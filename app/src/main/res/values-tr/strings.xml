@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Cemiuiler</string>
     <string name="xposed_description">Make MIUI Great Again!</string>
-    <string name="language">English</string>
+    <string name="language">Türkçe</string>
     <string name="translator">Lin Qiqi</string>
     <string name="translator_url">https://github.com/mu7220</string>
     <string name="settings">Settings</string>
