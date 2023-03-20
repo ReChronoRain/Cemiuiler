@@ -695,5 +695,5 @@
     <string name="system_ui_statusbar_indicator_align">水平對齊</string>
     <string name="system_ui_statusbar_clock_show_second_desc">狀態欄顯示秒鐘</string>
     <string name="joyose_enable_gpu_tuner_desc">開啟後 [遊戲空間] 的底部中間增加遊戲 GPU 相關設置</string>
-    <string name="system_ui_plugin_enable_volume_blur">Enable volume bar blur</string>
+    <string name="system_ui_plugin_enable_volume_blur">音量條模糊</string>
 </resources>
