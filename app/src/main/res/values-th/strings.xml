@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Cemiuiler</string>
-    <string name="xposed_description">Make MIUI Great Again!</string>
-    <string name="language">English</string>
+    <string name="xposed_description">ทำให้ MIUI ยอดเยี่ยมอีกครั้ง!</string>
+    <string name="language">อังกฤษ</string>
     <string name="translator">Lin Qiqi</string>
     <string name="translator_url">https://github.com/mu7220</string>
     <string name="settings">การตั้งค่า</string>
@@ -27,20 +27,20 @@
     <string name="milink">แคสต์</string>
     <string name="mirror">MIUI+</string>
     <string name="mms">ข้อความ</string>
-    <string name="security_center_remove_open_app_confirmation_popup">Remove open app popup</string>
+    <string name="security_center_remove_open_app_confirmation_popup">ลบป๊อปอัปแอปที่เปิดอยู่</string>
     <string name="security_center_remove_open_app_confirmation_popup_summary">Remove \"Allow XXX to open XXX\" Chain start popup</string>
     <string name="security_center_no_permission">Required permissions not granted</string>
     <string name="mishare">Mi Share</string>
-    <string name="music">Music</string>
-    <string name="package_installer">Package installer</string>
+    <string name="music">เพลง</string>
+    <string name="package_installer">ตัวติดตั้งแพ็คเกจ</string>
     <string name="personal_assistant">App vault</string>
-    <string name="powerkeeper">Battery and performance</string>
-    <string name="scanner">Scanner</string>
-    <string name="screenrecorder">Screen Recorder</string>
-    <string name="screenshot">Screenshot</string>
-    <string name="security_center">Security</string>
-    <string name="system_framework">System Framework</string>
-    <string name="system_settings">Settings</string>
+    <string name="powerkeeper">แบตเตอรี่และประสิทธิภาพ</string>
+    <string name="scanner">แสกนเนอร์</string>
+    <string name="screenrecorder">บันทึกหน้าจอ</string>
+    <string name="screenshot">สกรีนช็อต</string>
+    <string name="security_center">ความปลอดภัย</string>
+    <string name="system_framework">กรอบงานระบบ</string>
+    <string name="system_settings">การตั้งค่า</string>
     <string name="system_ui">System UI</string>
     <string name="system_ui_plugin">System UI Plugin</string>
     <string name="theme_manager">Themes</string>
