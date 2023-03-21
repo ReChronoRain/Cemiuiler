@@ -16,7 +16,7 @@
     <string name="home">Trình khởi chạy hệ thống</string>
     <string name="aireco">AI Reco</string>
     <string name="browser">Trình duyệt</string>
-    <string name="camera">Camera</string>
+    <string name="camera">Máy ảnh</string>
     <string name="clock">Đồng hồ</string>
     <string name="gallery">Thư viện ảnh</string>
     <string name="guard_provider">Bảo mật MIUI</string>
@@ -88,8 +88,8 @@
     <string name="gallery_enable_video_editor">Mở khóa chỉnh sửa video</string>
     <string name="gallery_enable_text_yanhua">Mở khóa pháo hoa văn bản</string>
     <string name="gallery_enable_remover_2">Mở khóa xóa ma thuật</string>
-    <string name="gallery_enable_magic_matting">Unlock Cut</string>
-    <string name="gallery_enable_magic_sky">Unlock Sky</string>
+    <string name="gallery_enable_magic_matting">Mở khóa cắt</string>
+    <string name="gallery_enable_magic_sky">Mở khóa bầu trời</string>
     <string name="guard_provider_disable_upload_applist">Prevent automatic upload of installed app list</string>
     <string name="home_gesture">Gesture</string>
     <string name="home_layout">Layout</string>
