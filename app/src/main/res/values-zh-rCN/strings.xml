@@ -290,7 +290,6 @@
     <string name="system_ui_qs_label">快捷开关标签</string>
     <string name="system_ui_statusbar_iconmanage_title">图标</string>
     <string name="system_ui_statusbar_clock_title">时钟指示器</string>
-    <string name="system_ui_statusbar_clock_show_second">显示秒</string>
     <string name="system_ui_status_bar_battery_indicator_enable">启用</string>
     <string name="system_ui_status_bar_battery_indicator_centered">居中</string>
     <string name="system_ui_status_bar_battery_indicator_rounded">圆角</string>
@@ -695,7 +694,6 @@
     <string name="array_netspeedicons_no">无图标</string>
     <string name="system_ui_statusbar_network_speed_icon">指示器图标</string>
     <string name="system_ui_statusbar_indicator_align">水平对齐</string>
-    <string name="system_ui_statusbar_clock_show_second_desc">状态栏显示秒钟</string>
     <string name="joyose_enable_gpu_tuner_desc">开启后 [游戏空间] 的底部中间增加游戏 GPU 相关设置</string>
     <string name="system_ui_plugin_enable_volume_blur">音量条模糊</string>
     <string name="camera_features_title">功能</string>
@@ -708,9 +706,6 @@
     <string name="camera_features_unlock_duration">解锁延时摄影</string>
     <string name="camera_features_unlock_idcard">解锁身份证拍摄</string>
     <string name="camera_features_unlock_milive">解锁短视频</string>
-    <string name="system_ui_statusbar_clock_diy_title">开启自定义格式</string>
-    <string name="system_ui_statusbar_clock_diy">设置格式</string>
-    <string name="system_ui_statusbar_clock_diy_desc">回车换行，超过2行会被截断\n        \nyy/M/d N月e E a aaH:mm I时 → 23/2/23 二月初四 周一 下午 傍晚18:08 酉时\n              \nyyyy - 4位年份 (2023)       \nyy - 2位年份 (23)        \nMM - 补0月份 (02、12)     \nM - 月份 (2、12)       \nN - 农历月份 (正、二)     \ndd - 补0日期 (02、23)     \nd - 日期 (2、23)     \ne - 农历日期 (初十、十九)      \nE - 星期 (周三)      \na - 时段 (上午、下午)     \naa - 精确时段 (傍晚、凌晨等)      \nHH - 24小时制补0小时 (09、14)      \nH - 24小时制小时 (9、14)     \nhh - 12小时制补0小时 (09、02)      \nh - 12小时制小时 (9、2)      \nmm - 补0分钟 (09)       \nss - 补0秒数 (09)       \nI - 时辰 (卯、亥)</string>
     <string name="camera_features_unlock_moon">解锁超级月亮</string>
     <string name="camera_features_unlock_pano">解锁全景</string>
     <string name="camera_features_unlock_pixel">解锁超分辨率模式</string>
@@ -726,4 +721,22 @@
     <string name="camera_features_unlock_film_slowshutter">解锁慢快门</string>
     <string name="camera_features_unlock_film_timebackflow">解锁时光倒流</string>
     <string name="camera_features_unlock_film_timefreeze">解锁时间静止</string>
+    <string name="array_clock_geek">极客</string>
+    <string name="system_ui_statusbar_clock_period">显示时段</string>
+    <string name="system_ui_statusbar_clock_editor">时钟格式</string>
+    <string name="system_ui_statusbar_clock_double_size">双排大小（0 为不修改）</string>
+    <string name="system_ui_statusbar_clock_size">时钟大小（0 为不修改）</string>
+    <string name="system_ui_statusbar_clock_second">显示秒数</string>
+    <string name="system_ui_statusbar_clock_year">显示年份</string>
+    <string name="system_ui_statusbar_clock_month">显示月份</string>
+    <string name="system_ui_statusbar_clock_date">显示日期</string>
+    <string name="system_ui_statusbar_clock_week">显示星期</string>
+    <string name="system_ui_statusbar_clock_hour_cn">显示时辰</string>
+    <string name="system_ui_statusbar_clock_hide_space">隐藏间隔</string>
+    <string name="system_ui_statusbar_clock_double">双排显示</string>
+    <string name="system_ui_statusbar_clock_double_center">双排居中对齐</string>
+    <string name="array_clock_close">关闭</string>
+    <string name="array_clock_default">预设</string>
+    <string name="system_ui_statusbar_clock_geek">极客模式</string>
+    <string name="system_ui_statusbar_clock_default">预设模式</string>
 </resources>
