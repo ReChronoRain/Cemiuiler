@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cemiuiler</string>
+    <string name="app_name">Key: app_name
+app_name
+File: strings. xml</string>
     <string name="xposed_description">Make MIUI Great Again!</string>
     <string name="language">English</string>
     <string name="translator">Lin Qiqi</string>
