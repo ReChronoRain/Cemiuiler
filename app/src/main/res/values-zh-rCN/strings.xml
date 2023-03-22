@@ -735,8 +735,6 @@
     <string name="system_ui_statusbar_clock_hide_space">隐藏间隔</string>
     <string name="system_ui_statusbar_clock_double">双排显示</string>
     <string name="system_ui_statusbar_clock_double_center">双排居中对齐</string>
-    <string name="array_clock_close">关闭</string>
     <string name="array_clock_default">预设</string>
-    <string name="system_ui_statusbar_clock_geek">极客模式</string>
-    <string name="system_ui_statusbar_clock_default">预设模式</string>
+    <string name="system_ui_statusbar_clock_mode">自定义时钟模式</string>
 </resources>
