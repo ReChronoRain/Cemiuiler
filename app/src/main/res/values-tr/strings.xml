@@ -697,6 +697,7 @@
     <string name="joyose_enable_gpu_tuner_desc">Açtıktan sonra, [Oyun Alanı] \'nın alt ortasına oyun GPU\'su ile ilgili ayarları ekleyin</string>
     <string name="system_ui_plugin_enable_volume_blur">Ses çubuğu bulanıklığını etkinleştir</string>
     <string name="camera_features_title">Özellikler</string>
+    <string name="camera_record_title">Record</string>
     <string name="camera_features_unlock_aiwatermark">AI filigranının kilidini aç</string>
     <string name="camera_features_unlock_ambilight">Uzun pozlamanın kilidini aç</string>
     <string name="camera_features_unlock_clone">Klon modunun kilidini aç</string>
@@ -738,4 +739,8 @@
     <string name="array_clock_default">Varsayılan</string>
     <string name="system_ui_statusbar_clock_mode">Özel saat modu</string>
     <string name="home_other_fix_android_r_s">Masaüstünün kararmasına neden olan bir uyumluluk sorununu düzeltin</string>
+    <string name="camera_record_60fps">Unlock 60FPS</string>
+    <string name="camera_record_60fps_desc">Not available in some qualities, please make sure that your device was supported</string>
+    <string name="camera_record_120fps">Unlock 120FPS</string>
+    <string name="camera_record_120fps_desc">Only support when 4K qualities, please make sure that your device was supported</string>
 </resources>
