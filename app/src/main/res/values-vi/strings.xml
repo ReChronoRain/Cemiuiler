@@ -166,10 +166,10 @@
     <string name="home_gesture_down_swipe">Vuốt xuống</string>
     <string name="home_gesture_down_swipe_desc">Vuốt xuống bằng một ngón tay trên bất kỳ màn hình chính</string>
     <string name="home_gesture_up_swipe2">Vuốt lên bằng hai ngón tay</string>
-    <string name="home_gesture_up_swipe2_desc">Swipe up with two fingers on any home screen</string>
-    <string name="home_gesture_down_swipe2">Swipe down with two fingers</string>
-    <string name="home_gesture_down_swipe2_desc">Swipe down with two fingers on any home screen</string>
-    <string name="home_gesture_pinch">Pinch with two fingers</string>
+    <string name="home_gesture_up_swipe2_desc">Vuốt lên bằng hai ngón tay trên bất kỳ màn hình chính</string>
+    <string name="home_gesture_down_swipe2">Vuốt xuống bằng hai ngón tay</string>
+    <string name="home_gesture_down_swipe2_desc">Vuốt xuống bằng hai ngón tay trên bất kỳ chỗ nào ở màn hình chính</string>
+    <string name="home_gesture_pinch">Chụm bằng hai ngón tay</string>
     <string name="home_gesture_spread">Spread with two fingers</string>
     <string name="home_layout_home_title">Home screen</string>
     <string name="home_layout_hotseats_title">Dock</string>
