@@ -697,6 +697,7 @@
     <string name="joyose_enable_gpu_tuner_desc">開啟後 [遊戲空間] 的底部中間增加遊戲 GPU 相關設置</string>
     <string name="system_ui_plugin_enable_volume_blur">音量條模糊</string>
     <string name="camera_features_title">功能</string>
+    <string name="camera_record_title">Record</string>
     <string name="camera_features_unlock_aiwatermark">解鎖 AI 浮水印</string>
     <string name="camera_features_unlock_ambilight">解鎖長曝光</string>
     <string name="camera_features_unlock_clone">解鎖魔法分身</string>
@@ -738,4 +739,8 @@
     <string name="array_clock_default">预设</string>
     <string name="system_ui_statusbar_clock_mode">自定義時鐘模式</string>
     <string name="home_other_fix_android_r_s">Fix a compatibility issue that caused the desktop to go black</string>
+    <string name="camera_record_60fps">Unlock 60FPS</string>
+    <string name="camera_record_60fps_desc">Not available in some qualities, please make sure that your device was supported</string>
+    <string name="camera_record_120fps">Unlock 120FPS</string>
+    <string name="camera_record_120fps_desc">Only support when 4K qualities, please make sure that your device was supported</string>
 </resources>
