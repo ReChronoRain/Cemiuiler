@@ -697,6 +697,7 @@
     <string name="joyose_enable_gpu_tuner_desc">开启后 \"游戏空间\" 的底部中间增加游戏 GPU 相关设置</string>
     <string name="system_ui_plugin_enable_volume_blur">音量条模糊</string>
     <string name="camera_features_title">功能</string>
+    <string name="camera_record_title">录像</string>
     <string name="camera_features_unlock_aiwatermark">解锁 AI 水印</string>
     <string name="camera_features_unlock_ambilight">解锁长曝光</string>
     <string name="camera_features_unlock_clone">解锁魔法分身</string>
@@ -738,4 +739,8 @@
     <string name="array_clock_default">预设</string>
     <string name="system_ui_statusbar_clock_mode">自定义时钟模式</string>
     <string name="home_other_fix_android_r_s">修复兼容性问题导致桌面黑屏</string>
+    <string name="camera_record_60fps">解锁 60FPS</string>
+    <string name="camera_record_60fps_desc">部分画质下不可用，部分设备硬件不支持</string>
+    <string name="camera_record_120fps">解锁 120FPS</string>
+    <string name="camera_record_120fps_desc">仅 4K 模式支持, 部分设备硬件不支持</string>
 </resources>
