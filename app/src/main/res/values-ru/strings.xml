@@ -759,4 +759,7 @@
     <string name="camera_portrait_cvlens_desc">Cannot work fine on some device</string>
     <string name="camera_pro_raw">Unlock RAW</string>
     <string name="camera_pro_log">Unlock LOG</string>
+    <string name="system_settings_permission_title">Permission</string>
+    <string name="system_settings_permission_show_app_up">Upper-level permissions without searching the application list</string>
+    <string name="prefs_key_system_settings_permission_show_app_up_desc">Restore the old behavior, jump directly to the permission switch of the corresponding application [displayed on top of other applications]</string>
 </resources>
