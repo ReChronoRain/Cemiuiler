@@ -762,4 +762,6 @@
     <string name="system_settings_permission_title">权限</string>
     <string name="system_settings_permission_show_app_up">上层权限免翻应用列表</string>
     <string name="prefs_key_system_settings_permission_show_app_up_desc">恢复旧版行为，直接跳转对应应用 [显示在其他应用上层] 的权限开关</string>
+    <string name="system_ui_status_bar_no_netspeed_separator_title">网速分隔符</string>
+    <string name="system_ui_status_bar_no_netspeed_separator_desc">于水滴屏的设备上不显示时间和网速间的竖线</string>
 </resources>
