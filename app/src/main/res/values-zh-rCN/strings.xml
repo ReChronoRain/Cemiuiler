@@ -759,4 +759,7 @@
     <string name="camera_portrait_cvlens_desc">部分设备无法正常工作</string>
     <string name="camera_pro_raw">解锁 RAW</string>
     <string name="camera_pro_log">解锁 LOG</string>
+    <string name="system_settings_permission_title">权限</string>
+    <string name="system_settings_permission_show_app_up">上层权限免翻应用列表</string>
+    <string name="prefs_key_system_settings_permission_show_app_up_desc">恢复旧版行为，直接跳转对应应用 [显示在其他应用上层] 的权限开关</string>
 </resources>
