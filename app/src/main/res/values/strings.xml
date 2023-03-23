@@ -713,6 +713,8 @@
     <string name="camera_features_title">Features</string>
     <string name="camera_record_title">Record</string>
     <string name="camera_shot_title">Shot</string>
+    <string name="camera_portrait_title">Portrait</string>
+    <string name="camera_pro_title">Pro</string>
     <string name="camera_features_unlock_aiwatermark">Unlock AI watermark</string>
     <string name="camera_features_unlock_ambilight">Unlock Long exposure</string>
     <string name="camera_features_unlock_clone">Unlock Clone mode</string>
@@ -759,6 +761,16 @@
     <string name="camera_record_120fps">Unlock 120FPS</string>
     <string name="camera_record_120fps_desc">Only support when 4K qualities, please make sure that your device was supported</string>
     <string name="camera_record_audio_zoom">Unlock Audio zoom</string>
+    <string name="camera_record_hdr">Unlock HDR</string>
+    <string name="camera_record_ai">Unlock AI enhance</string>
     <string name="camera_shot_makeup">Unlock Makeup</string>
     <string name="camera_shot_makeup_desc">Takes effect only when using the front camera</string>
+    <string name="camera_shot_hand_gesture">Unlock Palm shutter</string>
+    <string name="camera_shot_color_enhance">Unlock Color enhance</string>
+    <string name="camera_portrait_new_beauty">Unlock New beauty</string>
+    <string name="camera_portrait_new_beauty_desc">Takes effect only when using the front camera</string>
+    <string name="camera_portrait_cvlens">Unlock Master-lens</string>
+    <string name="camera_portrait_cvlens_desc">Cannot work fine on some device</string>
+    <string name="camera_pro_raw">Unlock RAW</string>
+    <string name="camera_pro_log">Unlock LOG</string>
 </resources>
