@@ -701,6 +701,7 @@
     <string name="camera_shot_title">拍照</string>
     <string name="camera_portrait_title">人像</string>
     <string name="camera_pro_title">专业</string>
+    <string name="camera_settings_title">设置</string>
     <string name="camera_features_unlock_aiwatermark">解锁 AI 水印</string>
     <string name="camera_features_unlock_ambilight">解锁长曝光</string>
     <string name="camera_features_unlock_clone">解锁魔法分身</string>
@@ -764,4 +765,10 @@
     <string name="prefs_key_system_settings_permission_show_app_up_desc">恢复旧版行为，直接跳转对应应用 \"显示在其他应用上层\" 的权限开关</string>
     <string name="system_ui_status_bar_no_netspeed_separator_title">网速分隔符</string>
     <string name="system_ui_status_bar_no_netspeed_separator_desc">于水滴屏的设备上不显示时间和网速间的竖线</string>
+    <string name="camera_settings_lab_options">启用实验室选项</string>
+    <string name="camera_settings_track_eyes">解锁人眼追焦</string>
+    <string name="camera_settings_heic">解锁 HEIF 格式</string>
+    <string name="camera_settings_men_makeup">解锁男性妆容适配</string>
+    <string name="camera_settings_nevus">解锁祛痣</string>
+    <string name="camera_settings_track_focus">解锁万物追焦</string>
 </resources>
