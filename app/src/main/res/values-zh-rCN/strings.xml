@@ -771,4 +771,6 @@
     <string name="camera_settings_men_makeup">解锁男性妆容适配</string>
     <string name="camera_settings_nevus">解锁祛痣</string>
     <string name="camera_settings_track_focus">解锁万物追焦</string>
+    <string name="camera_settings_predictive">解锁运动抓拍</string>
+    <string name="security_center_super_wireless_charge">解锁极速无线充电模式</string>
 </resources>
