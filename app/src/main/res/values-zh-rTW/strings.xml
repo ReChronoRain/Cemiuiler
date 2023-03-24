@@ -761,7 +761,7 @@
     <string name="camera_pro_log">解鎖 LOG</string>
     <string name="system_settings_permission_title">權限</string>
     <string name="system_settings_permission_show_app_up">上層權限免翻應用程式列表</string>
-    <string name="prefs_key_system_settings_permission_show_app_up_desc">恢復舊版行為，直接跳轉對應應用程式 [顯示在其他應用程式上層] 的權限開關</string>
-    <string name="system_ui_status_bar_no_netspeed_separator_title">Network speed separator</string>
-    <string name="system_ui_status_bar_no_netspeed_separator_desc">The vertical line between the time and the network speed is not displayed on the device with the water drop screen</string>
+    <string name="prefs_key_system_settings_permission_show_app_up_desc">恢復舊版行為，直接跳轉對應應用程式 “顯示在其他應用程式上層” 的權限開關</string>
+    <string name="system_ui_status_bar_no_netspeed_separator_title">網速分隔符號</string>
+    <string name="system_ui_status_bar_no_netspeed_separator_desc">于水滴屏的設備上不顯示時間和網速間的分隔號</string>
 </resources>
