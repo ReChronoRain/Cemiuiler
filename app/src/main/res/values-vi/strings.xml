@@ -187,13 +187,13 @@
     <string name="home_title_title_color">Màu sắc của tiêu đề</string>
     <string name="home_recent_hide_freeform">Ẩn nút Báo vi phạm</string>
     <string name="home_recent_hide_clean_up">Ẩn nút xóa</string>
-    <string name="home_recent_freeform_background_color">Freeform app card background color</string>
+    <string name="home_recent_freeform_background_color">Phong cách màu thẻ tự do</string>
     <string name="home_recent_text_size">Kích thước của văn bản nhãn hình thu nhỏ</string>
     <string name="home_recent_text_color">Màu tiêu đề thẻ tác vụ</string>
     <string name="home_recent_text">Văn bản hiển thị khi không có tác vụ gần đây</string>
     <string name="home_recent_remove_icon">Loại bỏ biểu tượng</string>
     <string name="lbe_disable_clipboard_tip">Bỏ quyền đọc ghi tạm</string>
-    <string name="market_device_modify">Model guise</string>
+    <string name="market_device_modify">Chế độ hướng dẫn</string>
     <string name="market_device_modify_desc">Disguised device model is Xiaomi 13 Ultra</string>
     <string name="mediaeditor_unlock_minimum_crop_limit">Mở khóa giới hạn cắt hình</string>
     <string name="mediaeditor_filter_manager">Mở khóa bộ lọc chính</string>
@@ -214,7 +214,7 @@
     <string name="system_framework_other_speed_install">Tốc độ</string>
     <string name="system_framework_other_speed_install_desc">Cài đặt tăng tốc bộ nhớ</string>
     <string name="various_install_app_size">Kích thước</string>
-    <string name="personal_assistant_widget_crack">Widget patch</string>
+    <string name="personal_assistant_widget_crack">Vá widget</string>
     <string name="personal_assistant_fold_widget_enable">Pad/Fold weight</string>
     <string name="personal_assistant_fold_widget_enable_desc">Enable Pad/Fold style widgets</string>
     <string name="personal_assistant_overlap_mode">Negative one screen Fold style</string>
