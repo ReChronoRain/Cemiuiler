@@ -237,9 +237,9 @@
     <string name="security_center_other_title">Khác</string>
     <string name="security_center_newbox_title">Thanh bên</string>
     <string name="security_center_bubble_and_freeform_title">Bubble and freeform</string>
-    <string name="security_center_show_battery_temperature">Show battery temperature</string>
-    <string name="security_center_ai_clipboard">Protect clipboard</string>
-    <string name="security_center_blur_location">Lower positioning accuracy</string>
+    <string name="security_center_show_battery_temperature">Hiện nhiệt độ pin</string>
+    <string name="security_center_ai_clipboard">Bảo vệ khay nhớ tạm</string>
+    <string name="security_center_blur_location">Độ chính xác định vị thấp hơn</string>
     <string name="security_center_get_number">Manage the application to obtain the mobile phone number and log in with one click</string>
     <string name="security_center_applock_pin_scramble">Applock out of order PIN</string>
     <string name="security_center_applock_pin_scramble_desc">Randomly change app lock PIN keypad sequence</string>
