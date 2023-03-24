@@ -395,7 +395,7 @@
     <string name="location_simulation_work_longitude_latitude">Longitude and latitude</string>
     <string name="location_simulation_work_remarks">Mark</string>
     <string name="app_details_playstore">Open with app store</string>
-    <string name="app_details_launch">Launch</string>
+    <string name="app_details_launch">Khởi chạy</string>
     <string name="app_details_nolaunch">App has no default launchable activity</string>
     <string name="app_details_apk_file">APK directory</string>
     <string name="app_details_apk_version_code">App version number</string>
