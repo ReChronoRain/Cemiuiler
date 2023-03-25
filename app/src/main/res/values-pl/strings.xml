@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Cemiuiler</string>
-    <string name="xposed_description">Make MIUI Great Again!</string>
-    <string name="language">English</string>
+    <string name="xposed_description">Zrób MIUI ponownie wspaniałym!</string>
+    <string name="language">Angielski</string>
     <string name="translator">Lin Qiqi</string>
     <string name="translator_url">https://github.com/mu7220</string>
-    <string name="settings">Settings</string>
-    <string name="about">About</string>
+    <string name="settings">Ustawienia</string>
+    <string name="about">O aplikacji</string>
     <string name="about_use">Quote</string>
-    <string name="about_use_desc">Cemiuiler uses some or all of the following open source projects, thanks to the developers of these projects for their support (in no particular order)</string>
-    <string name="about_contributer">Contributor</string>
-    <string name="about_contributer_desc">Thanks to the following contributors for their help in the development of Cemiuiler (in no particular order)</string>
+    <string name="about_use_desc">Cemiuiler korzysta z niektórych lub wszystkich następujących projektów open source, dzięki programistom tych projektów za ich wsparcie (bez konkretnego zamówienia)</string>
+    <string name="about_contributer">Współautor</string>
+    <string name="about_contributer_desc">Dzięki następującym współtwórcom za ich pomoc w rozwoju Cemiuiler (brak konkretnego zamówienia)</string>
     <string name="about_donation">Sponsor</string>
-    <string name="about_donation_desc">You can support us by donating here</string>
-    <string name="home">System launcher</string>
+    <string name="about_donation_desc">Możesz nas wspierać poprzez darowizny</string>
+    <string name="home">Launcher systemowy</string>
     <string name="aireco">AI Reco</string>
-    <string name="browser">Browser</string>
-    <string name="camera">Camera</string>
-    <string name="clock">Clock</string>
-    <string name="gallery">Gallery</string>
-    <string name="guard_provider">MIUI security components</string>
-    <string name="incallui">Phone</string>
+    <string name="browser">Przeglądarka</string>
+    <string name="camera">Kamera</string>
+    <string name="clock">Zegar</string>
+    <string name="gallery">Galeria</string>
+    <string name="guard_provider">Komponenty bezpieczeństwa MIUI</string>
+    <string name="incallui">Telefon</string>
     <string name="joyose">Joyose</string>
-    <string name="lbe">Permissions</string>
+    <string name="lbe">Uprawnienia</string>
     <string name="market">GetApps</string>
-    <string name="mediaeditor">Gallery Editor</string>
-    <string name="milink">Cast</string>
+    <string name="mediaeditor">Edytor galerii</string>
+    <string name="milink">Prześlij ekran</string>
     <string name="mirror">MIUI+</string>
     <string name="mms">Message</string>
     <string name="security_center_remove_open_app_confirmation_popup">Remove open app popup</string>
@@ -790,4 +790,6 @@
     <string name="security_center_blur_model">Sidebar blur model</string>
     <string name="security_center_blurradius">Sidebar blur value</string>
     <string name="security_center_color">Sidebar color</string>
+    <string name="system_other_delete_on_post_notification">Remove the upper display notification</string>
+    <string name="system_other_delete_on_post_notification_desc">Remove \"This app is displaying on top of other apps on screen\" notification</string>
 </resources>
