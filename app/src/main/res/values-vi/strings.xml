@@ -558,8 +558,8 @@
     <string name="system_other_flag_secure_desc">Cho phép chụp ành màn hình và ghi hình bất kì ứng dụng nào</string>
     <string name="system_framework_share_menu_test">Chia sẻ menu thử nghiệm</string>
     <string name="system_framework_open_with_menu_test">Mở với menu thử nghiệm</string>
-    <string name="system_framework_default_volume_stream">Adjust volume by default</string>
-    <string name="system_framework_volume_first_press">Instant volume adjustment</string>
+    <string name="system_framework_default_volume_stream">Điều chỉnh âm lượng bằng mặc định</string>
+    <string name="system_framework_volume_first_press">Điều chỉnh âm lượng tức thì</string>
     <string name="system_framework_volume_separate_control">Independent volume control</string>
     <string name="system_framework_volume_disable_safe">Remove high volume safety restrictions</string>
     <string name="system_framework_volume_separate_slider">Notification volume slider</string>
