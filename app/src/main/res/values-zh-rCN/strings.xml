@@ -792,4 +792,6 @@
     <string name="security_center_color">全局侧边栏背景叠加层颜色</string>
     <string name="system_other_delete_on_post_notification">移除上层显示通知</string>
     <string name="system_other_delete_on_post_notification_desc">移除 \"此应用正显示在屏幕上其他应用的上层\" 通知</string>
+    <string name="updater_device">伪装机型</string>
+    <string name="updater_device_desc">可用于获取其他机型的 ROM 包，该功能极度危险</string>
 </resources>
