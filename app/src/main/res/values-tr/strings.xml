@@ -792,4 +792,6 @@
     <string name="security_center_color">Kenar çubuğu rengi</string>
     <string name="system_other_delete_on_post_notification">Üst ekran bildirimini kaldırma</string>
     <string name="system_other_delete_on_post_notification_desc">\"Bu uygulama ekrandaki diğer uygulamaların üstünde görüntüleniyor\" bildirimini kaldırın</string>
+    <string name="updater_device">Fake device for Updater</string>
+    <string name="updater_device_desc">This feature is really danger, please do not use it in daily</string>
 </resources>
