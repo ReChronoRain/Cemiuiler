@@ -194,7 +194,7 @@
     <string name="home_recent_remove_icon">Loại bỏ biểu tượng</string>
     <string name="lbe_disable_clipboard_tip">Bỏ quyền đọc ghi tạm</string>
     <string name="market_device_modify">Chế độ hướng dẫn</string>
-    <string name="market_device_modify_desc">Disguised device model is Xiaomi 13 Ultra</string>
+    <string name="market_device_modify_desc">Mẫu thiết bị được ngụy trang là Xiaomi 13 Ultra</string>
     <string name="mediaeditor_unlock_minimum_crop_limit">Mở khóa giới hạn cắt hình</string>
     <string name="mediaeditor_filter_manager">Mở khóa bộ lọc chính</string>
     <string name="milink_unlock_mishare">Mở khóa kết nối thiết bị</string>
@@ -215,10 +215,10 @@
     <string name="system_framework_other_speed_install_desc">Cài đặt tăng tốc bộ nhớ</string>
     <string name="various_install_app_size">Kích thước</string>
     <string name="personal_assistant_widget_crack">Vá widget</string>
-    <string name="personal_assistant_fold_widget_enable">Pad/Fold weight</string>
-    <string name="personal_assistant_fold_widget_enable_desc">Enable Pad/Fold style widgets</string>
-    <string name="personal_assistant_overlap_mode">Negative one screen Fold style</string>
-    <string name="powerkeeper_custom_refresh_rate">Custom high refresh rate apps</string>
+    <string name="personal_assistant_fold_widget_enable">Tiện ích Pad/Fold</string>
+    <string name="personal_assistant_fold_widget_enable_desc">Bật tiện ích kiểu Pad/Fold</string>
+    <string name="personal_assistant_overlap_mode">Phủ định một màn hình kiểu Fold</string>
+    <string name="powerkeeper_custom_refresh_rate">Tùy chỉnh ứng dụng tốc độ làm mới cao</string>
     <string name="scanner_card">Mở khóa quét thẻ ID</string>
     <string name="scanner_translation">Mở khóa bản dịch</string>
     <string name="scanner_ocr">Mở khóa OCR</string>
@@ -241,10 +241,10 @@
     <string name="security_center_ai_clipboard">Bảo vệ khay nhớ tạm</string>
     <string name="security_center_blur_location">Độ chính xác định vị thấp hơn</string>
     <string name="security_center_get_number">Quản lí ứng dụng dựa vào số điện thoại và đăng nhập với một cú click</string>
-    <string name="security_center_applock_pin_scramble">Applock out of order PIN</string>
-    <string name="security_center_applock_pin_scramble_desc">Randomly change app lock PIN keypad sequence</string>
+    <string name="security_center_applock_pin_scramble">Mã PIN hết hàng của Applock</string>
+    <string name="security_center_applock_pin_scramble_desc">Thay đổi ngẫu nhiên thứ tự bàn phím mã PIN khóa ứng dụng</string>
     <string name="security_center_beauty_light">Độ sáng tăng sáng</string>
-    <string name="security_center_beauty_light_auto">Unlock Adjust fill light brightness automatically</string>
+    <string name="security_center_beauty_light_auto">Mở khóa điều chỉnh độ sáng của đèn phụ tự động</string>
     <string name="security_center_beauty_face">Làm đẹp cho cuộc gọi video</string>
     <string name="security_center_beauty_privacy">Mở khóa bảo mật máy ảnh</string>
     <string name="security_center_beauty_pc">Unlock Keep faces centered</string>
