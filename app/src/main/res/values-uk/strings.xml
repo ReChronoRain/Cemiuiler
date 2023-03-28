@@ -183,6 +183,7 @@
     <string name="home_recent_none_blur">None Blur</string>
     <string name="home_recent_none_blur_simple_anim">None Blur (Simple Anim)</string>
     <string name="home_recent_disable_wallpaper_dimming">Disable wallpaper dimming</string>
+    <string name="home_recent_show_real_memory">Show real memory</string>
     <string name="home_title_bigicon_title">Велика іконка</string>
     <string name="home_title_title_color">Title color</string>
     <string name="home_recent_hide_freeform">Hide freeform button</string>
@@ -278,6 +279,11 @@
     <string name="system_ui_lockscreen_safe_title">Security</string>
     <string name="system_ui_lockscreen_ui_title">UI</string>
     <string name="system_ui_lock_screen_show_second">Clock show second</string>
+    <string name="system_ui_lock_screen_show_charging_current">Show charging current</string>
+    <string name="system_ui_lock_screen_hide_camera">Hide camera</string>
+    <string name="system_ui_lock_screen_hide_smart_screen">Hide smart screen</string>
+    <string name="system_ui_lock_screen_current">Current</string>
+    <string name="system_ui_lock_screen_default_theme">Support default theme only</string>
     <string name="system_ui_lock_screen_scramble_pin">Random PIN</string>
     <string name="system_ui_lock_screen_scramble_pin_desc">Randomize PIN keypad order</string>
     <string name="system_ui_charge_animation_style">Charging animation style</string>
