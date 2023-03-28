@@ -183,6 +183,7 @@
     <string name="home_recent_none_blur">無模糊</string>
     <string name="home_recent_none_blur_simple_anim">無模糊（精簡動畫）</string>
     <string name="home_recent_disable_wallpaper_dimming">取消桌布壓暗</string>
+    <string name="home_recent_show_real_memory">Show real memory</string>
     <string name="home_title_bigicon_title">大圖示</string>
     <string name="home_title_title_color">文本顏色</string>
     <string name="home_recent_hide_freeform">隱藏小窗按鈕</string>
@@ -278,6 +279,11 @@
     <string name="system_ui_lockscreen_safe_title">安全</string>
     <string name="system_ui_lockscreen_ui_title">UI</string>
     <string name="system_ui_lock_screen_show_second">Clock show second</string>
+    <string name="system_ui_lock_screen_show_charging_current">Show charging current</string>
+    <string name="system_ui_lock_screen_hide_camera">Hide camera</string>
+    <string name="system_ui_lock_screen_hide_smart_screen">Hide smart screen</string>
+    <string name="system_ui_lock_screen_current">Current</string>
+    <string name="system_ui_lock_screen_default_theme">Support default theme only</string>
     <string name="system_ui_lock_screen_scramble_pin">亂序 PIN</string>
     <string name="system_ui_lock_screen_scramble_pin_desc">隨機更改 PIN 鍵盤順序</string>
     <string name="system_ui_charge_animation_style">充電動畫樣式</string>
