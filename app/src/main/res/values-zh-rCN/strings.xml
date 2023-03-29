@@ -813,13 +813,9 @@
     <string name="updater_device">伪装机型</string>
     <string name="updater_device_desc">可用于获取其他机型的 ROM 包，该功能极度危险</string>
     <string name="array_battery_both">两者</string>
-    <string name="array_battery_both">B</string>
     <string name="array_battery_temperature">仅温度</string>
-    <string name="array_battery_temperature">O</string>
     <string name="array_battery_current">仅电流</string>
-    <string name="array_battery_current">O</string>
     <string name="system_ui_statusbar_battery_size">字体大小</string>
-    <string name="system_ui_statusbar_battery_size">F</string>
     <string name="system_ui_statusbar_battery_show">显示内容</string>
     <string name="system_ui_statusbar_battery_disable">隐藏单位</string>
     <string name="system_ui_statusbar_battery_title">电池和温度指示器</string>
