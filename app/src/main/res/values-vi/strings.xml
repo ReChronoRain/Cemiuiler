@@ -812,4 +812,15 @@
     <string name="system_other_delete_on_post_notification_desc">Xóa thông báo \"Ứng dụng này đang hiển thị trên các ứng dụng khác trên màn hình\"</string>
     <string name="updater_device">Fake thiết bị để Cập nhật</string>
     <string name="updater_device_desc">Có thể được sử dụng để lấy các gói Rom cho các dòng máy khác, tính năng này cực kỳ nguy hiểm</string>
+    <string name="array_battery_both">Both</string>
+    <string name="array_battery_both">B</string>
+    <string name="array_battery_temperature">Only temperature</string>
+    <string name="array_battery_temperature">O</string>
+    <string name="array_battery_current">Only current</string>
+    <string name="array_battery_current">O</string>
+    <string name="system_ui_statusbar_battery_size">Font size</string>
+    <string name="system_ui_statusbar_battery_size">F</string>
+    <string name="system_ui_statusbar_battery_show">Show contents</string>
+    <string name="system_ui_statusbar_battery_disable">Hide units</string>
+    <string name="system_ui_statusbar_battery_title">Battery and temperature indicator</string>
 </resources>
