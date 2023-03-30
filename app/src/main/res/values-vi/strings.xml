@@ -700,8 +700,8 @@
     <string name="system_ui_statusbar_network_speed_detailed">Tốc độ tải lên và tải xuống được hiển thị trong hàng kép</string>
     <string name="system_ui_statusbar_indicator_bold">Đậm</string>
     <string name="system_ui_statusbar_network_speed_detailed_desc">Hiển thị tốc độ mạng đến và đi riêng biệt</string>
-    <string name="system_ui_statusbar_network_speed_fixedcontent_width">Sửa chiều rộng nội dung</string>
-    <string name="system_ui_statusbar_network_speed_fixedcontent_width_desc">Ngăn các phần tử liền kề lắc trái và phải</string>
+    <string name="system_ui_statusbar_indicator_fixedcontent_width">Fix content width</string>
+    <string name="system_ui_statusbar_indicator_fixedcontent_width_desc">To prevent horizontal jitter</string>
     <string name="system_ui_statusbar_indicator_left_margin">Lề trái</string>
     <string name="system_ui_statusbar_indicator_right_margin">Lề phải</string>
     <string name="system_ui_statusbar_indicator_vertical_offset">Chiều rộng lên và xuống</string>
@@ -819,4 +819,10 @@
     <string name="system_ui_statusbar_battery_show">Hiển thị nội dung</string>
     <string name="system_ui_statusbar_battery_disable">Ẩn đơn vị</string>
     <string name="system_ui_statusbar_battery_title">Chỉ báo pin và nhiệt độ</string>
+    <string name="system_ui_statusbar_battery_all_enable">Main switch</string>
+    <string name="system_ui_statusbar_battery_right_show">Show on the right</string>
+    <string name="system_ui_statusbar_battery_electric_current">The current always shows a positive value</string>
+    <string name="system_ui_statusbar_battery_line_show">Single row display</string>
+    <string name="system_ui_statusbar_battery_opposite">Reverse order</string>
+    <string name="system_ui_statusbar_battery_only_changing_show">Show only when charging</string>
 </resources>
