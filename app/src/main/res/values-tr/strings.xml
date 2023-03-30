@@ -700,8 +700,8 @@
     <string name="system_ui_statusbar_network_speed_detailed">Yükleme ve indirme hızı çift sıra halinde görüntülenir</string>
     <string name="system_ui_statusbar_indicator_bold">Kalın</string>
     <string name="system_ui_statusbar_network_speed_detailed_desc">Gelen ve giden ağ hızlarını ayrı ayrı göster</string>
-    <string name="system_ui_statusbar_network_speed_fixedcontent_width">İçerik genişliğini düzeltin</string>
-    <string name="system_ui_statusbar_network_speed_fixedcontent_width_desc">Yatay titremeyi önlemek için</string>
+    <string name="system_ui_statusbar_indicator_fixedcontent_width">Fix content width</string>
+    <string name="system_ui_statusbar_indicator_fixedcontent_width_desc">To prevent horizontal jitter</string>
     <string name="system_ui_statusbar_indicator_left_margin">Sol kenar boşluğu</string>
     <string name="system_ui_statusbar_indicator_right_margin">Sağ kenar boşluğu</string>
     <string name="system_ui_statusbar_indicator_vertical_offset">Yukarı ve aşağı ofset</string>
@@ -819,4 +819,10 @@
     <string name="system_ui_statusbar_battery_show">Show contents</string>
     <string name="system_ui_statusbar_battery_disable">Hide units</string>
     <string name="system_ui_statusbar_battery_title">Battery and temperature indicator</string>
+    <string name="system_ui_statusbar_battery_all_enable">Main switch</string>
+    <string name="system_ui_statusbar_battery_right_show">Show on the right</string>
+    <string name="system_ui_statusbar_battery_electric_current">The current always shows a positive value</string>
+    <string name="system_ui_statusbar_battery_line_show">Single row display</string>
+    <string name="system_ui_statusbar_battery_opposite">Reverse order</string>
+    <string name="system_ui_statusbar_battery_only_changing_show">Show only when charging</string>
 </resources>
