@@ -700,8 +700,8 @@
     <string name="system_ui_statusbar_network_speed_detailed">上下行网速双排显示</string>
     <string name="system_ui_statusbar_indicator_bold">加粗</string>
     <string name="system_ui_statusbar_network_speed_detailed_desc">分别显示传入和传出的网络速度</string>
-    <string name="system_ui_statusbar_network_speed_fixedcontent_width">固定宽度</string>
-    <string name="system_ui_statusbar_network_speed_fixedcontent_width_desc">防止相邻元素左右抖动</string>
+    <string name="system_ui_statusbar_indicator_fixedcontent_width">Fix content width</string>
+    <string name="system_ui_statusbar_indicator_fixedcontent_width_desc">To prevent horizontal jitter</string>
     <string name="system_ui_statusbar_indicator_left_margin">左侧间距</string>
     <string name="system_ui_statusbar_indicator_right_margin">右侧间距</string>
     <string name="system_ui_statusbar_indicator_vertical_offset">上下偏移量</string>
@@ -819,4 +819,10 @@
     <string name="system_ui_statusbar_battery_show">显示内容</string>
     <string name="system_ui_statusbar_battery_disable">隐藏单位</string>
     <string name="system_ui_statusbar_battery_title">电池和温度指示器</string>
+    <string name="system_ui_statusbar_battery_all_enable">Main switch</string>
+    <string name="system_ui_statusbar_battery_right_show">Show on the right</string>
+    <string name="system_ui_statusbar_battery_electric_current">The current always shows a positive value</string>
+    <string name="system_ui_statusbar_battery_line_show">Single row display</string>
+    <string name="system_ui_statusbar_battery_opposite">Reverse order</string>
+    <string name="system_ui_statusbar_battery_only_changing_show">Show only when charging</string>
 </resources>
