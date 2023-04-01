@@ -155,6 +155,25 @@
 
         <activity android:label="@string/settings_safe_mode" android:name=".ui.settings.SafeModeActivity"/>
 
+        <activity android:label="软盘 (A:)" android:name=".ui.FoolsAActivity"/>
+
+        <activity android:label="？？？? (A:)" android:name=".ui.FoolsBActivity"/>
+
+        <activity android:label="实验记录_14040331_001221.dat" android:name=".ui.fools.a.Experiment1Activity"/>
+
+        <activity android:label="《三江事》杂志 (1).png" android:name=".ui.fools.a.News1Activity"/>
+
+        <activity android:label="《三江事》杂志 (2).png" android:name=".ui.fools.a.News2Activity"/>
+
+        <activity android:label="GL3625次车票.tkt" android:name=".ui.fools.a.Ticket1Activity"/>
+
+        <activity android:label="《三江早间新闻》.wav" android:name=".ui.fools.a.News3Activity"/>
+
+        <activity android:label="J23-M-L.txt" android:name=".ui.fools.a.Tip1Activity"/>
+
+        <activity android:label="文件加密程序.exe" android:name=".ui.fools.a.Exe1Activity"/>
+
+        <activity android:label="J23-M-L.txt" android:name=".ui.fools.b.Tip1Activity"/>
 
         <activity android:label="@string/system_framework_free_form_title" android:name=".ui.systemframework.FreeFormSettings"/>
         <activity android:label="@string/system_framework_volume_title" android:name=".ui.systemframework.VolumeSettings"/>

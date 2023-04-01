@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+            android:summary="车次：GL3625\n上车地点：三江\n上车时间：1404/4/6 21:11\n下车地点：戴秦\n下车时间：1404/4/6 21:11\n持票人：绀漓\n座位：13车3F\n校验码：5GS6-D76H-52G0-V3FZ-████-████-████-71Z9\n\n校验码的后四位被加粗了，不知是什么用意。"/>
+
+</PreferenceScreen>

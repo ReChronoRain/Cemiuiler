@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+            android:title="实验记录_14040331_001221.dat"
+            android:summary="DAT 文件 | 36.06KB | 1404/3/31 23:59"
+            android:key="prefs_key_fools_a_experiment_1">
+        <intent
+                android:targetPackage="com.sevtinge.cemiuiler"
+                android:targetClass="com.sevtinge.cemiuiler.ui.fools.a.Experiment1Activity"/>
+    </Preference>
+    <Preference
+            android:title="《三江事》杂志 (1).png"
+            android:summary="图片 | 192.34KB | 1404/4/6 10:02"
+            android:key="prefs_key_fools_a_news_1">
+        <intent
+                android:targetPackage="com.sevtinge.cemiuiler"
+                android:targetClass="com.sevtinge.cemiuiler.ui.fools.a.News1Activity"/>
+    </Preference>
+    <Preference
+            android:title="《三江事》杂志 (2).png"
+            android:summary="图片 | 202.77KB | 1404/4/6 10:04"
+            android:key="prefs_key_fools_a_news_2">
+        <intent
+                android:targetPackage="com.sevtinge.cemiuiler"
+                android:targetClass="com.sevtinge.cemiuiler.ui.fools.a.News2Activity"/>
+    </Preference>
+    <Preference
+            android:title="GL3625次车票.tkt"
+            android:summary="行程文件 | 28.35KB | 1404/4/6 19:38"
+            android:key="prefs_key_fools_a_ticket_1">
+        <intent
+                android:targetPackage="com.sevtinge.cemiuiler"
+                android:targetClass="com.sevtinge.cemiuiler.ui.fools.a.Ticket1Activity"/>
+    </Preference>
+    <Preference
+            android:title="《三江早间新闻》.wav"
+            android:summary="音频 | 514.81KB | 1404/4/7 10:10"
+            android:key="prefs_key_fools_a_news_3">
+        <intent
+                android:targetPackage="com.sevtinge.cemiuiler"
+                android:targetClass="com.sevtinge.cemiuiler.ui.fools.a.News3Activity"/>
+    </Preference>
+    <Preference
+            android:title="J23-M-L.txt"
+            android:summary="文本 | 66.25KB | 1404/4/7 11:07"
+            android:key="prefs_key_fools_a_tip_1">
+        <intent
+                android:targetPackage="com.sevtinge.cemiuiler"
+                android:targetClass="com.sevtinge.cemiuiler.ui.fools.a.Tip1Activity"/>
+    </Preference>
+    <Preference
+            android:title="文件加密程序.exe"
+            android:summary="可执行文件 | 3.90KB | 0/0/0 00:01"
+            android:key="prefs_key_fools_a_exe_1">
+        <intent
+                android:targetPackage="com.sevtinge.cemiuiler"
+                android:targetClass="com.sevtinge.cemiuiler.ui.fools.a.Exe1Activity"/>
+    </Preference>
+
+</PreferenceScreen>

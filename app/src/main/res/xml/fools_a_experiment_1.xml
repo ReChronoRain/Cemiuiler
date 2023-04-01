@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+            android:summary="实验名：一种关于逆向思维及定向思维的干涉\n实验序号：75528\n发起者：Dr.Kersum &amp; Lourbel\n操作员：██████\n实验记录：Lourbel 参与了实验... 不过仅此一次，我们也没能见到他的真容。Lourbel 提出向 J23-M 药剂中添加过量的 C18H27NO3 粉末。我们不能理解 Lourbel 为什么会想要加入它，但出于他的身份，我们还是照做了。在加入约 128g 的 C18H27NO3 粉末后，J23-M 药剂逐渐呈暗红色，后自主蒸发，小鼠吸入蒸发的气体后逐渐失去了自主控制能力，变成一副行尸走肉般模样。Lourbel 对这次的实验结果感到很满意，并将该组合药剂命名为 J23-M-L 。Dr.Kersum 对此依然很不解，不过在他看来，能产生预期结果的药剂就是好药剂。"/>
+
+</PreferenceScreen>

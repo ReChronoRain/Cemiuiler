@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+            android:summary="这是一张图片。\n图片疑似为《三江事》的杂志第 1672+1 期的某一页拍摄照片。这一页写着 “铁道部开通三江市至戴秦市列车：《三江事》讯，1404年4月6日，铁道部正式宣布开通三江市至戴秦市列车，这也是唯一一班经停海门站的列车。铁道部发言人■■■■■称，开通该列车将大大提升两地通勤效率，并解决海门市无火车的历史。”。"/>
+
+</PreferenceScreen>

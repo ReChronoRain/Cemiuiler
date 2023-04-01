@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+            android:summary="使用说明：输入正确密钥后重启系统，被加密文件将临时解除加密状态，显示在文件列表中。"/>
+    <EditTextPreference
+            android:title="加密文件"
+            android:summary="输入密码以解除加密"
+            android:key="prefs_key_fools_enable_b"/>
+</PreferenceScreen>

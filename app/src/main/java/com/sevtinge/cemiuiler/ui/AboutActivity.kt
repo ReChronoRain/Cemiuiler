@@ -5,13 +5,14 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.format.Time
 import androidx.fragment.app.Fragment
+import com.sevtinge.cemiuiler.BuildConfig
 import com.sevtinge.cemiuiler.R
 import com.sevtinge.cemiuiler.ui.base.SubFragment
 import moralnorm.appcompat.app.AppCompatActivity
 import moralnorm.internal.utils.ViewUtils
 import moralnorm.preference.Preference
+import moralnorm.preference.PreferenceCategory
 import moralnorm.preference.SwitchPreference
-import com.sevtinge.cemiuiler.BuildConfig
 
 
 class AboutActivity : AppCompatActivity() {
@@ -78,6 +79,10 @@ class AboutActivity : AppCompatActivity() {
             mQQGroup.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 joinQQGroup("MF68KGcOGYEfMvkV_htdyT6D6C13We_r") //&authKey=du488g%2FRPdQ%2FaUq0IKuDLvK24mEmbpRidqHGE6qqv3wpa1lbUa6Vi7JJ4YxWe7s5&noverify=0&group_code=247909573
                 true
+            }
+            if (getSharedPreferences().getBoolean("prefs_key_fools_seen_b", false)) {
+                var mFools = findPreference<PreferenceCategory>("prefs_key_fools_enable")
+                mFools.setVisible(false)
             }
         }
 

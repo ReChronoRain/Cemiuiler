@@ -23,6 +23,10 @@ android {
             isMinifyEnabled = false
             setProguardFiles(listOf(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"))
         }
+        create("special") {
+            isMinifyEnabled = false
+            setProguardFiles(listOf(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"))
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

@@ -101,7 +101,7 @@ public class DialogCustom extends BaseHook {
         });
 
         try {
-            findAndHookMethod(mAlertControllerCls,"updateParentPanelMarginByWindowInsets", WindowInsets.class, new MethodHook() {
+            hookAllMethods(mAlertControllerCls,"updateParentPanelMarginByWindowInsets", new MethodHook() {
                 @Override
                 protected void after(MethodHookParam param) throws Throwable {
                     mParentPanel = (View) XposedHelpers.getObjectField(param.thisObject, "mParentPanel");

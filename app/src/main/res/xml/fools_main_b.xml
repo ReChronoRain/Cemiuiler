@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+>
+    <Preference
+            android:title="J23-M-L.txt"
+            android:summary="文本 | 66.25KB | 1404/4/7 11:07"
+            android:key="prefs_key_fools_b_tip_1">
+        <intent
+                android:targetPackage="com.sevtinge.cemiuiler"
+                android:targetClass="com.sevtinge.cemiuiler.ui.fools.b.Tip1Activity"/>
+    </Preference>
+
+</PreferenceScreen>

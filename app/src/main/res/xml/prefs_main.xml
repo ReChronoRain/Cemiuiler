@@ -1,7 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory>
+    <PreferenceCategory
+            android:key="prefs_key_fools"
+            app:isPreferenceVisible="false">
+
+        <Preference
+                android:title="软盘 (A:)"
+                android:summary="1.02MB / 1.44MB"
+                android:key="prefs_key_fools_a"
+                android:icon="@drawable/ic_fools_a"
+                app:isPreferenceVisible="false">
+            <intent
+                    android:targetPackage="com.sevtinge.cemiuiler"
+                    android:targetClass="com.sevtinge.cemiuiler.ui.FoolsAActivity"/>
+        </Preference>
+
+        <Preference
+                android:title="？？？？ (A:)"
+                android:summary="66.25KB / 1.44MB"
+                android:key="prefs_key_fools_b"
+                android:icon="@drawable/ic_fools_b"
+                app:isPreferenceVisible="false">
+            <intent
+                    android:targetPackage="com.sevtinge.cemiuiler"
+                    android:targetClass="com.sevtinge.cemiuiler.ui.FoolsBActivity"/>
+        </Preference>
+
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+            android:key="prefs_key_module_do"
+            app:isPreferenceVisible="true">
 
         <Preference
                 android:title="@string/joyose"
@@ -312,7 +344,9 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory>
+    <PreferenceCategory
+            android:key="prefs_key_module_settings"
+            app:isPreferenceVisible="true">
 
         <Preference
                 android:title="@string/settings"

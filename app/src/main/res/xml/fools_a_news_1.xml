@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+            android:summary="这是一张图片。\n图片大体为黑色不反光平面上放置有一份名为《三江事》的杂志，为第 1672+1 期。杂志封面为一废墟照片，照片给人一种不安感。杂志摘要写着 “三江市雁湖区一研究所发生爆炸”、“铁道部开通三江市至戴秦市列车”、“三江市多区发生不知名疾病”、“洋视网锐评孔一己文学”。杂志右下角有缺失一角，呈三角形，缺失处边缘十分粗糙似手撕，缺失处边缘有深红色不明块状物。"/>
+
+</PreferenceScreen>

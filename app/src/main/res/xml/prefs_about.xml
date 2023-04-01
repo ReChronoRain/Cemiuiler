@@ -1,10 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:app="http://schemas.android.com/apk/res-auto">
     <SwitchPreference
         android:layout="@layout/activity_about"
         android:key="prefs_key_hidden_function"
         android:summary="@string/xposed_description" />
-
+    <SwitchPreference
+            android:key="prefs_key_fools_seen_b"
+            android:title="已读"
+            android:summary="请在阅读后勾选此选项以销毁文件。"
+            android:defaultValue="false"
+            app:isPreferenceVisible="false"/>
+    <EditTextPreference
+            android:title="加密文件"
+            android:summary="输入密码以解除加密"
+            android:key="prefs_key_fools_enable_b"
+            app:isPreferenceVisible="false"/>
+    <PreferenceCategory
+            android:key="prefs_key_fools_enable"
+            app:isPreferenceVisible="true">
+        <SwitchPreference
+                android:key="prefs_key_fools_enable_a"
+                android:title="启动软盘驱动程序"
+                android:defaultValue="false" />
+    </PreferenceCategory>
     <PreferenceCategory android:title="@string/about_developer_title">
         <Preference
                 android:icon="@drawable/ic_sevtinge"

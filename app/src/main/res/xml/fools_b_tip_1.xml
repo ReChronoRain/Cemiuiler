@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Preference
+            android:summary="我们成功了。\n列车的 13 号车厢像人间蒸发一样消失了，它将前往 FarLand 。\n哈哈哈，我们成功了。\n......\n哦，不，剩下的车厢发生什么了？\n我的身体发生了什么？\n我们必须赶紧逃离这里！\n赶紧......逃离......\n赶紧......\n赶......"/>
+    <SwitchPreference
+            android:key="prefs_key_fools_seen_b"
+            android:title="已读"
+            android:summary="请在阅读后勾选此选项以销毁文件。"
+            android:defaultValue="false"
+    />
+</PreferenceScreen>
