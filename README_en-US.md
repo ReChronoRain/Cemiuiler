@@ -85,7 +85,18 @@ Cemiuiler uses some or all of the content of the following open source projects.
 - [「FixMiuiMediaControlPanel」 by qqlittleice](https://github.com/qqlittleice/FixMiuiMediaControlPanel)
 - [「HideMiuiClipboardDialog」 by zerorooot](https://github.com/zerorooot/HideMiuiClipboardDialog)
 - [「MaxFreeForm」 by YifePlayte](https://github.com/YifePlayte/MaxFreeForm)
-- [「Miui Feature」 by MoralNorm](https://github.com/moralnorm/mi
+- [「Miui Feature」 by MoralNorm](https://github.com/moralnorm/miui_feature)
+- [「MiuiHomeR」 by qqlittleice](https://github.com/qqlittleice/MiuiHome_R)
+- [「MIUIQOL」 by chsbuffer](https://github.com/chsbuffer/MIUIQOL)
+- [「Miui XXL」 by YuKongA](https://github.com/YuKongA/Miui_XXL)
+- [「NoStorageRestrict」 by Xposed-Modules-Repo](https://github.com/Xposed-Modules-Repo/com.github.dan.nostoragerestrict)
+- [「Portal Hook」 by Haocen2004](https://github.com/Haocen2004/PortalHook)
+- [「RemoveMiuiSystemSelfProtection」 by gfbjngjibn](https://github.com/gfbjngjibn/RemoveMiuiSystemSelfProtection)
+- [「SettingsDontThroughTheList」 by weixiansen574](https://github.com/weixiansen574/settingsdontthroughthelist)
+- [「WINI」 by ouhoukyo](https://github.com/ouhoukyo/WINI)
+- [「Woobox For MIUI」 by Simplicity-Team](https://github.com/Simplicity-Team/WooBoxForMIUI)
+- [「Woobox For MIUI」 by hosizoraru](https://github.com/hosizoraru/WooBoxForMIUI)
+- [「XposedBridge」 by rovo89](https://github.com/rovo89/XposedBridge)
 
 [qgroup_url]: https://jq.qq.com/?_wv=1027&k=TedCJq8V
 [badge_qgroup]: https://img.shields.io/badge/QQ-group-4DB8FF?style=for-the-badge&logo=tencentqq
