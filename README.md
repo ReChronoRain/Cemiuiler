@@ -108,5 +108,5 @@
 
 
 ## Star历史
-**觉得本模块不错的话点一个start谢谢喵~**
+**觉得本模块不错的话点一个Star谢谢喵~**
 [![Star History Chart](https://api.star-history.com/svg?repos=Sevtinge/Cemiuiler&type=Date)](https://star-history.com/#Sevtinge/Cemiuiler&Date)
