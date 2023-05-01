@@ -184,6 +184,9 @@
     <string name="disable_app_settings">這是一個壞主意！</string>
     <string name="disable_app_text">如果這是一個必要的系統應用程式，將其停用可能會導致裝置損毀</string>
     <string name="disable_app_title">確定要停用該應用程式嗎？</string>
+    <string name="file_explorer_can_selectable">資料夾名稱可以選擇操作</string>
+    <string name="file_explorer_is_single_line">資料夾名稱以單行顯示</string>
+    <string name="fileexplorer">檔案管理</string>
     <string name="floating_window">小窗</string>
     <string name="gallery">相簿</string>
     <string name="gallery_enable_hdr_enhanced">解鎖超動態顯示</string>
