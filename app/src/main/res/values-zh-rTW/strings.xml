@@ -632,7 +632,7 @@
     <string name="system_framework_freeform_bubble">小窗氣泡</string>
     <string name="system_framework_freeform_count">多小窗</string>
     <string name="system_framework_freeform_recents_to_small_freeform">將所有小窗轉為迷你小窗</string>
-    <string name="system_framework_freeform_recents_to_small_freeform_desc">在最近任務中將所有小窗轉為迷你小窗顯示n此功能為實驗性功能，具有較高不穩定性</string>
+    <string name="system_framework_freeform_recents_to_small_freeform_desc">在最近任務中將所有小窗轉為迷你小窗顯示\n此功能為實驗性功能，具有較高不穩定性</string>
     <string name="system_framework_freeform_sticky">記住狀態</string>
     <string name="system_framework_freeform_title">小窗</string>
     <string name="system_framework_open_with_menu_test">打開方式選單測試</string>
