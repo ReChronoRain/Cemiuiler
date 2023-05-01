@@ -349,7 +349,7 @@
     <string name="home_recent_none_blur">無模糊</string>
     <string name="home_recent_none_blur_simple_anim">無模糊（精簡動畫）</string>
     <string name="home_recent_remove_icon">隱藏圖示</string>
-    <string name="home_recent_show_real_memory">顯示真實運行記憶體/string>
+    <string name="home_recent_show_real_memory">顯示真實運行記憶體</string>
     <string name="home_recent_simple_blur">簡單模糊</string>
     <string name="home_recent_task_view_card_rounded_corners">卡片圓角大小</string>
     <string name="home_recent_test_blur">測試模糊</string>
