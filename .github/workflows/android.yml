@@ -31,9 +31,10 @@ jobs:
             !~/.gradle/caches/build-cache-*
           key: gradle-deps-core-${{ hashFiles('**/*.gradle*') }}
           restore-keys: gradle-deps
-      - name: Build with Gradle and align apk file
+      - name: Build with Gradle
+        run: ./gradlew assembleRelease assembleDebug
+      - name: Align apk file
         run: |
-          ./gradlew assembleRelease assembleDebug
           mkdir -vp ${{ github.workspace }}/unsigned-apk
           zipalign -v -p 4 "$(find app/build/outputs/apk/release -name '*.apk')"  ${{ github.workspace }}/unsigned-apk/unsigned-app-release.apk
           zipalign -v -p 4 "$(find app/build/outputs/apk/debug -name '*.apk')" ${{ github.workspace }}/unsigned-apk/unsigned-app-debug.apk
