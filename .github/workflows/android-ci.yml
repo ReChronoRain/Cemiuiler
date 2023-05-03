@@ -36,7 +36,7 @@ jobs:
       - name: Fix bug
         shell: bash
         run: |
-          [[ -f ${{ github.workspace }}/app/libs/Stub-debug.aar ]] && mv -f ${{ github.workspace }}/app/libs/Stub-debug.aar ${{ github.workspace }}/app/libs/stub-debug.aar
+          [[ -f ${{ github.workspace }}/app/libs/Stub-debug.aar ]] && mv -vf ${{ github.workspace }}/app/libs/Stub-debug.aar ${{ github.workspace }}/app/libs/stub-debug.aar
       - name: Build with Gradle
         run: ./gradlew assembleRelease assembleDebug
       - name: Align apk file
