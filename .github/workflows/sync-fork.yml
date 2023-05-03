@@ -33,6 +33,6 @@ jobs:
           cd ${GIT_CLONE}/fork
           if [[ -n "$(git diff)" ]]; then
             git add . -f
-            git commit -a -m "同步上游"
+            git commit -a -m "同步上游更新"
             git push origin main -f
           fi
