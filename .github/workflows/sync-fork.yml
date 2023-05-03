@@ -29,7 +29,7 @@ jobs:
           git clone https://github.com/Sevtinge/Cemiuiler.git ${GIT_CLONE}/main -b main --depth=1
           git clone https://"${GITHUB_USER}":"${GITHUB_TOKEN}"@github.com/chase535/Cemiuiler.git ${GIT_CLONE}/fork -b main --depth=1
           rm -rvf ${GIT_CLONE}/main/.git ${GIT_CLONE}/main/.github/workflows
-          git cp -avf ${GIT_CLONE}/main/* ${GIT_CLONE}/fork
+          cp -avf ${GIT_CLONE}/main/. ${GIT_CLONE}/fork
           cd ${GIT_CLONE}/fork
           if [[ -n "$(git diff)" ]]; then
             git add . -f
