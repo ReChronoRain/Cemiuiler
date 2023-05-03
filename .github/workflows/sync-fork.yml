@@ -27,7 +27,7 @@ jobs:
           git config --global user.email "${GITHUB_EMAIL}"
           mkdir -vp ${GIT_CLONE}/{main,fork}
           git clone https://github.com/Sevtinge/Cemiuiler.git ${GIT_CLONE}/main -b main --depth=1
-          git clone https://"${GITHUB_USER}":"${GITHUB_TOKEN}"@github.com/chase535/Cemiuiler.git ${GIT_CLONE}/fork -b main --depth=1
+          git clone https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/chase535/Cemiuiler.git ${GIT_CLONE}/fork -b main --depth=1
           rm -rvf ${GIT_CLONE}/main/.git ${GIT_CLONE}/main/.github/workflows
           cp -avf ${GIT_CLONE}/main/. ${GIT_CLONE}/fork
           cd ${GIT_CLONE}/fork
