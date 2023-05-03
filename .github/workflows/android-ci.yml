@@ -44,7 +44,7 @@ jobs:
       - name: Check key variables
         shell: bash
         run: |
-          if [[ -n "${{ secrets.JKS_FILE_BASE64_ENCODE }}" && -n "${{ secrets.KEY_STORE_PASSWORD }}" && -n "${{ secrets.ALIAS }}" && -n "${{ secrets.KEY_PASSWORD }}" ]]; then
+          if [[ -n "${{ secrets.JKS_FILE_BASE64_ENCODE }}" && -n "${{ secrets.KEY_STORE_PASSWORD }}" && -n "${{ secrets.KEY_ALIAS }}" && -n "${{ secrets.KEY_PASSWORD }}" ]]; then
             echo "All variables exist, start sign apk."
             echo "key_variables_check=success" >> ${GITHUB_ENV}
           else
@@ -57,9 +57,9 @@ jobs:
           echo "${{ secrets.JKS_FILE_BASE64_ENCODE }}" | base64 -d > ${{ github.workspace }}/key.jks
           mkdir -vp ${{ github.workspace }}/signed-apk
           echo "Sign release apk"
-          apksigner sign -verbose --ks ${{ github.workspace }}/key.jks --ks-key-alias ${{ secrets.ALIAS }} --ks-pass pass:${{ secrets.KEY_STORE_PASSWORD }} --key-pass pass:${{ secrets.KEY_PASSWORD }} --out ${{ github.workspace }}/signed-apk/app-release.apk ${{ github.workspace }}/unsigned-apk/unsigned-app-release.apk
+          apksigner sign -verbose --ks ${{ github.workspace }}/key.jks --ks-key-alias ${{ secrets.KEY_ALIAS }} --ks-pass pass:${{ secrets.KEY_STORE_PASSWORD }} --key-pass pass:${{ secrets.KEY_PASSWORD }} --out ${{ github.workspace }}/signed-apk/app-release.apk ${{ github.workspace }}/unsigned-apk/unsigned-app-release.apk
           echo "Sign debug apk"
-          apksigner sign -verbose --ks ${{ github.workspace }}/key.jks --ks-key-alias ${{ secrets.ALIAS }} --ks-pass pass:${{ secrets.KEY_STORE_PASSWORD }} --key-pass pass:${{ secrets.KEY_PASSWORD }} --out ${{ github.workspace }}/signed-apk/app-debug.apk ${{ github.workspace }}/unsigned-apk/unsigned-app-debug.apk
+          apksigner sign -verbose --ks ${{ github.workspace }}/key.jks --ks-key-alias ${{ secrets.KEY_ALIAS }} --ks-pass pass:${{ secrets.KEY_STORE_PASSWORD }} --key-pass pass:${{ secrets.KEY_PASSWORD }} --out ${{ github.workspace }}/signed-apk/app-debug.apk ${{ github.workspace }}/unsigned-apk/unsigned-app-debug.apk
       - name: Upload unsigned release apk
         if: ${{ (env.key_variables_check == 'failure' || failure()) && env.gradle_build_success == 'true' }}
         uses: actions/upload-artifact@v3
