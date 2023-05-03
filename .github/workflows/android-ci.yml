@@ -1,0 +1,86 @@
+name: Android CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    name: Android CI
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y zipalign apksigner
+      - name: Setup JDK17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          java-package: 'jdk'
+          distribution: 'adopt'
+          cache: 'gradle'
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            !~/.gradle/caches/build-cache-*
+          key: gradle-deps-core-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: gradle-deps
+      - name: Build with Gradle
+        run: ./gradlew assembleRelease assembleDebug
+      - name: Align apk file
+        run: |
+          mkdir -vp ${{ github.workspace }}/unsigned-apk
+          zipalign -v -p 4 "$(find app/build/outputs/apk/release -name '*.apk')"  ${{ github.workspace }}/unsigned-apk/unsigned-app-release.apk
+          zipalign -v -p 4 "$(find app/build/outputs/apk/debug -name '*.apk')" ${{ github.workspace }}/unsigned-apk/unsigned-app-debug.apk
+          echo "gradle_build_success=true" >> ${GITHUB_ENV}
+      - name: Check key variables
+        shell: bash
+        run: |
+          if [[ -n "${{ secrets.JKS_FILE_BASE64_ENCODE }}" && -n "${{ secrets.KEY_STORE_PASSWORD }}" && -n "${{ secrets.ALIAS }}" && -n "${{ secrets.KEY_PASSWORD }}" ]]; then
+            echo "All variables exist, start sign apk."
+            echo "key_variables_check=success" >> ${GITHUB_ENV}
+          else
+            echo "At least one variable does not exist, skip sign apk."
+            echo "key_variables_check=failure" >> ${GITHUB_ENV}
+          fi
+      - name: Sign apk
+        if: ${{ env.key_variables_check == 'success' }}
+        run: |
+          echo "${{ secrets.JKS_FILE_BASE64_ENCODE }}" | base64 -d > ${{ github.workspace }}/key.jks
+          mkdir -vp ${{ github.workspace }}/signed-apk
+          echo "Sign release apk"
+          apksigner sign -verbose --ks ${{ github.workspace }}/key.jks --ks-key-alias ${{ secrets.ALIAS }} --ks-pass pass:${{ secrets.KEY_STORE_PASSWORD }} --key-pass pass:${{ secrets.KEY_PASSWORD }} --out ${{ github.workspace }}/signed-apk/app-release.apk ${{ github.workspace }}/unsigned-apk/unsigned-app-release.apk
+          echo "Sign debug apk"
+          apksigner sign -verbose --ks ${{ github.workspace }}/key.jks --ks-key-alias ${{ secrets.ALIAS }} --ks-pass pass:${{ secrets.KEY_STORE_PASSWORD }} --key-pass pass:${{ secrets.KEY_PASSWORD }} --out ${{ github.workspace }}/signed-apk/app-debug.apk ${{ github.workspace }}/unsigned-apk/unsigned-app-debug.apk
+      - name: Upload unsigned release apk
+        if: ${{ (env.key_variables_check == 'failure' || failure()) && env.gradle_build_success == 'true' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: unsigned-app-release
+          path: ${{ github.workspace }}/unsigned-apk/unsigned-app-release.apk
+      - name: Upload unsigned debug apk
+        if: ${{ (env.key_variables_check == 'failure' || failure()) && env.gradle_build_success == 'true' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: unsigned-app-debug
+          path: ${{ github.workspace }}/unsigned-apk/unsigned-app-debug.apk
+      - name: Upload signed release apk
+        if: ${{ env.key_variables_check == 'success' && success() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-release
+          path: ${{ github.workspace }}/signed-apk/app-release.apk
+      - name: Upload signed debug apk
+        if: ${{ env.key_variables_check == 'success' && success() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-debug
+          path: ${{ github.workspace }}/signed-apk/app-debug.apk
