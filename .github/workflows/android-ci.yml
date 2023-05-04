@@ -42,8 +42,10 @@ jobs:
       - name: Align apk file
         run: |
           mkdir -vp ${{ github.workspace }}/unsigned-apk
-          zipalign -v -p 4 "$(find app/build/outputs/apk/release -name '*.apk')"  ${{ github.workspace }}/unsigned-apk/unsigned-app-release.apk
-          zipalign -v -p 4 "$(find app/build/outputs/apk/debug -name '*.apk')" ${{ github.workspace }}/unsigned-apk/unsigned-app-debug.apk
+          zipalign -v -z -p 4 "$(find ${{ github.workspace }}/app/build/outputs/apk/release -name '*.apk')"  ${{ github.workspace }}/unsigned-apk/unsigned-app-release.apk
+          zipalign -v -z -p 4 "$(find ${{ github.workspace }}/app/build/outputs/apk/beta -name '*.apk')" ${{ github.workspace }}/unsigned-apk/unsigned-app-beta.apk
+          zipalign -v -z -p 4 "$(find ${{ github.workspace }}/app/build/outputs/apk/canary -name '*.apk')" ${{ github.workspace }}/unsigned-apk/unsigned-app-canary.apk
+          zipalign -v -z -p 4 "$(find ${{ github.workspace }}/app/build/outputs/apk/debug -name '*.apk')" ${{ github.workspace }}/unsigned-apk/unsigned-app-debug.apk
           echo "gradle_build_success=true" >> ${GITHUB_ENV}
       - name: Check key variables
         shell: bash
@@ -61,9 +63,10 @@ jobs:
           echo "${JKS_FILE_BASE64_ENCODE}" | base64 -d > ${{ github.workspace }}/key.jks
           mkdir -vp ${{ github.workspace }}/signed-apk
           echo "Sign release apk"
-          apksigner sign -verbose --ks ${{ github.workspace }}/key.jks --ks-key-alias ${KEY_ALIAS} --ks-pass pass:${KEY_STORE_PASSWORD} --key-pass pass:${KEY_PASSWORD} --out ${{ github.workspace }}/signed-apk/app-release.apk ${{ github.workspace }}/unsigned-apk/unsigned-app-release.apk
-          echo "Sign debug apk"
-          apksigner sign -verbose --ks ${{ github.workspace }}/key.jks --ks-key-alias ${KEY_ALIAS} --ks-pass pass:${KEY_STORE_PASSWORD} --key-pass pass:${KEY_PASSWORD} --out ${{ github.workspace }}/signed-apk/app-debug.apk ${{ github.workspace }}/unsigned-apk/unsigned-app-debug.apk
+          for version in release beta canary debug; do
+            echo "Sign ${version} apk"
+            apksigner sign -verbose --ks ${{ github.workspace }}/key.jks --ks-key-alias ${KEY_ALIAS} --ks-pass pass:${KEY_STORE_PASSWORD} --key-pass pass:${KEY_PASSWORD} --out ${{ github.workspace }}/signed-apk/app-${version}.apk ${{ github.workspace }}/unsigned-apk/unsigned-app-${version}.apk
+          done
       - name: Upload unsigned release apk
         if: ${{ (env.key_variables_check == 'failure' || failure()) && env.gradle_build_success == 'true' }}
         uses: actions/upload-artifact@v3
