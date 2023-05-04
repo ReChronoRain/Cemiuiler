@@ -22,46 +22,47 @@ public class OpenAppInFreeForm extends BaseHook {
 
     @Override
     public void init() {
-        mActivityStarter = findClassIfExists("com.android.server.wm.ActivityStarter");
-        mActivityTaskManagerService = findClassIfExists("com.android.server.wm.ActivityTaskManagerService");
+        if (mPrefsMap.getBoolean("system_framework_freeform_jump")) {
+            mActivityStarter = findClassIfExists("com.android.server.wm.ActivityStarter");
+            mActivityTaskManagerService = findClassIfExists("com.android.server.wm.ActivityTaskManagerService");
 
 
-        findAndHookMethod(mActivityTaskManagerService, "onSystemReady", new MethodHook() {
-            @Override
-            protected void after(MethodHookParam param) throws Throwable {
-                Context mContext = (Context) XposedHelpers.getObjectField(param.thisObject, "mContext");
-                IntentFilter intentFilter = new IntentFilter();
-                intentFilter.addAction(ACTION_PREFIX + "SetFreeFormPackage");
-                BroadcastReceiver mReceiver = new BroadcastReceiver() {
-                    @Override
-                    public void onReceive(Context context, Intent intent) {
-                        String action = intent.getAction();
-                        if (action == null) return;
+            findAndHookMethod(mActivityTaskManagerService, "onSystemReady", new MethodHook() {
+                @Override
+                protected void after(MethodHookParam param) throws Throwable {
+                    Context mContext = (Context) XposedHelpers.getObjectField(param.thisObject, "mContext");
+                    IntentFilter intentFilter = new IntentFilter();
+                    intentFilter.addAction(ACTION_PREFIX + "SetFreeFormPackage");
+                    BroadcastReceiver mReceiver = new BroadcastReceiver() {
+                        @Override
+                        public void onReceive(Context context, Intent intent) {
+                            String action = intent.getAction();
+                            if (action == null) return;
 
-                        if (action.equals(ACTION_PREFIX + "SetFreeFormPackage")) {
-                            String pkg = intent.getStringExtra("package");
-                            XposedHelpers.setAdditionalStaticField(MiuiFreeFormManager.class, "nextFreeformPackage", pkg);
+                            if (action.equals(ACTION_PREFIX + "SetFreeFormPackage")) {
+                                String pkg = intent.getStringExtra("package");
+                                XposedHelpers.setAdditionalStaticField(MiuiFreeFormManager.class, "nextFreeformPackage", pkg);
+                            }
+                        }
+                    };
+                    mContext.registerReceiver(mReceiver, intentFilter);
+                }
+            });
+
+            hookAllMethods(mActivityStarter, "executeRequest", new MethodHook() {
+                @Override
+                protected void before(MethodHookParam param) throws Throwable {
+                    Object request = param.args[0];
+                    Intent intent = (Intent) XposedHelpers.getObjectField(request, "intent");
+                    Object safeOptions = XposedHelpers.getObjectField(request, "activityOptions");
+                    if (safeOptions != null) {
+                        ActivityOptions ao = (ActivityOptions) XposedHelpers.getObjectField(safeOptions, "mOriginalOptions");
+                        if (ao != null && XposedHelpers.getIntField(ao, "mLaunchWindowingMode") == 5) {
+                            return;
                         }
                     }
-                };
-                mContext.registerReceiver(mReceiver, intentFilter);
-            }
-        });
-
-        hookAllMethods(mActivityStarter, "executeRequest", new MethodHook() {
-            @Override
-            protected void before(MethodHookParam param) throws Throwable {
-                Object request = param.args[0];
-                Intent intent = (Intent) XposedHelpers.getObjectField(request, "intent");
-                Object safeOptions = XposedHelpers.getObjectField(request, "activityOptions");
-                if (safeOptions != null) {
-                    ActivityOptions ao = (ActivityOptions) XposedHelpers.getObjectField(safeOptions, "mOriginalOptions");
-                    if (ao != null && XposedHelpers.getIntField(ao, "mLaunchWindowingMode") == 5) {
-                        return;
-                    }
-                }
-                String callingPackage = (String) XposedHelpers.getObjectField(request, "callingPackage");
-                boolean openInFw = shouldOpenInFreeForm(intent, callingPackage);
+                    String callingPackage = (String) XposedHelpers.getObjectField(request, "callingPackage");
+                    boolean openInFw = shouldOpenInFreeForm(intent, callingPackage);
 
 //                Bundle ao = safeOptions != null ? (Bundle) XposedHelpers.callMethod(safeOptions, "getActivityOptionsBundle") : null;
 //                String reason = (String) XposedHelpers.getObjectField(request, "reason");
@@ -73,13 +74,14 @@ public class OpenAppInFreeForm extends BaseHook {
 //                    + " intentExtra| " + Helpers.stringifyBundle(intent.getExtras())
 //                );
 
-                if (openInFw) {
-                    Context mContext = (Context) XposedHelpers.getObjectField(XposedHelpers.getObjectField(param.thisObject, "mService"), "mContext");
-                    ActivityOptions options = MiuiMultiWindowUtils.getActivityOptions(mContext, intent.getComponent().getPackageName(), true, false);
-                    XposedHelpers.callMethod(param.thisObject, "setActivityOptions", options.toBundle());
+                    if (openInFw) {
+                        Context mContext = (Context) XposedHelpers.getObjectField(XposedHelpers.getObjectField(param.thisObject, "mService"), "mContext");
+                        ActivityOptions options = MiuiMultiWindowUtils.getActivityOptions(mContext, intent.getComponent().getPackageName(), true, false);
+                        XposedHelpers.callMethod(param.thisObject, "setActivityOptions", options.toBundle());
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     private boolean shouldOpenInFreeForm(Intent intent, String callingPackage) {
@@ -91,7 +93,7 @@ public class OpenAppInFreeForm extends BaseHook {
         String pkgName = intent.getComponent().getPackageName();
         if (fwBlackList.contains(pkgName)) return false;
         boolean openInFw = false;
-        final boolean openFwWhenShare = mPrefsMap.getBoolean("framework_freeform_app_share");
+        final boolean openFwWhenShare = mPrefsMap.getBoolean("system_framework_freeform_app_share");
         if (openFwWhenShare) {
             /*if (mPrefsMap.getStringSet("system_fw_forcein_actionsend_apps").contains(pkgName)) return false;*/
             if ("com.miui.packageinstaller".equals(pkgName) && intent.getComponent().getClassName().contains("com.miui.packageInstaller.NewPackageInstallerActivity")) {
