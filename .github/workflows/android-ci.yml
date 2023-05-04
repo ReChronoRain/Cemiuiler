@@ -31,15 +31,6 @@ jobs:
           java-package: 'jdk'
           distribution: 'adopt'
           cache: 'gradle'
-      - name: Cache Gradle dependencies
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-            !~/.gradle/caches/build-cache-*
-          key: gradle-deps-core-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: gradle-deps
       - name: Fix bug
         shell: bash
         run: |
