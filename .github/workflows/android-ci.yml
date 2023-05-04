@@ -2,7 +2,7 @@ name: Android CI
 
 on:
   push:
-    branches: [ "matrix" ]
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
   workflow_dispatch:
@@ -15,7 +15,7 @@ env:
 
 jobs:
   build:
-    name: build ${{ matrix.apk_version }} version apk
+    name: Build Cemiuiler ${{ matrix.apk_version }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -46,7 +46,7 @@ jobs:
       - name: Align apk file
         run: |
           mkdir -vp ${{ github.workspace }}/unsigned-apk
-          zipalign -v -p 4 "$(find ${{ github.workspace }}/app/build/outputs/apk -name '*.apk')"  ${{ github.workspace }}/unsigned-apk/unsigned-app-${{ matrix.apk_version }}.apk
+          zipalign -v -p 4 "$(find ${{ github.workspace }}/app/build/outputs/apk -name '*.apk')"  ${{ github.workspace }}/unsigned-apk/Unsigned-Cemiuiler-${{ matrix.apk_version }}.apk
           echo "gradle_build_success=true" >> ${GITHUB_ENV}
       - name: Check key variables
         shell: bash
@@ -63,17 +63,16 @@ jobs:
         run: |
           echo "${JKS_FILE_BASE64_ENCODE}" | base64 -d > ${{ github.workspace }}/key.jks
           mkdir -vp ${{ github.workspace }}/signed-apk
-          echo "Sign release apk"
-          apksigner sign -verbose --ks ${{ github.workspace }}/key.jks --ks-key-alias ${KEY_ALIAS} --ks-pass pass:${KEY_STORE_PASSWORD} --key-pass pass:${KEY_PASSWORD} --out ${{ github.workspace }}/signed-apk/app-${{ matrix.apk_version }}.apk ${{ github.workspace }}/unsigned-apk/unsigned-app-${{ matrix.apk_version }}.apk
-      - name: Upload unsigned ${{ matrix.apk_version }} version apk
+          apksigner sign -verbose --ks ${{ github.workspace }}/key.jks --ks-key-alias ${KEY_ALIAS} --ks-pass pass:${KEY_STORE_PASSWORD} --key-pass pass:${KEY_PASSWORD} --out ${{ github.workspace }}/signed-apk/Cemiuiler-${{ matrix.apk_version }}.apk ${{ github.workspace }}/unsigned-apk/Unsigned-Cemiuiler-${{ matrix.apk_version }}.apk
+      - name: Upload unsigned ${{ matrix.apk_version }} APK
         if: ${{ (env.key_variables_check == 'failure' || failure()) && env.gradle_build_success == 'true' }}
         uses: actions/upload-artifact@v3
         with:
-          name: unsigned-app-${{ matrix.apk_version }}
-          path: ${{ github.workspace }}/unsigned-apk/unsigned-app-${{ matrix.apk_version }}.apk
-      - name: Upload signed ${{ matrix.apk_version }} apk
+          name: Unsigned-Cemiuiler-${{ matrix.apk_version }}
+          path: ${{ github.workspace }}/unsigned-apk/Unsigned-Cemiuiler-${{ matrix.apk_version }}.apk
+      - name: Upload signed ${{ matrix.apk_version }} APK
         if: ${{ env.key_variables_check == 'success' && success() }}
         uses: actions/upload-artifact@v3
         with:
-          name: app-${{ matrix.apk_version }}
-          path: ${{ github.workspace }}/signed-apk/app-${{ matrix.apk_version }}.apk
+          name: Cemiuiler-${{ matrix.apk_version }}
+          path: ${{ github.workspace }}/signed-apk/Cemiuiler-${{ matrix.apk_version }}.apk
