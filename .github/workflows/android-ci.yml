@@ -15,8 +15,12 @@ env:
 
 jobs:
   build:
-    name: Android CI
+    name: build ${{ matrix.apk_version }} version apk
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        apk_version: [Release, Beta, Canary, Debug]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -37,15 +41,12 @@ jobs:
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: assemble
+          arguments: assemble${{ matrix.apk_version }}
           cache-read-only: false
       - name: Align apk file
         run: |
           mkdir -vp ${{ github.workspace }}/unsigned-apk
-          zipalign -v -z -p 4 "$(find ${{ github.workspace }}/app/build/outputs/apk/release -name '*.apk')"  ${{ github.workspace }}/unsigned-apk/unsigned-app-release.apk
-          zipalign -v -z -p 4 "$(find ${{ github.workspace }}/app/build/outputs/apk/beta -name '*.apk')" ${{ github.workspace }}/unsigned-apk/unsigned-app-beta.apk
-          zipalign -v -z -p 4 "$(find ${{ github.workspace }}/app/build/outputs/apk/canary -name '*.apk')" ${{ github.workspace }}/unsigned-apk/unsigned-app-canary.apk
-          zipalign -v -z -p 4 "$(find ${{ github.workspace }}/app/build/outputs/apk/debug -name '*.apk')" ${{ github.workspace }}/unsigned-apk/unsigned-app-debug.apk
+          zipalign -v -p 4 "$(find ${{ github.workspace }}/app/build/outputs/apk -name '*.apk')"  ${{ github.workspace }}/unsigned-apk/unsigned-app-${{ matrix.apk_version }}.apk
           echo "gradle_build_success=true" >> ${GITHUB_ENV}
       - name: Check key variables
         shell: bash
@@ -63,31 +64,16 @@ jobs:
           echo "${JKS_FILE_BASE64_ENCODE}" | base64 -d > ${{ github.workspace }}/key.jks
           mkdir -vp ${{ github.workspace }}/signed-apk
           echo "Sign release apk"
-          for version in release beta canary debug; do
-            echo "Sign ${version} apk"
-            apksigner sign -verbose --ks ${{ github.workspace }}/key.jks --ks-key-alias ${KEY_ALIAS} --ks-pass pass:${KEY_STORE_PASSWORD} --key-pass pass:${KEY_PASSWORD} --out ${{ github.workspace }}/signed-apk/app-${version}.apk ${{ github.workspace }}/unsigned-apk/unsigned-app-${version}.apk
-          done
-      - name: Upload unsigned release apk
+          apksigner sign -verbose --ks ${{ github.workspace }}/key.jks --ks-key-alias ${KEY_ALIAS} --ks-pass pass:${KEY_STORE_PASSWORD} --key-pass pass:${KEY_PASSWORD} --out ${{ github.workspace }}/signed-apk/app-${{ matrix.apk_version }}.apk ${{ github.workspace }}/unsigned-apk/unsigned-app-${{ matrix.apk_version }}.apk
+      - name: Upload unsigned ${{ matrix.apk_version }} version apk
         if: ${{ (env.key_variables_check == 'failure' || failure()) && env.gradle_build_success == 'true' }}
         uses: actions/upload-artifact@v3
         with:
-          name: unsigned-app-release
-          path: ${{ github.workspace }}/unsigned-apk/unsigned-app-release.apk
-      - name: Upload unsigned debug apk
-        if: ${{ (env.key_variables_check == 'failure' || failure()) && env.gradle_build_success == 'true' }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: unsigned-app-debug
-          path: ${{ github.workspace }}/unsigned-apk/unsigned-app-debug.apk
-      - name: Upload signed release apk
+          name: unsigned-app-${{ matrix.apk_version }}
+          path: ${{ github.workspace }}/unsigned-apk/unsigned-app-${{ matrix.apk_version }}.apk
+      - name: Upload signed ${{ matrix.apk_version }} apk
         if: ${{ env.key_variables_check == 'success' && success() }}
         uses: actions/upload-artifact@v3
         with:
-          name: app-release
-          path: ${{ github.workspace }}/signed-apk/app-release.apk
-      - name: Upload signed debug apk
-        if: ${{ env.key_variables_check == 'success' && success() }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: app-debug
-          path: ${{ github.workspace }}/signed-apk/app-debug.apk
+          name: app-${{ matrix.apk_version }}
+          path: ${{ github.workspace }}/signed-apk/app-${{ matrix.apk_version }}.apk
