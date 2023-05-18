@@ -21,14 +21,12 @@ public class Various extends BaseModule {
         isMiuiApps = mPackageName.startsWith("com.miui") || mPackageName.startsWith("com.xiaomi") || miuiDialogCustomApps.contains(mPackageName);
 
 
-
         initHook(new MiuiAppNoOverScroll(), isMiuiOverScrollApps());
         initHook(new DialogCustom(), isMiuiDialogCustom());
 
         initHook(new CollapseMiuiTitle(), isCollapseMiuiTitleApps());
 
         initHook(UnlockIme.INSTANCE, mPrefsMap.getBoolean("various_unlock_ime"));
-
 
     }
 
