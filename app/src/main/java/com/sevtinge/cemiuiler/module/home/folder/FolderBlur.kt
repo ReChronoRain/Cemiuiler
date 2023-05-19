@@ -27,13 +27,13 @@ object FolderBlur : BaseHook() {
                     "home_recent_blur_level", 0
                 ) == 4 || !mPrefsMap.getBoolean("home_folder_blur")
             ) {
-                if (isAlpha()) {
+                if (isAlpha() || checkVersionCode() >= 439096421) {
                     "com.miui.home.launcher.common.BlurUtils".hookBeforeMethod("isUserBlurWhenOpenFolder") {
                         it.result = false
                     }
                 }
             } else {
-                if (isAlpha()) {
+                if (isAlpha() || checkVersionCode() >= 439096421) {
                     "com.miui.home.launcher.common.BlurUtils".hookBeforeMethod("isUserBlurWhenOpenFolder") {
                         it.result = true
                     }
