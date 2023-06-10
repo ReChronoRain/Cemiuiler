@@ -29,7 +29,8 @@
 
         <MultiSelectListPreference
             android:title="@string/settings_reboot"
-            android:key="prefs_key_settings_reboot" />
+            android:key="prefs_key_settings_reboot"
+            app:isPreferenceVisible="false" />
 
         <SwitchPreference
             android:title="@string/disable_detailed_log"
@@ -60,13 +61,8 @@
         <Preference
             android:title="@string/settings_safe_mode"
             android:key="prefs_key_safe_mode"
-            android:summary="@string/settings_safe_mode_desc">
-
-            <intent
-                android:targetPackage="com.sevtinge.cemiuiler"
-                android:targetClass="com.sevtinge.cemiuiler.ui.settings.SafeModeActivity" />
-
-        </Preference>
+            android:summary="@string/settings_safe_mode_desc"
+            android:fragment="com.sevtinge.cemiuiler.ui.fragment.settings.SafeModeSettings"/>
 
     </PreferenceCategory>
 
