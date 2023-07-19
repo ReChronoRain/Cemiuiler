@@ -12,9 +12,6 @@ public class WorkspacePadding extends BaseHook {
     Context mContext;
     Class<?> mDeviceConfig;
 
-    static int mHomeVersionCode;
-    final static int NEW_HOME_WORKSPACE_PADDING_TOP_VERSION = 439096586;
-
     @Override
     public void init() {
 
@@ -38,14 +35,15 @@ public class WorkspacePadding extends BaseHook {
         }
 
         if (mPrefsMap.getBoolean("home_layout_workspace_padding_top_enable")) {
-            if (mHomeVersionCode >= NEW_HOME_WORKSPACE_PADDING_TOP_VERSION) {
+            try {
+                // 新版本桌面，先标记，后续再做进一步修改
                 findAndHookMethod(mDeviceConfig, "getWorkspaceCellPaddingTop", Context.class, new MethodHook() {
                     @Override
                     protected void before(MethodHookParam param) {
                         param.setResult(DisplayUtils.dip2px(mContext, mPrefsMap.getInt("home_layout_workspace_padding_top", 0)));
                     }
                 });
-            } else {
+            } catch (Throwable t) {
                 findAndHookMethod(mDeviceConfig, "getWorkspaceCellPaddingTop", new MethodHook() {
                     @Override
                     protected void before(MethodHookParam param) {
