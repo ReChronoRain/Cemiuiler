@@ -1,7 +1,17 @@
 package com.sevtinge.cemiuiler.module;
 
 import com.sevtinge.cemiuiler.module.base.BaseModule;
-import com.sevtinge.cemiuiler.module.gallery.*;
+import com.sevtinge.cemiuiler.module.gallery.EnableHdrEnhance;
+import com.sevtinge.cemiuiler.module.gallery.EnableIdPhoto;
+import com.sevtinge.cemiuiler.module.gallery.EnableMagicSky;
+import com.sevtinge.cemiuiler.module.gallery.EnableOcr;
+import com.sevtinge.cemiuiler.module.gallery.EnableOcrForm;
+import com.sevtinge.cemiuiler.module.gallery.EnablePdf;
+import com.sevtinge.cemiuiler.module.gallery.EnablePhotoMovie;
+import com.sevtinge.cemiuiler.module.gallery.EnableRemover2;
+import com.sevtinge.cemiuiler.module.gallery.EnableTextYanhua;
+import com.sevtinge.cemiuiler.module.gallery.EnableVideoPost;
+import com.sevtinge.cemiuiler.module.gallery.UnlockSuperClipboard;
 
 public class Gallery extends BaseModule {
 
@@ -19,6 +29,7 @@ public class Gallery extends BaseModule {
         initHook(new EnableVideoPost(), mPrefsMap.getBoolean("gallery_enable_video_editor"));
         initHook(new EnableOcr(), mPrefsMap.getBoolean("gallery_enable_ocr"));
         initHook(new EnableOcrForm(), mPrefsMap.getBoolean("gallery_enable_ocr_form"));
+        initHook(new UnlockSuperClipboard(), mPrefsMap.getBoolean("gallery_unlock_super_clipboard"));
     }
 }
 

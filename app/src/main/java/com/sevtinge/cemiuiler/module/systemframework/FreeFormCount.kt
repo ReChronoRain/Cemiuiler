@@ -1,22 +1,30 @@
 package com.sevtinge.cemiuiler.module.systemframework
 
-import com.github.kyuubiran.ezxhelper.utils.findMethod
-import com.github.kyuubiran.ezxhelper.utils.hookReturnConstant
+import com.github.kyuubiran.ezxhelper.ClassUtils.loadClass
+import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHook
+import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHooks
+import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinder
 import com.sevtinge.cemiuiler.module.base.BaseHook
 
 class FreeFormCount : BaseHook() {
     override fun init() {
+        val clazzMiuiFreeFormStackDisplayStrategy =
+            loadClass("com.android.server.wm.MiuiFreeFormStackDisplayStrategy")
         // GetMaxMiuiFreeFormStackCount
-        findMethod("com.android.server.wm.MiuiFreeFormStackDisplayStrategy") {
-            name == "getMaxMiuiFreeFormStackCount"
-        }.hookReturnConstant(256)
-        // GetMaxMiuiFreeFormStackCountForFlashBack
-        findMethod("com.android.server.wm.MiuiFreeFormStackDisplayStrategy") {
-            name == "getMaxMiuiFreeFormStackCountForFlashBack"
-        }.hookReturnConstant(256)
+        clazzMiuiFreeFormStackDisplayStrategy.methodFinder().filter {
+            name in setOf(
+                "getMaxMiuiFreeFormStackCount",
+                "getMaxMiuiFreeFormStackCountForFlashBack"
+            )
+        }.toList().createHooks {
+            returnConstant(256)
+        }
+
         // ShouldStopStartFreeform
-        findMethod("com.android.server.wm.MiuiFreeFormManagerService") {
+        clazzMiuiFreeFormStackDisplayStrategy.methodFinder().first {
             name == "shouldStopStartFreeform"
-        }.hookReturnConstant(false)
+        }.createHook {
+            returnConstant(false)
+        }
     }
 }

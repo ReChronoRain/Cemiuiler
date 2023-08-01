@@ -18,7 +18,7 @@ public class ViewWifiPasswordHook extends BaseHook {
     @Override
     public void init() {
         int titleId = mResHook.addResource("system_wifipassword_btn_title", R.string.system_settings_wifipassword_btn_title);
-        int dlgTitleId =mResHook.addResource("system_wifi_password_dlgtitle", R.string.system_settings_wifi_password_dlgtitle);
+        int dlgTitleId = mResHook.addResource("system_wifi_password_dlgtitle", R.string.system_settings_wifi_password_dlgtitle);
         Helpers.hookAllMethods("com.android.settings.wifi.SavedAccessPointPreference", lpparam.classLoader, "onBindViewHolder", new MethodHook() {
             @Override
             @SuppressLint("DiscouragedApi")
@@ -52,7 +52,7 @@ public class ViewWifiPasswordHook extends BaseHook {
         });
         Helpers.hookAllMethods("miuix.appcompat.app.AlertDialog", lpparam.classLoader, "onCreate", new MethodHook() {
             @Override
-            protected void after(MethodHookParam param) throws Throwable {
+            protected void after(MethodHookParam param) {
                 if (wifiSharedKey[0] != null) {
                     TextView messageView = (TextView) XposedHelpers.callMethod(param.thisObject, "getMessageView");
                     messageView.setTextIsSelectable(true);
@@ -71,7 +71,7 @@ public class ViewWifiPasswordHook extends BaseHook {
                     }
                     Object mWifiManager = XposedHelpers.getObjectField(param.thisObject, "mWifiManager");
                     Object wifiConfiguration = XposedHelpers.callMethod(wifiEntry, "getWifiConfiguration");
-                    Class <?> WifiDppUtilsClass = XposedHelpers.findClass("com.android.settings.wifi.dpp.WifiDppUtils", lpparam.classLoader);
+                    Class<?> WifiDppUtilsClass = XposedHelpers.findClass("com.android.settings.wifi.dpp.WifiDppUtils", lpparam.classLoader);
                     String sharedKey = (String) XposedHelpers.callStaticMethod(WifiDppUtilsClass, "getPresharedKey", mWifiManager, wifiConfiguration);
                     sharedKey = (String) XposedHelpers.callStaticMethod(WifiDppUtilsClass, "removeFirstAndLastDoubleQuotes", sharedKey);
                     wifiSharedKey[0] = sharedKey;
@@ -79,7 +79,7 @@ public class ViewWifiPasswordHook extends BaseHook {
             }
 
             @Override
-            protected void after(MethodHookParam param) throws Throwable {
+            protected void after(MethodHookParam param) {
                 Object wifiEntry = param.args[0];
                 boolean canShare = (boolean) XposedHelpers.callMethod(wifiEntry, "canShare");
                 if (canShare) {

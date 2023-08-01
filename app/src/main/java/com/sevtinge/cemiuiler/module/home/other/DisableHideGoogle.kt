@@ -6,6 +6,7 @@ import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedHelpers
 import miui.os.Build
 
+@Suppress("UNCHECKED_CAST")
 object DisableHideGoogle : BaseHook() {
     override fun init() {
         if (Build.IS_INTERNATIONAL_BUILD)
@@ -23,7 +24,7 @@ object DisableHideGoogle : BaseHook() {
 
                     skippedItem.removeIf {
                         it.packageName == "com.google.android.googlequicksearchbox"
-                                || it.packageName == "com.google.android.gms"
+                            || it.packageName == "com.google.android.gms"
                     }
                 }
             }

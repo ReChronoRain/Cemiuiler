@@ -1,8 +1,7 @@
 package com.sevtinge.cemiuiler.utils
 
 import android.graphics.Color
-import com.sevtinge.cemiuiler.module.camera.EnableLabOptions.log
-import de.robv.android.xposed.XposedBridge
+import com.sevtinge.cemiuiler.utils.Helpers.log
 
 object ColorUtils {
     // color转换不可靠，加一个默认值
@@ -14,7 +13,7 @@ object ColorUtils {
             originalColor = Color.valueOf(color)
         } catch (e: Throwable) {
             // 颜色转换失败
-            log("Hook failed by: $e");
+            log("ColorUtils colorToHex Hook failed by: $e")
         }
         val alpha = (originalColor.alpha() * 255).toInt()
         val red = (originalColor.red() * 255).toInt()
@@ -58,7 +57,8 @@ object ColorUtils {
     }
 
     fun addAlphaForColor(color: Int, alpha: Int): Int {
-        return Color.valueOf(Color.red(color) / 255f,Color.green(color)/ 255f,Color.blue(color)/ 255f,alpha/ 255f).toArgb()
+        return Color.valueOf(Color.red(color) / 255f, Color.green(color) / 255f, Color.blue(color) / 255f, alpha / 255f)
+            .toArgb()
     }
 
 }

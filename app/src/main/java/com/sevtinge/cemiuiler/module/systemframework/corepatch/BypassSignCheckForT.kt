@@ -1,23 +1,22 @@
 package com.sevtinge.cemiuiler.module.systemframework.corepatch
 
-import com.github.kyuubiran.ezxhelper.utils.findMethod
-import com.github.kyuubiran.ezxhelper.utils.hookMethod
+import com.github.kyuubiran.ezxhelper.ClassUtils.loadClass
+import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHook
+import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinder
 import com.sevtinge.cemiuiler.module.base.BaseHook
 
 object BypassSignCheckForT : BaseHook() {
     override fun init() {
         try {
-            findMethod("android.util.apk.ApkSignatureVerifier") {
+            loadClass("android.util.apk.ApkSignatureVerifier").methodFinder().first {
                 name == "getMinimumSignatureSchemeVersionForTargetSdk"
-            }.hookMethod {
+            }.createHook {
                 after { param ->
                     param.result = 1
                 }
             }
         } catch (e: Throwable) {
-            log("hook failed by $e")
+            logE(e)
         }
-
     }
-
 }

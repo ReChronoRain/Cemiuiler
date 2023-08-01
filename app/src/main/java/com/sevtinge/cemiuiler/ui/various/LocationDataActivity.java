@@ -50,7 +50,7 @@ public class LocationDataActivity extends AppCompatActivity implements View.OnCl
     EditText mRemarks;
 
     @Override
-    protected void onCreate(Bundle bundle) {
+    public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.activity_location);
 
@@ -101,10 +101,10 @@ public class LocationDataActivity extends AppCompatActivity implements View.OnCl
                 String remarks = mRemarks.getText().toString();
 
                 if (TextUtils.isEmpty(title) ||
-                        TextUtils.isEmpty(offset) ||
-                        TextUtils.isEmpty(baseStation) ||
-                        TextUtils.isEmpty(longitudeAndLatitude) ||
-                        TextUtils.isEmpty(remarks)) {
+                    TextUtils.isEmpty(offset) ||
+                    TextUtils.isEmpty(baseStation) ||
+                    TextUtils.isEmpty(longitudeAndLatitude) ||
+                    TextUtils.isEmpty(remarks)) {
 
                     ToastHelper.makeText(this, "格式错误");
                 } else {
@@ -113,13 +113,13 @@ public class LocationDataActivity extends AppCompatActivity implements View.OnCl
                     String[] split2 = longitudeAndLatitude.split(",", 2);
 
                     LocationData mData = new LocationData(title,
-                            Double.parseDouble(split2[0]),
-                            Double.parseDouble(split2[1]),
-                            Integer.parseInt(offset),
-                            Integer.parseInt(split[0]),
-                            Integer.parseInt(split[1]),
-                            remarks,
-                            1);
+                        Double.parseDouble(split2[0]),
+                        Double.parseDouble(split2[1]),
+                        Integer.parseInt(offset),
+                        Integer.parseInt(split[0]),
+                        Integer.parseInt(split[1]),
+                        remarks,
+                        1);
 
                     /*mData.setTitle(title);
                     mData.setLongitude(Double.parseDouble(split2[0]));
@@ -147,50 +147,47 @@ public class LocationDataActivity extends AppCompatActivity implements View.OnCl
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
-
         final AdapterView.AdapterContextMenuInfo mMenuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         final LocationData mDataPosition = mLocationDataList.get(mMenuInfo.position);
-        switch (item.getItemId()) {
 
-            case R.id.location_add:
-                final EditText editText = new EditText(this);
-                View view = LayoutInflater.from(this).inflate(R.layout.location_edit_dialog, null);
-                initEditView(view);
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("新增");
-                builder.setView(view);
-                builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {
+        if (item.getItemId() == R.id.location_add) {
+            final EditText editText = new EditText(this);
+            View view = LayoutInflater.from(this).inflate(R.layout.location_edit_dialog, null);
+            initEditView(view);
 
-                    String n = n(editText.getText().toString());
-                    if (n.equals("") || !e(n)) {
-                        ToastHelper.makeText(this, "格式错误");
-                        return;
-                    }
-                    String[] split = n.split(",", 6);
-                    LocationData kVar2 = new LocationData(String.valueOf(split[0]), Double.parseDouble(split[1]), Double.parseDouble(split[2]), Integer.parseInt(split[3]), Integer.parseInt(split[4]), Integer.parseInt(split[5]), split[6], 7);
-                    long b2 = mSQLiteHelper.b(kVar2);
-                    if (b2 < 0) {
-                        ToastHelper.makeText(this, "Can't insert");
-                        return;
-                    }
-                    kVar2.setF((int) b2);
-                    mLocationDataList.add(0, kVar2);
-                    mAdapter.notifyDataSetChanged();
-                });
-                builder.setNegativeButton(android.R.string.cancel, null).show();
-                return true;
-
-            case R.id.location_delete:
-                mLocationDataList.remove(mMenuInfo.position);
-                mAdapter.notifyDataSetChanged();
-                if (mSQLiteHelper.a(mDataPosition) != 1) {
-                    ToastHelper.makeText(this, "Can't delete.");
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("新增");
+            builder.setView(view);
+            builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                String n = n(editText.getText().toString());
+                if (n.equals("") || !e(n)) {
+                    ToastHelper.makeText(this, "格式错误");
+                    return;
                 }
-                return true;
 
-            default:
-                return super.onContextItemSelected(item);
+                String[] split = n.split(",", 6);
+                LocationData kVar2 = new LocationData(String.valueOf(split[0]), Double.parseDouble(split[1]), Double.parseDouble(split[2]), Integer.parseInt(split[3]), Integer.parseInt(split[4]), Integer.parseInt(split[5]), split[6], 7);
+                long b2 = mSQLiteHelper.b(kVar2);
+                if (b2 < 0) {
+                    ToastHelper.makeText(this, "Can't insert");
+                    return;
+                }
+
+                kVar2.setF((int) b2);
+                mLocationDataList.add(0, kVar2);
+                mAdapter.notifyDataSetChanged();
+            });
+            builder.setNegativeButton(android.R.string.cancel, null).show();
+        } else if (item.getItemId() == R.id.location_delete) {
+            mLocationDataList.remove(mMenuInfo.position);
+            mAdapter.notifyDataSetChanged();
+            if (mSQLiteHelper.a(mDataPosition) != 1) {
+                ToastHelper.makeText(this, "Can't delete.");
+            }
+        } else {
+            return super.onContextItemSelected(item);
         }
+        return true;
     }
 
     private void initEditView(View view) {

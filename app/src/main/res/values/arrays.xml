@@ -28,6 +28,7 @@
         <item>com.miui.gallery</item>
         <item>com.miui.guardprovider</item>
         <item>com.miui.home</item>
+        <item>com.miui.miinput</item>
         <item>com.miui.mediaeditor</item>
         <item>com.miui.mishare.connectivity</item>
         <item>com.miui.miwallpaper</item>
@@ -45,14 +46,15 @@
         <item>com.miui.voiceassist</item>
         <item>com.miui.weather2</item>
         <item>com.sohu.inputmethod.sogou.xiaomi</item>
+        <item>com.xiaomi.aiasst.vision</item>
         <item>com.xiaomi.aireco</item>
+        <item>com.xiaomi.barrage</item>
         <item>com.xiaomi.joyose</item>
         <item>com.xiaomi.market</item>
         <item>com.xiaomi.mirror</item>
         <item>com.xiaomi.misettings</item>
         <item>com.xiaomi.mtb</item>
         <item>com.xiaomi.scanner</item>
-        <item>miui.systemui.plugin</item>
     </string-array>
 
     <string-array name="app_module_support">
@@ -170,7 +172,6 @@
         <item>@string/charge_animation_entries_aura</item>
         <item>@string/charge_animation_entries_stream</item>
         <item>@string/charge_animation_entries_alpha</item>
-        <item>@string/charge_animation_entries_lzdh</item>
     </string-array>
 
     <string-array name="charge_animation_values">
@@ -179,7 +180,6 @@
         <item>2</item>
         <item>3</item>
         <item>4</item>
-        <item>5</item>
     </string-array>
 
 
@@ -441,6 +441,18 @@
         <item>2</item>
     </string-array>
 
+    <string-array name="system_ui_status_bar_clock_double_mode">
+        <item>@string/array_default</item>
+        <item>@string/array_align_center</item>
+        <item>@string/array_align_right</item>
+    </string-array>
+
+    <string-array name="system_ui_status_bar_clock_double_mode_value">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
     <string-array name="system_ui_status_bar_battery_show">
         <item>@string/array_battery_both</item>
         <item>@string/array_battery_power</item>
@@ -461,6 +473,20 @@
     </string-array>
 
     <string-array name="system_ui_status_bar_battery_disable_value">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="system_ui_status_bar_layout_mode">
+        <item>@string/array_default</item>
+        <item>@string/array_clock_center</item>
+        <item>@string/array_clock_right</item>
+        <item>@string/array_clock_center_and_icon_left</item>
+    </string-array>
+
+    <string-array name="system_ui_status_bar_layout_mode_value">
         <item>0</item>
         <item>1</item>
         <item>2</item>
@@ -519,5 +545,15 @@
         <item />
         <item>thick</item>
         <item>theme</item>
+    </string-array>
+
+    <string-array name="mipad_input_bluetooth_version">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="mipad_input_bluetooth_version_value">
+        <item>1</item>
+        <item>2</item>
     </string-array>
 </resources>

@@ -2,10 +2,8 @@ package com.sevtinge.cemiuiler.module.home.title
 
 import android.annotation.SuppressLint
 import android.content.res.Resources
-import androidx.core.content.ContextCompat
 import com.sevtinge.cemiuiler.module.base.BaseHook
 import com.sevtinge.cemiuiler.module.base.BaseXposedInit
-import com.sevtinge.cemiuiler.module.home.recent.RealMemory.context
 import de.robv.android.xposed.callbacks.XC_InitPackageResources
 
 object EnableIconMonetColor : BaseHook() {
@@ -13,10 +11,10 @@ object EnableIconMonetColor : BaseHook() {
     override fun init() {}
 
     @SuppressLint("DiscouragedApi")
-    fun initResource(resParam: XC_InitPackageResources.InitPackageResourcesParam){
+    fun initResource(resParam: XC_InitPackageResources.InitPackageResourcesParam) {
         val monet = "system_accent1_100"
         val monoColorId = Resources.getSystem().getIdentifier(monet, "color", "android")
-        var monoColor = ContextCompat.getColor(context!!, monoColorId)  /*原方法 Resources.getSystem().getColor(monoColorId)*/
+        var monoColor = Resources.getSystem().getColor(monoColorId, null)
         if (BaseXposedInit.mPrefsMap.getBoolean("home_other_use_edit_color")) {
             monoColor = mPrefsMap.getInt("home_other_your_color_qwq", -1)
         }

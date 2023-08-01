@@ -2,30 +2,25 @@ package com.sevtinge.cemiuiler.module.weather;
 
 import android.content.Context;
 import android.os.Bundle;
+
 import com.sevtinge.cemiuiler.module.base.BaseHook;
-import com.sevtinge.cemiuiler.utils.LogUtils;
+import com.sevtinge.cemiuiler.utils.Helpers;
 import com.sevtinge.cemiuiler.utils.PrefsUtils;
-import de.robv.android.xposed.XC_MethodHook;
+
 import de.robv.android.xposed.XC_MethodReplacement;
-import de.robv.android.xposed.XposedBridge;
-import de.robv.android.xposed.XposedHelpers;
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class SetDeviceLevel extends BaseHook {
     Class<?> mUtil;
 
     @Override
     public void init() {
-
-            log("Start to hook package " + lpparam.packageName);
-            mUtil = findClassIfExists("miuix.animation.utils.DeviceUtils");
-            returnIntConstant(mUtil, "transDeviceLevel");
-
+        mUtil = findClassIfExists("miuix.animation.utils.DeviceUtils");
+        returnIntConstant(mUtil, "transDeviceLevel");
     }
 
     public static Bundle checkBundle(Context context, Bundle bundle) {
         if (context == null) {
-            LogUtils.log("SetWeatherDeviceLevel" + "Context is null!");
+            Helpers.log("SetWeatherDeviceLevel" + "Context is null!");
             return null;
         }
         if (bundle == null) bundle = new Bundle();

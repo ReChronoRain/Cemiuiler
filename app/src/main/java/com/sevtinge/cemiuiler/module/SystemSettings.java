@@ -1,8 +1,24 @@
 package com.sevtinge.cemiuiler.module;
 
+import static com.sevtinge.cemiuiler.utils.devicesdk.SystemSDKKt.isAndroidR;
+import static com.sevtinge.cemiuiler.utils.devicesdk.SystemSDKKt.isMoreAndroidVersion;
+
 import com.sevtinge.cemiuiler.module.base.BaseModule;
-import com.sevtinge.cemiuiler.module.systemsettings.*;
-import com.sevtinge.cemiuiler.module.systemsettings.aiimage.*;
+import com.sevtinge.cemiuiler.module.miinput.UnlockKnuckleFunction;
+import com.sevtinge.cemiuiler.module.systemsettings.AddMiuiPlusEntry;
+import com.sevtinge.cemiuiler.module.systemsettings.EnableSpeedMode;
+import com.sevtinge.cemiuiler.module.systemsettings.InternationalBuild;
+import com.sevtinge.cemiuiler.module.systemsettings.NewNFCPage;
+import com.sevtinge.cemiuiler.module.systemsettings.NoveltyHaptic;
+import com.sevtinge.cemiuiler.module.systemsettings.PermissionTopOfApp;
+import com.sevtinge.cemiuiler.module.systemsettings.QuickInstallPermission;
+import com.sevtinge.cemiuiler.module.systemsettings.UnLockAreaScreenshot;
+import com.sevtinge.cemiuiler.module.systemsettings.UnlockTaplusForSettings;
+import com.sevtinge.cemiuiler.module.systemsettings.ViewWifiPasswordHook;
+import com.sevtinge.cemiuiler.module.systemsettings.VoipAssistantController;
+import com.sevtinge.cemiuiler.module.systemsettings.aiimage.UnlockAi;
+import com.sevtinge.cemiuiler.module.systemsettings.aiimage.UnlockMemc;
+import com.sevtinge.cemiuiler.module.systemsettings.aiimage.UnlockSuperResolution;
 
 public class SystemSettings extends BaseModule {
 
@@ -15,10 +31,21 @@ public class SystemSettings extends BaseModule {
         initHook(PermissionTopOfApp.INSTANCE, mPrefsMap.getBoolean("system_settings_permission_show_app_up"));
         initHook(new QuickInstallPermission(), mPrefsMap.getBoolean("system_settings_permission_unknown_origin_app"));
         initHook(new InternationalBuild(), mPrefsMap.getBoolean("system_settings_international_build"));
+        initHook(new NewNFCPage(), mPrefsMap.getBoolean("system_settings_new_nfc_page"));
 
         initHook(new UnlockSuperResolution(), mPrefsMap.getBoolean("system_settings_ai_image_unlock_sr"));
         initHook(new UnlockAi(), mPrefsMap.getBoolean("system_settings_ai_image_unlock_ai"));
         initHook(new UnlockMemc(), mPrefsMap.getBoolean("system_settings_ai_image_unlock_memc"));
+        initHook(UnLockAreaScreenshot.INSTANCE, mPrefsMap.getBoolean("system_settings_area_screenshot"));
+        initHook(NoveltyHaptic.INSTANCE, mPrefsMap.getBoolean("system_settings_novelty_haptic"));
+
+        if (!isAndroidR()){
+            initHook(UnlockTaplusForSettings.INSTANCE, mPrefsMap.getBoolean("content_extension_unlock_taplus"));
+        }
+
+        if (!isMoreAndroidVersion(33)) {
+            initHook(UnlockKnuckleFunction.INSTANCE, mPrefsMap.getBoolean("system_settings_knuckle_function"));
+        }
     }
 }
 

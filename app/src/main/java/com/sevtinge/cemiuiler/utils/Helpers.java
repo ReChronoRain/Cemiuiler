@@ -7,7 +7,6 @@ import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.content.res.XmlResourceParser;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -23,18 +22,13 @@ import android.os.Handler;
 import android.util.Log;
 import android.util.LruCache;
 import android.widget.TextView;
+
 import com.sevtinge.cemiuiler.BuildConfig;
-
-import com.sevtinge.cemiuiler.R;
-
 import com.sevtinge.cemiuiler.module.base.BaseHook;
 import com.sevtinge.cemiuiler.provider.SharedPrefsProvider;
-import de.robv.android.xposed.callbacks.XC_LoadPackage;
-import org.xmlpull.v1.XmlPullParser;
 
 import java.io.File;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.concurrent.Executor;
@@ -43,9 +37,8 @@ import java.util.concurrent.Executors;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
+import de.robv.android.xposed.callbacks.XC_LoadPackage;
 import moralnorm.internal.utils.ReflectUtils;
-import moralnorm.preference.PreferenceCategory;
-import moralnorm.preference.PreferenceScreen;
 
 public class Helpers {
 
@@ -58,11 +51,6 @@ public class Helpers {
     public static int XposedVersion = 0;
 
     public static String mAppModulePkg = BuildConfig.APPLICATION_ID;
-
-    public static ArrayList<ModData> allModsList = new ArrayList<ModData>();
-
-    public static final String ANDROID_NS = "http://schemas.android.com/apk/res/android";
-    public static final String MIUIZER_NS = "http://schemas.android.com/apk/res-auto";
 
     public static final int REQUEST_PERMISSIONS_BACKUP = 1;
     public static final int REQUEST_PERMISSIONS_RESTORE = 2;
@@ -137,89 +125,9 @@ public class Helpers {
         return isDackMode(context) ? black : white;
     }
 
-
-    public static void getAllMods(Context context, boolean force) {
-        if (force) allModsList.clear();
-        else if (allModsList.size() > 0) return;
-        parsePrefXml(context, R.xml.home);
-        parsePrefXml(context, R.xml.security_center);
-        parsePrefXml(context, R.xml.various);
-    }
-
-    private static String getModTitle(Resources res, String title) {
-        if (title == null) return null;
-        int titleResId = Integer.parseInt(title.substring(1));
-        if (titleResId <= 0) return null;
-        return res.getString(titleResId);
-    }
-
-    @SuppressLint("NonConstantResourceId")
-    private static void parsePrefXml(Context context, int xmlResId) {
-        Resources res = context.getResources();
-        String lastPrefSub = null;
-        String lastPrefSubTitle = null;
-        String lastPrefSubSubTitle = null;
-        int catResId = 0;
-        ModData.ModCat catPrefKey = null;
-
-        switch (xmlResId) {
-            case R.xml.home:
-                catResId = R.string.home;
-                catPrefKey = ModData.ModCat.prefs_key_home;
-                break;
-            case R.xml.security_center:
-                catResId = R.string.security;
-                catPrefKey = ModData.ModCat.prefs_key_security_center;
-                break;
-            case R.xml.various:
-                catResId = R.string.various;
-                catPrefKey = ModData.ModCat.prefs_key_various;
-                break;
-        }
-
-        try (XmlResourceParser xml = res.getXml(xmlResId)) {
-            int eventType = xml.getEventType();
-            int order = 0;
-            while (eventType != XmlPullParser.END_DOCUMENT) {
-                if (eventType == XmlPullParser.START_TAG && !PreferenceScreen.class.getSimpleName().equals(xml.getName()))
-                    try {
-                        if (xml.getName().equals(PreferenceCategory.class.getSimpleName()) || xml.getName().equals(PreferenceCategory.class.getCanonicalName())) {
-                            if (xml.getAttributeValue(ANDROID_NS, "key") != null) {
-                                lastPrefSub = xml.getAttributeValue(ANDROID_NS, "key");
-                                lastPrefSubTitle = getModTitle(res, xml.getAttributeValue(ANDROID_NS, "title"));
-                                lastPrefSubSubTitle = null;
-                                order = 1;
-                            } else {
-                                lastPrefSubSubTitle = getModTitle(res, xml.getAttributeValue(ANDROID_NS, "title"));
-                                order++;
-                            }
-                            eventType = xml.next();
-                            continue;
-                        }
-
-                        ModData modData = new ModData();
-                        boolean isChild = xml.getAttributeBooleanValue(MIUIZER_NS, "child", false);
-                        if (!isChild) {
-                            modData.title = getModTitle(res, xml.getAttributeValue(ANDROID_NS, "title"));
-                            if (modData.title != null) {
-                                modData.breadcrumbs = res.getString(catResId) + (lastPrefSubTitle == null ? "" : ("/" + lastPrefSubTitle + (lastPrefSubSubTitle == null ? "" : "/" + lastPrefSubSubTitle)));
-                                modData.key = xml.getAttributeValue(ANDROID_NS, "key");
-                                modData.cat = catPrefKey;
-                                modData.sub = lastPrefSub;
-                                modData.order = order;
-                                allModsList.add(modData);
-                                //Log.e("miuizer", modData.key + " = " + modData.order);
-                            }
-                        }
-                        order++;
-                    } catch (Throwable t) {
-                        t.printStackTrace();
-                    }
-                eventType = xml.next();
-            }
-        } catch (Throwable t) {
-            t.printStackTrace();
-        }
+    public static Object proxySystemProperties(String method, String prop, int val, ClassLoader classLoader) {
+        return XposedHelpers.callStaticMethod(XposedHelpers.findClassIfExists("android.os.SystemProperties", classLoader),
+            method, prop, val);
     }
 
 
@@ -266,7 +174,9 @@ public class Helpers {
 
 
     public static void log(String line) {
-        XposedBridge.log("Cemiuiler: " + line);
+        if (!BaseHook.mPrefsMap.getBoolean("settings_disable_detailed_log")) {
+            XposedBridge.log("Cemiuiler: " + line);
+        }
     }
 
     public static void log(Throwable t) {
@@ -425,7 +335,7 @@ public class Helpers {
             Class<?> hookClass = XposedHelpers.findClassIfExists(className, classLoader);
             if (hookClass == null || XposedBridge.hookAllMethods(hookClass, methodName, callback).size() == 0) ;
         } catch (Throwable t) {
-            XposedBridge.log(t);
+            log(t);
         }
     }
 
@@ -435,7 +345,7 @@ public class Helpers {
             if (XposedBridge.hookAllMethods(hookClass, methodName, callback).size() == 0)
                 log(getCallerMethod(), "Failed to hook " + methodName + " method in " + hookClass.getCanonicalName());
         } catch (Throwable t) {
-            XposedBridge.log(t);
+            log(t);
         }
     }
 
@@ -446,7 +356,7 @@ public class Helpers {
             if (hookClass == null || XposedBridge.hookAllConstructors(hookClass, callback).size() == 0)
                 log(getCallerMethod(), "Failed to hook " + className + " constructor");
         } catch (Throwable t) {
-            XposedBridge.log(t);
+            log(t);
         }
     }
 
@@ -460,7 +370,7 @@ public class Helpers {
                     log(getCallerMethod(), "Failed to hook " + hookClass.getPackageName() + "/" + hookClass.getCanonicalName() + " constructor");
                 }
         } catch (Throwable t) {
-            XposedBridge.log(t);
+            log(t);
         }
     }
 
@@ -472,6 +382,7 @@ public class Helpers {
                 XposedBridge.hookAllMethods(hookClass, methodName, callback).size();
             }
         } catch (Throwable t) {
+            log(t);
         }
     }
 
@@ -575,11 +486,20 @@ public class Helpers {
                 onChange(prefName, prefDefValueBool);
         }
 
-        public void onChange(Uri uri) {}
-        public void onChange(String name) {}
-        public void onChange(String name, String defValue) {}
-        public void onChange(String name, int defValue) {}
-        public void onChange(String name, boolean defValue) {}
+        public void onChange(Uri uri) {
+        }
+
+        public void onChange(String name) {
+        }
+
+        public void onChange(String name, String defValue) {
+        }
+
+        public void onChange(String name, int defValue) {
+        }
+
+        public void onChange(String name, boolean defValue) {
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -633,7 +553,7 @@ public class Helpers {
                 return prefValue == 1;
             } else log("ContentResolver", "[" + name + "] Cursor fail: " + cursor);
         } catch (Throwable t) {
-            XposedBridge.log(t);
+            log(t);
         }
 
         if (BaseHook.mPrefsMap.containsKey(name))
@@ -666,24 +586,6 @@ public class Helpers {
         return Uri.parse("content://" + SharedPrefsProvider.AUTHORITY + "/pref/");
     }
 
-    public static boolean isAndroidVersionTiramisu() {
-        switch (Build.VERSION.SDK_INT) {
-            case Build.VERSION_CODES.R: // 30
-                return false;
-            case Build.VERSION_CODES.S_V2: // 32
-                return false;
-            case Build.VERSION_CODES.S: // 31
-                return false;
-            case Build.VERSION_CODES.TIRAMISU: // 33
-                return true;
-            default:
-                LogUtils.log(" Warning: Unsupported Version of Android " + Build.VERSION.SDK_INT);
-                break;
-        }
-        return false;
-    }
-
-
     public static class MethodHook extends XC_MethodHook {
 
 
@@ -706,7 +608,7 @@ public class Helpers {
             try {
                 this.before(param);
             } catch (Throwable t) {
-                XposedBridge.log(t);
+                log(t);
             }
         }
 
@@ -715,7 +617,7 @@ public class Helpers {
             try {
                 this.after(param);
             } catch (Throwable t) {
-                XposedBridge.log(t);
+                log(t);
             }
         }
     }
@@ -727,11 +629,10 @@ public class Helpers {
             File apkPath = new File(lpparam.appInfo.sourceDir);
             Object pkg = XposedHelpers.callMethod(parser, "parsePackage", apkPath, 0);
             String versionName = (String) XposedHelpers.getObjectField(pkg, "mVersionName");
-            XposedBridge.log("Cemiuiler: " + lpparam + " versionName is " + versionName);
+            log(lpparam + " versionName is " + versionName);
             return versionName;
         } catch (Throwable e) {
-            XposedBridge.log("Cemiuiler: Unknown Version.");
-            XposedBridge.log(e);
+            log("Unknown Version. Error message: " + e);
             return "null";
         }
     }
@@ -743,17 +644,40 @@ public class Helpers {
             File apkPath = new File(lpparam.appInfo.sourceDir);
             Object pkg = XposedHelpers.callMethod(parser, "parsePackage", apkPath, 0);
             int versionCode = XposedHelpers.getIntField(pkg, "mVersionCode");
-            XposedBridge.log("Cemiuiler: " + lpparam + " versionCode is " + versionCode);
+            log( lpparam + " versionCode is " + versionCode);
             return versionCode;
         } catch (Throwable e) {
-            XposedBridge.log("Cemiuiler: Unknown Version.");
-            XposedBridge.log(e);
+            log("Unknown Version. Error message: " + e);
             return -1;
         }
     }
 
+    public static int constrain(int amount, int low, int high) {
+        return amount < low ? low : (Math.min(amount, high));
+    }
+
     public static float constrain(float amount, float low, float high) {
         return amount < low ? low : (Math.min(amount, high));
+    }
+
+    public static float lerp(float start, float stop, float amount) {
+        return start + (stop - start) * amount;
+    }
+
+    public static float lerp(int start, int stop, float amount) {
+        return lerp((float) start, (float) stop, amount);
+    }
+
+    public static float lerpInv(float a, float b, float value) {
+        return a != b ? ((value - a) / (b - a)) : 0.0f;
+    }
+
+    public static float saturate(float value) {
+        return constrain(value, 0.0f, 1.0f);
+    }
+
+    public static float lerpInvSat(float a, float b, float value) {
+        return saturate(lerpInv(a, b, value));
     }
 
     public static float norm(float start, float stop, float value) {
@@ -764,14 +688,11 @@ public class Helpers {
         return f * f;
     }
 
-    public static float lerp(float start, float stop, float amount) {
-        return start + (stop - start) * amount;
+    public static float exp(float f) {
+        return (float) Math.exp(f);
     }
 
-    public static float exp(float f) {
-        return (float)Math.exp(f);
-    }
-    public static final float convertGammaToLinearFloat(float i, int max, float f, float f2) {
+    public static float convertGammaToLinearFloat(float i, int max, float f, float f2) {
         float norm = norm(0.0f, max, i);
         float R = 0.4f;
         float A = 0.2146f;

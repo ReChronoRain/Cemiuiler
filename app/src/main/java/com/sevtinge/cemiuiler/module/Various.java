@@ -1,8 +1,10 @@
 package com.sevtinge.cemiuiler.module;
 
 import com.sevtinge.cemiuiler.module.base.BaseModule;
-import com.sevtinge.cemiuiler.module.various.*;
-import com.sevtinge.cemiuiler.module.guardprovider.DisableUploadAppList;
+import com.sevtinge.cemiuiler.module.various.CollapseMiuiTitle;
+import com.sevtinge.cemiuiler.module.various.DialogCustom;
+import com.sevtinge.cemiuiler.module.various.MiuiAppNoOverScroll;
+import com.sevtinge.cemiuiler.module.various.UnlockIme;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -20,7 +22,6 @@ public class Various extends BaseModule {
         mPackageName = mLoadPackageParam.packageName;
         isMiuiApps = mPackageName.startsWith("com.miui") || mPackageName.startsWith("com.xiaomi") || miuiDialogCustomApps.contains(mPackageName);
 
-
         initHook(new MiuiAppNoOverScroll(), isMiuiOverScrollApps());
         initHook(new DialogCustom(), isMiuiDialogCustom());
 
@@ -29,8 +30,6 @@ public class Various extends BaseModule {
         initHook(UnlockIme.INSTANCE, mPrefsMap.getBoolean("various_unlock_ime"));
 
     }
-
-
 
 
     private boolean isMiuiOverScrollApps() {
@@ -45,22 +44,22 @@ public class Various extends BaseModule {
         return mPrefsMap.getStringAsInt("various_collapse_miui_title", 0) != 0 && collapseMiuiTitleApps.contains(mPackageName);
     }
 
-    HashSet<String> miuiOverScrollApps = new HashSet<String>(Arrays.asList(
-            "com.android.fileexplorer",
-            "com.android.providers.downloads.ui",
-            "com.android.settings"
+    HashSet<String> miuiOverScrollApps = new HashSet<>(Arrays.asList(
+        "com.android.fileexplorer",
+        "com.android.providers.downloads.ui",
+        "com.android.settings"
     ));
 
-    HashSet<String> miuiDialogCustomApps = new HashSet<String>(Arrays.asList(
-            "com.android.fileexplorer",
-            "com.android.providers.downloads.ui",
-            "com.android.settings"
+    HashSet<String> miuiDialogCustomApps = new HashSet<>(Arrays.asList(
+        "com.android.fileexplorer",
+        "com.android.providers.downloads.ui",
+        "com.android.settings"
     ));
 
-    HashSet<String> collapseMiuiTitleApps = new HashSet<String>(Arrays.asList(
-            "com.android.fileexplorer",
-            "com.android.providers.downloads.ui",
-            "com.android.settings"
+    HashSet<String> collapseMiuiTitleApps = new HashSet<>(Arrays.asList(
+        "com.android.fileexplorer",
+        "com.android.providers.downloads.ui",
+        "com.android.settings"
     ));
 
 

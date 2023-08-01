@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <DropDownPreference
+        android:title="@string/system_framework_default_volume_stream"
+        android:key="prefs_key_system_framework_default_volume_stream"
+        app:entries="@array/default_volume_stream"
+        app:entryValues="@array/default_volume_streame_value"
+        android:defaultValue="0" />
+
+    <SwitchPreference
+        android:title="@string/system_framework_volume_first_press"
+        android:key="prefs_key_system_framework_volume_first_press"
+        android:defaultValue="false" />
+
+    <SwitchPreference
+        android:title="@string/system_framework_volume_separate_control"
+        android:key="prefs_key_system_framework_volume_separate_control"
+        android:defaultValue="false" />
+
+    <SwitchPreference
+        android:title="@string/system_framework_volume_separate_slider"
+        android:key="prefs_key_system_framework_volume_separate_slider"
+        android:defaultValue="false"
+        android:dependency="prefs_key_system_framework_volume_separate_control" />
+
+    <SwitchPreference
+        android:title="@string/system_framework_volume_disable_safe"
+        android:key="prefs_key_system_framework_volume_disable_safe"
+        android:defaultValue="false" />
+        
+    <SeekBarPreferenceEx
+        android:key="prefs_key_system_framework_volume_media_steps"
+        android:title="@string/system_framework_volume_media_steps"
+        android:summary="@string/system_framework_volume_media_steps_desc"
+        android:defaultValue="15"
+        app:defaultValueText="@string/array_default"
+        app:maxValue="30"
+        app:minValue="15"
+        app:stepValue="1"
+        app:format="%s"
+        app:showSeekBarValue="true" />
+
+    <SeekBarPreferenceEx
+        android:key="prefs_key_system_framework_volume_steps"
+        android:title="@string/system_framework_volume_steps"
+        android:defaultValue="0"
+        app:defaultValueText="@string/array_default"
+        app:minValue="0"
+        app:maxValue="500"
+        app:stepValue="25"
+        app:format="X %s"
+        app:displayDividerValue="100"
+        app:showSeekBarValue="true"
+        app:isPreferenceVisible="false" />
+        
+    <Preference android:enabled="false" />
+</PreferenceScreen>

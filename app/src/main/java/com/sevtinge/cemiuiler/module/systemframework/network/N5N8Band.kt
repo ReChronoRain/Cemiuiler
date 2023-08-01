@@ -1,23 +1,26 @@
 package com.sevtinge.cemiuiler.module.systemframework.network
 
-import com.github.kyuubiran.ezxhelper.utils.findMethod
-import com.github.kyuubiran.ezxhelper.utils.hookReturnConstant
+import com.github.kyuubiran.ezxhelper.ClassUtils.loadClass
+import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHook
+import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinder
 import com.sevtinge.cemiuiler.module.base.BaseHook
 
 object N5N8Band : BaseHook() {
     override fun init() {
-        try {
-            findMethod("miui.telephony.TelephonyManagerEx") {
+        runCatching {
+            loadClass("miui.telephony.TelephonyManagerEx").methodFinder().first {
                 name == "isN5Supported"
-            }.hookReturnConstant(true)
-        } catch (_: Throwable) {
+            }.createHook {
+                returnConstant(true)
+            }
         }
 
-        try {
-            findMethod("miui.telephony.TelephonyManagerEx") {
+        runCatching {
+            loadClass("miui.telephony.TelephonyManagerEx").methodFinder().first {
                 name == "isN8Supported"
-            }.hookReturnConstant(true)
-        } catch (_: Throwable) {
+            }.createHook {
+                returnConstant(true)
+            }
         }
     }
 }

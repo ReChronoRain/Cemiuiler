@@ -1,57 +1,102 @@
 package com.sevtinge.cemiuiler.ui;
 
-import android.annotation.SuppressLint;
+import android.app.backup.BackupManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.FileObserver;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.sevtinge.cemiuiler.R;
-import com.sevtinge.cemiuiler.module.GlobalActions;
-import com.sevtinge.cemiuiler.module.base.BaseHook;
-import com.sevtinge.cemiuiler.ui.main.fragment.MainFragment;
-import com.sevtinge.cemiuiler.ui.main.base.BaseMainActivity;
+import com.sevtinge.cemiuiler.data.adapter.ModSearchAdapter;
+import com.sevtinge.cemiuiler.provider.SharedPrefsProvider;
+import com.sevtinge.cemiuiler.ui.base.SettingsActivity;
+import com.sevtinge.cemiuiler.ui.fragment.AboutFragment;
+import com.sevtinge.cemiuiler.ui.fragment.MainFragment;
 import com.sevtinge.cemiuiler.utils.ALPermissionManager;
-import com.sevtinge.cemiuiler.view.CustomMultipleChoiceView;
+import com.sevtinge.cemiuiler.utils.Helpers;
+import com.sevtinge.cemiuiler.utils.PrefsUtils;
+import com.sevtinge.cemiuiler.utils.SearchHelper;
+import com.sevtinge.cemiuiler.utils.SettingLauncherHelper;
+import com.sevtinge.cemiuiler.view.RestartAlertDialog;
 
+import java.util.Set;
 
-import java.util.Arrays;
-import java.util.List;
+import moralnorm.view.SearchActionMode;
 
-import de.robv.android.xposed.XposedBridge;
-import moralnorm.appcompat.app.AlertDialog;
+public class MainActivity extends SettingsActivity {
 
-import static com.sevtinge.cemiuiler.module.base.BaseHook.mPrefsMap;
-
-public class MainActivity extends BaseMainActivity {
-
+    View mFrameContent;
+    View mSearchView;
+    SearchActionMode mSearchActionMode;
+    TextView mSearchInputView;
+    RecyclerView mSearchResultView;
+    TextWatcher mSearchResultListener;
+    ModSearchAdapter mSearchAdapter;
+    String lastFilter;
     private final MainFragment mMainFrag = new MainFragment();
-
-    private Intent mIntent = null;
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        new Thread(new Runnable() {
+            public void run() {
+                SearchHelper.getAllMods(MainActivity.this, savedInstanceState != null);
+            }
+        }).start();
+        initView();
+        initData();
         setImmersionMenuEnabled(true);
-        mIntent = getIntent();
-        if (mIntent != null) {
-            getAppCompatActionBar().setDisplayHomeAsUpEnabled(mIntent.getBooleanExtra("isDisplayHomeAsUpEnabled", false));
-        }
-
+        setFragment(mMainFrag);
         ALPermissionManager.RootCommand(getPackageCodePath());
-
-        //XposedBridge.log("Cemiuiler: Detail log is " + mPrefsMap.getBoolean("settings_disable_detailed_log") + ".");
-
-
     }
 
-    @Override
-    public Fragment initFragment() {
-        return mMainFrag;
+    private void initView() {
+        mFrameContent = findViewById(R.id.frame_content);
+        mSearchView = findViewById(R.id.search_view);
+        mSearchInputView = findViewById(android.R.id.input);
+        mSearchResultView = findViewById(R.id.search_result_view);
+
+        mSearchAdapter = new ModSearchAdapter();
+        mSearchInputView.setHint(getResources().getString(R.string.search));
+        mSearchResultView.setLayoutManager(new LinearLayoutManager(this));
+        mSearchResultView.setAdapter(mSearchAdapter);
+        mSearchView.setOnClickListener(v -> startSearchMode());
+
+        mSearchAdapter.setOnItemClickListener((view, ad) -> {
+            SettingLauncherHelper.onStartSettingsForArguments(this,
+                SubSettings.class,
+                ad.fragment,
+                null,
+                ad.catTitleResId);
+        });
+
+        mSearchResultListener = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                findMod(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                findMod(s.toString());
+            }
+        };
     }
 
     @Override
@@ -60,105 +105,115 @@ public class MainActivity extends BaseMainActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.restart_home:
-
-                List<String> mAppName = Arrays.asList(getResources().getStringArray(R.array.restart_apps_name));
-                List<String> mAppPackageName = Arrays.asList(getResources().getStringArray(R.array.restart_apps_packagename));
-
-
-                AlertDialog dialog = new AlertDialog(this);
-
-                dialog.setTitle(item.getTitle());
-                CustomMultipleChoiceView view = new CustomMultipleChoiceView(this);
-                LinearLayout mRoot = new LinearLayout(this);
-                mRoot.addView(view);
-                view.setData(mAppName, null);
-                view.deselectAll();
-                view.setOnCheckedListener(sparseBooleanArray -> {
-                    dialog.dismiss();
-                    for (int i = 0; i < sparseBooleanArray.size(); i++) {
-                        if (sparseBooleanArray.get(i)) {
-                            if (i == 4) {
-                                Intent intent = new Intent(GlobalActions.ACTION_PREFIX + "RestartSystemUI");
-                                intent.setPackage("com.android.systemui");
-                                sendBroadcast(intent);
-                            } else {
-                                restartApp(mAppPackageName.get(i));
-                            }
-                        }
-                    }
-                });
-                dialog.setView(mRoot);
-                dialog.show();
-
-
-                /*sendBroadcast(new Intent(GlobalActions.ACTION_PREFIX + "RestartHome"));*/
-
-                /*String[] mAppName = new String[] {"桌面", "设置", "手机管家", "主题壁纸", "智能助理", "系统界面", "全选"};
-                String[] mAppPackageName = new String[] {"com.miui.home",
-                        "com.android.settings",
-                        "com.miui.securitycenter",
-                        "com.android.thememanager",
-                        "com.miui.personalassistant",
-                        "com.android.systemui",
-                        ""};
-                boolean[] checkedItems = new boolean[]{false, false, false, false, false, false, false};
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle(item.getTitle());
-                builder.setMultiChoiceItems(mAppName, checkedItems, (dialog, which, isChecked) -> {
-
-                    if (which == (checkedItems.length - 1)) {
-                        if (isChecked) {
-                            for (int i = 0; i < checkedItems.length; i++) {
-                                checkedItems[i] = true;
-                            }
-                        } else {
-                            for (int i = checkedItems.length - 1; i >= 0; i--) {
-                                checkedItems[i] = false;
-                            }
-                        }
-                    }
-                });
-                builder.setNeutralButton(android.R.string.cancel, (dialog, which) -> {
-                    dialog.dismiss();
-                });
-                builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {
-                    for (int i = 0; i < checkedItems.length; i++) {
-                        if(checkedItems[i] != false) {
-                            if (!TextUtils.isEmpty(mAppPackageName[i])) {
-                                if (mAppPackageName[i].equals("com.android.systemui")) {
-                                    sendBroadcast(new Intent(GlobalActions.ACTION_PREFIX + "RestartSystemUI"));
-                                } else {
-                                    Intent intent = new Intent(GlobalActions.ACTION_PREFIX + "RestartApps");
-                                    intent.putExtra("packageName", mAppPackageName[i]);
-                                    sendBroadcast(intent);
-                                    Toast.makeText(this, mAppPackageName[i], Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        }
-                    }
-                });
-                builder.show();*/
-                break;
-
-            case R.id.settings:
-                Intent intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);
-                break;
-            default:
-                break;
+        int itemId = item.getItemId();
+        if (itemId == R.id.restart) {
+            RestartAlertDialog dialog = new RestartAlertDialog(this);
+            dialog.setTitle(item.getTitle());
+            dialog.show();
+        } else if (itemId == R.id.settings) {
+            Intent intent = new Intent(this, ModuleSettingsActivity.class);
+            startActivity(intent);
+        } else if (itemId == R.id.about) {
+            SettingLauncherHelper.onStartSettings(this, SubSettings.class, AboutFragment.class, item.getTitle().toString());
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void restartApp(String packageName) {
-        Intent intent = new Intent(GlobalActions.ACTION_PREFIX + "RestartApps");
-        intent.putExtra("packageName", packageName);
-        sendBroadcast(intent);
-        Toast.makeText(this, packageName, Toast.LENGTH_SHORT).show();
+    private void initData() {
+
+        SharedPreferences.OnSharedPreferenceChangeListener mPreferenceChangeListener = (sharedPreferences, s) -> {
+            Log.i("prefs", "Changed: " + s);
+            requestBackup();
+            Object val = sharedPreferences.getAll().get(s);
+            String path = "";
+            if (val instanceof String)
+                path = "string/";
+            else if (val instanceof Set<?>)
+                path = "stringset/";
+            else if (val instanceof Integer)
+                path = "integer/";
+            else if (val instanceof Boolean)
+                path = "boolean/";
+            getContentResolver().notifyChange(Uri.parse("content://" + SharedPrefsProvider.AUTHORITY + "/" + path + s), null);
+            if (!path.equals(""))
+                getContentResolver().notifyChange(Uri.parse("content://" + SharedPrefsProvider.AUTHORITY + "/pref/" + path + s), null);
+        };
+
+        PrefsUtils.mSharedPreferences.registerOnSharedPreferenceChangeListener(mPreferenceChangeListener);
+        Helpers.fixPermissionsAsync(getApplicationContext());
+
+        try {
+            FileObserver mFileObserver = new FileObserver(PrefsUtils.getSharedPrefsPath(), FileObserver.CLOSE_WRITE) {
+                @Override
+                public void onEvent(int event, String path) {
+                    Helpers.fixPermissionsAsync(getApplicationContext());
+                }
+            };
+            mFileObserver.startWatching();
+        } catch (Throwable t) {
+            Log.e("prefs", "Failed to start FileObserver!");
+        }
+    }
+
+    void findMod(String filter) {
+        lastFilter = filter;
+        mSearchResultView.setVisibility(filter.equals("") ? View.GONE : View.VISIBLE);
+        ModSearchAdapter adapter = (ModSearchAdapter) mSearchResultView.getAdapter();
+        if (adapter == null) return;
+        adapter.getFilter().filter(filter);
+    }
+
+    private void startSearchMode() {
+        mFrameContent.setVisibility(View.GONE);
+        SearchActionMode startActionMode = (SearchActionMode) startActionMode(new SearchActionMode.Callback() {
+            @Override
+            public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+                SearchActionMode searchActionMode = (SearchActionMode) actionMode;
+                searchActionMode.setAnchorView(mSearchView);
+                searchActionMode.setAnimateView(findViewById(android.R.id.list_container));
+                searchActionMode.getSearchInput().addTextChangedListener(mSearchResultListener);
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+                return true;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+                return true;
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode actionMode) {
+                SearchActionMode searchActionMode = (SearchActionMode) actionMode;
+                searchActionMode.getSearchInput().removeTextChangedListener(mSearchResultListener);
+                exitSearchMode();
+                updateData();
+            }
+        });
+
+        if (startActionMode == null) {
+            throw new NullPointerException("null cannot be cast to non-null type moralnorm.appcompat.internal.view.SearchActionMode");
+        }
+        mSearchActionMode = startActionMode;
+    }
+
+    private void exitSearchMode() {
+        if (mSearchActionMode != null) {
+            mSearchActionMode = null;
+        }
+        mFrameContent.setVisibility(View.VISIBLE);
+    }
+
+    public void requestBackup() {
+        new BackupManager(getApplicationContext()).dataChanged();
+    }
+
+    private void updateData() {
+        mFrameContent.setVisibility(View.VISIBLE);
     }
 }

@@ -32,8 +32,7 @@ object BlurWhenShowShortcutMenu : BaseHook() {
         val blurUtilsClass: Class<*> = findClassIfExists("com.miui.home.launcher.common.BlurUtils")
         val applicationClass: Class<*> = findClassIfExists("com.miui.home.launcher.Application")
         val utilitiesClass: Class<*> = findClassIfExists("com.miui.home.launcher.common.Utilities")
-        val launcherStateClass: Class<*> = findClassIfExists("com.miui.home.launcher.LauncherState")
-        val DragViewClass: Class<*> = findClassIfExists("com.miui.home.launcher.DragView")
+        val dragViewClass: Class<*> = findClassIfExists("com.miui.home.launcher.DragView")
 
         val allBluredDrawable: MutableList<Drawable> = ArrayList()
 
@@ -73,14 +72,8 @@ object BlurWhenShowShortcutMenu : BaseHook() {
                         XposedHelpers.callMethod(mLauncher, "getSystemUiController")
                     val mWindow = HookUtils.getValueByField(systemUiController, "mWindow")
                     val targetBlurView = XposedHelpers.callMethod(mLauncher, "getScreen") as View
-           //修复文件夹内各种模糊冲突异常
-                    if (iconIsInFolder) {
-                        
-                            blurBackground = !mPrefsMap.getBoolean("home_folder_blur")
-                        
-                    } else {
-                        blurBackground = true
-                    }
+                    // 修复文件夹内各种模糊冲突异常
+                    blurBackground = if (iconIsInFolder) !mPrefsMap.getBoolean("home_folder_blur") else true
                     val renderEffectArray = arrayOfNulls<RenderEffect>(51)
                     for (index in 0..50) {
                         renderEffectArray[index] = RenderEffect.createBlurEffect(
@@ -94,7 +87,7 @@ object BlurWhenShowShortcutMenu : BaseHook() {
                     valueAnimator.addUpdateListener { animator ->
                         val value = animator.animatedValue as Int
                         targetBlurView.setRenderEffect(renderEffectArray[value])
-//修复始终模糊壁纸冲突导致的各种模糊异常
+                        // 修复始终模糊壁纸冲突导致的各种模糊异常
                         if (blurBackground && !mPrefsMap.getBoolean("home_other_always_blur_launcher_wallpaper")) {
                             XposedHelpers.callStaticMethod(
                                 blurUtilsClass,
@@ -144,7 +137,7 @@ object BlurWhenShowShortcutMenu : BaseHook() {
                 }
             })
 
-        XposedBridge.hookAllMethods(DragViewClass, "remove", object : XC_MethodHook() {
+        XposedBridge.hookAllMethods(dragViewClass, "remove", object : XC_MethodHook() {
             override fun beforeHookedMethod(param: MethodHookParam) {
                 if (isShortcutMenuLayerBlurred) {
                     param.result = null
@@ -168,13 +161,10 @@ object BlurWhenShowShortcutMenu : BaseHook() {
                             XposedHelpers.callMethod(mLauncher, "getSystemUiController")
                         val mWindow = HookUtils.getValueByField(systemUiController, "mWindow")
 
-                        if ( blurBackground ) {
-                        XposedHelpers.callStaticMethod(
-                            blurUtilsClass,
-                            "fastBlurDirectly",
-                            0f,
-                            mWindow
-                        )
+                        if (blurBackground) {
+                            XposedHelpers.callStaticMethod(
+                                blurUtilsClass, "fastBlurDirectly", 0f, mWindow
+                            )
                         }
                     }
                 }
@@ -210,13 +200,10 @@ object BlurWhenShowShortcutMenu : BaseHook() {
                         valueAnimator.addUpdateListener { animator ->
                             val value = animator.animatedValue as Int
                             targetBlurView.setRenderEffect(renderEffectArray[value])
-                  //修复始终模糊壁纸模糊丢失
-                            if (blurBackground  && !mPrefsMap.getBoolean("home_other_always_blur_launcher_wallpaper") ) {
+                            // 修复始终模糊壁纸模糊丢失
+                            if (blurBackground && !mPrefsMap.getBoolean("home_other_always_blur_launcher_wallpaper")) {
                                 XposedHelpers.callStaticMethod(
-                                    blurUtilsClass,
-                                    "fastBlurDirectly",
-                                    value / 50f,
-                                    mWindow
+                                    blurUtilsClass, "fastBlurDirectly", value / 50f, mWindow
                                 )
                             }
                         }
@@ -273,10 +260,10 @@ object BlurWhenShowShortcutMenu : BaseHook() {
 
                         val mSystemShortcutMenu: ViewGroup
                         val mSystemShortcutMenuBackground: GradientDrawable
-/*
-                        val mWidgetShortcutMenu: ViewGroup
-                        val mWidgetShortcutMenuBackground: GradientDrawable
-*/
+                        /*
+                             val mWidgetShortcutMenu: ViewGroup
+                             val mWidgetShortcutMenuBackground: GradientDrawable
+                        */
                         val mAppPersonaliseShortcutMenu: ViewGroup
                         val mAppPersonaliseShortcutMenuBackground: GradientDrawable
 
@@ -298,7 +285,7 @@ object BlurWhenShowShortcutMenu : BaseHook() {
                                 }
                             }
                         } catch (e: Exception) {
-                            XposedBridge.log("Cemiuiler: BlurWhenShowShortcutMenu get mAppShortcutMenu failed by: $e")
+                            log("BlurWhenShowShortcutMenu get mAppShortcutMenu failed by: $e")
                         }
                         try {
                             mSystemShortcutMenu = param.thisObject.getObjectField("mSystemShortcutMenu") as ViewGroup
@@ -315,10 +302,11 @@ object BlurWhenShowShortcutMenu : BaseHook() {
                                 }
                             }
                         } catch (e: Exception) {
-                            XposedBridge.log("Cemiuiler: BlurWhenShowShortcutMenu get mSystemShortcutMenu failed by: $e")
+                            log("BlurWhenShowShortcutMenu get mSystemShortcutMenu failed by: $e")
                         }
                         try {
-                            mAppPersonaliseShortcutMenu = param.thisObject.getObjectField("mAppPersonaliseShortcutMenu") as ViewGroup
+                            mAppPersonaliseShortcutMenu =
+                                param.thisObject.getObjectField("mAppPersonaliseShortcutMenu") as ViewGroup
                             mAppPersonaliseShortcutMenuBackground =
                                 mAppPersonaliseShortcutMenu.background as GradientDrawable
                             mAppPersonaliseShortcutMenuBackground.alpha = singleLayerAlpha
@@ -332,7 +320,7 @@ object BlurWhenShowShortcutMenu : BaseHook() {
                                 }
                             }
                         } catch (e: Exception) {
-                            XposedBridge.log("Cemiuiler: BlurWhenShowShortcutMenu get mAppPersonaliseShortcutMenu failed by: $e")
+                            log("BlurWhenShowShortcutMenu get mAppPersonaliseShortcutMenu failed by: $e")
                         }
                         try {
                             mFolderShortcutMenu = param.thisObject.getObjectField("mFolderShortcutMenu") as ViewGroup
@@ -349,25 +337,25 @@ object BlurWhenShowShortcutMenu : BaseHook() {
                                 }
                             }
                         } catch (e: Exception) {
-                            XposedBridge.log("Cemiuiler: BlurWhenShowShortcutMenu get mFolderShortcutMenu failed by: $e")
+                            log("BlurWhenShowShortcutMenu get mFolderShortcutMenu failed by: $e")
                         }
-                       /*try {
-                            mWidgetShortcutMenu = param.thisObject.getObjectField("mWidgetShortcutMenu") as ViewGroup
-                            mWidgetShortcutMenuBackground =
-                                mWidgetShortcutMenu.background as GradientDrawable
-                            mWidgetShortcutMenuBackground.alpha = singleLayerAlpha
-                            for (index in 0..mWidgetShortcutMenu.childCount) {
-                                val child = mWidgetShortcutMenu.getChildAt(index)
-                                if (child != null && child.background != null) {
-                                    if (child.background is Drawable) {
-                                        val childBackground = child.background as Drawable
-                                        childBackground.alpha = singleLayerAlpha
-                                    }
-                                }
-                            }
-                        } catch (e: Exception) {
-                            XposedBridge.log("Cemiuiler: BlurWhenShowShortcutMenu get mWidgetShortcutMenu failed by: $e")
-                        }*/
+                        /*try {
+                             mWidgetShortcutMenu = param.thisObject.getObjectField("mWidgetShortcutMenu") as ViewGroup
+                             mWidgetShortcutMenuBackground =
+                                 mWidgetShortcutMenu.background as GradientDrawable
+                             mWidgetShortcutMenuBackground.alpha = singleLayerAlpha
+                             for (index in 0..mWidgetShortcutMenu.childCount) {
+                                 val child = mWidgetShortcutMenu.getChildAt(index)
+                                 if (child != null && child.background != null) {
+                                     if (child.background is Drawable) {
+                                         val childBackground = child.background as Drawable
+                                         childBackground.alpha = singleLayerAlpha
+                                     }
+                                 }
+                             }
+                         } catch (e: Exception) {
+                             XposedBridge.log("Cemiuiler: BlurWhenShowShortcutMenu get mWidgetShortcutMenu failed by: $e")
+                         }*/
                     }
                 })
             XposedBridge.hookAllMethods(
@@ -379,8 +367,7 @@ object BlurWhenShowShortcutMenu : BaseHook() {
                             return
                         }
                         val mArrow = HookUtils.getValueByField(
-                            param.thisObject,
-                            "mArrow"
+                            param.thisObject, "mArrow"
                         ) as View
                         val mArrowBackground = mArrow.background as ShapeDrawable
                         mArrowBackground.alpha = shortcutMenuBackgroundAlpha

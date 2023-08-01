@@ -1,5 +1,7 @@
 package com.sevtinge.cemiuiler.module.systemui.statusbar;
 
+import static de.robv.android.xposed.XposedHelpers.callMethod;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
@@ -30,8 +32,6 @@ import java.util.Objects;
 import java.util.Properties;
 
 import de.robv.android.xposed.XposedHelpers;
-
-import static de.robv.android.xposed.XposedHelpers.callMethod;
 
 public class DisplayHardwareDetail extends BaseHook {
     boolean showDeviceTemp;
@@ -81,8 +81,8 @@ public class DisplayHardwareDetail extends BaseHook {
 
     @Override
     public void init() {
-        showBatteryDetail = mPrefsMap.getBoolean("system_ui_statusbar_battery_enable"); //电池相关
-        showDeviceTemp = mPrefsMap.getBoolean("system_ui_statusbar_temp_enable"); //温度相关
+        showBatteryDetail = mPrefsMap.getBoolean("system_ui_statusbar_battery_enable"); // 电池相关
+        showDeviceTemp = mPrefsMap.getBoolean("system_ui_statusbar_temp_enable"); // 温度相关
 
         isTempAtRight = mPrefsMap.getBoolean("system_ui_statusbar_temp_right_show");
         isBatteryAtRight = mPrefsMap.getBoolean("system_ui_statusbar_battery_right_show");
@@ -300,12 +300,12 @@ public class DisplayHardwareDetail extends BaseHook {
                                     String currVal;
                                     int rawCurr = 0;
                                     try {
-                                        rawCurr = -1 * Math.round(Integer.parseInt(props.getProperty("POWER_SUPPLY_CURRENT_NOW")) / 1000f);//概率fc
+                                        rawCurr = -1 * Math.round(Integer.parseInt(props.getProperty("POWER_SUPPLY_CURRENT_NOW")) / 1000f);// 概率fc
                                     } catch (NumberFormatException e) {
                                         log("get POWER_SUPPLY_CURRENT_NOW failed: " + e);
                                     }
                                     String preferred = "mA";
-                                    if (mPrefsMap.getBoolean("system_ui_statusbar_battery_electric_current")) { //电流始终显示正值
+                                    if (mPrefsMap.getBoolean("system_ui_statusbar_battery_electric_current")) { // 电流始终显示正值
                                         rawCurr = Math.abs(rawCurr);
                                     }
                                     if (Math.abs(rawCurr) > 999) {
@@ -314,21 +314,37 @@ public class DisplayHardwareDetail extends BaseHook {
                                     } else {
                                         currVal = "" + rawCurr;
                                     }
-                                    int opt = mPrefsMap.getStringAsInt("system_ui_statusbar_battery_show", 1); //电池显示内容
+                                    int opt = mPrefsMap.getStringAsInt("system_ui_statusbar_battery_show", 1); // 电池显示内容
                                     int hideUnit = mPrefsMap.getStringAsInt("system_ui_statusbar_battery_disable", 0);
                                     String powerUnit = (hideUnit == 1 || hideUnit == 2) ? "" : "W";
                                     String currUnit = (hideUnit == 1 || hideUnit == 3) ? "" : preferred;
                                     if (opt == 1) {
-                                        float voltVal = Integer.parseInt(props.getProperty("POWER_SUPPLY_VOLTAGE_NOW")) / 1000f / 1000f;
+                                        float voltVal = 0f;
+                                        String powerNow;
+                                        try {
+                                            powerNow = props.getProperty("POWER_SUPPLY_VOLTAGE_NOW");
+                                        } catch (Exception e) {
+                                            throw new RuntimeException(e);
+                                        }
+                                        if (powerNow != null)
+                                            voltVal = Integer.parseInt(powerNow) / 1000f / 1000f;
                                         String simpleWatt = String.format(Locale.getDefault(), "%.2f", Math.abs(voltVal * rawCurr) / 1000);
                                         String splitChar = mPrefsMap.getBoolean("system_ui_statusbar_battery_line_show")
-                                                ? " " : "\n";
+                                            ? " " : "\n";
                                         batteryInfo = simpleWatt + powerUnit + splitChar + currVal + currUnit;
                                         if (mPrefsMap.getBoolean("system_ui_statusbar_battery_opposite")) {
                                             batteryInfo = currVal + currUnit + splitChar + simpleWatt + powerUnit;
                                         }
                                     } else if (opt == 2) {
-                                        float voltVal = Integer.parseInt(props.getProperty("POWER_SUPPLY_VOLTAGE_NOW")) / 1000f / 1000f;
+                                        float voltVal = 0f;
+                                        String powerNow;
+                                        try {
+                                            powerNow = props.getProperty("POWER_SUPPLY_VOLTAGE_NOW");
+                                        } catch (Exception e) {
+                                            throw new RuntimeException(e);
+                                        }
+                                        if (powerNow != null)
+                                            voltVal = Integer.parseInt(powerNow) / 1000f / 1000f;
                                         String simpleWatt = String.format(Locale.getDefault(), "%.2f", Math.abs(voltVal * rawCurr) / 1000);
                                         batteryInfo = simpleWatt + powerUnit;
                                     } else {
@@ -336,7 +352,15 @@ public class DisplayHardwareDetail extends BaseHook {
                                     }
                                 }
                                 if (showDeviceTemp && props != null && cpuProps != null) {
-                                    int batteryTempVal = Integer.parseInt(props.getProperty("POWER_SUPPLY_TEMP"));
+                                    int batteryTempVal = 0;
+                                    String powerTempNow;
+                                    try {
+                                        powerTempNow = props.getProperty("POWER_SUPPLY_TEMP");
+                                    } catch (Exception e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                    if (powerTempNow != null)
+                                        batteryTempVal = Integer.parseInt(powerTempNow);
                                     int cpuTempVal = Integer.parseInt(cpuProps);
                                     String simpleBatteryTemp = String.format(Locale.getDefault(), "%.1f", batteryTempVal / 10f);
                                     String simpleCpuTemp = String.format(Locale.getDefault(), "%.1f", cpuTempVal / 1000f);
@@ -345,7 +369,7 @@ public class DisplayHardwareDetail extends BaseHook {
                                     String tempUnit = hideUnit ? "" : "℃";
                                     if (opt == 1) {
                                         String splitChar = mPrefsMap.getBoolean("system_ui_statusbar_temp_line_show")
-                                                ? " " : "\n";
+                                            ? " " : "\n";
                                         deviceInfo = simpleBatteryTemp + tempUnit + splitChar + simpleCpuTemp + tempUnit;
                                         if (mPrefsMap.getBoolean("system_ui_statusbar_temp_opposite")) {
                                             deviceInfo = simpleCpuTemp + tempUnit + splitChar + simpleBatteryTemp + tempUnit;
@@ -422,35 +446,30 @@ public class DisplayHardwareDetail extends BaseHook {
         batteryView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, fontSize);
         if (isFontBold) batteryView.setTypeface(Typeface.DEFAULT_BOLD);
         switch (align) {
-            case 2:
-                batteryView.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-                break;
-            case 3:
-                batteryView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                break;
-            case 4:
-                batteryView.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
-                break;
+            case 2 -> batteryView.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+            case 3 -> batteryView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            case 4 -> batteryView.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
         }
-        if (fixedWidth > 10) lp.width = (int) (batteryView.getResources().getDisplayMetrics().density * fixedWidth);
+        if (fixedWidth > 10)
+            lp.width = (int) (batteryView.getResources().getDisplayMetrics().density * fixedWidth);
         leftMargin = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                leftMargin,
-                res.getDisplayMetrics()
+            TypedValue.COMPLEX_UNIT_DIP,
+            leftMargin,
+            res.getDisplayMetrics()
         );
         int topMargin = 0;
         if (vertical != 0) {
             float marginTop = TypedValue.applyDimension(
-                    TypedValue.COMPLEX_UNIT_DIP,
-                    (vertical - 8) * 0.5f,
-                    res.getDisplayMetrics()
+                TypedValue.COMPLEX_UNIT_DIP,
+                (vertical - 8) * 0.5f,
+                res.getDisplayMetrics()
             );
             topMargin = (int) marginTop;
         }
         rightMargin = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                rightMargin,
-                res.getDisplayMetrics()
+            TypedValue.COMPLEX_UNIT_DIP,
+            rightMargin,
+            res.getDisplayMetrics()
         );
         batteryView.setPaddingRelative(leftMargin, topMargin, rightMargin, 0);
         batteryView.setLayoutParams(lp);

@@ -16,8 +16,6 @@ public class ScramblePIN extends BaseHook {
 
     @Override
     public void init() {
-
-
         mKeyguardPINView = findClassIfExists("com.android.keyguard.KeyguardPINView");
 
         findAndHookMethod(mKeyguardPINView, "onFinishInflate", new MethodHook() {
@@ -33,7 +31,7 @@ public class ScramblePIN extends BaseHook {
                 mRandomViews.add(mViews[4][1]);
                 Collections.shuffle(mRandomViews);
 
-                View pinview = (View)param.thisObject;
+                View pinview = (View) param.thisObject;
                 ViewGroup row1 = pinview.findViewById(pinview.getResources().getIdentifier("row1", "id", "com.android.systemui"));
                 ViewGroup row2 = pinview.findViewById(pinview.getResources().getIdentifier("row2", "id", "com.android.systemui"));
                 ViewGroup row3 = pinview.findViewById(pinview.getResources().getIdentifier("row3", "id", "com.android.systemui"));

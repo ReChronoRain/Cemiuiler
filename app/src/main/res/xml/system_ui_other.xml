@@ -2,8 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory
-        android:title="@string/system_ui_charge_animation_title">
+    <PreferenceCategory android:title="@string/system_ui_charge_animation_title">
 
         <DropDownPreference
             android:defaultValue="0"
@@ -39,14 +38,28 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory
-            android:title="@string/system_ui_another_title" >
+    <PreferenceCategory android:title="@string/system_ui_notification_title">
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="prefs_key_system_ui_other_notification_fix"
+            android:title="@string/system_ui_other_notification_fix" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/system_ui_another_title">
 
         <SwitchPreference
             android:defaultValue="false"
             android:key="prefs_key_system_ui_notification_freeform"
             android:summary="@string/system_ui_notification_freeform_desc"
             android:title="@string/system_ui_notification_freeform" />
+
+        <SwitchPreference
+            android:title="@string/system_ui_plugin_enable_volume_blur"
+            android:summary="@string/system_ui_plugin_enable_volume_blur_desc"
+            android:key="prefs_key_system_ui_plugin_enable_volume_blur"
+            android:defaultValue="false" />
 
     </PreferenceCategory>
 
@@ -62,6 +75,6 @@
             android:key="prefs_key_system_ui_qs_label"
             android:title="@string/system_ui_qs_label" />
     </PreferenceCategory>
-<Preference android:enabled="false" />
+    <Preference android:enabled="false" />
 
 </PreferenceScreen>

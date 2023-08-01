@@ -17,9 +17,9 @@ import com.sevtinge.cemiuiler.module.base.BaseHook;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.TimeZone;
 
-import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 
 public class SelectiveHideIconForAlarmClock extends BaseHook {
@@ -33,7 +33,7 @@ public class SelectiveHideIconForAlarmClock extends BaseHook {
         mMiuiPhoneStatusBarPolicy = findClassIfExists("com.android.systemui.statusbar.phone.MiuiPhoneStatusBarPolicy");
         hookAllConstructors(mMiuiPhoneStatusBarPolicy, new MethodHook() {
             @Override
-            protected void after(MethodHookParam param) throws Throwable {
+            protected void after(MethodHookParam param) {
                 Context mContext = (Context) XposedHelpers.getObjectField(param.thisObject, "mContext");
                 XposedHelpers.setAdditionalInstanceField(param.thisObject, "mNextAlarmTime", getNextMIUIAlarmTime(mContext));
                 ContentResolver resolver = mContext.getContentResolver();
@@ -72,7 +72,7 @@ public class SelectiveHideIconForAlarmClock extends BaseHook {
 
         findAndHookMethod(mMiuiPhoneStatusBarPolicy, "onMiuiAlarmChanged", new MethodHook() {
             @Override
-            protected void before(MethodHookParam param) throws Throwable {
+            protected void before(MethodHookParam param) {
                 lastState = (boolean) XposedHelpers.getObjectField(param.thisObject, "mHasAlarm");
                 updateAlarmVisibility(param.thisObject, lastState);
                 param.setResult(null);
@@ -112,7 +112,6 @@ public class SelectiveHideIconForAlarmClock extends BaseHook {
     }
 
 
-    @SuppressWarnings("ConstantConditions")
     public long getNextMIUIAlarmTime(Context context) {
         String nextAlarm = Settings.System.getString(context.getContentResolver(), "next_alarm_clock_formatted");
         long nextTime = 0;
@@ -120,7 +119,7 @@ public class SelectiveHideIconForAlarmClock extends BaseHook {
             TimeZone timeZone = TimeZone.getTimeZone("UTC");
             SimpleDateFormat dateFormat = new SimpleDateFormat(DateFormat.getBestDateTimePattern(Locale.getDefault(), DateFormat.is24HourFormat(context) ? "EHm" : "Ehma"), Locale.getDefault());
             dateFormat.setTimeZone(timeZone);
-            long nextTimePart = dateFormat.parse(nextAlarm).getTime();
+            long nextTimePart = Objects.requireNonNull(dateFormat.parse(nextAlarm)).getTime();
 
             Calendar cal = Calendar.getInstance(timeZone);
             cal.setFirstDayOfWeek(Calendar.MONDAY);
@@ -141,13 +140,13 @@ public class SelectiveHideIconForAlarmClock extends BaseHook {
 
             nextTime = cal.getTimeInMillis();
         } catch (Throwable t) {
-            log("Hook failed by: " + t);
+            logE(t);
         }
         return nextTime;
     }
 
     public long getNextStockAlarmTime(Context context) {
-        AlarmManager alarmMgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         if (alarmMgr == null) return 0;
         AlarmManager.AlarmClockInfo aci = alarmMgr.getNextAlarmClock();
         return aci == null ? 0 : aci.getTriggerTime();

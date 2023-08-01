@@ -11,13 +11,15 @@ import android.os.Looper
 import android.os.Message
 import android.text.TextUtils
 import android.widget.Toast
-import com.github.kyuubiran.ezxhelper.utils.*
+import com.sevtinge.cemiuiler.utils.api.argTypes
+import com.sevtinge.cemiuiler.utils.api.args
+import com.sevtinge.cemiuiler.utils.callStaticMethod
 
 @SuppressLint("ViewConstructor", "SetTextI18n")
 class WeatherData(val context: Context?, private val showCity: Boolean) {
 
     private val mContext: Context
-    private val WEATHER_URI = Uri.parse("content://weather/weather")
+    private val mWeatherUri = Uri.parse("content://weather/weather")
     private val mHandler: Handler
     private val mWeatherObserver: ContentObserver?
     private val mWeatherRunnable: WeatherRunnable
@@ -36,7 +38,7 @@ class WeatherData(val context: Context?, private val showCity: Boolean) {
         mWeatherObserver = WeatherContentObserver(mHandler)
         mContext = context!!
         mWeatherRunnable = WeatherRunnable()
-        context.contentResolver.registerContentObserver(WEATHER_URI, true, mWeatherObserver)
+        context.contentResolver.registerContentObserver(mWeatherUri, true, mWeatherObserver)
         updateWeatherInfo()
     }
 
@@ -50,13 +52,21 @@ class WeatherData(val context: Context?, private val showCity: Boolean) {
         override fun run() {
             var str = ""
             try {
-                val query = mContext.contentResolver.query(WEATHER_URI, null, null, null, null)
+                val query = mContext.contentResolver.query(mWeatherUri, null, null, null, null)
                 if (query != null) {
                     if (query.moveToFirst()) {
                         str = if (showCity) {
-                            query.getString(query.getColumnIndexOrThrow("city_name")) + " " + query.getString(query.getColumnIndexOrThrow("description")) + " " + query.getString(query.getColumnIndexOrThrow("temperature"))
+                            query.getString(query.getColumnIndexOrThrow("city_name")) + " " + query.getString(
+                                query.getColumnIndexOrThrow(
+                                    "description"
+                                )
+                            ) + " " + query.getString(query.getColumnIndexOrThrow("temperature"))
                         } else {
-                            query.getString(query.getColumnIndexOrThrow("description")) + " " + query.getString(query.getColumnIndexOrThrow("temperature"))
+                            query.getString(query.getColumnIndexOrThrow("description")) + " " + query.getString(
+                                query.getColumnIndexOrThrow(
+                                    "temperature"
+                                )
+                            )
                         }
                     }
                     query.close()
@@ -83,7 +93,8 @@ class WeatherData(val context: Context?, private val showCity: Boolean) {
     }
 
     fun startCalendarApp() {
-        mContext.classLoader.loadClass("com.miui.systemui.util.CommonUtil").invokeStaticMethod("startCalendarApp", args(context), argTypes(Context::class.java))
+        mContext.classLoader.loadClass("com.miui.systemui.util.CommonUtil")
+            .callStaticMethod("startCalendarApp", args(context), argTypes(Context::class.java))
     }
 
     fun startWeatherApp() {

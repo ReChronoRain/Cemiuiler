@@ -1,8 +1,58 @@
 package com.sevtinge.cemiuiler.module.base;
 
-import com.sevtinge.cemiuiler.module.*;
+import static com.sevtinge.cemiuiler.utils.Helpers.log;
+
+import com.sevtinge.cemiuiler.BuildConfig;
+import com.sevtinge.cemiuiler.module.AiAsst;
+import com.sevtinge.cemiuiler.module.Aireco;
+import com.sevtinge.cemiuiler.module.Aod;
+import com.sevtinge.cemiuiler.module.Barrage;
+import com.sevtinge.cemiuiler.module.Browser;
+import com.sevtinge.cemiuiler.module.Camera;
+import com.sevtinge.cemiuiler.module.Clock;
+import com.sevtinge.cemiuiler.module.ContentExtension;
+import com.sevtinge.cemiuiler.module.Downloads;
+import com.sevtinge.cemiuiler.module.ExternalStorage;
+import com.sevtinge.cemiuiler.module.FileExplorer;
+import com.sevtinge.cemiuiler.module.Gallery;
+import com.sevtinge.cemiuiler.module.GuardProvider;
+import com.sevtinge.cemiuiler.module.Home;
+import com.sevtinge.cemiuiler.module.InCallUi;
+import com.sevtinge.cemiuiler.module.InputSettings;
+import com.sevtinge.cemiuiler.module.Joyose;
+import com.sevtinge.cemiuiler.module.Lbe;
+import com.sevtinge.cemiuiler.module.Market;
+import com.sevtinge.cemiuiler.module.MediaEditor;
+import com.sevtinge.cemiuiler.module.MiLink;
+import com.sevtinge.cemiuiler.module.MiSettings;
+import com.sevtinge.cemiuiler.module.MiShare;
+import com.sevtinge.cemiuiler.module.MiWallpaper;
+import com.sevtinge.cemiuiler.module.Mms;
+import com.sevtinge.cemiuiler.module.Mtb;
+import com.sevtinge.cemiuiler.module.Music;
+import com.sevtinge.cemiuiler.module.PackageInstaller;
+import com.sevtinge.cemiuiler.module.PersonalAssistant;
+import com.sevtinge.cemiuiler.module.Phone;
+import com.sevtinge.cemiuiler.module.PowerKeeper;
+import com.sevtinge.cemiuiler.module.Scanner;
+import com.sevtinge.cemiuiler.module.ScreenRecorder;
+import com.sevtinge.cemiuiler.module.ScreenShot;
+import com.sevtinge.cemiuiler.module.SecurityCenter;
 import com.sevtinge.cemiuiler.module.Settings;
-import com.sevtinge.cemiuiler.utils.*;
+import com.sevtinge.cemiuiler.module.SystemFramework;
+import com.sevtinge.cemiuiler.module.SystemSettings;
+import com.sevtinge.cemiuiler.module.SystemUI;
+import com.sevtinge.cemiuiler.module.ThemeManager;
+import com.sevtinge.cemiuiler.module.TsmClient;
+import com.sevtinge.cemiuiler.module.Updater;
+import com.sevtinge.cemiuiler.module.Various;
+import com.sevtinge.cemiuiler.module.VoiceAssist;
+import com.sevtinge.cemiuiler.module.Weather;
+import com.sevtinge.cemiuiler.utils.Helpers;
+import com.sevtinge.cemiuiler.utils.LogUtils;
+import com.sevtinge.cemiuiler.utils.PrefsMap;
+import com.sevtinge.cemiuiler.utils.PrefsUtils;
+import com.sevtinge.cemiuiler.utils.ResourcesHook;
 
 import java.io.File;
 import java.util.Map;
@@ -13,16 +63,15 @@ import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
-import com.sevtinge.cemiuiler.BuildConfig;
 
 public abstract class BaseXposedInit implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
     public static ResourcesHook mResHook;
     public static String mModulePath = null;
-    public static PrefsMap<String, Object> mPrefsMap = new PrefsMap<String, Object>();
+    public static PrefsMap<String, Object> mPrefsMap = new PrefsMap<>();
 
     public SystemFramework mSystemFramework = new SystemFramework();
-    //public SystemFrameworkForCorepatch mSystemFrameworkForCorepatch = new SystemFrameworkForCorepatch();
+    // public SystemFrameworkForCorepatch mSystemFrameworkForCorepatch = new SystemFrameworkForCorepatch();
     public SystemUI mSystemUI = new SystemUI();
     public Home mHome = new Home();
     public ScreenShot mScreenShot = new ScreenShot();
@@ -47,12 +96,14 @@ public abstract class BaseXposedInit implements IXposedHookLoadPackage, IXposedH
     public Music mMusic = new Music();
     public Gallery mGallery = new Gallery();
     public Aireco mAireco = new Aireco();
+    public AiAsst mAiAsst = new AiAsst();
     public Scanner mScanner = new Scanner();
     public MiShare mMiShare = new MiShare();
     public MiLink mMiLink = new MiLink();
     public GuardProvider mGuardProvider = new GuardProvider();
     public Lbe mLbe = new Lbe();
     public InCallUi mInCallUi = new InCallUi();
+    public InputSettings mInputSettings = new InputSettings();
     public TsmClient mTsmClient = new TsmClient();
     public ContentExtension mContentExtension = new ContentExtension();
     public VoiceAssist mVoiceAssist = new VoiceAssist();
@@ -65,7 +116,8 @@ public abstract class BaseXposedInit implements IXposedHookLoadPackage, IXposedH
     public MiWallpaper mMiWallpaper = new MiWallpaper();
     public Downloads mDownloads = new Downloads();
     public Aod mAod = new Aod();
-    //public SystemSettings mSystemSettings = new SystemSettings();
+    public Barrage mBarrage = new Barrage();
+    // public SystemSettings mSystemSettings = new SystemSettings();
     /*public void init(BaseModule... baseModules) {
         mPkgName = mLoadPackageParam.packageName;
         for (BaseModule app : baseModules) {
@@ -113,265 +165,234 @@ public abstract class BaseXposedInit implements IXposedHookLoadPackage, IXposedH
 
     public void init(LoadPackageParam lpparam) {
         String packageName = lpparam.packageName;
-        XposedBridge.log("Cemiuiler: packageName " + packageName);
-        //XposedBridge.log("Cemiuiler: R=" + Build.VERSION_CODES.R + " S=" + Build.VERSION_CODES.S + " T=" + Build.VERSION_CODES.TIRAMISU + " This=" + Build.VERSION.SDK_INT);
+        // XposedBridge.log("R=" + Build.VERSION_CODES.R + " S=" + Build.VERSION_CODES.S + " T=" + Build.VERSION_CODES.TIRAMISU + " This=" + Build.VERSION.SDK_INT);
         switch (packageName) {
-            case "android":
-                XposedBridge.log("Cemiuiler: Hook android");
+            case "android" -> {
+                log("Hook android");
                 mSystemFramework.init(lpparam);
                 mVarious.init(lpparam);
-                //mSystemFrameworkForCorepatch.init(lpparam);
-                break;
-
-            case "com.android.systemui":
+            }
+            // mSystemFrameworkForCorepatch.init(lpparam);
+            case "com.android.systemui" -> {
                 if (isSystemUIModuleEnable()) {
-                    XposedBridge.log("Cemiuiler: Hook com.android.systemui");
-                    //ALPermissionManager.RootCommand(android.content.ContextWrapper.getPackageCodePath());
+                    log("Hook com.android.systemui");
+                    // ALPermissionManager.RootCommand(android.content.ContextWrapper.getPackageCodePath());
                     mSystemUI.init(lpparam);
                     mVarious.init(lpparam);
-                    //mSystemUIPlugin.init(lpparam);
+                    // mSystemUIPlugin.init(lpparam);
                 }
-                break;
-
-            case "com.miui.home":
+            }
+            case "com.miui.home" -> {
                 if (isHomeModuleEnable()) {
-                    XposedBridge.log("Cemiuiler: Hook com.miui.home");
+                    log("Hook com.miui.home");
                     mHome.init(lpparam);
                     mVarious.init(lpparam);
                 }
-                break;
-
-            case "com.miui.securitycenter":
+            }
+            case "com.miui.securitycenter" -> {
                 if (isSecurityCenterModuleEnable()) {
-                    XposedBridge.log("Cemiuiler: Hook com.miui.securitycenter");
+                    log("Hook com.miui.securitycenter");
                     mSecurityCenter.init(lpparam);
                     mVarious.init(lpparam);
                 }
-                break;
-
-            case "com.android.settings":
-                XposedBridge.log("Cemiuiler: Hook com.android.settings");
+            }
+            case "com.android.settings" -> {
+                log("Hook com.android.settings");
                 mSystemSettings.init(lpparam);
                 mSettings.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.miui.personalassistant":
-                XposedBridge.log("Cemiuiler: Hook com.miui.personalassistant");
+            }
+            case "com.miui.personalassistant" -> {
+                log("Hook com.miui.personalassistant");
                 mPersonalAssistant.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.android.thememanager":
-                XposedBridge.log("Cemiuiler: Hook com.android.thememanager");
+            }
+            case "com.android.thememanager" -> {
+                log("Hook com.android.thememanager");
                 mThemeManager.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.android.browser":
-                XposedBridge.log("Cemiuiler: Hook com.android.browse");
+            }
+            case "com.android.browser" -> {
+                log("Hook com.android.browse");
                 mBrowser.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.android.updater":
-                XposedBridge.log("Cemiuiler: Hook com.android.updater");
+            }
+            case "com.android.updater" -> {
+                log("Hook com.android.updater");
                 mUpdater.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.xiaomi.market":
-                XposedBridge.log("Cemiuiler: Hook com.xiaomi.market");
+            }
+            case "com.xiaomi.market" -> {
+                log("Hook com.xiaomi.market");
                 mMarket.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.miui.packageinstaller":
-                XposedBridge.log("Cemiuiler: Hook com.miui.packageinstaller");
+            }
+            case "com.miui.packageinstaller" -> {
+                log("Hook com.miui.packageinstaller");
                 mPackageInstaller.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.miui.powerkeeper":
-                XposedBridge.log("Cemiuiler: Hook com.miui.powerkeeper");
+            }
+            case "com.miui.powerkeeper" -> {
+                log("Hook com.miui.powerkeeper");
                 mPowerKeeper.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.xiaomi.misettings":
-                XposedBridge.log("Cemiuiler: Hook com.xiaomi.misettings");
+            }
+            case "com.xiaomi.misettings" -> {
+                log("Hook com.xiaomi.misettings");
                 mMiSettings.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.xiaomi.joyose":
-                XposedBridge.log("Cemiuiler: Hook com.xiaomi.joyose");
+            }
+            case "com.xiaomi.joyose" -> {
+                log("Hook com.xiaomi.joyose");
                 mJoyose.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.miui.screenshot":
-                XposedBridge.log("Cemiuiler: Hook com.miui.screenshot");
+            }
+            case "com.miui.screenshot" -> {
+                log("Hook com.miui.screenshot");
                 mScreenShot.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.miui.screenrecorder":
-                XposedBridge.log("Cemiuiler: Hook com.miui.screenrecorder");
+            }
+            case "com.miui.screenrecorder" -> {
+                log("Hook com.miui.screenrecorder");
                 mScreenRecorder.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.miui.mediaeditor":
-                XposedBridge.log("Cemiuiler: Hook com.miui.mediaeditor");
+            }
+            case "com.miui.mediaeditor" -> {
+                log("Hook com.miui.mediaeditor");
                 mMediaEditor.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.miui.miwallpaper":
-                XposedBridge.log("Cemiuiler: Hook com.miui.miwallpaper");
+            }
+            case "com.miui.miwallpaper" -> {
+                log("Hook com.miui.miwallpaper");
                 mMiWallpaper.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.miui.weather2":
-                XposedBridge.log("Cemiuiler: Hook com.miui.weather2");
+            }
+            case "com.miui.weather2" -> {
+                log("Hook com.miui.weather2");
                 mWeather.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.android.deskclock":
-                XposedBridge.log("Cemiuiler: Hook com.android.deskclock");
+            }
+            case "com.android.deskclock" -> {
+                log("Hook com.android.deskclock");
                 mClock.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.miui.player":
-                XposedBridge.log("Cemiuiler: Hook com.miui.player");
+            }
+            case "com.miui.player" -> {
+                log("Hook com.miui.player");
                 mMusic.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.miui.gallery":
-                XposedBridge.log("Cemiuiler: Hook com.miui.gallery");
+            }
+            case "com.miui.gallery" -> {
+                log("Hook com.miui.gallery");
                 mGallery.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.miui.aod":
-                XposedBridge.log("Cemiuiler: Hook com.miui.aod");
+            }
+            case "com.miui.aod" -> {
+                log("Hook com.miui.aod");
                 mAod.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.xiaomi.aireco":
-                XposedBridge.log("Cemiuiler: Hook com.xiaomi.aireco");
+            }
+            case "com.xiaomi.aireco" -> {
+                log("Hook com.xiaomi.aireco");
                 mAireco.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.xiaomi.scanner":
-                XposedBridge.log("Cemiuiler: Hook com.xiaomi.scanner");
+            }
+            case "com.xiaomi.barrage" -> {
+                log("Hook com.xiaomi.barrage");
+                mBarrage.init(lpparam);
+                mVarious.init(lpparam);
+            }
+            case "com.xiaomi.aiasst.vision" -> {
+                log("Hook com.xiaomi.aiasst.vision");
+                mAiAsst.init(lpparam);
+                mVarious.init(lpparam);
+            }
+            case "com.xiaomi.scanner" -> {
+                log("Hook com.xiaomi.scanner");
                 mScanner.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.miui.mishare.connectivity":
-                XposedBridge.log("Cemiuiler: Hook com.miui.mishare.connectivity");
+            }
+            case "com.miui.miinput" -> {
+                log("Hook com.miui.miinput");
+                mInputSettings.init(lpparam);
+                mVarious.init(lpparam);
+            }
+            case "com.miui.mishare.connectivity" -> {
+                log("Hook com.miui.mishare.connectivity");
                 mMiShare.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.milink.service":
-                XposedBridge.log("Cemiuiler: Hook com.milink.service");
+            }
+            case "com.milink.service" -> {
+                log("Hook com.milink.service");
                 mMiLink.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.miui.guardprovider":
-                XposedBridge.log("Cemiuiler: Hook com.miui.guardprovider");
+            }
+            case "com.miui.guardprovider" -> {
+                log("Hook com.miui.guardprovider");
                 mGuardProvider.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.lbe.security.miui":
-                XposedBridge.log("Cemiuiler: Hook com.lbe.security.miui");
+            }
+            case "com.lbe.security.miui" -> {
+                log("Hook com.lbe.security.miui");
                 mLbe.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.android.incallui":
-                XposedBridge.log("Cemiuiler: Hook com.android.incallui");
+            }
+            case "com.android.incallui" -> {
+                log("Hook com.android.incallui");
                 mInCallUi.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.miui.tsmclient":
-                XposedBridge.log("Cemiuiler: Hook com.miui.tsmclient");
+            }
+            case "com.miui.tsmclient" -> {
+                log("Hook com.miui.tsmclient");
                 mTsmClient.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.miui.contentextension":
-                XposedBridge.log("Cemiuiler: Hook com.miui.contentextension");
+            }
+            case "com.miui.contentextension" -> {
+                log("Hook com.miui.contentextension");
                 mContentExtension.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.miui.voiceassist":
-                XposedBridge.log("Cemiuiler: Hook com.miui.voiceassist");
+            }
+            case "com.miui.voiceassist" -> {
+                log("Hook com.miui.voiceassist");
                 mVoiceAssist.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.android.mms":
-                XposedBridge.log("Cemiuiler: Hook com.android.mms");
+            }
+            case "com.android.mms" -> {
+                log("Hook com.android.mms");
                 mMms.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.android.fileexplorer":
-                XposedBridge.log("Cemiuiler: Hook com.android.fileexplorer");
+            }
+            case "com.android.fileexplorer" -> {
+                log("Hook com.android.fileexplorer");
                 mFileExplorer.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.android.phone":
-                XposedBridge.log("Cemiuiler: Hook com.android.phone");
+            }
+            case "com.android.phone" -> {
+                log("Hook com.android.phone");
                 mPhone.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.xiaomi.mtb":
-                XposedBridge.log("Cemiuiler: Hook com.xiaomi.mtb");
+            }
+            case "com.xiaomi.mtb" -> {
+                log("Hook com.xiaomi.mtb");
                 mMtb.init(lpparam);
-                break;
-
-            case "com.android.externalstorage":
-                XposedBridge.log("Cemiuiler: Hook com.android.externalstorage");
+            }
+            case "com.android.externalstorage" -> {
+                log("Hook com.android.externalstorage");
                 mExternalStorage.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.android.camera":
-                XposedBridge.log("Cemiuiler: Hook com.android.camera");
+            }
+            case "com.android.camera" -> {
+                log("Hook com.android.camera");
                 mCamera.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case "com.android.providers.downloads":
-                XposedBridge.log("Cemiuiler: Hook com.android.providers.downloads");
+            }
+            case "com.android.providers.downloads" -> {
+                log("Hook com.android.providers.downloads");
                 mDownloads.init(lpparam);
                 mVarious.init(lpparam);
-                break;
-
-            case BuildConfig.APPLICATION_ID:
-                ModuleActiveHook(lpparam);
-                break;
-
-            default:
-                mVarious.init(lpparam);
-                break;
+            }
+            case BuildConfig.APPLICATION_ID -> ModuleActiveHook(lpparam);
+            default -> mVarious.init(lpparam);
         }
     }
 

@@ -1,41 +1,42 @@
 package com.sevtinge.cemiuiler.module.packageinstaller
 
-import com.github.kyuubiran.ezxhelper.utils.*
+import com.github.kyuubiran.ezxhelper.ClassUtils.loadClass
+import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHook
+import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHooks
+import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinder
 import com.sevtinge.cemiuiler.module.base.BaseHook
-import com.sevtinge.cemiuiler.module.packageinstaller.PackageInstallerDexKit.mPackageInstallerResultMethodsMap
-import de.robv.android.xposed.XC_MethodReplacement
-import de.robv.android.xposed.XposedBridge
-import java.util.*
+import com.sevtinge.cemiuiler.utils.findClassOrNull
+import com.sevtinge.cemiuiler.utils.setBooleanField
 
-class DisableSafeModelTip : BaseHook() {
+object DisableSafeModelTip : BaseHook() {
     override fun init() {
-        try {
-            val result =
-                Objects.requireNonNull(mPackageInstallerResultMethodsMap["DisableSecurityModeFlag"])
-            for (descriptor in result) {
-                val disableSecurityModeFlag = descriptor.getMethodInstance(lpparam.classLoader)
-                log("disableSecurityModeFlag method is $disableSecurityModeFlag")
-                if (disableSecurityModeFlag.returnType == Boolean::class.javaPrimitiveType) {
-                    XposedBridge.hookMethod(disableSecurityModeFlag, XC_MethodReplacement.returnConstant(true))
+        val miuiSettingsCompatClass =
+            loadClass("com.android.packageinstaller.compat.MiuiSettingsCompat")
+
+        runCatching {
+            miuiSettingsCompatClass.methodFinder().filterByName("isPersonalizedAdEnabled")
+                .filterByReturnType(Boolean::class.java).toList().createHooks {
+                before {
+                    it.result = false
                 }
             }
-        } catch (e: Throwable) {
-            e.printStackTrace()
-        }
-        findAndHookMethod(
-            "com.miui.packageInstaller.model.ApkInfo",
-            "getSystemApp",
-            XC_MethodReplacement.returnConstant(true)
-        )
-        hookAllMethods(
-            "com.miui.packageInstaller.InstallProgressActivity",
-            "g0",
-            XC_MethodReplacement.returnConstant(false)
-        )
-        findAllMethods("com.miui.packageInstaller.InstallProgressActivity") { true }.hookAfter { param ->
-            param.thisObject.javaClass.findField { type == Boolean::class.java }.setBoolean(param.thisObject, false)
         }
 
-        //returnIntConstant(findClassIfExists("p6.a"), "d");
+        var letter = 'a'
+        for (i in 0..25) {
+            try {
+                val classIfExists =
+                    "com.miui.packageInstaller.ui.listcomponets.${letter}0".findClassOrNull()
+                classIfExists?.let {
+                    it.methodFinder().filterByName("a").first().createHook {
+                        after { hookParam ->
+                            hookParam.thisObject.setBooleanField("l", false)
+                        }
+                    }
+                }
+            } catch (t: Throwable) {
+                letter++
+            }
+        }
     }
 }

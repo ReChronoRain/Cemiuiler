@@ -1,5 +1,7 @@
 package com.sevtinge.cemiuiler.module.systemframework;
 
+import static com.sevtinge.cemiuiler.utils.devicesdk.SystemSDKKt.isMoreAndroidVersion;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,15 +11,17 @@ import android.os.BadParcelableException;
 import android.os.Handler;
 import android.util.Pair;
 import android.view.View;
+
 import com.sevtinge.cemiuiler.module.base.BaseHook;
 import com.sevtinge.cemiuiler.utils.Helpers;
 import com.sevtinge.cemiuiler.utils.PrefsUtils;
-import de.robv.android.xposed.XposedBridge;
-import de.robv.android.xposed.XposedHelpers;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
+import de.robv.android.xposed.XposedBridge;
+import de.robv.android.xposed.XposedHelpers;
 
 public class CleanOpenMenu extends BaseHook {
 
@@ -43,15 +47,14 @@ public class CleanOpenMenu extends BaseHook {
                             if (!key.contains("pref_key_system_framework_clean_open_apps")) return;
 
                             switch (type) {
-                                case "stringset":
+                                case "stringset" ->
                                     mPrefsMap.put(key, Helpers.getSharedStringSetPref(mContext, key));
-                                    break;
-                                case "integer":
+
+                                case "integer" ->
                                     mPrefsMap.put(key, Helpers.getSharedIntPref(mContext, key, 0));
-                                    break;
                             }
                         } catch (Throwable t) {
-                            log("Hook failed by: " + t);
+                            logE(t);
                         }
                     }
                 };
@@ -61,14 +64,14 @@ public class CleanOpenMenu extends BaseHook {
         MethodHook hook = new MethodHook() {
             @Override
             @SuppressWarnings("unchecked")
-            protected void after(MethodHookParam param) throws Throwable {
+            protected void after(MethodHookParam param) {
                 try {
                     if (param.args[0] == null) return;
                     if (param.args.length < 6) return;
                     Intent origIntent = (Intent) param.args[0];
                     Intent intent = (Intent) origIntent.clone();
                     String action = intent.getAction();
-                    //XposedBridge.log(action + ": " + intent.getType() + " | " + intent.getDataString());
+                    // XposedBridge.log(action + ": " + intent.getType() + " | " + intent.getDataString());
                     if (!Intent.ACTION_VIEW.equals(action)) return;
                     if (intent.hasExtra("Cemiuiler") && intent.getBooleanExtra("Cemiuiler", false)) return;
                     String scheme = intent.getScheme();
@@ -77,7 +80,7 @@ public class CleanOpenMenu extends BaseHook {
 
                     Context mContext = (Context) XposedHelpers.getObjectField(param.thisObject, "mContext");
                     String mimeType = getContentType(mContext, intent);
-                    //XposedBridge.log("mimeType: " + mimeType);
+                    // XposedBridge.log("mimeType: " + mimeType);
 
                     String key = "system_framework_clean_open_apps";
                     Set<String> selectedApps = mPrefsMap.getStringSet(key);
@@ -103,18 +106,18 @@ public class CleanOpenMenu extends BaseHook {
             }
         };
 
-        String ActQueryService = Helpers.isAndroidVersionTiramisu() ? "com.android.server.pm.ComputerEngine" : "com.android.server.pm.PackageManagerService$ComputerEngine";
+        String ActQueryService = isMoreAndroidVersion(33) ? "com.android.server.pm.ComputerEngine" : "com.android.server.pm.PackageManagerService$ComputerEngine";
         Helpers.hookAllMethods(ActQueryService, lpparam.classLoader, "queryIntentActivitiesInternal", hook);
 
-        //if (!findAndHookMethodSilently(mPackageManagerService, "queryIntentActivitiesInternal", Intent.class, String.class, int.class, int.class, int.class, boolean.class, boolean.class, hook))
+        // if (!findAndHookMethodSilently(mPackageManagerService, "queryIntentActivitiesInternal", Intent.class, String.class, int.class, int.class, int.class, boolean.class, boolean.class, hook))
         // findAndHookMethod(mPackageManagerService, "queryIntentActivitiesInternal", Intent.class, String.class, int.class, int.class, hook);//error
     }
-    //if (!findAndHookMethodSilently(mPackageManagerService, "queryIntentActivitiesInternal", Intent.class, String.class, long.class, long.class, int.class, boolean.class, boolean.class, hook))
-    //findAndHookMethod(mPackageManagerService, "queryIntentActivitiesInternal", Intent.class, String.class, long.class, int.class, hook);
+    // if (!findAndHookMethodSilently(mPackageManagerService, "queryIntentActivitiesInternal", Intent.class, String.class, long.class, long.class, int.class, boolean.class, boolean.class, hook))
+    // findAndHookMethod(mPackageManagerService, "queryIntentActivitiesInternal", Intent.class, String.class, long.class, int.class, hook);
     //}
 
 
-    //存在问题
+    // 存在问题
     private static Pair<Boolean, Boolean> isRemoveApp(boolean dynamic, Context context, String pkgName, Set<String> selectedApps, String mimeType) {
         String key = "system_framework_clean_open_apps";
         int mimeFlags0;
@@ -150,23 +153,23 @@ public class CleanOpenMenu extends BaseHook {
             else if (mimeType.startsWith("audio/")) dataType = Helpers.MimeType.AUDIO;
             else if (mimeType.startsWith("video/")) dataType = Helpers.MimeType.VIDEO;
             else if (mimeType.startsWith("text/") ||
-                    mimeType.startsWith("application/pdf") ||
-                    mimeType.startsWith("application/msword") ||
-                    mimeType.startsWith("application/vnd.ms-") ||
-                    mimeType.startsWith("application/vnd.openxmlformats-")) dataType = Helpers.MimeType.DOCUMENT;
+                mimeType.startsWith("application/pdf") ||
+                mimeType.startsWith("application/msword") ||
+                mimeType.startsWith("application/vnd.ms-") ||
+                mimeType.startsWith("application/vnd.openxmlformats-")) dataType = Helpers.MimeType.DOCUMENT;
             else if (mimeType.startsWith("application/vnd.android.package-archive") ||
-                    mimeType.startsWith("application/zip") ||
-                    mimeType.startsWith("application/x-zip") ||
-                    mimeType.startsWith("application/octet-stream") ||
-                    mimeType.startsWith("application/rar") ||
-                    mimeType.startsWith("application/x-rar") ||
-                    mimeType.startsWith("application/x-tar") ||
-                    mimeType.startsWith("application/x-bzip") ||
-                    mimeType.startsWith("application/gzip") ||
-                    mimeType.startsWith("application/x-lz") ||
-                    mimeType.startsWith("application/x-compress") ||
-                    mimeType.startsWith("application/x-7z") ||
-                    mimeType.startsWith("application/java-archive")) dataType = Helpers.MimeType.ARCHIVE;
+                mimeType.startsWith("application/zip") ||
+                mimeType.startsWith("application/x-zip") ||
+                mimeType.startsWith("application/octet-stream") ||
+                mimeType.startsWith("application/rar") ||
+                mimeType.startsWith("application/x-rar") ||
+                mimeType.startsWith("application/x-tar") ||
+                mimeType.startsWith("application/x-bzip") ||
+                mimeType.startsWith("application/gzip") ||
+                mimeType.startsWith("application/x-lz") ||
+                mimeType.startsWith("application/x-compress") ||
+                mimeType.startsWith("application/x-7z") ||
+                mimeType.startsWith("application/java-archive")) dataType = Helpers.MimeType.ARCHIVE;
             else if (mimeType.startsWith("link/")) dataType = Helpers.MimeType.LINK;
         return (mimeFlags & dataType) == dataType;
     }
@@ -175,20 +178,20 @@ public class CleanOpenMenu extends BaseHook {
         Helpers.hookAllMethods("miui.securityspace.XSpaceResolverActivityHelper.ResolverActivityRunner", null, "run", new Helpers.MethodHook() {
             @Override
             protected void after(MethodHookParam param) throws Throwable {
-                Intent mOriginalIntent = (Intent)XposedHelpers.getObjectField(param.thisObject, "mOriginalIntent");
+                Intent mOriginalIntent = (Intent) XposedHelpers.getObjectField(param.thisObject, "mOriginalIntent");
                 if (mOriginalIntent == null) return;
                 String action = mOriginalIntent.getAction();
                 if (!Intent.ACTION_VIEW.equals(action)) return;
-                //if (mOriginalIntent.getDataString() != null && mOriginalIntent.getDataString().contains(":")) return;
+                // if (mOriginalIntent.getDataString() != null && mOriginalIntent.getDataString().contains(":")) return;
 
-                Context mContext = (Context)XposedHelpers.getObjectField(param.thisObject, "mContext");
-                String mAimPackageName = (String)XposedHelpers.getObjectField(param.thisObject, "mAimPackageName");
+                Context mContext = (Context) XposedHelpers.getObjectField(param.thisObject, "mContext");
+                String mAimPackageName = (String) XposedHelpers.getObjectField(param.thisObject, "mAimPackageName");
                 if (mContext == null || mAimPackageName == null) return;
                 Set<String> selectedApps = Helpers.getSharedStringSetPref(mContext, "system_framework_clean_open_apps");
                 String mimeType = getContentType(mContext, mOriginalIntent);
                 Pair<Boolean, Boolean> isRemove = isRemoveApp(true, mContext, mAimPackageName, selectedApps, mimeType);
 
-                View mRootView = (View)XposedHelpers.getObjectField(param.thisObject, "mRootView");
+                View mRootView = (View) XposedHelpers.getObjectField(param.thisObject, "mRootView");
                 int appResId1 = mContext.getResources().getIdentifier("app1", "id", "android.miui");
                 int appResId2 = mContext.getResources().getIdentifier("app2", "id", "android.miui");
                 View originalApp = mRootView.findViewById(appResId1);

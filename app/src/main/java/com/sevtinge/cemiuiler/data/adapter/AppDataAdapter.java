@@ -1,5 +1,6 @@
 package com.sevtinge.cemiuiler.data.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,8 +30,9 @@ public class AppDataAdapter extends RecyclerView.Adapter<AppDataAdapter.ViewHold
     private int mType;
 
 
-    public void setData (List<AppData> appInfoList) {
-        this.appInfoList = appInfoList;
+    @SuppressLint("NotifyDataSetChanged")
+    public void setData(List<AppData> appInfoList) {
+        AppDataAdapter.appInfoList = appInfoList;
         notifyDataSetChanged();
     }
 
@@ -42,9 +44,10 @@ public class AppDataAdapter extends RecyclerView.Adapter<AppDataAdapter.ViewHold
 
     /**
      * 在Adapter中设置一个过滤方法，目的是为了将过滤后的数据传入Adapter中并刷新数据
+     *
      * @param locationListModels
      */
-    public void setFilter(List<AppData> locationListModels ) {
+    public void setFilter(List<AppData> locationListModels) {
         appInfoList = new ArrayList<>();
         appInfoList.addAll(locationListModels);
         notifyDataSetChanged();
@@ -62,7 +65,7 @@ public class AppDataAdapter extends RecyclerView.Adapter<AppDataAdapter.ViewHold
         AppData appInfo = appInfoList.get(position);
         selectedApps = PrefsUtils.mSharedPreferences.getStringSet(mKey, new LinkedHashSet<String>());
 
-        holder.mAppListIcon.setImageDrawable(appInfo.icon);
+        holder.mAppListIcon.setImageBitmap(appInfo.icon);
         holder.mAppName.setText(appInfo.label);
         holder.mAppPackageName.setText(appInfo.packageName);
         holder.mSelecte.setChecked(shouldSelect(appInfo.packageName));
@@ -101,8 +104,8 @@ public class AppDataAdapter extends RecyclerView.Adapter<AppDataAdapter.ViewHold
         }
     }
 
-    public interface onItemClickListener{
-        void onItemClick(View view, int position, AppData appData , boolean isCheck);
+    public interface onItemClickListener {
+        void onItemClick(View view, int position, AppData appData, boolean isCheck);
     }
 
 }

@@ -6,47 +6,46 @@ import android.view.View
 import android.view.ViewGroup
 import com.sevtinge.cemiuiler.module.base.BaseHook
 import com.sevtinge.cemiuiler.utils.HookUtils
-import com.sevtinge.cemiuiler.utils.XSPUtils
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
 
 object AddBlurEffectToNotificationView : BaseHook() {
-
-    var blurBackgroundAlpha: Int = mPrefsMap.getInt("system_ui_control_center_blur_background_alpha", 100)
+    var blurBackgroundAlpha: Int =
+        mPrefsMap.getInt("system_ui_control_center_blur_background_alpha", 100)
     var cornerRadius: Int = mPrefsMap.getInt("system_ui_control_center_corner_radius", 48)
     var blurRadius: Int = mPrefsMap.getInt("system_ui_control_center_blur_radius", 99)
-    var defaultBackgroundAlpha: Int = XSPUtils.getInt("system_ui_control_center_default_background_alpha", 200)
-
+    var defaultBackgroundAlpha: Int =
+        mPrefsMap.getInt("system_ui_control_center_default_background_alpha", 200)
 
     override fun init() {
-        val miuiExpandableNotificationRowClass = findClassIfExists(
-            "com.android.systemui.statusbar.notification.row.MiuiExpandableNotificationRow"
-        ) ?: return
+        val miuiExpandableNotificationRowClass =
+            findClassIfExists("com.android.systemui.statusbar.notification.row.MiuiExpandableNotificationRow")
+                ?: return
 
-        val notificationBackgroundViewClass = findClassIfExists(
-            "com.android.systemui.statusbar.notification.row.NotificationBackgroundView"
-        ) ?: return
+        val notificationBackgroundViewClass =
+            findClassIfExists("com.android.systemui.statusbar.notification.row.NotificationBackgroundView")
+                ?: return
 
-        val appMiniWindowRowTouchHelperClass = findClassIfExists(
-            "com.android.systemui.statusbar.notification.policy.AppMiniWindowRowTouchHelper"
-        ) ?: return
+        val appMiniWindowRowTouchHelperClass =
+            findClassIfExists("com.android.systemui.statusbar.notification.policy.AppMiniWindowRowTouchHelper")
+                ?: return
 
-        val miuiNotificationPanelViewControllerClass = findClassIfExists(
-            "com.android.systemui.statusbar.phone.MiuiNotificationPanelViewController"
-        ) ?: return
+        val miuiNotificationPanelViewControllerClass =
+            findClassIfExists("com.android.systemui.statusbar.phone.MiuiNotificationPanelViewController")
+                ?: return
 
-        val notificationStackScrollLayoutClass = findClassIfExists(
-            "com.android.systemui.statusbar.notification.stack.NotificationStackScrollLayout"
-        ) ?: return
+        val notificationStackScrollLayoutClass =
+            findClassIfExists("com.android.systemui.statusbar.notification.stack.NotificationStackScrollLayout")
+                ?: return
 
-        val lockScreenMagazineControllerClass = findClassIfExists(
-            "com.android.keyguard.magazine.LockScreenMagazineController"
-        ) ?: return
+        val lockScreenMagazineControllerClass =
+            findClassIfExists("com.android.keyguard.magazine.LockScreenMagazineController")
+                ?: return
 
-        val blurRatioChangedListener = findClassIfExists(
-            "com.android.systemui.statusbar.phone.MiuiNotificationPanelViewController\$mBlurRatioChangedListener\$1"
-        ) ?: return
+        val blurRatioChangedListener =
+            findClassIfExists("com.android.systemui.statusbar.phone.MiuiNotificationPanelViewController\$mBlurRatioChangedListener\$1")
+                ?: return
 
 
         // 每次设置背景的时候都同时改透明度
@@ -101,20 +100,16 @@ object AddBlurEffectToNotificationView : BaseHook() {
             object : XC_MethodHook() {
                 override fun beforeHookedMethod(param: MethodHookParam) {
                     val mPickedMiniWindowChild =
-                        HookUtils.getValueByField(param.thisObject, "mPickedMiniWindowChild")
-                            ?: return
+                        HookUtils.getValueByField(param.thisObject, "mPickedMiniWindowChild")?: return
 
                     val mBackgroundNormal =
-                        HookUtils.getValueByField(mPickedMiniWindowChild, "mBackgroundNormal")
-                            ?: return
+                        HookUtils.getValueByField(mPickedMiniWindowChild, "mBackgroundNormal")?: return
                     mBackgroundNormal as View
 
                     if (HookUtils.isBlurDrawable(mBackgroundNormal.background)) {
                         XposedHelpers.callMethod(
-                            mBackgroundNormal.background,
-                            "setVisible",
-                            false,
-                            false
+                            mBackgroundNormal.background, "setVisible",
+                            false, false
                         )
                         XposedHelpers.callMethod(
                             mBackgroundNormal,
@@ -199,7 +194,7 @@ object AddBlurEffectToNotificationView : BaseHook() {
                                 defaultBackgroundAlpha
                             )
                         } catch (e: Throwable) {
-                            //
+                            logE("BlurNotificationView -> defaultBackgroundAlpha", e)
                         }
                     }*/
                 }
@@ -314,7 +309,7 @@ object AddBlurEffectToNotificationView : BaseHook() {
                                 showBlurEffectForNotificationRow(expandableView)
                             }
                         } catch (e: Throwable) {
-                            return
+                          return
                         }
                     }
                 }
@@ -326,14 +321,10 @@ object AddBlurEffectToNotificationView : BaseHook() {
             "updateKeyguardElementAlpha",
             object : XC_MethodHook() {
                 override fun afterHookedMethod(param: MethodHookParam) {
-                    if (!isDefaultLockScreenTheme()) {
-                        return
-                    }
+                    if (!isDefaultLockScreenTheme()) return
                     val mNotificationStackScroller =
-                        HookUtils.getValueByField(
-                            param.thisObject,
-                            "mNotificationStackScroller"
-                        ) ?: return
+                        HookUtils.getValueByField(param.thisObject, "mNotificationStackScroller")
+                            ?: return
                     mNotificationStackScroller as ViewGroup
 
                     val keyguardContentsAlpha =
@@ -357,10 +348,8 @@ object AddBlurEffectToNotificationView : BaseHook() {
                 override fun beforeHookedMethod(param: MethodHookParam) {
                     val isBouncerShowing = param.args[0] as Boolean
                     val mNotificationStackScroller =
-                        HookUtils.getValueByField(
-                            param.thisObject,
-                            "mNotificationStackScroller"
-                        ) ?: return
+                        HookUtils.getValueByField(param.thisObject, "mNotificationStackScroller")
+                            ?: return
                     mNotificationStackScroller as ViewGroup
                     for (i in 0..mNotificationStackScroller.childCount) {
                         val childAt =
@@ -380,9 +369,7 @@ object AddBlurEffectToNotificationView : BaseHook() {
             "setViewsAlpha",
             object : XC_MethodHook() {
                 override fun beforeHookedMethod(param: MethodHookParam) {
-                    if (!isDefaultLockScreenTheme()) {
-                        return
-                    }
+                    if (!isDefaultLockScreenTheme()) return
                     val alpha = param.args[0] as Float
                     val drawableAlpha = alpha * 255
                     val mNotificationStackScrollLayout = HookUtils.getValueByField(
@@ -465,7 +452,6 @@ object AddBlurEffectToNotificationView : BaseHook() {
         XposedBridge.hookAllConstructors(miuiNotificationPanelViewControllerClass,
             object : XC_MethodHook() {
                 override fun afterHookedMethod(param: MethodHookParam) {
-                    val miuiNotificationPanelViewControllerClass = param.thisObject
                     val mNotificationStackScroller =
                         HookUtils.getValueByField(
                             param.thisObject,
@@ -475,10 +461,10 @@ object AddBlurEffectToNotificationView : BaseHook() {
                     XposedBridge.hookAllMethods(blurRatioChangedListener,
                         "onBlurRadiusChanged",
                         object : XC_MethodHook() {
-                            override fun afterHookedMethod(param: MethodHookParam) {
-                                val radius = param.args[0] as Int
+                            override fun afterHookedMethod(params: MethodHookParam) {
+                                val radius = params.args[0] as Int
                                 val isOnKeyguard = XposedHelpers.callMethod(
-                                    miuiNotificationPanelViewControllerClass,
+                                    param.thisObject,
                                     "isOnKeyguard"
                                 ) as Boolean
                                 for (i in 0..mNotificationStackScroller.childCount) {
@@ -486,12 +472,10 @@ object AddBlurEffectToNotificationView : BaseHook() {
                                         mNotificationStackScroller.getChildAt(i) ?: continue
                                     if (radius > 30 && !isOnKeyguard) {
                                         hideBlurEffectForNotificationRow(childAt)
-                                    } /*else {
+                                    } else {
                                         // 锁屏状态显示模糊
-                                        if (isOnKeyguard) {
-                                            showBlurEffectForNotificationRow(childAt)
-                                        }
-                                    }*/
+                                        if (isOnKeyguard) showBlurEffectForNotificationRow(childAt)
+                                    }
                                 }
                             }
                         })
@@ -531,17 +515,15 @@ object AddBlurEffectToNotificationView : BaseHook() {
             if (HookUtils.isBlurDrawable(mBackgroundNormal.background)) {
                 mBackgroundNormal.background = null
             }
-            try {
+            runCatching {
                 XposedHelpers.callMethod(
                     mBackgroundNormal,
                     "setDrawableAlpha",
                     defaultBackgroundAlpha
                 )
-            } catch (e: Throwable) {
-                // Nothing to do.
             }
 
-            try {
+            runCatching {
                 val childList =
                     XposedHelpers.callMethod(notificationRow, "getAttachedChildren") ?: return
                 childList as List<*>
@@ -552,8 +534,6 @@ object AddBlurEffectToNotificationView : BaseHook() {
                         }
                     }
                 }
-            } catch (e: Throwable) {
-                // Nothing to do.
             }
         }
     }
@@ -577,7 +557,7 @@ object AddBlurEffectToNotificationView : BaseHook() {
             if (HookUtils.isBlurDrawable(mBackgroundNormal.background)) {
                 XposedHelpers.callMethod(mBackgroundNormal.background, "setAlpha", alpha)
             }
-            try {
+            runCatching {
                 val childList =
                     XposedHelpers.callMethod(notificationRow, "getAttachedChildren") ?: return
                 childList as List<*>
@@ -588,8 +568,6 @@ object AddBlurEffectToNotificationView : BaseHook() {
                         }
                     }
                 }
-            } catch (e: Throwable) {
-                // Nothing to do.
             }
         }
     }
@@ -611,23 +589,20 @@ object AddBlurEffectToNotificationView : BaseHook() {
             }
         } else {
             val mBackgroundNormal =
-                HookUtils.getValueByField(notificationRow, "mBackgroundNormal")
-                    ?: return
+                HookUtils.getValueByField(notificationRow, "mBackgroundNormal")?: return
             mBackgroundNormal as View
             if (!HookUtils.isBlurDrawable(mBackgroundNormal.background)) {
                 mBackgroundNormal.background =
                     HookUtils.createBlurDrawable(mBackgroundNormal, blurRadius, cornerRadius)
-                try {
+                runCatching {
                     XposedHelpers.callMethod(
                         mBackgroundNormal,
                         "setDrawableAlpha",
                         blurBackgroundAlpha
                     )
-                } catch (e: Throwable) {
-                    // Nothing to do.
                 }
             }
-            try {
+            runCatching {
                 val childList =
                     XposedHelpers.callMethod(notificationRow, "getAttachedChildren") ?: return
                 childList as List<*>
@@ -638,8 +613,6 @@ object AddBlurEffectToNotificationView : BaseHook() {
                         }
                     }
                 }
-            } catch (e: Throwable) {
-                // Nothing to do.
             }
         }
     }

@@ -11,16 +11,15 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.github.kyuubiran.ezxhelper.utils.Log
+import com.github.kyuubiran.ezxhelper.Log
 import com.sevtinge.cemiuiler.R
 import com.sevtinge.cemiuiler.module.base.BaseHook
+import com.sevtinge.cemiuiler.utils.DisplayUtils.dip2px
 import com.sevtinge.cemiuiler.utils.Helpers
 import com.sevtinge.cemiuiler.utils.callMethod
 import com.sevtinge.cemiuiler.utils.callMethodOrNull
 import com.sevtinge.cemiuiler.utils.hookAfterMethod
-import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
-import moralnorm.internal.utils.DisplayUtils.dp2px
 import java.io.File
 import java.lang.reflect.Method
 import java.text.DecimalFormat
@@ -33,7 +32,7 @@ object DisplayMoreApkInfoNew : BaseHook() {
 
     @SuppressLint("SetTextI18n")
     override fun init() {
-        //if (!getBoolean("packageinstaller_show_more_apk_info", false)) return
+        // if (!getBoolean("packageinstaller_show_more_apk_info", false)) return
         mApkInfo = findClassIfExists("com.miui.packageInstaller.model.ApkInfo")//.findClassOrNull()
         mAppInfoViewObject =
             findClassIfExists("com.miui.packageInstaller.ui.listcomponets.AppInfoViewObject")//.findClassOrNull()
@@ -83,27 +82,30 @@ object DisplayMoreApkInfoNew : BaseHook() {
                             LinearLayout.LayoutParams.WRAP_CONTENT,
                             LinearLayout.LayoutParams.MATCH_PARENT
                         )
-                    appNameViewParams.setMargins(0, dp2px(mContext, 10f), 0, 0)
+                    appNameViewParams.setMargins(0, dip2px(mContext, 10f), 0, 0)
                     mAppNameView.layoutParams = appNameViewParams
                     mAppNameView.gravity = Gravity.CENTER
                     val linearLayout2 = LinearLayout(mContainerView.context)
-                    //val linearLayout2 = LinearLayout(mContext)
+                    // val linearLayout2 = LinearLayout(mContext)
                     linearLayout2.orientation = LinearLayout.VERTICAL
                     linearLayout2.gravity = Gravity.CENTER
                     linearLayout2.setPadding(
-                        dp2px(mContext, 18f),
-                        dp2px(mContext, 15f),
-                        dp2px(mContext, 18f),
-                        dp2px(mContext, 15f)
+                        dip2px(mContext, 18f),
+                        dip2px(mContext, 15f),
+                        dip2px(mContext, 18f),
+                        dip2px(mContext, 15f)
                     )
                     linearLayout2.layoutParams = LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.MATCH_PARENT
                     ).also {
-                        it.setMargins(0, dp2px(mContext, 13f), 0, 0)
+                        it.setMargins(0, dip2px(mContext, 13f), 0, 0)
                     }
                     linearLayout2.background =
-                        modRes.getDrawable(if (isDarkMode) R.drawable.ic_packageinstaller_background_dark else R.drawable.ic_packageinstaller_background_light)
+                        modRes.getDrawable(
+                            if (isDarkMode) R.drawable.ic_packageinstaller_background_dark else R.drawable.ic_packageinstaller_background_light,
+                            modRes.newTheme()
+                        )
                     val mAppPackageNameView = TextView(mContext)
                     mContainerView.removeAllViews()
                     val mAppVersionNameView = TextView(mContainerView.context)
@@ -143,10 +145,13 @@ object DisplayMoreApkInfoNew : BaseHook() {
                         mAppSdk =
                             mPkgInfo.applicationInfo.minSdkVersion.toString() + "-" + mPkgInfo.applicationInfo.targetSdkVersion
                     }
-                    mAppVersionNameView.text = modRes.getString(R.string.various_install_app_info_version_name) + ": " + mAppVersionName
-                    mAppVersionCodeView.text = modRes.getString(R.string.various_install_app_info_version_code) + ": " + mAppVersionCode
+                    mAppVersionNameView.text =
+                        modRes.getString(R.string.various_install_app_info_version_name) + ": " + mAppVersionName
+                    mAppVersionCodeView.text =
+                        modRes.getString(R.string.various_install_app_info_version_code) + ": " + mAppVersionCode
                     mAppSdkView.text = modRes.getString(R.string.various_install_app_info_sdk) + ": " + mAppSdk
-                    mAppSizeView.text = modRes.getString(R.string.various_install_app_size) + ": " + mOldAppSize + mNewAppSize
+                    mAppSizeView.text =
+                        modRes.getString(R.string.various_install_app_size) + ": " + mOldAppSize + mNewAppSize
                     mAppPackageNameView.text = mPackageName
                     linearLayout2.addView(mAppVersionNameView, 0)
                     linearLayout2.addView(mAppVersionCodeView, 1)

@@ -2,6 +2,7 @@ package com.sevtinge.cemiuiler.module;
 
 import static java.lang.System.currentTimeMillis;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -15,12 +16,14 @@ import android.provider.Settings;
 import android.view.KeyEvent;
 
 import com.sevtinge.cemiuiler.module.base.BaseHook;
-import com.sevtinge.cemiuiler.utils.LogUtils;
+import com.sevtinge.cemiuiler.utils.Helpers;
 import com.sevtinge.cemiuiler.utils.PrefsUtils;
 
 import de.robv.android.xposed.XposedHelpers;
 
+@SuppressLint("UnspecifiedRegisterReceiverFlag")
 public class GlobalActions extends BaseHook {
+
 
     @Override
     public void init() {
@@ -28,14 +31,15 @@ public class GlobalActions extends BaseHook {
         setupRestartActions();
     }
 
-    //GlobalActions
+    // GlobalActions
     public void setupGlobalActions() {
         hookAllConstructors("com.android.server.accessibility.AccessibilityManagerService", new MethodHook() {
             @Override
-            protected void after(MethodHookParam param) throws Throwable {
-                Context mGlobalContext = (Context)param.args[0];
+            protected void after(MethodHookParam param) {
+                Context mGlobalContext = (Context) param.args[0];
                 IntentFilter mFilter = new IntentFilter();
                 // Actions
+                mFilter.addAction(ACTION_PREFIX + "ToggleColorInversion");
                 mFilter.addAction(ACTION_PREFIX + "LockScreen");
                 mFilter.addAction(ACTION_PREFIX + "GoToSleep");
                 mFilter.addAction(ACTION_PREFIX + "ScreenCapture");
@@ -48,10 +52,10 @@ public class GlobalActions extends BaseHook {
 
     public static void proxySystemProperties(String method, String prop, String val, ClassLoader classLoader) {
         XposedHelpers.callStaticMethod(XposedHelpers.findClassIfExists("android.os.SystemProperties", classLoader),
-                method, prop, val);
+            method, prop, val);
     }
 
-
+    @SuppressLint("UnsafeIntentLaunch")
     private final BroadcastReceiver mGlobalReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -62,26 +66,34 @@ public class GlobalActions extends BaseHook {
                 String action = intent.getAction();
 
                 switch (action) {
-                    case ACTION_PREFIX + "LockScreen":
-                        XposedHelpers.callMethod(context.getSystemService(Context.POWER_SERVICE), "goToSleep", SystemClock.uptimeMillis());
-                        XposedHelpers.callMethod(wms, "lockNow", (Object)null);
-                        break;
+                    case ACTION_PREFIX + "ToggleColorInversion" -> {
+                        int opt = Settings.Secure.getInt(context.getContentResolver(), "accessibility_display_inversion_enabled");
+                        int conflictProp = (int) Helpers.proxySystemProperties("getInt", "ro.df.effect.conflict", 0, null);
+                        int conflictProp2 = (int) Helpers.proxySystemProperties("getInt", "ro.vendor.df.effect.conflict", 0, null);
+                        boolean hasConflict = conflictProp == 1 || conflictProp2 == 1;
+                        Object dfMgr = XposedHelpers.callStaticMethod(XposedHelpers.findClass("miui.hardware.display.DisplayFeatureManager", null), "getInstance");
+                        if (hasConflict && opt == 0) XposedHelpers.callMethod(dfMgr, "setScreenEffect", 15, 1);
+                        Settings.Secure.putInt(context.getContentResolver(), "accessibility_display_inversion_enabled", opt == 0 ? 1 : 0);
+                        if (hasConflict && opt != 0) XposedHelpers.callMethod(dfMgr, "setScreenEffect", 15, 0);
+                    }
 
-                    case ACTION_PREFIX + "GoToSleep":
+                    case ACTION_PREFIX + "LockScreen" -> {
                         XposedHelpers.callMethod(context.getSystemService(Context.POWER_SERVICE), "goToSleep", SystemClock.uptimeMillis());
-                        break;
+                        XposedHelpers.callMethod(wms, "lockNow", (Object) null);
+                    }
+                    case ACTION_PREFIX + "GoToSleep" ->
+                        XposedHelpers.callMethod(context.getSystemService(Context.POWER_SERVICE), "goToSleep", SystemClock.uptimeMillis());
 
-                    case ACTION_PREFIX + "ScreenCapture":
+                    case ACTION_PREFIX + "ScreenCapture" ->
                         context.sendBroadcast(new Intent("android.intent.action.CAPTURE_SCREENSHOT"));
-                        break;
 
-                    case ACTION_PREFIX + "OpenPowerMenu":
+                    case ACTION_PREFIX + "OpenPowerMenu" -> {
                         clsWMG = findClass("android.view.WindowManagerGlobal");
                         wms = XposedHelpers.callStaticMethod(clsWMG, "getWindowManagerService");
                         XposedHelpers.callMethod(wms, "showGlobalActions");
-                        break;
+                    }
 
-                    case ACTION_PREFIX + "LaunchIntent":
+                    case ACTION_PREFIX + "LaunchIntent" -> {
                         Intent launchIntent = intent.getParcelableExtra("intent");
                         if (launchIntent != null) {
                             int user = 0;
@@ -94,23 +106,22 @@ public class GlobalActions extends BaseHook {
                             else
                                 context.startActivity(launchIntent);
                         }
-                        break;
+                    }
                 }
             } catch (Throwable t) {
-                LogUtils.log(t);
+                Helpers.log(t);
             }
         }
     };
 
-    //RestartActions
+    // RestartActions
     public void setupRestartActions() {
         hookAllMethods("com.android.server.policy.PhoneWindowManager", "init", new MethodHook() {
             @Override
-            protected void after(MethodHookParam param) throws Throwable {
-                Context mContext = (Context)XposedHelpers.getObjectField(param.thisObject, "mContext");
+            protected void after(MethodHookParam param) {
+                Context mContext = (Context) XposedHelpers.getObjectField(param.thisObject, "mContext");
                 IntentFilter intentfilter = new IntentFilter();
                 intentfilter.addAction(ACTION_PREFIX + "RestartApps");
-                intentfilter.addAction(ACTION_PREFIX + "RestartHome");
                 mContext.registerReceiver(mRestartReceiver, intentfilter);
             }
         });
@@ -128,22 +139,14 @@ public class GlobalActions extends BaseHook {
                 String action = intent.getAction();
                 if (action == null) return;
 
-                switch (action) {
-                    case ACTION_PREFIX + "RestartApps":
-                        forceStopPackage(context,intent.getStringExtra("packageName"));
-                        break;
-
-                    case ACTION_PREFIX + "RestartHome":
-                        forceStopPackage(context, "com.miui.home");
-                        break;
+                if ((ACTION_PREFIX + "RestartApps").equals(action)) {
+                    forceStopPackage(context, intent.getStringExtra("packageName"));
                 }
             } catch (Exception e) {
-                LogUtils.log(e);
+                Helpers.log(e);
             }
         }
     };
-
-
 
 
     public static boolean handleAction(Context context, String key) {
@@ -159,17 +162,19 @@ public class GlobalActions extends BaseHook {
                 GlobalActions.sendDownUpKeyEvent(context, action, false);
             return true;
         }
-        switch (action) {
-            case 1: return setAction(context,"OpenNotificationCenter");
-            case 4: return setAction(context, "LockScreen");
-            case 5 : return setAction(context,"GoToSleep");
-            case 6: return setAction(context,"ScreenCapture");
-            case 12: return setAction(context, "OpenPowerMenu");
-            case 13: return launchAppIntent(context, key, skipLock);
+        return switch (action) {
+            case 1 -> setAction(context, "OpenNotificationCenter");
+            case 2 -> setAction(context, "ClearMemory");
+            case 3 -> setAction(context, "ToggleColorInversion");
+            case 4 -> setAction(context, "LockScreen");
+            case 5 -> setAction(context, "GoToSleep");
+            case 6 -> setAction(context, "ScreenCapture");
+            case 7 -> setAction(context, "OpenRecents");
+            case 8 -> setAction(context, "OpenVolumeDialog");
+            case 12 -> setAction(context, "OpenPowerMenu");
+            case 13 -> launchAppIntent(context, key, skipLock);
             /*
             case 3: return expandEQS(context);
-            case 4: return lockDevice(context);
-            case 5: return goToSleep(context);
             case 6: return takeScreenshot(context);
             case 7: return openRecents(context);
             case 8: return launchAppIntent(context, key, skipLock);
@@ -178,19 +183,16 @@ public class GlobalActions extends BaseHook {
             case 10: return toggleThis(context, Helpers.getSharedIntPref(context, key + "_toggle", 0));
             case 11: return switchToPrevApp(context);
             case 12: return openPowerMenu(context);
-            case 13: return clearMemory(context);
-            case 14: return toggleColorInversion(context);
             case 15: return goBack(context);
             case 16: return simulateMenu(context);
-            case 17: return openVolumeDialog(context);
             case 18: return volumeUp(context);
             case 19: return volumeDown(context);
             case 21: return switchKeyboard(context);
             case 22: return switchOneHandedLeft(context);
             case 23: return switchOneHandedRight(context);
             case 24: return forceClose(context);*/
-            default: return false;
-        }
+            default -> false;
+        };
     }
 
 
@@ -200,7 +202,7 @@ public class GlobalActions extends BaseHook {
             context.sendBroadcast(new Intent(ACTION_PREFIX + action));
             return true;
         } catch (Throwable t) {
-            LogUtils.log(t);
+            Helpers.log(t);
             return false;
         }
     }
@@ -227,9 +229,9 @@ public class GlobalActions extends BaseHook {
 
 
     public static boolean isMediaActionsAllowed(Context mContext) {
-        AudioManager am = (AudioManager)mContext.getSystemService(Context.AUDIO_SERVICE);
+        AudioManager am = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
         boolean isMusicActive = am.isMusicActive();
-        boolean isMusicActiveRemotely  = (Boolean)XposedHelpers.callMethod(am, "isMusicActiveRemotely");
+        boolean isMusicActiveRemotely = (Boolean) XposedHelpers.callMethod(am, "isMusicActiveRemotely");
         boolean isAllowed = isMusicActive || isMusicActiveRemotely;
         if (!isAllowed) {
             long mCurrentTime = currentTimeMillis();
@@ -240,12 +242,12 @@ public class GlobalActions extends BaseHook {
     }
 
     public static void sendDownUpKeyEvent(Context mContext, int keyCode, boolean vibrate) {
-        AudioManager am = (AudioManager)mContext.getSystemService(Context.AUDIO_SERVICE);
+        AudioManager am = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
         am.dispatchMediaKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, keyCode));
         am.dispatchMediaKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, keyCode));
 
-        if (vibrate && PrefsUtils.getSharedBoolPrefs(mContext, "prefs_key_controls_volumemedia_vibrate", true));
-            /*Helpers.performStrongVibration(mContext, PrefsUtils.getSharedBoolPrefs(mContext, "prefa_key_controls_volumemedia_vibrate_ignore", false));*/
+        if (vibrate && PrefsUtils.getSharedBoolPrefs(mContext, "prefs_key_controls_volumemedia_vibrate", true)) ;
+        /*Helpers.performStrongVibration(mContext, PrefsUtils.getSharedBoolPrefs(mContext, "prefa_key_controls_volumemedia_vibrate_ignore", false));*/
     }
 
     public static boolean launchAppIntent(Context context, String key, boolean skipLock) {
@@ -299,7 +301,7 @@ public class GlobalActions extends BaseHook {
 
             return intent;
         } catch (Throwable t) {
-            LogUtils.log(t);
+            Helpers.log(t);
             return null;
         }
     }

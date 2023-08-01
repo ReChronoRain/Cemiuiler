@@ -1,5 +1,8 @@
 package com.sevtinge.cemiuiler.module.systemframework;
 
+import static com.sevtinge.cemiuiler.utils.devicesdk.SystemSDKKt.isAndroidT;
+import static com.sevtinge.cemiuiler.utils.devicesdk.SystemSDKKt.isMoreAndroidVersion;
+
 import android.os.Build;
 import android.provider.Settings;
 import android.util.SparseIntArray;
@@ -8,9 +11,7 @@ import com.sevtinge.cemiuiler.module.base.BaseHook;
 
 import java.util.Set;
 
-import com.sevtinge.cemiuiler.utils.SdkHelper;
 import de.robv.android.xposed.XposedHelpers;
-import moralnorm.os.SdkVersion;
 
 public class VolumeSeparateControl extends BaseHook {
 
@@ -24,11 +25,14 @@ public class VolumeSeparateControl extends BaseHook {
         findAndHookMethod(mAudioService, "updateStreamVolumeAlias", boolean.class, String.class, new MethodHook() {
             @Override
             protected void after(MethodHookParam param) throws Throwable {
-                int[] mStreamVolumeAlias = (int[]) (SdkHelper.isAndroidTiramisu() ? XposedHelpers.getStaticObjectField(mAudioService, "mStreamVolumeAlias") : XposedHelpers.getObjectField(param.thisObject, "mStreamVolumeAlias"));
+                int[] mStreamVolumeAlias =
+                    (int[]) (isMoreAndroidVersion(Build.VERSION_CODES.TIRAMISU) ?
+                        XposedHelpers.getStaticObjectField(mAudioService, "mStreamVolumeAlias") :
+                        XposedHelpers.getObjectField(param.thisObject, "mStreamVolumeAlias"));
                 mStreamVolumeAlias[1] = 1;
                 mStreamVolumeAlias[5] = 5;
 
-                if (SdkHelper.isAndroidTiramisu()) {
+                if (isAndroidT()) {
                     XposedHelpers.setStaticObjectField(mAudioService, "mStreamVolumeAlias", mStreamVolumeAlias);
                 } else {
                     XposedHelpers.setObjectField(param.thisObject, "mStreamVolumeAlias", mStreamVolumeAlias);
@@ -68,9 +72,9 @@ public class VolumeSeparateControl extends BaseHook {
 
         findAndHookMethodSilently(mAudioService, "shouldZenMuteStream", int.class, new MethodHook() {
             protected void after(MethodHookParam param) throws Throwable {
-                int mStreamType = (int)param.args[0];
-                if (mStreamType == 5 && !(boolean)param.getResult()) {
-                    int mZenMode = (int)XposedHelpers.callMethod(XposedHelpers.getObjectField(param.thisObject, "mNm"), "getZenMode");
+                int mStreamType = (int) param.args[0];
+                if (mStreamType == 5 && !(boolean) param.getResult()) {
+                    int mZenMode = (int) XposedHelpers.callMethod(XposedHelpers.getObjectField(param.thisObject, "mNm"), "getZenMode");
                     if (mZenMode == 1) param.setResult(true);
                 }
             }

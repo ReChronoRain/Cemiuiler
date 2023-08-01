@@ -1,9 +1,10 @@
 package com.sevtinge.cemiuiler.module.base;
 
 import com.sevtinge.cemiuiler.XposedInit;
-import com.sevtinge.cemiuiler.utils.ResourcesHook;
+import com.sevtinge.cemiuiler.utils.Helpers;
 import com.sevtinge.cemiuiler.utils.LogUtils;
 import com.sevtinge.cemiuiler.utils.PrefsMap;
+import com.sevtinge.cemiuiler.utils.ResourcesHook;
 
 import java.lang.reflect.Method;
 
@@ -30,10 +31,11 @@ public abstract class BaseHook {
         try {
             setLoadPackageParam(lpparam);
             init();
-            if (!mPrefsMap.getBoolean("settings_disable_detailed_log")) printHookStateLog("Hook Success!");
+            if (!mPrefsMap.getBoolean("settings_disable_detailed_log"))
+                printHookStateLog("Hook Success!");
         } catch (Throwable t) {
             printHookStateLog("Hook Failed!");
-            printHookFailedLog(t);
+            Helpers.log(TAG + " " + t);
         }
     }
 
@@ -53,6 +55,28 @@ public abstract class BaseHook {
         if (!mPrefsMap.getBoolean("settings_disable_detailed_log")) {
             XposedBridge.log("Cemiuiler: " + TAG + " " + log);
         }
+    }
+
+    public void logI(String log) {
+        if (!mPrefsMap.getBoolean("settings_disable_detailed_log")) {
+            XposedBridge.log("Cemiuiler: " + TAG + " " + log);
+        }
+    }
+
+    public void logE(Exception e) {
+        XposedBridge.log("Cemiuiler: " + TAG + " hook failed by: " + e);
+    }
+
+    public void logE(Throwable t) {
+        XposedBridge.log("Cemiuiler: " + TAG + " hook failed by: " + t);
+    }
+
+    public void logE(String tag, Exception e) {
+        XposedBridge.log("Cemiuiler: " + TAG + " " + tag + " hook failed by: " + e);
+    }
+
+    public void logE(String tag, Throwable t) {
+        XposedBridge.log("Cemiuiler: " + TAG + " " + tag + " hook failed by: " + t);
     }
 
 
