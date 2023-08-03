@@ -7,7 +7,7 @@ import com.sevtinge.cemiuiler.utils.Helpers;
 
 import de.robv.android.xposed.XposedHelpers;
 
-public class AutoCloseCollapse extends BaseHook {
+public class AutoCollapse extends BaseHook {
     @Override
     public void init() {
         Helpers.findAndHookMethod("com.android.systemui.qs.tileimpl.QSTileImpl", lpparam.classLoader, "click", View.class, new MethodHook() {
