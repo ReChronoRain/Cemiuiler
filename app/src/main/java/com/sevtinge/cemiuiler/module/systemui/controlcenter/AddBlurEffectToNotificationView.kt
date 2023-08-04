@@ -485,10 +485,10 @@ object AddBlurEffectToNotificationView : BaseHook() {
                                         mNotificationStackScroller.getChildAt(i) ?: continue
                                     if (radius > 30 && !isOnKeyguard) {
                                         hideBlurEffectForNotificationRow(childAt)
-                                    } else {
-                                        // 锁屏状态显示模糊
+                                    } /*else {
+                                        // 锁屏状态显示模糊（不能留，点击通知进入密码页面模糊残留）
                                         if (isOnKeyguard) showBlurEffectForNotificationRow(childAt)
-                                    }
+                                    }*/
                                 }
                             }
                         })
