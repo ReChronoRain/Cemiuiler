@@ -83,6 +83,7 @@
     <string name="milink">投屏</string>
     <string name="mirror">MIUI+</string>
     <string name="mi_settings">小米设置</string>
+    <string name="mi_input_settings">输入设置</string>
     <string name="mishare">小米互传</string>
     <string name="miwallpaper">壁纸</string>
     <string name="mms">短信</string>
@@ -302,7 +303,7 @@
     <string name="home_drawer_blur">抽屉模糊</string>
     <string name="home_drawer_blur_desc">请将应用程序抽屉的背景透明度设置为 100% 以使用此功能</string>
 
-    <string name="home_dock_bg_custom_enable">启用自定义</string>
+    <string name="home_dock_bg_enable">添加 Dock 栏背景</string>
     <string name="home_dock_bg_height">高度</string>
     <string name="home_dock_bg_height_desc">Dock 栏高度</string>
     <string name="home_dock_bg_margin_horizontal">水平边距</string>
@@ -960,7 +961,7 @@
     <string name="system_ui_statusbar_iconmanage_status_title">状态图标</string>
     <string name="system_ui_statusbar_iconmanage_notify_title">通知图标</string>
     <string name="system_ui_statusbar_iconmanage_battery_title">电池</string>
-    <string name="system_ui_statusbar_iconmamage_call_title">通话</string>
+    <string name="system_ui_statusbar_iconmanage_call_title">通话</string>
     <string name="system_ui_statusbar_iconmanage_left_title">图标左侧显示</string>
     <string name="system_ui_statusbar_iconmanage_right_title">图标右侧显示</string>
     <string name="system_ui_status_bar_icon_wifi">WIFI 图标</string>
