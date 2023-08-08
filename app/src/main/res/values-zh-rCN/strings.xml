@@ -985,6 +985,7 @@
     <string name="system_ui_status_bar_icon_vowifi">隐藏 VoWiFi 图标</string>
     <string name="system_ui_status_bar_icon_headset">耳机</string>
     <string name="system_ui_status_bar_icon_volume">音量</string>
+    <string name="system_ui_status_bar_icon_data_saver">流量节省</string>
     <string name="system_ui_status_bar_icon_zen">勿扰模式</string>
     <string name="system_ui_status_bar_icon_stealth">隐藏隐身模式图标</string>
     <string name="system_ui_status_bar_icon_mute">隐藏麦克风静音图标</string>
