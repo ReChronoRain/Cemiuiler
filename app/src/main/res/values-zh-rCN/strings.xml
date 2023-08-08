@@ -911,6 +911,7 @@
     <string name="system_ui_statusbar_indicator_temperature_title">温度相关</string>
     <string name="system_ui_statusbar_battery_size">字体大小</string>
     <string name="system_ui_statusbar_battery_show">显示内容</string>
+    <string name="system_ui_statusbar_temp_decimal_places">隐藏小数位</string>
     <string name="system_ui_statusbar_battery_disable">隐藏单位</string>
     <string name="system_ui_statusbar_battery_right_show">右侧显示</string>
     <string name="system_ui_statusbar_battery_electric_current">电流总显示正值</string>

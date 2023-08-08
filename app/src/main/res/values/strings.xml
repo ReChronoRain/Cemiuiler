@@ -816,6 +816,7 @@
     <string name="array_battery_current">Current only</string>
     <string name="system_ui_statusbar_battery_size">Font size</string>
     <string name="system_ui_statusbar_battery_show">Show contents</string>
+    <string name="system_ui_statusbar_temp_decimal_places">Hide decimal places</string>
     <string name="system_ui_statusbar_battery_disable">Hide units</string>
     <string name="system_ui_statusbar_battery_right_show">Show on the right</string>
     <string name="system_ui_statusbar_battery_electric_current">The current always shows a positive value</string>
