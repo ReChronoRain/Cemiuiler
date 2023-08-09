@@ -110,6 +110,7 @@ public class FiveAndGmsTile extends BaseHook {
                             packageManager.getPackageInfo(CheckGms, PackageManager.GET_ACTIVITIES);
                             param.setResult(true);
                         } catch (PackageManager.NameNotFoundException e) {
+                            logI("Not Find GMS App");
                             param.setResult(false);
                         }
                     } else {
@@ -189,7 +190,7 @@ public class FiveAndGmsTile extends BaseHook {
                                 }
                             }
                             XposedHelpers.callMethod(param.thisObject, "refreshState");
-                        } else if (End == PackageManager.COMPONENT_ENABLED_STATE_ENABLED) {
+                        } else if (End == PackageManager.COMPONENT_ENABLED_STATE_ENABLED || End == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT) {
                             for (String GmsAppsSystem : GmsAppsSystem) {
                                 try {
                                     packageManager.getPackageInfo(GmsAppsSystem, PackageManager.GET_ACTIVITIES);
@@ -198,9 +199,6 @@ public class FiveAndGmsTile extends BaseHook {
                                     logI("Don't have Gms app :" + GmsAppsSystem);
                                 }
                             }
-                            XposedHelpers.callMethod(param.thisObject, "refreshState");
-                        } else {
-                            logI("Unknown state");
                             XposedHelpers.callMethod(param.thisObject, "refreshState");
                         }
                     }
