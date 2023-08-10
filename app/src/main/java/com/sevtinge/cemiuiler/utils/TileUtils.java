@@ -76,7 +76,8 @@ public abstract class TileUtils extends BaseHook {
             }
         });
     }
-
+    
+    /*用于指定磁贴工厂函数*/
     public Class<?> customQSFactory() {
         return null;
     }
