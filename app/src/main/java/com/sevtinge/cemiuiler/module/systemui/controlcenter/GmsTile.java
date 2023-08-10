@@ -16,7 +16,8 @@ import de.robv.android.xposed.XposedHelpers;
 
 public class GmsTile extends TileUtils {
     String CheckGms = "com.google.android.gms";
-
+    String mQSFactoryClsName = isMoreAndroidVersion(Build.VERSION_CODES.TIRAMISU) ? "com.android.systemui.qs.tileimpl.MiuiQSFactory" :
+        "com.android.systemui.qs.tileimpl.QSFactoryInjectorImpl";
     String[] GmsAppsSystem = new String[]{
         "com.google.android.gms",
         "com.google.android.gsf",
@@ -35,13 +36,21 @@ public class GmsTile extends TileUtils {
     }
 
     @Override
+    public Class<?> customQSFactory() {
+        return findClassIfExists(mQSFactoryClsName);
+    }
+
+    @Override
     public Class<?> customClass() {
         return findClassIfExists("com.android.systemui.qs.tiles.ScreenLockTile");
     }
 
     @Override
-    public String customTileProvider() {
-        return isMoreAndroidVersion(Build.VERSION_CODES.TIRAMISU) ? "screenLockTileProvider" : "mScreenLockTileProvider";
+    public String[] customTileProvider() {
+        String[] TileProvider = new String[2];
+        TileProvider[0] = "screenLockTileProvider";
+        TileProvider[1] = isMoreAndroidVersion(Build.VERSION_CODES.TIRAMISU) ? "createTileInternal" : "interceptCreateTile";
+        return TileProvider;
     }
 
     @Override

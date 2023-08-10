@@ -1,11 +1,8 @@
 package com.sevtinge.cemiuiler.utils;
 
-import static com.sevtinge.cemiuiler.utils.devicesdk.SystemSDKKt.isMoreAndroidVersion;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
-import android.os.Build;
 import android.view.View;
 
 import com.sevtinge.cemiuiler.module.base.BaseHook;
@@ -16,8 +13,6 @@ import de.robv.android.xposed.XposedHelpers;
 public abstract class TileUtils extends BaseHook {
     Class<?> mResourceIcon;
     Class<?> mQSFactory;
-
-    String mQSFactoryClsName;
     final boolean[] isListened = {false};
 
     /*固定语法，必须调用。
@@ -29,10 +24,7 @@ public abstract class TileUtils extends BaseHook {
      * */
     @Override
     public void init() {
-        mQSFactoryClsName = isMoreAndroidVersion(Build.VERSION_CODES.TIRAMISU) ? "com.android.systemui.qs.tileimpl.MiuiQSFactory" :
-            "com.android.systemui.qs.tileimpl.QSFactoryImpl";
-
-        mQSFactory = findClassIfExists(mQSFactoryClsName);
+        mQSFactory = customQSFactory();
         Class<?> myTile = customClass();
         mResourceIcon = findClass("com.android.systemui.qs.tileimpl.QSTileImpl$ResourceIcon");
         SystemUiHook(); // 不需要覆写
@@ -85,13 +77,17 @@ public abstract class TileUtils extends BaseHook {
         });
     }
 
+    public Class<?> customQSFactory() {
+        return null;
+    }
+
     /*需要Hook的磁贴Class*/
     public Class<?> customClass() {
         return null;
     }
 
     /*需要Hook执行的Class方法*/
-    public String customTileProvider() {
+    public String[] customTileProvider() {
         return null;
     }
 
@@ -138,12 +134,12 @@ public abstract class TileUtils extends BaseHook {
      * 判断是否是自定义磁贴，如果是则在自定义磁贴前加上Key，用于定位磁贴。
      */
     public void tileAllName(Class<?> QSFactory) {
-        findAndHookMethod(QSFactory, "createTileInternal", String.class, new MethodHook() {
+        findAndHookMethod(QSFactory, customTileProvider()[1], String.class, new MethodHook() {
             @Override
             protected void before(MethodHookParam param) {
                 String tileName = (String) param.args[0];
                 if (tileName.equals(customName())) {
-                    String myTileProvider = customTileProvider();
+                    String myTileProvider = customTileProvider()[0];
                     Object provider = XposedHelpers.getObjectField(param.thisObject, myTileProvider);
                     Object tile = XposedHelpers.callMethod(provider, "get");
                     XposedHelpers.setAdditionalInstanceField(tile, "customName", tileName);
