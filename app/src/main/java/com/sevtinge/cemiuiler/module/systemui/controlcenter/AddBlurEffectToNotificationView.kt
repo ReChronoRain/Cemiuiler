@@ -10,6 +10,9 @@ import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
 import com.sevtinge.cemiuiler.utils.replaceMethod
+import com.sevtinge.cemiuiler.utils.callStaticMethod
+import com.sevtinge.cemiuiler.utils.findClass
+import com.github.kyuubiran.ezxhelper.EzXHelper.appContext
 
 object AddBlurEffectToNotificationView : BaseHook() {
     var blurBackgroundAlpha: Int =
@@ -48,20 +51,31 @@ object AddBlurEffectToNotificationView : BaseHook() {
             findClassIfExists("com.android.systemui.statusbar.phone.MiuiNotificationPanelViewController\$mBlurRatioChangedListener\$1")
                 ?: return
 
-        // 存在卡片砍头情况        
-        /*
-        // 避免控制中心通知上移
-        "com.android.systemui.statusbar.notification.stack.AmbientState".replaceMethod( "getTopPadding")
+//避免控制中心通知上移(修复2k屏以下控制中心通知砍头，修复横屏时控制中心砍头现象)
+           "com.android.systemui.statusbar.notification.stack.AmbientState".replaceMethod("getTopPadding")
             {
-
-            return@replaceMethod  1750.0f
-            }
-        // 修改横幅通知上划极限值 
-        "com.android.systemui.statusbar.notification.stack.AmbientState".replaceMethod( "getStackTranslation")
+                     
+        val getScreenHeight =
+            findClass("com.android.systemui.fsgesture.AppQuickSwitchActivity").callStaticMethod("getScreenHeight",appContext) as Int            
+              if(getScreenHeight <= 1440){
+              return@replaceMethod  1200.0f *0.45f + getScreenHeight * 0.09f
+             } else {
+              return@replaceMethod  1200.0f + getScreenHeight * 0.18125f
+                  }
+             }
+        //修改横幅通知上划极限值
+          "com.android.systemui.statusbar.notification.stack.AmbientState".replaceMethod("getStackTranslation")
             {
+            
+            val getScreenHeight =
+                findClass("com.android.systemui.fsgesture.AppQuickSwitchActivity").callStaticMethod("getScreenHeight",appContext) as Int            
+            if(getScreenHeight <= 1440){
+            return@replaceMethod  -1200.0f *0.45f
+            } else {
             return@replaceMethod -1200.0f
-            }
-        */
+            }             
+              }
+
 
         // 每次设置背景的时候都同时改透明度
         XposedBridge.hookAllMethods(
