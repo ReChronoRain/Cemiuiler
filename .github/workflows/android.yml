@@ -1,19 +1,24 @@
 name: Build and Release
- 
+
 on:
-  push:
-    branches:
-      - master
-      - "feature/*"
-    tags:
-      - "v*.*.*"
-  pull_request:
-    branches:
-      - master
-      - "feature/*"
- 
+
+ push:
+
+   branches: [ "main" ]
+
+   tags:
+
+     - 'v*'
+
+ pull_request:
+
+   branches: [ "main" ]
+   
+permissions: write-all
+
 jobs:
-  apk:
+
+ apk:
     name: Generate APK
     runs-on: ubuntu-latest
     steps:
@@ -29,14 +34,16 @@ jobs:
       - name: Set execution flag for gradlew
         run: chmod +x gradlew
       - name: Build APK
-        run: bash ./gradlew assembleDebug --stacktrace
+        run: bash ./gradlew assembleCanary
       - name: Upload APK
         uses: actions/upload-artifact@v1
         with:
           name: apk
-          path: app/build/outputs/apk/debug/app-debug.apk
+          path: app/build/outputs/apk/canary/Cemiuiler.apk
  
-  release:
+  
+ release:
+  
     name: Release APK
     needs: apk
     runs-on: ubuntu-latest
@@ -67,6 +74,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: apk/app-debug.apk
+          asset_path: apk/Cemiuiler.apk
           asset_name: ${{ github.event.repository.name }}  ${{ steps.branch-name.outputs.current_branch }} v${{ github.run_number }}.${{ github.run_attempt }}.apk
           asset_content_type: application/zip
