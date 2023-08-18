@@ -1,5 +1,6 @@
 package com.sevtinge.cemiuiler.module.systemui.lockscreen
 
+import android.os.Build
 import android.view.View
 import android.widget.LinearLayout
 import com.github.kyuubiran.ezxhelper.ClassUtils.loadClass
@@ -11,7 +12,7 @@ import com.sevtinge.cemiuiler.utils.getObjectField
 object RemoveCamera : BaseHook() {
     override fun init() {
         // 屏蔽右下角组件显示
-        loadClass("com.android.systemui.statusbar.phone.KeyguardBottomAreaView").methodFinder().first {
+        loadClass(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) "com.android.keyguard.injector.KeyguardBottomAreaInjector" else "com.android.systemui.statusbar.phone.KeyguardBottomAreaView").methodFinder().first {
             name == "onFinishInflate"
         }.createHook {
             after {

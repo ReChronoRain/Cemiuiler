@@ -1,5 +1,6 @@
 package com.sevtinge.cemiuiler.module.systemui.statusbar.icon.all
 
+import android.os.Build
 import com.github.kyuubiran.ezxhelper.ClassUtils.loadClass
 import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHook
 import com.github.kyuubiran.ezxhelper.MemberExtensions.paramCount
@@ -20,7 +21,8 @@ class StatusBarIcon : BaseHook() {
             }
         }
 
-        loadClass("com.android.systemui.statusbar.phone.MiuiDripLeftStatusBarIconControllerImpl").methodFinder().first {
+
+        loadClass(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) "com.android.systemui.statusbar.phone.StatusBarIconControllerImpl" else "com.android.systemui.statusbar.phone.MiuiDripLeftStatusBarIconControllerImpl").methodFinder().first {
             name == "setIconVisibility" && paramCount == 2
         }.createHook {
             before { param ->

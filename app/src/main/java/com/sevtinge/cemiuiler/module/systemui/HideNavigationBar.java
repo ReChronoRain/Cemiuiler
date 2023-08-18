@@ -1,6 +1,7 @@
 package com.sevtinge.cemiuiler.module.systemui;
 
 import android.content.Context;
+import android.os.Build;
 import android.provider.Settings;
 
 import com.sevtinge.cemiuiler.module.base.BaseHook;
@@ -8,17 +9,29 @@ import com.sevtinge.cemiuiler.module.base.BaseHook;
 import de.robv.android.xposed.XposedHelpers;
 
 public class HideNavigationBar extends BaseHook {
+
     @Override
     public void init() {
-        findAndHookMethod("com.android.systemui.statusbar.phone.NavigationModeControllerExt",
-            "hideNavigationBar",
-            new MethodHook() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            hookAllConstructors("com.android.systemui.statusbar.phone.NavigationModeControllerExt", new MethodHook() {
                 @Override
-                protected void after(MethodHookParam param) {
-                    param.setResult(true);
+                protected void after(MethodHookParam param) throws Throwable {
+                    super.after(param);
+                    XposedHelpers.setStaticBooleanField(param.getClass().getClassLoader().loadClass("com.android.systemui.statusbar.phone.NavigationModeControllerExt"), "mHideGestureLine", true);
                 }
-            }
-        );
+            });
+        } else {
+            findAndHookMethod("com.android.systemui.statusbar.phone.NavigationModeControllerExt",
+                "hideNavigationBar",
+                new MethodHook() {
+                    @Override
+                    protected void after(MethodHookParam param) {
+                        param.setResult(true);
+                    }
+                }
+            );
+        }
+
         hookAllMethods("com.android.systemui.navigationbar.NavigationBarController",
             "createNavigationBar",
             new MethodHook() {

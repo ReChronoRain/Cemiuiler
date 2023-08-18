@@ -2,6 +2,7 @@ package com.sevtinge.cemiuiler.module.systemui.lockscreen
 
 import android.app.KeyguardManager
 import android.content.Context
+import android.os.Build
 import android.os.SystemClock
 import android.view.MotionEvent
 import android.view.View
@@ -15,7 +16,11 @@ import de.robv.android.xposed.XposedHelpers.setAdditionalInstanceField
 
 object LockScreenDoubleTapToSleep : BaseHook() {
     override fun init() {
-        loadClass("com.android.systemui.statusbar.phone.NotificationsQuickSettingsContainer").methodFinder().first {
+        loadClass(
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+                "com.android.systemui.shade.NotificationsQuickSettingsContainer"
+            else
+                "com.android.systemui.statusbar.phone.NotificationsQuickSettingsContainer").methodFinder().first {
             name == "onFinishInflate"
         }.createHook {
             before {

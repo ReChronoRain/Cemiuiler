@@ -2,6 +2,7 @@ package com.sevtinge.cemiuiler.module.systemui.lockscreen
 
 import android.animation.ValueAnimator
 import android.graphics.drawable.LayerDrawable
+import android.os.Build
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.sevtinge.cemiuiler.module.base.BaseHook
@@ -13,7 +14,7 @@ import de.robv.android.xposed.XposedHelpers
 object AddBlurEffectToLockScreen : BaseHook() {
     override fun init() {
         val miuiNotificationPanelViewControllerClass = findClassIfExists(
-            "com.android.systemui.statusbar.phone.MiuiNotificationPanelViewController"
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) "com.android.systemui.shade.MiuiNotificationPanelViewController" else "com.android.systemui.statusbar.phone.MiuiNotificationPanelViewController"
         ) ?: return
 
         val keyguardBottomAreaViewClass = findClassIfExists(
