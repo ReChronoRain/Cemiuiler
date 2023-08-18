@@ -48,21 +48,52 @@ object AddBlurEffectToNotificationView : BaseHook() {
             findClassIfExists("com.android.systemui.statusbar.phone.MiuiNotificationPanelViewController\$mBlurRatioChangedListener\$1")
                 ?: return
 
-        // 存在卡片砍头情况        
-        /*
-        // 避免控制中心通知上移
-        "com.android.systemui.statusbar.notification.stack.AmbientState".replaceMethod( "getTopPadding")
+//避免修改上滑极限值以后动画速度过快
+      "com.android.systemui.statusbar.notification.stack.AmbientState".replaceMethod( "getAppearFraction")
             {
+            
+            val appearFraction = it.thisObject.getObjectField("mAppearFraction")  as Float
+            
+            val isFlinging = it.thisObject.getObjectField("mIsFlinging")  as Boolean
+                        
+            val isSwipingUp = it.thisObject.getObjectField("mIsSwipingUp")  as Boolean
+            
+            if(isFlinging || isSwipingUp){
+            
+            return@replaceMethod appearFraction * appearFraction * appearFraction * appearFraction
+            
+            }else {
+            
+            return@replaceMethod appearFraction
+            
+            }             
 
-            return@replaceMethod  1750.0f
-            }
-        // 修改横幅通知上划极限值 
-        "com.android.systemui.statusbar.notification.stack.AmbientState".replaceMethod( "getStackTranslation")
-            {
-            return@replaceMethod -1200.0f
-            }
-        */
+    }
 
+//修改横幅通知上滑极限值
+    "com.android.systemui.statusbar.notification.stack.AmbientState".replaceMethod("getStackTranslation")
+            {            
+                
+            val getScreenHeight =
+                findClass("com.android.systemui.fsgesture.AppQuickSwitchActivity").callStaticMethod("getScreenHeight",appContext) as Int            
+             
+            val mStackTranslation = it.thisObject.getObjectField("mStackTranslation")  as Float
+            
+            val isFlinging = it.thisObject.getObjectField("mIsFlinging")  as Boolean
+            
+            val isSwipingUp = it.thisObject.getObjectField("mIsSwipingUp")  as Boolean
+            
+            if(isFlinging || isSwipingUp){
+
+            return@replaceMethod  getScreenHeight.toFloat()
+
+            } else {
+            
+            return@replaceMethod mStackTranslation
+            
+            }             
+
+    }
         // 每次设置背景的时候都同时改透明度
         XposedBridge.hookAllMethods(
             notificationBackgroundViewClass,
