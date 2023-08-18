@@ -12,6 +12,7 @@ import de.robv.android.xposed.XposedHelpers
 import com.sevtinge.cemiuiler.utils.replaceMethod
 import com.github.kyuubiran.ezxhelper.EzXHelper.appContext
 import com.sevtinge.cemiuiler.utils.getObjectField
+import com.sevtinge.cemiuiler.utils.callStaticMethod
 
 object AddBlurEffectToNotificationView : BaseHook() {
     var blurBackgroundAlpha: Int =
