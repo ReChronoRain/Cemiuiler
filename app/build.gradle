@@ -25,7 +25,7 @@ android {
         project.archivesBaseName = "Cemiuiler"
         applicationVariants.configureEach { variant ->
             variant.outputs.configureEach {
-                outputFileName = project.archivesBaseName + "_" + versionName + "(" + versionCode + ")_" + variant.buildType.name + ".apk"
+                outputFileName = variant.buildType.name + ".apk"
             }
         }
     }
