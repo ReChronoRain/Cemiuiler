@@ -109,7 +109,7 @@ object AddBlurEffectToNotificationView : BaseHook() {
             
             if(isFlinging || isSwipingUp){
             
-            return@replaceMethod appearFraction * appearFraction * appearFraction * appearFraction
+            return@replaceMethod -appearFraction * appearFraction * appearFraction
             
             }else {
             
