@@ -20,9 +20,12 @@ Android 11 ~ 13 的 MIUI 12.5 ~ 14
 
 ## 作用域包含的应用
 
+<details>
+    <summary>点击展开折叠的内容</summary>
+
 | 应用名 | 包名 |
 | :---- | :---- | 
-| 系统框架 | android |
+| 系统框架 | system |
 | 系统界面 | com.android.systemui |
 | 系统桌面 | com.miui.home |
 | 系统更新 | com.android.updater |
@@ -30,10 +33,13 @@ Android 11 ~ 13 的 MIUI 12.5 ~ 14
 | 小米设置 | com.xiaomi.misettings |
 | 手机管家 | com.miui.securitycenter |
 
+</details>
 
 > 同 LSPosed 推荐的作用域
 
 ## 交流 & 反馈群组
+
+加入我们所创建的群组以反馈问题或了解最新情况。
 
 [![badge_qgroup]][qgroup_url]
 [![badge_qguild]][qguild_url]
@@ -41,9 +47,11 @@ Android 11 ~ 13 的 MIUI 12.5 ~ 14
 
 ## 为 Cemiuiler 贡献翻译
 
-您可以在[这里](https://crwd.in/cemiuiler)为 Cemiuiler 项目提供翻译.
+您可以在[这里](https://crwd.in/cemiuiler)为 Cemiuiler 项目贡献翻译。
 
 ## 感谢
+
+> Cemiuiler 使用了以下开源项目的部分或全部内容，感谢这些项目的开发者提供的大力支持（排名顺序不分先后）。
 
 - [「AndroidHiddenApiBypass」 by LSPosed](https://github.com/LSPosed/AndroidHiddenApiBypass)
 - [「AntiAntiDefraud」 by MinaMichita](https://github.com/MinaMichita/AntiAntiDefraud)
@@ -79,8 +87,6 @@ Android 11 ~ 13 的 MIUI 12.5 ~ 14
 - [「Woobox For MIUI」 by Simplicity-Team](https://github.com/Simplicity-Team/WooBoxForMIUI)
 - [「XposedBridge」 by rovo89](https://github.com/rovo89/XposedBridge)
 - [「.xlDownload」 by Kr328](https://github.com/Kr328/.xlDownload)
-
-> Cemiuiler 使用了以下开源项目的部分或全部内容，感谢这些项目的开发者提供的大力支持（排名顺序不分先后）。
 
 [qgroup_url]: https://jq.qq.com/?_wv=1027&k=TedCJq8V
 [badge_qgroup]: https://img.shields.io/badge/QQ-群组-4DB8FF?style=for-the-badge&logo=tencentqq
