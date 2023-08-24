@@ -84,7 +84,7 @@ MIUI 12.5 ~ 14 for Android 11 ~ 13
 
 > 同 LSPosed 推荐的作用域
 
-## 交流 & 反馈群组
+## Chat & Feedback Group
 
 加入我们所创建的群组以反馈问题或了解最新情况。
 
@@ -118,7 +118,7 @@ You can provide translations for the Cemiuiler project [here](https://crwd.in/ce
 - [「Miui Feature」 by MoralNorm](https://github.com/moralnorm/miui_feature)
 - [「MiuiHomeR」 by qqlittleice](https://github.com/qqlittleice/MiuiHome_R)
 - [「MIUI IME Unlock」 by RC1844](https://github.com/RC1844/MIUI_IME_Unlock)
-- [「MIUIQOL」 by chsbuffer](https://github.com/chsbuffer/MIUIQOL)
+- [「MIUI QOL」 by chsbuffer](https://github.com/chsbuffer/MIUIQOL)
 - [「Miui XXL」 by Wine-Network](https://github.com/Wine-Network/Miui_XXL)
 - [「Miui XXL」 by YuKongA](https://github.com/YuKongA/Miui_XXL)
 - [「MIUI 通知修复」 by tehcneko](https://github.com/Xposed-Modules-Repo/io.github.tehcneko.miuinotificationfix)
