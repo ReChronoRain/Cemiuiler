@@ -82,11 +82,11 @@ Android 11 ~ 13 的 MIUI 12.5 ~ 14
 
 </details>
 
-> 同 LSPosed 推荐的作用域
+> 与 LSPosed 中推荐的作用域相同
 
 ## 交流 & 反馈群组
 
-加入我们所创建的群组以反馈问题或了解最新情况。
+加入我们所创建的群组以反馈问题或是了解最新情况。
 
 [![badge_qgroup]][qgroup_url]
 [![badge_qguild]][qguild_url]

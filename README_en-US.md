@@ -21,72 +21,72 @@ MIUI 12.5 ~ 14 for Android 11 ~ 13
 ## Supported Applications
 
 <details>
-    <summary>点击展开折叠的内容</summary>
+    <summary>Click to expand collapsed content</summary>
 
-| 应用名 | 包名 |
+| App Name | Package Name |
 | :---- | :---- | 
-| 系统框架 | system |
-| 系统界面 | com.android.systemui |
-| 系统桌面 | com.miui.home |
-| 系统更新 | com.android.updater |
+| System Framework | system |
+| System UI | com.android.systemui |
+| System Launcher | com.miui.home |
+| Updater | com.android.updater |
 | Joyose | com.xiaomi.joyose |
-| 小米设置 | com.xiaomi.misettings |
-| 手机管家 | com.miui.securitycenter |
-| 笔记 | com.miui.notes |
-| 壁纸 | com.miui.miwallpaper |
-| 传送门 | com.miui.contentextension |
-| 弹幕通知 | com.xiaomi.barrage |
-| 百度输入法小米版 | com.baidu.input_mi |
-| 电话 | com.android.incallui |
-| 电话服务 | com.android.phone |
-| 电量与性能 | com.miui.powerkeeper |
-| 短信 | com.android.mms |
-| 截屏 | com.miui.screenshot |
-| 垃圾清理 | com.miui.cleanmaster |
-| 浏览器 | com.android.browser |
-| 鲁班（MTB） | com.xiaomi.mtb |
-| 屏幕录制 | com.miui.screenrecorder |
-| 权限管理服务 | com.lbe.security.miui |
-| 设置 | com.android.settings
-| 输入设置 | com.miui.miinput |
-| 搜狗输入法小米版 | com.sohu.inputmethod.sogou.xiaomi |
-| 天气 | com.miui.weather2 |
-| 投屏 | com.milink.service |
-| 外部存储设备 | com.android.externalstorage |
-| 万象息屏 | com.miui.aod |
-| 文件管理 | com.android.fileexplorer |
-| 系统服务组件 | com.miui.securityadd |
-| 下载管理 | com.android.providers.downloads.ui |
-| 下载管理程序 | com.android.providers.downloads |
-| 相册 | com.miui.gallery |
-| 小米创作 | com.miui.creation |
-| 小米互传 | com.miui.mishare.connectivity |
-| 小米相册 - 编辑 | com.miui.mediaeditor |
-| 小米云服务 | com.miui.cloudservice |
-| 小米智能卡 | com.miui.tsmclient |
-| 讯飞输入法小米版 | com.iflytek.inputmethod.miui |
-| 应用包管理组件 | com.miui.packageinstaller |
-| 应用商店 | com.xiaomi.market |
-| 智能助理 | com.miui.personalassistant |
-| 主题壁纸 | com.android.thememanager |
+| Settings | com.xiaomi.misettings |
+| Security | com.miui.securitycenter |
+| Notes | com.miui.notes |
+| Mi Wallpaper | com.miui.miwallpaper |
+| Taplus | com.miui.contentextension |
+| Bullet screen notification | com.xiaomi.barrage |
+| Baidu IME for MIUI | com.baidu.input_mi |
+| Phone | com.android.incallui |
+| Phone Services | com.android.phone |
+| Battery and performance | com.miui.powerkeeper |
+| Messaging | com.android.mms |
+| Screenshot | com.miui.screenshot |
+| Cleaner | com.miui.cleanmaster |
+| Browser | com.android.browser |
+| Rueban (MTB) | com.xiaomi.mtb |
+| Screen Recorder | com.miui.screenrecorder |
+| Permissions | com.lbe.security.miui |
+| Settings | com.android.settings
+| Input Settings | com.miui.miinput |
+| Sogou Keyboard for MIUI | com.sohu.inputmethod.sogou.xiaomi |
+| Weather | com.miui.weather2 |
+| Cast | com.milink.service |
+| External Storage | com.android.externalstorage |
+| Always-on display | com.miui.aod |
+| File Manager | com.android.fileexplorer |
+| System Service Plugin | com.miui.securityadd |
+| Downloads | com.android.providers.downloads.ui |
+| Downloads | com.android.providers.downloads |
+| Gallery | com.miui.gallery |
+| Mi Canvas | com.miui.creation |
+| Mi Share | com.miui.mishare.connectivity |
+| Gallery Editor | com.miui.mediaeditor |
+| Xiaomi Cloud | com.miui.cloudservice |
+| Smart Cards | com.miui.tsmclient |
+| iFlytek IME for MIUI | com.iflytek.inputmethod.miui |
+| Package Installer | com.miui.packageinstaller |
+| GetApps | com.xiaomi.market |
+| App Vault | com.miui.personalassistant |
+| Themes | com.android.thememanager |
 | com.miui.rom | com.miui.rom |
-| MIUI 安全组件 | com.miui.guardprovider |
-| 时钟 | com.android.deskclock |
-| 相机 | com.android.camera |
-| 小爱翻译 | com.xiaomi.aiasst.vision |
-| 小爱建议 | com.xiaomi.aireco |
-| 小爱视觉 | com.xiaomi.scanner |
-| 小爱同学 | com.miui.voiceassist |
-| 音乐 | com.miui.player |
-| MIUI+ Beta 版 | com.xiaomi.mirror |
+| MIUI Security Components | com.miui.guardprovider |
+| Clock | com.android.deskclock |
+| Camera | com.android.camera |
+| Mi AI Translate | com.xiaomi.aiasst.vision |
+| Mi AI Suggestions | com.xiaomi.aireco |
+| Scanner | com.xiaomi.scanner |
+| Mi AI | com.miui.voiceassist |
+| Music | com.miui.player |
+| MIUI+ Beta | com.xiaomi.mirror |
 
 </details>
 
-> 同 LSPosed 推荐的作用域
+> Same scope as recommended in LSPosed
 
 ## Chat & Feedback Group
 
-加入我们所创建的群组以反馈问题或了解最新情况。
+Join our group to report issues or get the latest updates.
 
 [![badge_qgroup]][qgroup_url]
 [![badge_qguild]][qguild_url]
