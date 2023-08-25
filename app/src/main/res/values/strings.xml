@@ -1178,4 +1178,6 @@
     <string name="various_open_aosp_app_manage_title">App Management</string>
     <string name="various_open_aosp_language_title">Language Settings</string>
     <string name="various_open_aosp_extremely_dark_title">Extremely Dark</string>
+    <string name="home_recent_show_memory_info">Show memory info</string>
+    <string name="home_recent_show_memory_info_sum">only for pad</string>
 </resources>
