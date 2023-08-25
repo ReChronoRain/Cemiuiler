@@ -69,6 +69,7 @@ import com.sevtinge.cemiuiler.module.home.recent.FreeformCardBackgroundColor;
 import com.sevtinge.cemiuiler.module.home.recent.HideCleanUp;
 import com.sevtinge.cemiuiler.module.home.recent.HideFreeform;
 import com.sevtinge.cemiuiler.module.home.recent.HideStatusBarWhenEnterRecent;
+import com.sevtinge.cemiuiler.module.home.recent.MemInfoShow;
 import com.sevtinge.cemiuiler.module.home.recent.RealMemory;
 import com.sevtinge.cemiuiler.module.home.recent.RecentResource;
 import com.sevtinge.cemiuiler.module.home.recent.RecentText;
@@ -165,6 +166,7 @@ public class Home extends BaseModule {
         initHook(RecentResource.INSTANCE, mPrefsMap.getInt("task_view_corners", 20) != 20 ||
             mPrefsMap.getInt("task_view_header_height", 40) != 40);
         initHook(RealMemory.INSTANCE, mPrefsMap.getBoolean("home_recent_show_real_memory"));
+        initHook(new MemInfoShow(), mPrefsMap.getBoolean("home_recent_show_memory_info"));
 
         // 图标
         initHook(BigIconCorner.INSTANCE, mPrefsMap.getBoolean("home_title_big_icon_corner"));
