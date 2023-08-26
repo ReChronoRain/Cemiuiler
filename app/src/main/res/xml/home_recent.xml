@@ -39,6 +39,11 @@
             android:defaultValue="false" />
 
         <SwitchPreference
+            android:key="prefs_key_always_show_clean_up"
+            android:title="@string/home_recent_always_show_clean_up"
+            android:defaultValue="false" />
+
+        <SwitchPreference
             android:key="prefs_key_home_recent_remove_icon"
             android:title="@string/home_recent_remove_icon"
             android:defaultValue="false" />

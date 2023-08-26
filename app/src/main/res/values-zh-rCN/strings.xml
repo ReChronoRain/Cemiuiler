@@ -463,6 +463,7 @@
     <string name="home_recent_show_real_memory">显示真实使用内存量</string>
     <string name="home_recent_show_memory_info_sum">平板专用</string>
     <string name="home_recent_show_memory_info">强制展示内存信息</string>
+    <string name="home_recent_always_show_clean_up">无卡片时不隐藏清理图标</string>
 
     <string name="home_title_icon_title">图标</string>
     <string name="home_title_bigicon_title">大图标</string>
