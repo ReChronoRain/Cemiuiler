@@ -587,7 +587,9 @@
     <string name="screen_recorder_save_to_movies_desc">规范录制视频保存位置到 Movies/ScreenRecorder</string>
 
     <string name="screenshot_unlock_minimum_crop_limit">解锁最小裁切图片限制</string>
-    <string name="screenshot_save_to_pictures_desc">规范截图保存位置到 Pictures/Screenshots</string>
+    <string name="screenshot_save_to_pictures_desc">规范截屏保存位置到 Pictures/Screenshots</string>
+    <string name="screenshot_device_customize_title">自定义带壳截屏机型</string>
+    <string name="screenshot_device_customize_desc">填写请输入 机型代号</string>
 
     <string name="security_center_app_title">应用管理</string>
     <string name="security_center_battery_title">省电与电池</string>
@@ -1061,7 +1063,8 @@
     <string name="various_location_simulation_title">位置模拟</string>
     <string name="various_dialog_title">弹窗</string>
     <string name="various_mipad_title">平板相关</string>
-    <string name="various_open_aosp_something_title">打开 “隐藏” 的原生界面</string>
+    <string name="various_open_aosp_something_title">隐藏特性</string>
+    <string name="various_open_aosp_something_desc">便捷打开 “隐藏” 的原生界面</string>
     <string name="settings_notfication_importance">显示通知重要程度</string>
     <string name="various_no_overscroll">禁用越界回弹</string>
     <string name="various_disable_bluetooth_restrict">禁用蓝牙临时关闭</string>
