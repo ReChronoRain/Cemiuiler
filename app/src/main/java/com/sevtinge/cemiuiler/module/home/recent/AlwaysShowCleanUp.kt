@@ -1,5 +1,6 @@
 package com.sevtinge.cemiuiler.module.home.recent
 
+import com.github.kyuubiran.ezxhelper.ClassUtils.loadClass
 import com.sevtinge.cemiuiler.module.base.BaseHook
 import com.sevtinge.cemiuiler.utils.api.isPad
 

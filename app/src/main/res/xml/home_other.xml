@@ -23,9 +23,9 @@
             android:title="@string/home_other_shortcut_background_blur_custom"
             android:key="prefs_key_home_other_shortcut_background_blur_custom"
             android:defaultValue="200"
-            app:defaultValueText="@string/array_default"           
+            app:defaultValueText="@string/array_default"
             app:minValue="80"
-            app:maxValue="255" 
+            app:maxValue="255"
             app:format="%s"
             app:stepValue="1"
             android:dependency="prefs_key_home_other_shortcut_background_blur" />
@@ -92,6 +92,17 @@
         <SwitchPreference
             android:key="prefs_key_home_other_disable_hide_google"
             android:title="@string/home_other_disable_hide_google"
+            android:defaultValue="false" />
+
+        <SwitchPreference
+            android:key="prefs_key_home_other_disable_hide_file"
+            android:title="@string/home_other_disable_hide_file"
+            android:defaultValue="false" />
+
+        <SwitchPreference
+            android:key="prefs_key_home_other_disable_hide_theme"
+            android:title="@string/home_other_disable_hide_theme"
+            android:summary="@string/home_other_disable_hide_theme_sum"
             android:defaultValue="false" />
 
         <Preference android:title="@string/home_other_app_icon_hide">

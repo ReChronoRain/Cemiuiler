@@ -19,6 +19,7 @@ import com.sevtinge.cemiuiler.module.home.UnlockHotseatIcon;
 import com.sevtinge.cemiuiler.module.home.UserPresentAnimation;
 import com.sevtinge.cemiuiler.module.home.WidgetCornerRadius;
 import com.sevtinge.cemiuiler.module.home.WidgetCrack;
+import com.sevtinge.cemiuiler.module.home.dock.DisableRecentsIcon;
 import com.sevtinge.cemiuiler.module.home.dock.DockCustom;
 import com.sevtinge.cemiuiler.module.home.dock.FoldDeviceDock;
 import com.sevtinge.cemiuiler.module.home.dock.FoldDock;
@@ -53,7 +54,9 @@ import com.sevtinge.cemiuiler.module.home.other.AlwaysBlurWallpaper;
 import com.sevtinge.cemiuiler.module.home.other.AlwaysShowStatusClock;
 import com.sevtinge.cemiuiler.module.home.other.BlurRadius;
 import com.sevtinge.cemiuiler.module.home.other.BlurWhenShowShortcutMenu;
+import com.sevtinge.cemiuiler.module.home.other.DisableHideFile;
 import com.sevtinge.cemiuiler.module.home.other.DisableHideGoogle;
+import com.sevtinge.cemiuiler.module.home.other.DisableHideTheme;
 import com.sevtinge.cemiuiler.module.home.other.FixAndroidRS;
 import com.sevtinge.cemiuiler.module.home.other.FreeformShortcutMenu;
 import com.sevtinge.cemiuiler.module.home.other.HomeMode;
@@ -196,6 +199,7 @@ public class Home extends BaseModule {
         initHook(HideSeekPoint.INSTANCE, mPrefsMap.getBoolean("home_dock_hide_seekpoint"));
         initHook(ShowDockIconTitle.INSTANCE, mPrefsMap.getBoolean("home_dock_icon_title"));
         initHook(new HideNavigationBar(), mPrefsMap.getBoolean("system_ui_hide_navigation_bar"));
+        initHook(new DisableRecentsIcon(), mPrefsMap.getBoolean("home_dock_disable_recents_icon"));
 
         // 其他
         initHook(new HomeMode(), mPrefsMap.getStringAsInt("home_other_home_mode", 0) > 0);
@@ -210,8 +214,10 @@ public class Home extends BaseModule {
         initHook(BlurRadius.INSTANCE, mPrefsMap.getInt("home_other_blur_radius", 100) != 100);
         initHook(ShortcutItemCount.INSTANCE, mPrefsMap.getBoolean("home_other_shortcut_remove_restrictions"));
         initHook(DisableHideGoogle.INSTANCE, mPrefsMap.getBoolean("home_other_disable_hide_google"));
+        initHook(DisableHideFile.INSTANCE, mPrefsMap.getBoolean("home_other_disable_hide_file"));
         initHook(ShowAllHideApp.INSTANCE); // 桌面快捷方式管理
         initHook(FixAndroidRS.INSTANCE, mPrefsMap.getBoolean("home_other_fix_android_r_s"));
+        initHook(new DisableHideTheme(),mPrefsMap.getBoolean("home_other_disable_hide_theme"));
 
         // 实验性功能
         initHook(BlurWhenShowShortcutMenu.INSTANCE, mPrefsMap.getBoolean("home_other_shortcut_background_blur"));
