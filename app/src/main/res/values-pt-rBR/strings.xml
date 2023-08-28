@@ -690,7 +690,7 @@
     <string name="array_align_left">Esquerda</string>
     <string name="array_align_right">Direita</string>
     <string name="array_align_center">Centralizado</string>
-    <string name="system_ui_statusbar_network_speed_sec_unit">Ocultar sufixo de Byte por segundo (/s)</string>
+    <string name="system_ui_statusbar_network_speed_sec_unit">Ocultar sufixo de Byte por segundo (*b/s)</string>
     <string name="array_netspeedicons_no">Sem ícones</string>
     <string name="system_ui_statusbar_network_speed_icon">Ícone indicador</string>
     <string name="horizontal_alignment">Alinhamento horizontal</string>
@@ -1063,7 +1063,7 @@
     <string name="various_mipad_input_close_magic_title">Sem ponteiro mágico</string>
     <string name="various_mipad_input_close_magic_desc">Transforme o ponteiro redondo da MIUI em ponteiro AOSP.</string>
     <string name="various_mipad_input_restore_esc_title">Restaurar função ESC</string>
-    <string name="various_mipad_input_restore_esc_desc">Restaure a função ESC que foi mapeada para a função \\"voltar\\" pela MIUI.</string>
+    <string name="various_mipad_input_restore_esc_desc">Restaure a função ESC que foi mapeada para a função \"voltar\" pela MIUI.</string>
     <string name="various_mipad_input_disable_bluetooth_title">Remover restrição de caneta bluetooth</string>
     <string name="various_mipad_input_disable_bluetooth_desc">Faça com que todas as canetas compatíveis funcionem sem a necessidade de conexão bluetooth com a caneta oficial.</string>
     <string name="various_mipad_input_bluetooth_version_title">Versão do driver</string>
@@ -1102,8 +1102,6 @@
     <string name="security_center_leave_open">Deixe o slide desdobrado</string>
     <string name="security_center_disable_sidebar_show_suggest">Desativar mostrar sugestões de apps</string>
     <string name="incallui_answer_in_head_up">Responda de cabeça erguida</string>
-    <string name="system_framework_disable_integrity">Desative a verificação de integridade do sistema</string>
-    <string name="system_framework_disable_integrity_desc">Desative a recuperação automática de conteúdo adulterado</string>
     <string name="system_ui_lock_screen_hide_status_bar">Remover a barra de status na tela de bloqueio</string>
     <string name="system_ui_status_bar_icon_vowifi">Ocultar ícone VoWiFi</string>
     <string name="system_ui_status_bar_icon_stealth">Ocultar ícone do modo incógnito</string>
