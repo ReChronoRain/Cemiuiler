@@ -8,7 +8,7 @@ import com.github.kyuubiran.ezxhelper.EzXHelper.appContext
 import com.sevtinge.cemiuiler.module.base.BaseHook
 import com.sevtinge.cemiuiler.utils.HookUtils
 import com.sevtinge.cemiuiler.utils.callStaticMethod
-import com.sevtinge.cemiuiler.utils.devicesdk.isAndroidS
+import com.sevtinge.cemiuiler.utils.devicesdk.isAndroidT
 import com.sevtinge.cemiuiler.utils.devicesdk.isAndroidU
 import com.sevtinge.cemiuiler.utils.getObjectField
 import com.sevtinge.cemiuiler.utils.replaceMethod
@@ -75,40 +75,84 @@ object AddBlurEffectToNotificationView : BaseHook() {
             ) ?: return
 
         // 修改横幅通知上滑极限值，存在部分异常问题，暂时回退
-        /*if (!isAndroidS()) {
-            "com.android.systemui.statusbar.notification.stack.AmbientState".replaceMethod("getStackTranslation") {
-                val getScreenHeight =
-                    findClass("com.android.systemui.fsgesture.AppQuickSwitchActivity")
-                        .callStaticMethod("getScreenHeight", appContext) as Int
+/*
+修复:
+1.修复控制中心有音乐播放器时，上滑横幅通知模糊残留(大部分，可以完全避免，但无音乐通知时速度会非常快)
+2.修复控制中心左右切换，通知卡片加载缓慢、跳动、闪屏等异常
+存在的问题:
+1.有、无音乐通知时，动画速度不同步
+2.控制中心有音乐播放通知时，超级长的长文本通知有残留，超级大的大图通知有残留，目前正经app推送的消息应该没问题，仅在测试中发现
+(似乎miui自身也没有解决这个问题，包括新、旧版控制中心切换也是存在一些问题的)
+小白无知，更复杂的hook方法也写不出来(大写的尴尬…)
+比如:   
+ public static boolean isMediaNotification(StatusBarNotification statusBarNotification) {
+        return MediaDataManagerKt.isMediaNotification(statusBarNotification);
+    }
+    我想获得isMediaNotification的Boolean值该怎么写？
+ */
+ 
+ //仅在安卓13设备测试
+       if (isAndroidT()) {
+       
+     //换个方式修改通知上划极限值
+      "com.android.systemui.statusbar.notification.stack.AmbientState".replaceMethod("getOverExpansion")
+            {    
 
-                val mStackTranslation = it.thisObject.getObjectField("mStackTranslation") as Float
-
-                val isFlinging = it.thisObject.getObjectField("mIsFlinging") as Boolean
-
-                val isSwipingUp = it.thisObject.getObjectField("mIsSwipingUp") as Boolean
-
-                if (isFlinging || isSwipingUp)
-                    return@replaceMethod getScreenHeight.toFloat()
-                else
-                    return@replaceMethod mStackTranslation
-
+            val getScreenHeight =
+                findClass("com.android.systemui.fsgesture.AppQuickSwitchActivity").callStaticMethod("getScreenHeight",appContext) as Int
+                            
+            val mOverExpansion = it.thisObject.getObjectField("mOverExpansion")  as Float
+              
+            val isNCSwitching = it.thisObject.getObjectField("isNCSwitching")  as Boolean
+            
+            val isSwipingUp = it.thisObject.getObjectField("mIsSwipingUp")  as Boolean
+            
+            val isFlinging = it.thisObject.getObjectField("mIsFlinging")  as Boolean
+            
+            val isAppearing = it.thisObject.getObjectField("mAppearing")  as Boolean
+            
+            if( isAppearing && (isSwipingUp || isFlinging) && ! isNCSwitching){
+            
+            return@replaceMethod -(getScreenHeight).toFloat()
+            
+             
+            } else {
+            
+            return@replaceMethod mOverExpansion
+            
             }
-
-            // 避免修改上滑极限值以后动画速度过快
-            "com.android.systemui.statusbar.notification.stack.AmbientState".replaceMethod("getAppearFraction") {
-
-                val appearFraction = it.thisObject.getObjectField("mAppearFraction") as Float
-
-                val isFlinging = it.thisObject.getObjectField("mIsFlinging") as Boolean
-
-                val isSwipingUp = it.thisObject.getObjectField("mIsSwipingUp") as Boolean
-
-                if (isFlinging || isSwipingUp)
-                    return@replaceMethod -appearFraction * appearFraction * appearFraction
-                else
-                    return@replaceMethod appearFraction
             }
-        }*/
+            
+     //抬高StackTopMargin,试图优化下滑不足展开距离松手后通知自动回弹的效果，有音乐通知时正常，没有音乐通知时有所改善，但还是有些割裂感(一般很少这样操作)                    
+   "com.android.systemui.statusbar.notification.stack.AmbientState".replaceMethod("getStackTopMargin")
+            {            
+                
+            val getScreenHeight =
+                findClass("com.android.systemui.fsgesture.AppQuickSwitchActivity").callStaticMethod("getScreenHeight",appContext) as Int            
+             
+            val mStackTopMargin = it.thisObject.getObjectField("mStackTopMargin")  as Int
+            val isScreenLandscape =
+                findClass("com.android.systemui.statusbar.notification.NotificationUtil").callStaticMethod("isScreenLandscape") as Boolean
+                                      
+            val isNCSwitching = it.thisObject.getObjectField("isNCSwitching")  as Boolean                        
+            val isFlinging = it.thisObject.getObjectField("mIsFlinging")  as Boolean
+            
+            val isAppearing = it.thisObject.getObjectField("mAppearing")  as Boolean
+            
+            if(isAppearing && isFlinging && ! isNCSwitching){
+            
+            if(isScreenLandscape) return@replaceMethod (getScreenHeight*0.05*0.45).toInt() else return@replaceMethod (getScreenHeight*0.05).toInt()
+            
+            
+            } else {
+            
+            return@replaceMethod mStackTopMargin
+            
+            }
+            
+            
+            }        
+      }
 
         // 每次设置背景的时候都同时改透明度
         XposedBridge.hookAllMethods(
