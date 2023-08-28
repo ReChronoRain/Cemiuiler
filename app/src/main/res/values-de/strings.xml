@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="xposed_description">Mache MIUI wieder großartig!</string>
+    <string name="language">Englisch</string>
+    <string name="translator_url">https://github.com/mu7220</string>
+    <string name="settings">Einstellungen</string>
+    <string name="about">Über</string>
+    <string name="about_use">Zitat</string>
+    <string name="about_use_desc">Cemiuiler greift auf einige oder sämtliche der nachstehenden Open-Source-Projekte zurück. Ein herzlicher Dank gebührt den Entwicklern dieser Projekte für ihre wertvolle Unterstützung (ungeordnet)</string>
+    <string name="about_contributer">Mitwirkender</string>
+    <string name="about_contributer_desc">Vielen Dank an die folgenden Mitwirkenden für ihre Hilfe bei der Entwicklung von Cemiuiler (ungeordnet)</string>
+    <string name="about_donation">Förderer</string>
+    <string name="about_donation_desc">Sie können uns unterstützen, indem Sie hier spenden</string>
+    <string name="home">Systemstartprogramm</string>
+    <string name="aireco">AI Reco</string>
+    <string name="browser">Browser</string>
+    <string name="camera">Kamera</string>
+    <string name="clock">Uhr</string>
+    <string name="gallery">Galerie</string>
+    <string name="guard_provider">MIUI Sicherheitskomponenten</string>
+    <string name="incallui">Telefon</string>
+    <string name="joyose">Joyose</string>
+    <string name="lbe">Berechtigungen</string>
+    <string name="market">GetApps</string>
+    <string name="mediaeditor">Gallery Editor</string>
+    <string name="milink">übertragen</string>
+    <string name="mirror">MIUI+</string>
+    <string name="mms">Nachricht</string>
+    <string name="security_center_remove_open_app_confirmation_popup">Entferne das Popup zum Öffnen der App</string>
+    <string name="security_center_remove_open_app_confirmation_popup_summary">Entferne das Popup \'Erlauben Sie XXX, XXX zu öffnen\' bei der Startkette</string>
+    <string name="security_center_no_permission">Erforderliche Berechtigungen nicht erteilt</string>
+    <string name="mishare">Mi Share</string>
+    <string name="music">Musik</string>
+    <string name="package_installer">Paket-Installer</string>
+    <string name="personal_assistant">App-Tresor</string>
+    <string name="powerkeeper">Akku und Leistung</string>
+    <string name="scanner">Scanner</string>
+    <string name="screenrecorder">Bildschirmrekorder</string>
+</resources>

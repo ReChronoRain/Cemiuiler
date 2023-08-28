@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="language">Inglese</string>
+    <string name="settings">Impostazioni</string>
+    <string name="about">Info</string>
+    <string name="about_use_desc">Cemiuiler fa uso di alcuni o tutti i seguenti progetti open source. Un ringraziamento speciale agli sviluppatori di questi progetti per il loro supporto (non in ordine)</string>
+    <string name="about_contributer">Collaboratore</string>
+    <string name="about_contributer_desc">Un ringraziamento speciale ai seguenti collaboratori per il loro aiuto nello sviluppo di Cemiuiler (non in ordine)</string>
+    <string name="about_donation_desc">Puoi sostenerci donando qui</string>
+    <string name="home">Launcher di sistema</string>
+    <string name="clock">Orologio</string>
+    <string name="gallery">Galleria</string>
+    <string name="guard_provider">Componenti di sicurezza MIUI</string>
+    <string name="incallui">Telefono</string>
+    <string name="lbe">Permessi</string>
+    <string name="mediaeditor">Editor Galleria</string>
+    <string name="mms">Messaggi</string>
+</resources>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="xposed_description">Zrób MIUI ponownie wspaniałym!</string>
+    <string name="language">Angielski</string>
+    <string name="translator_url">https://github.com/mu7220</string>
+    <string name="settings">Ustawienia</string>
+    <string name="about">O aplikacji</string>
+    <string name="about_use_desc">Cemiuiler korzysta z niektórych lub wszystkich następujących projektów open source, dzięki programistom tych projektów za ich wsparcie (bez konkretnego zamówienia)</string>
+    <string name="about_contributer">Współautor</string>
+    <string name="about_contributer_desc">Dzięki następującym współtwórcom za ich pomoc w rozwoju Cemiuiler (brak konkretnego zamówienia)</string>
+    <string name="about_donation">Sponsor</string>
+    <string name="about_donation_desc">Możesz nas wspierać poprzez darowizny</string>
+    <string name="home">Launcher systemowy</string>
+    <string name="aireco">AI Reco</string>
+    <string name="browser">Przeglądarka</string>
+    <string name="camera">Kamera</string>
+    <string name="clock">Zegar</string>
+    <string name="gallery">Galeria</string>
+    <string name="guard_provider">Komponenty bezpieczeństwa MIUI</string>
+    <string name="incallui">Telefon</string>
+    <string name="joyose">Joyose</string>
+    <string name="lbe">Uprawnienia</string>
+    <string name="market">GetApps</string>
+    <string name="mediaeditor">Edytor galerii</string>
+    <string name="milink">Prześlij ekran</string>
+    <string name="mirror">MIUI+</string>
+</resources>
