@@ -76,19 +76,7 @@ object AddBlurEffectToNotificationView : BaseHook() {
 
         // 修改横幅通知上滑极限值，存在部分异常问题，暂时回退
 /*
-修复:
-1.修复控制中心有音乐播放器时，上滑横幅通知模糊残留(大部分，可以完全避免，但无音乐通知时速度会非常快)
-2.修复控制中心左右切换，通知卡片加载缓慢、跳动、闪屏等异常
-存在的问题:
-1.有、无音乐通知时，动画速度不同步
-2.控制中心有音乐播放通知时，超级长的长文本通知有残留，超级大的大图通知有残留，目前正经app推送的消息应该没问题，仅在测试中发现
-(似乎miui自身也没有解决这个问题，包括新、旧版控制中心切换也是存在一些问题的)
-小白无知，更复杂的hook方法也写不出来(大写的尴尬…)
-比如:   
- public static boolean isMediaNotification(StatusBarNotification statusBarNotification) {
-        return MediaDataManagerKt.isMediaNotification(statusBarNotification);
-    }
-    我想获得isMediaNotification的Boolean值该怎么写？
+能力有限，只能这样了，此次修改后，应该各种情况下均不会出现模糊残留，测试包括了(2k分辨率、1080p分辨率、横竖屏、有无音乐播放通知、新旧版控制中心)，唯一不足(无音乐播放通知时，竖屏移除通知速率较快，能接受，横屏时更快，不太灵光的样子)，仅在小米11 Android13机型测试
  */
  
  //仅在安卓13设备测试
@@ -123,35 +111,38 @@ object AddBlurEffectToNotificationView : BaseHook() {
             }
             }
             
-     //抬高StackTopMargin,试图优化下滑不足展开距离松手后通知自动回弹的效果，有音乐通知时正常，没有音乐通知时有所改善，但还是有些割裂感(一般很少这样操作)                    
-   "com.android.systemui.statusbar.notification.stack.AmbientState".replaceMethod("getStackTopMargin")
-            {            
-                
-            val getScreenHeight =
-                findClass("com.android.systemui.fsgesture.AppQuickSwitchActivity").callStaticMethod("getScreenHeight",appContext) as Int            
-             
-            val mStackTopMargin = it.thisObject.getObjectField("mStackTopMargin")  as Int
-            val isScreenLandscape =
-                findClass("com.android.systemui.statusbar.notification.NotificationUtil").callStaticMethod("isScreenLandscape") as Boolean
-                                      
-            val isNCSwitching = it.thisObject.getObjectField("isNCSwitching")  as Boolean                        
+ //这应该是一个lerp的插值，可用于调整速率，也影响to值
+      "com.android.systemui.statusbar.notification.stack.AmbientState".replaceMethod( "getAppearFraction")
+            {
+            
+            val isNCSwitching = it.thisObject.getObjectField("isNCSwitching")  as Boolean
+            
+            val isSwipingUp = it.thisObject.getObjectField("mIsSwipingUp")  as Boolean
+            
             val isFlinging = it.thisObject.getObjectField("mIsFlinging")  as Boolean
+            
+            val mAppearFraction = it.thisObject.getObjectField("mAppearFraction")  as Float
             
             val isAppearing = it.thisObject.getObjectField("mAppearing")  as Boolean
             
-            if(isAppearing && isFlinging && ! isNCSwitching){
+
+            val isScreenLandscape =
+                findClass("com.android.systemui.statusbar.notification.NotificationUtil").callStaticMethod("isScreenLandscape") as Boolean
             
-            if(isScreenLandscape) return@replaceMethod (getScreenHeight*0.05*0.45).toInt() else return@replaceMethod (getScreenHeight*0.05).toInt()
             
+            if(isAppearing && (isSwipingUp || isFlinging) && !isNCSwitching){
+
+//这里其实还可以加一个是否有音乐通知判断，修改速率(没找到我能写出来的方法，放弃了)
+
+            if(isScreenLandscape) return@replaceMethod mAppearFraction*3 else return@replaceMethod mAppearFraction*2
+
             
             } else {
-            
-            return@replaceMethod mStackTopMargin
-            
+            return@replaceMethod mAppearFraction
+ 
             }
-            
-            
             }        
+
       }
 
         // 每次设置背景的时候都同时改透明度
