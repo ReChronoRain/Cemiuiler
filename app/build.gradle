@@ -51,19 +51,20 @@ android {
         }
     }
 
+    def properties
+    def propertiesFile = rootProject.file('signing.properties')
+    if (propertiesFile.exists()) {
+        properties = new Properties()
+        properties.load(propertiesFile.newDataInputStream())
+    }
+    def getString = { String propertyName, String environmentName, String prompt ->
+        return properties?.get(propertyName) ?: System.getenv(environmentName) ?:
+            System.console()?.readLine('\n' + prompt + ': ')
+    }
+    def keyStoreFile = getString('storeFile', 'STORE_FILE', 'Store file')?.with(rootProject.&file)
+
     signingConfigs {
         cemiuiler {
-            def properties
-            def propertiesFile = rootProject.file('signing.properties')
-            if (propertiesFile.exists()) {
-                properties = new Properties()
-                properties.load(propertiesFile.newDataInputStream())
-            }
-            def getString = { String propertyName, String environmentName, String prompt ->
-                return properties?.get(propertyName) ?: System.getenv(environmentName) ?:
-                    System.console()?.readLine('\n' + prompt + ': ')
-            }
-            def keyStoreFile = getString('storeFile', 'STORE_FILE', 'Store file')?.with(rootProject.&file)
             if (keyStoreFile != null) {
                 storeFile keyStoreFile
                 storePassword getString('storePassword', 'STORE_PASSWORD', 'Store password')
@@ -74,17 +75,6 @@ android {
     }
 
     buildTypes {
-        def properties
-        def propertiesFile = rootProject.file('signing.properties')
-        if (propertiesFile.exists()) {
-            properties = new Properties()
-            properties.load(propertiesFile.newDataInputStream())
-        }
-        def getString = { String propertyName, String environmentName, String prompt ->
-            return properties?.get(propertyName) ?: System.getenv(environmentName) ?:
-                System.console()?.readLine('\n' + prompt + ': ')
-        }
-        def keyStoreFile = getString('storeFile', 'STORE_FILE', 'Store file')?.with(rootProject.&file)
         release {
             minifyEnabled true
             shrinkResources true
