@@ -12,6 +12,7 @@ import com.sevtinge.cemiuiler.utils.devicesdk.isAndroidT
 import com.sevtinge.cemiuiler.utils.devicesdk.isAndroidU
 import com.sevtinge.cemiuiler.utils.getObjectField
 import com.sevtinge.cemiuiler.utils.replaceMethod
+import com.sevtinge.cemiuiler.utils.hookAfterMethod
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
@@ -74,14 +75,18 @@ object AddBlurEffectToNotificationView : BaseHook() {
                     "com.android.systemui.statusbar.phone.MiuiNotificationPanelViewController\$mBlurRatioChangedListener\$1"
             ) ?: return
 
-        // 修改横幅通知上滑极限值，存在部分异常问题，暂时回退
-/*
-能力有限，只能这样了，此次修改后，应该各种情况下均不会出现模糊残留，测试包括了(2k分辨率、1080p分辨率、横竖屏、有无音乐播放通知、新旧版控制中心)，唯一不足(无音乐播放通知时，竖屏移除通知速率较快，能接受，横屏时更快，不太灵光的样子)，仅在小米11 Android13机型测试
- */
+        val mediaDataFilterClass = findClassIfExists(
+            "com.android.systemui.media.MediaDataFilter"
+        ) ?: return
+
+ 
  
  //仅在安卓13设备测试
        if (isAndroidT()) {
        
+
+       var hasActiveMediaOrRecommendation = false
+
      //换个方式修改通知上划极限值
       "com.android.systemui.statusbar.notification.stack.AmbientState".replaceMethod("getOverExpansion")
             {    
@@ -115,6 +120,10 @@ object AddBlurEffectToNotificationView : BaseHook() {
       "com.android.systemui.statusbar.notification.stack.AmbientState".replaceMethod( "getAppearFraction")
             {
             
+   //用于判断控制中心是否有音乐播放通知       mediaDataFilterClass.hookAfterMethod("hasActiveMediaOrRecommendation") {
+        hasActiveMediaOrRecommendation = it.result as Boolean
+                }
+
             val isNCSwitching = it.thisObject.getObjectField("isNCSwitching")  as Boolean
             
             val isSwipingUp = it.thisObject.getObjectField("mIsSwipingUp")  as Boolean
@@ -132,11 +141,16 @@ object AddBlurEffectToNotificationView : BaseHook() {
             
             if(isAppearing && (isSwipingUp || isFlinging) && !isNCSwitching){
 
-//这里其实还可以加一个是否有音乐通知判断，修改速率(没找到我能写出来的方法，放弃了)
+//这次基本OK了
 
-            if(isScreenLandscape) return@replaceMethod mAppearFraction*3 else return@replaceMethod mAppearFraction*2
-
+            if(hasActiveMediaOrRecommendation){
+            if(isScreenLandscape)             return@replaceMethod mAppearFraction*6.0f else return@replaceMethod mAppearFraction*2.0f
+            } else {
             
+            if(isScreenLandscape)
+            return@replaceMethod (mAppearFraction*mAppearFraction*mAppearFraction)/2.5f else return@replaceMethod (mAppearFraction*mAppearFraction*mAppearFraction)*3.5f
+           
+            }
             } else {
             return@replaceMethod mAppearFraction
  
