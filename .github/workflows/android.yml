@@ -20,7 +20,8 @@ jobs:
     runs-on: ubuntu-latest
     name: Build App
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Git Repository
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
           submodules: true
@@ -32,57 +33,61 @@ jobs:
           distribution: "temurin"
           cache: gradle
 
-      - name: Build with Gradle All
+      - name: Create Sign File
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        run: |
+          touch signing.properties
+          echo storePassword=${{ secrets.KEY_STORE_PASSWORD }} >> signing.properties
+          echo keyAlias=${{ secrets.ALIAS }} >> signing.properties
+          echo keyPassword='${{ secrets.KEY_STORE_PASSWORD }}' >> signing.properties
+          echo storeFile=../key.jks >> signing.properties
+          echo ${{ secrets.SIGNING_KEY }} | base64 --decode > key.jks
+
+      - name: Build with Gradle
         shell: bash
         run: ./gradlew assemble
 
-      # - name: Sign Canary APK
-      #   if: success()
-      #   id: sign_canary
-      #   uses: r0adkll/sign-android-release@v1.0.4
-      #   with:
-      #     releaseDirectory: ./app/build/outputs/apk/canary
-      #     signingKeyBase64: ${{ secrets.SIGNING_KEY }}
-      #     alias: ${{ secrets.ALIAS }}
-      #     keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
-      #     keyPassword: ${{ secrets.KEY_STORE_PASSWORD }}
+      - name: Find APKs
+        run: |
+          echo "APK_FILE_CANARY=$(find app/build/outputs/apk/canary -name '*.apk')" >> $GITHUB_ENV
+          echo "APK_FILE_DEBUG=$(find app/build/outputs/apk/debug -name '*.apk')" >> $GITHUB_ENV
 
-      # - name: Sign Debug APK
-      #   if: success()
-      #   id: sign_debug
-      #   uses: r0adkll/sign-android-release@v1.0.4
-      #   with:
-      #     releaseDirectory: ./app/build/outputs/apk/debug
-      #     signingKeyBase64: ${{ secrets.SIGNING_KEY }}
-      #     alias: ${{ secrets.ALIAS }}
-      #     keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
-      #     keyPassword: ${{ secrets.KEY_STORE_PASSWORD }}
+      - name: Show APKs SHA256
+        if: success()
+        run: |
+          echo "### Build Success" >> $GITHUB_STEP_SUMMARY
+          echo "|Artifact|SHA256|" >> $GITHUB_STEP_SUMMARY
+          echo "|:--------:|:----------|" >> $GITHUB_STEP_SUMMARY
+          canary=($(sha256sum ${{ env.APK_FILE_CANARY }}))
+          echo "|Canary|$canary" >> $GITHUB_STEP_SUMMARY
+          debug=($(sha256sum ${{ env.APK_FILE_DEBUG }}))
+          echo "|Debug|$debug" >> $GITHUB_STEP_SUMMARY
 
       - name: Upload Canary APK
         if: contains(github.event.head_commit.message, '[upload]') == true
         uses: actions/upload-artifact@v3
         with:
           name: Cemiuiler Canary
-          path: ${{ steps.sign_canary.outputs.signedReleaseFile }}
+          path: ${{ env.APK_FILE_CANARY }}
 
-      # - name: Post to Beta Channel & Canary Group
-      #   if: ${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && github.ref_type != 'tag' && contains(github.event.head_commit.message, '[skip post]') == false && contains(github.event.head_commit.message, 's#') == false }}
-      #   shell: bash
-      #   env:
-      #     GROUP_ID: ${{ secrets.CANARY_GROUP_ID }}
-      #     GROUP_ID_TEMPORARY: ${{ secrets.GROUP_TEMPORARY_ID }}
-      #     CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
-      #     MESSAGE_THREAD_ID: ${{ secrets.MESSAGE_THREAD_ID }}
-      #     BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-      #     CANARY: ${{ steps.sign_canary.outputs.signedReleaseFile }}
-      #     DEBUG: ${{ steps.sign_debug.outputs.signedReleaseFile }}
-      #   run: |
-      #     mkdir -p ${{ github.workspace }}/git_clone
-      #     git clone ${{ github.event.repository.url }} ${{ github.workspace }}/git_clone -b ${{ github.ref_name }}
-      #     cd ${{ github.workspace }}/git_clone
-      #     { echo -e 'Github CI\n'; git log ${{ github.event.before }}..${{ github.event.after }} --pretty=format:"%h %s"; } > ${{ github.workspace }}/git_log
-      #     ESCAPED="$(cat ${{ github.workspace }}/git_log | gawk '{gsub(/[_*[\]()~`>#+=\|{}.!-]/,"\\\\\\\\&")}1' | sed -e 's|"|\\"|g' -e 's|^[0-9a-z]\+|__&__|' | hexdump -v -e '/1 "%02X"' | sed 's/\(..\)/%\1/g')"
-      #     cd ${{ github.workspace }}
-      #     curl -v "https://api.telegram.org/bot${BOT_TOKEN}/sendMediaGroup?chat_id=${GROUP_ID}&message_thread_id=${MESSAGE_THREAD_ID}&media=%5B%7B%22type%22%3A%22document%22%2C%20%22media%22%3A%22attach%3A%2F%2Fcanary%22%2C%22parse_mode%22%3A%22MarkdownV2%22%2C%22caption%22%3A%22${ESCAPED}%22%7D%5D" -F canary="@${CANARY}"
-      #     curl -v "https://api.telegram.org/bot${BOT_TOKEN}/sendMediaGroup?chat_id=${CHANNEL_ID}&media=%5B%7B%22type%22%3A%22document%22%2C%20%22media%22%3A%22attach%3A%2F%2Fcanary%22%2C%22parse_mode%22%3A%22MarkdownV2%22%2C%22caption%22%3A%22${ESCAPED}%22%7D%5D" -F canary="@${CANARY}"
-      #     curl -v "https://api.telegram.org/bot${BOT_TOKEN}/sendMediaGroup?chat_id=${GROUP_ID_TEMPORARY}&media=%5B%7B%22type%22%3A%22document%22%2C%20%22media%22%3A%22attach%3A%2F%2Fdebug%22%2C%22parse_mode%22%3A%22MarkdownV2%22%2C%22caption%22%3A%22${ESCAPED}%22%7D%5D" -F debug="@${DEBUG}"
+      - name: Post to Beta Channel & Canary Group
+        if: ${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && github.ref_type != 'tag' && contains(github.event.head_commit.message, '[skip post]') == false && contains(github.event.head_commit.message, 's#') == false }}
+        shell: bash
+        env:
+          GROUP_ID: ${{ secrets.CANARY_GROUP_ID }}
+          GROUP_ID_TEMPORARY: ${{ secrets.GROUP_TEMPORARY_ID }}
+          CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
+          MESSAGE_THREAD_ID: ${{ secrets.MESSAGE_THREAD_ID }}
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CANARY: ${{ env.APK_FILE_CANARY }}
+          DEBUG: ${{ env.APK_FILE_DEBUG }}
+        run: |
+          mkdir -p ${{ github.workspace }}/git_clone
+          git clone ${{ github.event.repository.url }} ${{ github.workspace }}/git_clone -b ${{ github.ref_name }}
+          cd ${{ github.workspace }}/git_clone
+          { echo -e 'Github CI\n'; git log ${{ github.event.before }}..${{ github.event.after }} --pretty=format:"%h %s"; } > ${{ github.workspace }}/git_log
+          ESCAPED="$(cat ${{ github.workspace }}/git_log | gawk '{gsub(/[_*[\]()~`>#+=\|{}.!-]/,"\\\\\\\\&")}1' | sed -e 's|"|\\"|g' -e 's|^[0-9a-z]\+|__&__|' | hexdump -v -e '/1 "%02X"' | sed 's/\(..\)/%\1/g')"
+          cd ${{ github.workspace }}
+          curl -v "https://api.telegram.org/bot${BOT_TOKEN}/sendMediaGroup?chat_id=${GROUP_ID}&message_thread_id=${MESSAGE_THREAD_ID}&media=%5B%7B%22type%22%3A%22document%22%2C%20%22media%22%3A%22attach%3A%2F%2Fcanary%22%2C%22parse_mode%22%3A%22MarkdownV2%22%2C%22caption%22%3A%22${ESCAPED}%22%7D%5D" -F canary="@${CANARY}"
+          curl -v "https://api.telegram.org/bot${BOT_TOKEN}/sendMediaGroup?chat_id=${CHANNEL_ID}&media=%5B%7B%22type%22%3A%22document%22%2C%20%22media%22%3A%22attach%3A%2F%2Fcanary%22%2C%22parse_mode%22%3A%22MarkdownV2%22%2C%22caption%22%3A%22${ESCAPED}%22%7D%5D" -F canary="@${CANARY}"
+          curl -v "https://api.telegram.org/bot${BOT_TOKEN}/sendMediaGroup?chat_id=${GROUP_ID_TEMPORARY}&media=%5B%7B%22type%22%3A%22document%22%2C%20%22media%22%3A%22attach%3A%2F%2Fdebug%22%2C%22parse_mode%22%3A%22MarkdownV2%22%2C%22caption%22%3A%22${ESCAPED}%22%7D%5D" -F debug="@${DEBUG}"
