@@ -58,9 +58,9 @@ jobs:
           echo "### Build Success" >> $GITHUB_STEP_SUMMARY
           echo "|Artifact|SHA256|" >> $GITHUB_STEP_SUMMARY
           echo "|:--------:|:----------|" >> $GITHUB_STEP_SUMMARY
-          canary=($(sha256sum ${{ env.APK_FILE_CANARY }}))
+          canary=($(sha256sum '${{ env.APK_FILE_CANARY }}'))
           echo "|Canary|$canary" >> $GITHUB_STEP_SUMMARY
-          debug=($(sha256sum ${{ env.APK_FILE_DEBUG }}))
+          debug=($(sha256sum '${{ env.APK_FILE_DEBUG }}'))
           echo "|Debug|$debug" >> $GITHUB_STEP_SUMMARY
 
       - name: Upload Canary APK
