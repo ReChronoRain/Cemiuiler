@@ -120,7 +120,8 @@ object AddBlurEffectToNotificationView : BaseHook() {
       "com.android.systemui.statusbar.notification.stack.AmbientState".replaceMethod( "getAppearFraction")
             {
             
-   //用于判断控制中心是否有音乐播放通知       mediaDataFilterClass.hookAfterMethod("hasActiveMediaOrRecommendation") {
+   //用于判断控制中心是否有音乐播放通知
+       mediaDataFilterClass.hookAfterMethod("hasActiveMediaOrRecommendation") {
         hasActiveMediaOrRecommendation = it.result as Boolean
                 }
 
