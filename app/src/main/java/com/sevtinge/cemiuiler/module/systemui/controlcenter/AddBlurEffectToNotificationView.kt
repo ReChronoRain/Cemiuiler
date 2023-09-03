@@ -84,8 +84,14 @@ object AddBlurEffectToNotificationView : BaseHook() {
  //仅在安卓13设备测试
        if (isAndroidT()) {
        
+//用于判断控制中心是否有音乐播放通知
 
        var hasActiveMediaOrRecommendation = false
+
+mediaDataFilterClass.hookAfterMethod("hasActiveMediaOrRecommendation") {
+        hasActiveMediaOrRecommendation = it.result as Boolean
+                }
+
 
      //换个方式修改通知上划极限值
       "com.android.systemui.statusbar.notification.stack.AmbientState".replaceMethod("getOverExpansion")
@@ -103,11 +109,19 @@ object AddBlurEffectToNotificationView : BaseHook() {
             val isFlinging = it.thisObject.getObjectField("mIsFlinging")  as Boolean
             
             val isAppearing = it.thisObject.getObjectField("mAppearing")  as Boolean
+
+            val isScreenLandscape = findClass("com.android.systemui.statusbar.notification.NotificationUtil").callStaticMethod("isScreenLandscape") as Boolean
+
+            if (isAppearing && (isSwipingUp || isFlinging) && ! isNCSwitching){
+
+            if (hasActiveMediaOrRecommendation){
+
+            if (isScreenLandscape) return@replaceMethod -getScreenHeight.toFloat() else return@replaceMethod -getScreenHeight.toFloat()*6.0f
+            } else {
             
-            if( isAppearing && (isSwipingUp || isFlinging) && ! isNCSwitching){
-            
-            return@replaceMethod -(getScreenHeight).toFloat()
-            
+            if (isScreenLandscape) return@replaceMethod -getScreenHeight.toFloat()/3.0f else return@replaceMethod -getScreenHeight.toFloat()/1.2f
+           
+            }
              
             } else {
             
@@ -119,11 +133,6 @@ object AddBlurEffectToNotificationView : BaseHook() {
  //这应该是一个lerp的插值，可用于调整速率，也影响to值
       "com.android.systemui.statusbar.notification.stack.AmbientState".replaceMethod( "getAppearFraction")
             {
-            
-   //用于判断控制中心是否有音乐播放通知
-       mediaDataFilterClass.hookAfterMethod("hasActiveMediaOrRecommendation") {
-        hasActiveMediaOrRecommendation = it.result as Boolean
-                }
 
             val isNCSwitching = it.thisObject.getObjectField("isNCSwitching")  as Boolean
             
@@ -136,27 +145,17 @@ object AddBlurEffectToNotificationView : BaseHook() {
             val isAppearing = it.thisObject.getObjectField("mAppearing")  as Boolean
             
 
-            val isScreenLandscape =
-                findClass("com.android.systemui.statusbar.notification.NotificationUtil").callStaticMethod("isScreenLandscape") as Boolean
-            
-            
-            if(isAppearing && (isSwipingUp || isFlinging) && !isNCSwitching){
+            val isScreenLandscape = findClass("com.android.systemui.statusbar.notification.NotificationUtil").callStaticMethod("isScreenLandscape") as Boolean
 
-//这次基本OK了
-
-            if(hasActiveMediaOrRecommendation){
-            if(isScreenLandscape)             return@replaceMethod mAppearFraction*6.0f else return@replaceMethod mAppearFraction*2.0f
-            } else {
+            if (isAppearing && (isSwipingUp || isFlinging) && !isNCSwitching && hasActiveMediaOrRecommendation && isScreenLandscape){
             
-            if(isScreenLandscape)
-            return@replaceMethod (mAppearFraction*mAppearFraction*mAppearFraction)/2.5f else return@replaceMethod (mAppearFraction*mAppearFraction*mAppearFraction)*3.5f
-           
-            }
+            return@replaceMethod mAppearFraction*6.0f 
+            
             } else {
             return@replaceMethod mAppearFraction
  
             }
-            }        
+            } 
 
       }
 
