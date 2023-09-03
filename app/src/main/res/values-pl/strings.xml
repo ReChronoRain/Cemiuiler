@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Content that does not require translation-->
+    <!--Introduction to Xposed Modules-->
+    <string name="xposed_description">Zrób MIUI ponownie wspaniałym!</string>
+    <!--Cemiuiler Settings/About Page-->
+    <string name="language">Angielski</string>
+    <string name="settings">Ustawienia</string>
+    <string name="about">O aplikacji</string>
+    <string name="about_use_desc">Cemiuiler korzysta z niektórych lub wszystkich następujących projektów open source, dzięki programistom tych projektów za ich wsparcie (bez konkretnego zamówienia)</string>
+    <string name="about_contributer">Współautor</string>
+    <string name="about_contributer_desc">Dzięki następującym współtwórcom za ich pomoc w rozwoju Cemiuiler (brak konkretnego zamówienia)</string>
+    <string name="about_donation">Sponsor</string>
+    <string name="about_donation_desc">Możesz nas wspierać poprzez darowizny</string>
+    <!--Pop-up window/miuix part-->
+    <!--String reuse-->
+    <!--Multi-list Array-->
+    <!--System Framework-->
+    <!--Package Manager Service-->
+    <!--Browser-->
+    <string name="browser">Przeglądarka</string>
+    <!--Camera-->
+    <string name="camera">Kamera</string>
+    <!--Clock-->
+    <string name="clock">Zegar</string>
+    <!--File Manager-->
+    <!--Phone-->
+    <string name="incallui">Telefon</string>
+    <!--Message-->
+    <!--Phone Service-->
+    <!--Download management program-->
+    <!--System UI-->
+    <!--Settings-->
+    <!--Themes-->
+    <!--Updater-->
+    <!--Permissions-->
+    <string name="lbe">Uprawnienia</string>
+    <!--Cast-->
+    <string name="milink">Prześlij ekran</string>
+    <!--Always-on display-->
+    <!--Taplus-->
+    <!--Mi Canvas-->
+    <!--Gallery-->
+    <string name="gallery">Galeria</string>
+    <!--MIUI security components-->
+    <string name="guard_provider">Komponenty bezpieczeństwa MIUI</string>
+    <!--System launcher-->
+    <string name="home">Launcher systemowy</string>
+    <!--Gallery Editor-->
+    <string name="mediaeditor">Edytor galerii</string>
+    <!--Mi Share-->
+    <!--Wallpaper-->
+    <!--Package installer-->
+    <!--App vault-->
+    <!--Music-->
+    <!--Battery and performance-->
+    <!--creen Recorder-->
+    <!--Screenshot-->
+    <!--Security/Tablet security center-->
+    <!--Smart cards-->
+    <!--Weather-->
+    <!--AI Translate-->
+    <!--AI Reco-->
+    <string name="aireco">AI Reco</string>
+    <!--弹幕通知-->
+    <!--Barrage-->
+    <string name="joyose">Joyose</string>
+    <!--GetApps-->
+    <string name="market">GetApps</string>
+    <!--MIUI+-->
+    <string name="mirror">MIUI+</string>
+    <!--Mi Settings-->
+    <!--MTB-->
+    <!--Scanner-->
+    <!--Other-->
+    <!--Tip-->
+</resources>

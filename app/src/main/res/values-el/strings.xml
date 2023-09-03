@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Content that does not require translation-->
+    <!--Introduction to Xposed Modules-->
+    <!--Cemiuiler Settings/About Page-->
+    <!--Pop-up window/miuix part-->
+    <!--String reuse-->
+    <!--Multi-list Array-->
+    <!--System Framework-->
+    <!--Package Manager Service-->
+    <!--Browser-->
+    <!--Camera-->
+    <!--Clock-->
+    <!--File Manager-->
+    <!--Phone-->
+    <!--Message-->
+    <!--Phone Service-->
+    <!--Download management program-->
+    <!--System UI-->
+    <!--Settings-->
+    <!--Themes-->
+    <!--Updater-->
+    <!--Permissions-->
+    <!--Cast-->
+    <!--Always-on display-->
+    <!--Taplus-->
+    <!--Mi Canvas-->
+    <!--Gallery-->
+    <!--MIUI security components-->
+    <!--System launcher-->
+    <!--Gallery Editor-->
+    <!--Mi Share-->
+    <!--Wallpaper-->
+    <!--Package installer-->
+    <!--App vault-->
+    <!--Music-->
+    <!--Battery and performance-->
+    <!--creen Recorder-->
+    <!--Screenshot-->
+    <!--Security/Tablet security center-->
+    <!--Smart cards-->
+    <!--Weather-->
+    <!--AI Translate-->
+    <!--AI Reco-->
+    <!--弹幕通知-->
+    <!--Barrage-->
+    <!--GetApps-->
+    <!--MIUI+-->
+    <!--Mi Settings-->
+    <!--MTB-->
+    <!--Scanner-->
+    <!--Other-->
+    <!--Tip-->
+</resources>
