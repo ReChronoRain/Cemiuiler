@@ -255,6 +255,8 @@
     <string name="system_framework_volume_media_steps_desc">可能会导致音量条的滚动卡顿或蓝牙音量异常</string>
     <string name="system_framework_volume_steps">音量级数倍增</string>
 
+    <string name="system_ui_display_cutout_title">屏幕缺口</string>
+    <string name="system_ui_display_hide_cutout">隐藏屏幕缺口</string>
     <string name="system_ui_display_brightness_title">亮度</string>
     <string name="system_ui_display_auto_brightness">自动亮度范围</string>
     <string name="system_ui_display_auto_brightness_desc">定义自动亮度的最小值和最大值</string>
@@ -1307,6 +1309,4 @@
     <string name="tip_18">Tip: Cemiuiler 是电老虎 (暴论)</string>
     <string name="tip_19">Tip: 变成灰色的功能，如果没有特别注译的话，就是功能存在异常，暂时不打算开放给用户使用，简称饼</string>
     <string name="tip_20">Tip: 没事不要追新版 Canary，坏了不要催更（</string>
-    <string name="system_ui_display_cutout_title">屏幕缺口</string>
-    <string name="system_ui_display_hide_cutout">隐藏屏幕缺口</string>
 </resources>
