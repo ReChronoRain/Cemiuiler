@@ -698,7 +698,6 @@
     <string name="system_settings_window_animation_scale">窗口动画缩放</string>
     <string name="system_settings_transition_animation_scale">过渡动画缩放</string>
     <string name="system_settings_animator_duration_scale">Animator 时长缩放</string>
-    <string name="system_settings_animation_scale">数值 10 相当于 1 </string>
 
     <!--主题壁纸-->
     <string name="theme_manager">主题壁纸</string>
