@@ -104,7 +104,6 @@
         <SeekBarPreferenceEx
             android:defaultValue="10"
             android:key="prefs_key_system_settings_window_animation_scale"
-            android:summary="@string/system_settings_animation_scale"
             android:title="@string/system_settings_window_animation_scale"
             app:defaultValueText="@string/array_default"
             app:format="%s / 100 f"
@@ -116,7 +115,6 @@
         <SeekBarPreferenceEx
             android:defaultValue="10"
             android:key="prefs_key_system_settings_transition_animation_scale"
-            android:summary="@string/system_settings_animation_scale"
             android:title="@string/system_settings_transition_animation_scale"
             app:defaultValueText="@string/array_default"
             app:format="%s / 100 f"
@@ -128,7 +126,6 @@
         <SeekBarPreferenceEx
             android:defaultValue="10"
             android:key="prefs_key_system_settings_animator_duration_scale"
-            android:summary="@string/system_settings_animation_scale"
             android:title="@string/system_settings_animator_duration_scale"
             app:defaultValueText="@string/array_default"
             app:format="%s / 100 f"
