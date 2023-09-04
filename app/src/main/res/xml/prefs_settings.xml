@@ -59,7 +59,7 @@
             android:fragment="com.sevtinge.cemiuiler.ui.fragment.settings.SafeModeFragment"
             android:key="prefs_key_safe_mode"
             android:summary="@string/settings_safe_mode_desc"
-            android:title="@string/settings_safe_mode"></Preference>
+            android:title="@string/settings_safe_mode" />
 
     </PreferenceCategory>
 
