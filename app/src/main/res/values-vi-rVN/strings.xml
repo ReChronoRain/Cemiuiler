@@ -1125,20 +1125,20 @@ Nếu ROM của bạn có tùy chọn thu gọn bố cục cài đặt nhanh s�
     <string name="location_add">Thêm</string>
     <string name="location_delete">Xóa</string>
     <!--Tip-->
-    <string name="tip_0">Mẹo: Đây là một số mẹo!</string>
-    <string name="tip_1">Mẹo: Bạn có thể hỗ trợ chúng tôi bằng cách quyên góp : Giới thiệu - Tài trợ.</string>
-    <string name="tip_2">Mẹo: Bạn muốn liên hệ với nhà phát triển? Telegram@Sevtinge_PM_bot Hoặc Bilibili@绀漓丨Sevtinge.</string>
-    <string name="tip_3">Mẹo: Bạn muốn tham gia nhóm chính thức? Telegram@cemiuiler Hoặc tìm 247909573 trong QQ.</string>
-    <string name="tip_5">Mẹo: Đoán xem bạn phải xem lại mẹo này bao nhiêu lần nữa?</string>
-    <string name="tip_6">Mẹo: Làm cho MIUI tuyệt vời trở lại!</string>
-    <string name="tip_7">Mẹo: Chào mừng bạn theo dõi trên Github@sevtinge Hoặc Bilibili@绀漓丨Sevtinge.</string>
-    <string name="tip_8">Mẹo: Sevtinge là con trai hay con gái?</string>
-    <string name="tip_9">Mẹo: Tin tức Sanjiang: Chuyến tàu GL3625 bị mất tích được tìm thấy vào lúc 5 giờ sáng ngày 7 tháng 4 năm 1404 trên chuyến Haimen-Jincheng xuất phát từ Haimen đến Jincheng của công ty vận tải đường sắt Har-Jincheng, toa thứ 13 đã biến mất một cách bí ẩn.</string>
-    <string name="tip_10">Mẹo: Sanjiang news: Sevtinge được xác nhận đã ngồi trên toa thứ 13 của đoàn tàu GL3625.</string>
-    <string name="tip_11">Mẹo: Sanjiang news: Người dân cho biết họ đã quen với việc đoàn tàu GL3625 biến mất.</string>
-    <string name="tip_12">Mẹo: Bạn có biết? Trong thực tế, Tất cả Mẹo là vô nghĩa.</string>
-    <string name="tip_13">Mẹo: Bạn có biết? Sinh nhật của Cemiuiler vào ngày 1/5, sinh nhật của Sevtinge vào ngày 2/2.</string>
-    <string name="tip_14">Mẹo: Sevtinge học tại Trường Đại học công nghệ thông tin Shanhe tại Thành Phố Sanjiang.</string>
-    <string name="tip_15">Mẹo: Tôi nghe nói Sevtinge có hai dạng phát hành khác nhau.</string>
-    <string name="tip_16">Mẹo: Sevtinge là một con cáo!</string>
+    <string name="tip_0">Đây là một số mẹo!</string>
+    <string name="tip_1">Bạn có thể hỗ trợ chúng tôi bằng cách quyên góp : Giới thiệu - Tài trợ.</string>
+    <string name="tip_2">Bạn muốn liên hệ với nhà phát triển? Telegram@Sevtinge_PM_bot Hoặc Bilibili@绀漓丨Sevtinge.</string>
+    <string name="tip_3">Bạn muốn tham gia nhóm chính thức? Telegram@cemiuiler Hoặc tìm 247909573 trong QQ.</string>
+    <string name="tip_5">Đoán xem bạn phải xem lại mẹo này bao nhiêu lần nữa?</string>
+    <string name="tip_6">Làm cho MIUI tuyệt vời trở lại!</string>
+    <string name="tip_7">Chào mừng bạn theo dõi trên Github@sevtinge Hoặc Bilibili@绀漓丨Sevtinge.</string>
+    <string name="tip_8">Sevtinge là con trai hay con gái?</string>
+    <string name="tip_9">Tin tức Sanjiang: Chuyến tàu GL3625 bị mất tích được tìm thấy vào lúc 5 giờ sáng ngày 7 tháng 4 năm 1404 trên chuyến Haimen-Jincheng xuất phát từ Haimen đến Jincheng của công ty vận tải đường sắt Har-Jincheng, toa thứ 13 đã biến mất một cách bí ẩn.</string>
+    <string name="tip_10">Sanjiang news: Sevtinge được xác nhận đã ngồi trên toa thứ 13 của đoàn tàu GL3625.</string>
+    <string name="tip_11">Sanjiang news: Người dân cho biết họ đã quen với việc đoàn tàu GL3625 biến mất.</string>
+    <string name="tip_12">Bạn có biết? Trong thực tế, Tất cả Mẹo là vô nghĩa.</string>
+    <string name="tip_13">Bạn có biết? Sinh nhật của Cemiuiler vào ngày 1/5, sinh nhật của Sevtinge vào ngày 2/2.</string>
+    <string name="tip_14">Sevtinge học tại Trường Đại học công nghệ thông tin Shanhe tại Thành Phố Sanjiang.</string>
+    <string name="tip_15">Tôi nghe nói Sevtinge có hai dạng phát hành khác nhau.</string>
+    <string name="tip_16">Sevtinge là một con cáo!</string>
 </resources>
