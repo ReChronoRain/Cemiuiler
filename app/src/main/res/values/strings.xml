@@ -665,6 +665,7 @@
     <string name="system_settings_window_animation_scale">Window Animation Zoom</string>
     <string name="system_settings_transition_animation_scale">Transition Animation Scaling</string>
     <string name="system_settings_animator_duration_scale">Animator duration scaling</string>
+    <string name="system_settings_animation_scale">A value of 10 is equivalent to 1</string>
     <!--Themes-->
     <string name="theme_manager">Themes</string>
     <string name="theme_manager_version_code_modify">Disable MIUI version detection</string>
