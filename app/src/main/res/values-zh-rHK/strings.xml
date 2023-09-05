@@ -19,7 +19,7 @@
     <string name="settings_debug_title">調試模式</string>
     <string name="settings_hide_app_icon">桌面圖示</string>
     <string name="settings_icon">設定圖示</string>
-    <string name="settings_icon_desc">設定模組入口在系统設定中的位置</string>
+    <string name="settings_icon_desc">設定模組入口在系統設定中的位置</string>
     <string name="settings_icon_disable">禁用</string>
     <string name="settings_icon_top">頂部</string>
     <string name="settings_icon_medium">中部</string>
@@ -268,7 +268,7 @@
     <string name="system_framework_open_with_menu_test">打開方式選單測試</string>
     <string name="system_framework_other_use_original_animation">過渡動畫使用原生樣式</string>
     <string name="system_framework_other_speed_install">快速安裝</string>
-    <string name="system_framework_other_speed_install_desc">安裝至運行記憶體以提升安裝速度，需要系统底層支援</string>
+    <string name="system_framework_other_speed_install_desc">安裝至運行記憶體以提升安裝速度，需要系統底層支援</string>
     <string name="system_framework_other_disable_cleaner">禁止關閉後台應用程式</string>
     <string name="system_framework_other_disable_cleaner_desc">實驗性功能，可能導致運行內存佔用異常</string>
     <string name="system_framework_disable_72h_verify">禁用每 72 小時驗證鎖定螢幕密碼</string>
@@ -278,8 +278,8 @@
     <string name="system_framework_core_patch_downgr_desc">允許應用程式在安裝新版本的情況下直接覆蓋安裝舊版本</string>
     <string name="system_framework_core_patch_auth_creak">禁用應用程式包管理器簽名校驗</string>
     <string name="system_framework_core_patch_auth_creak_desc">關閉安裝應用程式時的簽名驗證，可以安裝被竄改的應用程式</string>
-    <string name="system_framework_disable_integrity">禁用系统完整性校驗</string>
-    <string name="system_framework_disable_integrity_desc">禁止自動恢復被更改的內容。當啟用「禁用應用程式包管理器簽名校驗」功能時，它將默認啟用。\n僅支援 Android 13 及以上版本</string>
+    <string name="system_framework_disable_integrity">禁用系統完整性校驗</string>
+    <string name="system_framework_disable_integrity_desc">禁止自動恢復被更改的內容。當啟用「禁用應用程式包管理器簽名校驗」功能時，它將默認啟用。\n僅支援Android 13 及以上版本</string>
     <string name="system_framework_core_patch_digest_creak">禁用 APK 簽名校驗</string>
     <string name="system_framework_core_patch_digest_creak_desc">允許直接覆蓋安裝同包名且不同簽名的應用程式</string>
     <string name="system_framework_core_patch_use_pre_signature">安裝時始終使用已安裝應用程式的簽名</string>
@@ -386,7 +386,7 @@
     <string name="system_ui_lock_screen_current">當前</string>
     <string name="system_ui_lock_screen_show_second">時鐘顯示秒數</string>
     <string name="system_ui_lock_screen_blur_button">相機和智慧助理按鈕背景模糊</string>
-    <string name="system_ui_lock_screen_force_system_fonts">時鐘強制使用系统字體</string>
+    <string name="system_ui_lock_screen_force_system_fonts">時鐘強制使用系統字體</string>
     <string name="system_ui_lock_screen_double_lock">雙擊鎖定螢幕</string>
     <string name="system_ui_lock_screen_double_lock_desc">雙擊空白處鎖定螢幕</string>
     <string name="system_ui_lock_screen_not_disturb_mode_title">隱藏勿擾模式通知</string>
@@ -452,7 +452,7 @@
     <string name="system_ui_status_bar_icon_mobile_network_signal_no_card">無 SIM 卡圖示</string>
     <string name="system_ui_status_bar_icon_mobile_network_signal_card_1">SIM 卡 1 訊號圖示</string>
     <string name="system_ui_status_bar_icon_mobile_network_signal_card_2">SIM 卡 2 訊號圖示</string>
-    <string name="system_ui_status_bar_icon_mobile_network_type">顯示邏輯</string>
+    <string name="system_ui_status_bar_icon_mobile_network_type">显示逻辑</string>
     <string name="system_ui_status_bar_big_mobile_network_type">大網絡類型圖示</string>
     <string name="system_ui_status_bar_icon_location">位置訊息</string>
     <string name="system_ui_status_bar_icon_alarm_clock">鬧鐘</string>
@@ -482,7 +482,7 @@
     <string name="system_ui_status_bar_network_speed_at_right">網絡速度</string>
     <string name="system_ui_status_bar_volume_at_right">聲音情境</string>
     <string name="system_ui_status_bar_use_new_hd">強制使用新 HD 圖示</string>
-    <string name="system_ui_status_bar_use_new_hd_summary">需要較新的系统版本，部分機型可能至今未進版</string>
+    <string name="system_ui_status_bar_use_new_hd_summary">需要較新的系統版本，部分機型可能至今未進版</string>
     <string name="system_ui_status_bar_no_netspeed_separator_title">網速分隔符號</string>
     <string name="system_ui_status_bar_no_netspeed_separator_desc">於水滴屏的設備上不顯示時間和網速間的分隔號</string>
     <string name="system_ui_status_bar_hide_icon">截圖時隱藏狀態欄</string>
@@ -624,7 +624,7 @@
     <string name="system_settings_wifi_password_label">密碼</string>
     <string name="system_settings_wifi_password_dlgtitle">WiFi 詳情</string>
     <string name="system_settings_novelty_haptic_title">解鎖新版觸感調節頁面</string>
-    <string name="system_settings_novelty_haptic_desc">僅供有「聲音與觸感-觸感」頁面的設備使用</string>
+    <string name="system_settings_novelty_haptic_desc">僅供有「聲音與觸感-觸感」頁面的裝置使用</string>
     <string name="system_settings_connection_sharing_title">連接與分享</string>
     <string name="system_settings_new_nfc_page">新版 NFC 頁面</string>
     <string name="system_settings_new_nfc_page_desc">開啟後，不支援的設備預設付款應用程式無法選中小米錢包</string>
@@ -710,17 +710,17 @@
     <string name="guard_provider_disable_upload_applist">阻止自動上傳已安裝的應用程式列表</string>
     <!--System launcher-->
     <string name="home">系统桌面</string>
-    <string name="home_gesture">手勢與導覽欄</string>
+    <string name="home_gesture">手勢與導航欄</string>
     <string name="home_navigation_title">導航</string>
     <string name="home_navigation_back_area_height">返回手勢區域高度</string>
     <string name="home_navigation_back_area_width">返回手勢區域寬度</string>
     <string name="home_gesture_title2">手勢</string>
     <string name="home_gesture_mainscreen_title">主畫面</string>
-    <string name="home_gesture_gesture_title">全屏幕手勢</string>
+    <string name="home_gesture_gesture_title">全螢幕手勢</string>
     <string name="home_gesture_double_tap">雙擊</string>
     <string name="home_gesture_double_tap_desc">在任意主屏幕空白處雙擊</string>
     <string name="home_gesture_shake">搖晃</string>
-    <string name="home_gesture_shake_desc">在任意主屏幕搖晃設備</string>
+    <string name="home_gesture_shake_desc">在任意主屏幕搖晃裝置</string>
     <string name="home_gesture_left_swipe">左滑</string>
     <string name="home_gesture_left_swipe_desc">在主屏幕 Dock 欄向左滑動</string>
     <string name="home_gesture_right_swipe">右滑</string>
@@ -877,7 +877,7 @@
     <string name="home_other_tasks_shortcut_menu_desc">在快捷選單中新增多開選單</string>
     <string name="home_other_user_present_animation">最佳化解鎖動畫</string>
     <string name="home_other_always_blur_launcher_wallpaper">始終模糊桌布</string>
-    <string name="home_other_perfect_icon">完美圖示優先度</string>
+    <string name="home_other_perfect_icon">完美圖示優先級</string>
     <string name="home_other_icon_mono_chrome">圖示背景色</string>
     <string name="home_other_icon_monet_color">使用 Monet 取色</string>
     <string name="home_other_use_edit_color">使用自訂顏色</string>
@@ -886,7 +886,7 @@
     <string name="home_other_shortcut_background_blur">快捷選單背景模糊</string>
     <string name="home_other_blur_radius">模糊半徑</string>
     <string name="home_large_icon_corner_radius">大圖示圓角</string>
-    <string name="home_other_app_icon_hide">桌面捷徑管理</string>
+    <string name="home_other_app_icon_hide">桌面快捷方式管理</string>
     <string name="home_other_shortcut_remove_restrictions">解鎖 shortcut 數量限制</string>
     <string name="home_other_disable_hide_google">禁止隱藏 Google 圖示</string>
     <string name="home_other_fix_android_r_s">修復相容性問題導致系统桌布黑屏</string>
@@ -919,7 +919,7 @@
     <string name="miui_package_installer_safe_model_tip">禁用安全守護提示</string>
     <string name="miui_package_installer_count_checking">禁用頻繁安裝應用程式檢查</string>
     <string name="miui_package_installer_update_system_app">解除系统應用程式安裝限制</string>
-    <string name="miui_package_installer_update_system_app_desc">允許任何非系统管道安裝系统應用程式</string>
+    <string name="miui_package_installer_update_system_app_desc">允許任何非系统管道安裝系統應用程式</string>
     <string name="miui_package_installer_install_source">自訂安裝來源</string>
     <string name="miui_package_installer_apk_info">顯示更多安裝包資訊</string>
     <string name="miui_package_installer_apk_info_desc">顯示安裝中應用程式的更多相關資訊</string>
@@ -1064,7 +1064,7 @@
     <!--GetApps-->
     <string name="market">應用程式商店</string>
     <string name="market_device_modify">機型偽裝</string>
-    <string name="market_device_modify_desc">偽裝設備機型為 Xiaomi 13 Ultra</string>
+    <string name="market_device_modify_desc">偽裝裝置機型為 Xiaomi 13 Ultra</string>
     <string name="market_disable_new_icon">禁止使用協力廠商圖示</string>
     <string name="market_disable_new_icon_desc">使桌面更加整潔</string>
     <!--MIUI+-->
@@ -1179,7 +1179,7 @@
     <string name="app_details_min_sdk">最低 SDK 版本</string>
     <string name="disable_app_settings">這是一個壞主意！</string>
     <string name="disable_app_title">確定要禁用該應用程式嗎？</string>
-    <string name="disable_app_text">如果這是一個必要的系统應用程式，將其禁用可能會導致設備損毀</string>
+    <string name="disable_app_text">如果這是一個必要的系統應用程式，將其停用可能會導致裝置損毀</string>
     <string name="disable_app_fail">更改應用程式狀態失敗</string>
     <string name="unlimited">無限制</string>
     <string name="calls">通話</string>
@@ -1228,5 +1228,5 @@
     <string name="tip_17">小提示：鈴柒柒有兩種愛好，是個貓娘控也是個蘿莉控 (x</string>
     <string name="tip_18">小提示：Cemiuiler 是最會噴電的的系统內建 (喂！)</string>
     <string name="tip_19">小提示：變灰功能沒有特別註釋，代表功能異常，目前不計劃開放。</string>
-    <string name="tip_20">小提示：沒事兒，別找 Canary 追新，有問題也別急著更新。(扶額</string>
+    <string name="tip_20">\"小提示：閒閒沒事，不要找 Canary 追新，有問題別急著更新。(扶額</string>
 </resources>

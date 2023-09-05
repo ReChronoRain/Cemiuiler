@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Introduction to Xposed Modules-->
+    <!--Cemiuiler Settings/About Page-->
+    <string name="language">Inglese</string>
+    <string name="settings">Impostazioni</string>
+    <string name="about">Info</string>
+    <string name="about_use_desc">Cemiuiler fa uso di alcuni o tutti i seguenti progetti open source. Un ringraziamento speciale agli sviluppatori di questi progetti per il loro supporto (non in ordine)</string>
+    <string name="about_contributer">Collaboratore</string>
+    <string name="about_contributer_desc">Un ringraziamento speciale ai seguenti collaboratori per il loro aiuto nello sviluppo di Cemiuiler (non in ordine)</string>
+    <string name="about_donation_desc">Puoi sostenerci donando qui</string>
+    <!--Pop-up window/miuix part-->
+    <!--String reuse-->
+    <!--Multi-list Array-->
+    <!--System Framework-->
+    <!--Package Manager Service-->
+    <!--Browser-->
+    <!--Camera-->
+    <!--Clock-->
+    <string name="clock">Orologio</string>
+    <!--File Manager-->
+    <!--Phone-->
+    <string name="incallui">Telefono</string>
+    <!--Message-->
+    <string name="mms">Messaggi</string>
+    <!--Phone Service-->
+    <!--Download management program-->
+    <!--System UI-->
+    <!--Settings-->
+    <!--Themes-->
+    <!--Updater-->
+    <!--Permissions-->
+    <string name="lbe">Permessi</string>
+    <!--Cast-->
+    <!--Always-on display-->
+    <!--Taplus-->
+    <!--Mi Canvas-->
+    <!--Gallery-->
+    <string name="gallery">Galleria</string>
+    <!--MIUI security components-->
+    <string name="guard_provider">Componenti di sicurezza MIUI</string>
+    <!--System launcher-->
+    <string name="home">Launcher di sistema</string>
+    <!--Gallery Editor-->
+    <string name="mediaeditor">Editor Galleria</string>
+    <!--Mi Share-->
+    <!--Wallpaper-->
+    <!--Package installer-->
+    <!--App vault-->
+    <!--Music-->
+    <!--Battery and performance-->
+    <!--creen Recorder-->
+    <!--Screenshot-->
+    <!--Security/Tablet security center-->
+    <!--Smart cards-->
+    <!--Weather-->
+    <!--AI Translate-->
+    <!--AI Reco-->
+    <!--Barrage-->
+    <!--Joyose-->
+    <!--GetApps-->
+    <!--MIUI+-->
+    <!--Mi Settings-->
+    <!--MTB-->
+    <!--Scanner-->
+    <!--Other-->
+    <!--Tip-->
+</resources>
