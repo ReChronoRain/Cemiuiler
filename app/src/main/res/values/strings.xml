@@ -666,6 +666,9 @@
     <string name="system_settings_window_animation_scale">Window Animation Zoom</string>
     <string name="system_settings_transition_animation_scale">Transition Animation Scaling</string>
     <string name="system_settings_animator_duration_scale">Animator duration scaling</string>
+    <string name="system_settings_pad">For Pad</string>
+    <string name="system_settings_enable_pad_area">Enable pad area</string>
+    <string name="system_settings_enable_fold_area">Enable fold area</string>
     <!--Themes-->
     <string name="theme_manager">Themes</string>
     <string name="theme_manager_version_code_modify">Disable MIUI version detection</string>
@@ -793,6 +796,9 @@
     <string name="home_big_folder_icon_bg_width">Background width</string>
     <string name="home_big_folder_icon_bg_height">Background height</string>
     <string name="home_big_folder_item_max_count">Big Folder</string>
+    <string name="home_big_folder_icon_bg_2x1_n">eight grid background custom</string>
+    <string name="home_big_folder_icon_bg_1x2_n">four grid background custom</string>
+    <string name="home_big_folder_icon_bg_n">nine and sixteen grid background custom</string>
     <string name="home_auto_close_folder_title">Auto Shut Off</string>
     <string name="home_auto_close_folder_summary">Close app\'s folder after launch</string>
     <string name="home_wallpaper">Background</string>
@@ -921,6 +927,8 @@
     <string name="home_recent_simple_blur">Simple Blur</string>
     <string name="home_recent_none_blur">None Blur</string>
     <string name="home_recent_none_blur_simple_anim">None Blur (Simple Anim)</string>
+    <string name="mi_pad_enable_more_setting">enable more setting for mi pad</string>
+    <string name="mi_pad_enable_hidegestureline">enable hidegestureline</string>
     <!--Gallery Editor-->
     <string name="mediaeditor">Gallery Editor</string>
     <string name="mediaeditor_unlock_minimum_crop_limit">Unlock the minimum crop image limit</string>

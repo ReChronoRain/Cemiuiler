@@ -23,6 +23,19 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:key="prefs_key_system_settings_pad"
+        android:title="@string/system_settings_pad">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="prefs_key_system_settings_enable_pad_area"
+            android:title="@string/system_settings_enable_pad_area" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="prefs_key_system_settings_enable_fold_area"
+            android:title="@string/system_settings_enable_fold_area" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="prefs_key_system_settings_connection_sharing"
         android:title="@string/system_settings_connection_sharing_title">
         <SwitchPreference

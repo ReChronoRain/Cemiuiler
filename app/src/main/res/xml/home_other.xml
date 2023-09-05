@@ -23,9 +23,9 @@
             android:title="@string/home_other_shortcut_background_blur_custom"
             android:key="prefs_key_home_other_shortcut_background_blur_custom"
             android:defaultValue="200"
-            app:defaultValueText="@string/array_default"           
+            app:defaultValueText="@string/array_default"
             app:minValue="80"
-            app:maxValue="255" 
+            app:maxValue="255"
             app:format="%s"
             app:stepValue="1"
             android:dependency="prefs_key_home_other_shortcut_background_blur" />
@@ -53,6 +53,18 @@
     </PreferenceCategory>
 
     <PreferenceCategory>
+        <SwitchPreference
+            android:key="prefs_key_mi_pad_enable_more_setting"
+            android:title="@string/mi_pad_enable_more_setting"
+            android:summary="@string/content_extension_super_image_summary"
+            android:defaultValue="false" />
+
+        <SwitchPreference
+            android:key="prefs_key_mi_pad_enable_hidegestureline"
+            android:title="@string/mi_pad_enable_hidegestureline"
+            android:summary="@string/content_extension_super_image_summary"
+            android:defaultValue="false" />
+
         <SwitchPreference
             android:key="prefs_key_personal_assistant_overlap_mode"
             android:title="@string/personal_assistant_overlap_mode"

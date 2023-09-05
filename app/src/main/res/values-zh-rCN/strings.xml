@@ -700,6 +700,9 @@
     <string name="system_settings_window_animation_scale">窗口动画缩放</string>
     <string name="system_settings_transition_animation_scale">过渡动画缩放</string>
     <string name="system_settings_animator_duration_scale">Animator 时长缩放</string>
+    <string name="system_settings_pad">平板相关</string>
+    <string name="system_settings_enable_pad_area">开启平板专区</string>
+    <string name="system_settings_enable_fold_area">开启折叠屏专区</string>
 
     <!--主题壁纸-->
     <string name="theme_manager">主题壁纸</string>
@@ -826,6 +829,9 @@
     <string name="home_big_folder_icon_bg_width_1x2">背景宽度</string>
     <string name="home_big_folder_icon_bg_height_1x2">背景高度</string>
     <string name="home_big_folder_icon_bg">九宫格背景自定义</string>
+    <string name="home_big_folder_icon_bg_2x1_n">八宫格背景自定义</string>
+    <string name="home_big_folder_icon_bg_1x2_n">四宫格背景义</string>
+    <string name="home_big_folder_icon_bg_n">九、十六宫格背景自定义</string>
     <string name="home_big_folder_icon_bg_custom">自定义</string>
     <string name="home_big_folder_icon_bg_width">背景宽度</string>
     <string name="home_big_folder_icon_bg_height">背景高度</string>
@@ -953,6 +959,8 @@
     <string name="home_other_fix_android_r_s">修复兼容性问题导致桌面黑屏</string>
     <string name="home_other_shortcut_background_blur_custom">快捷菜单背景透明度</string>
     <string name="home_other_high_models">强制识别为高端机型</string>
+    <string name="mi_pad_enable_more_setting">为平板设置开启更多选项</string>
+    <string name="mi_pad_enable_hidegestureline">为平板开启隐藏小白条(等等)开关</string>
 
     <string name="home_recent_blur_level">模糊等级</string>
     <string name="home_recent_complete_blur_plus">完整模糊补充 (实验性)</string>
