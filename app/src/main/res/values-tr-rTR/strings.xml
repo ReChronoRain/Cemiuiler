@@ -331,6 +331,7 @@
     <string name="system_ui_status_bar_network_speed_at_right">İnternet hızı</string>
     <string name="system_ui_status_bar_volume_at_right">Ses sahnesi</string>
     <string name="system_ui_status_bar_use_new_hd">Yeni HD simgesini kullanmaya zorla</string>
+    <string name="system_ui_status_bar_use_new_hd_summary">Yeni bir sistem sürümü gereklidir. Bazı modeller güncellenmemiş olabilir</string>
     <string name="system_ui_status_bar_no_netspeed_separator_title">Ağ hızı ayırıcı</string>
     <string name="system_ui_status_bar_no_netspeed_separator_desc">Zaman ve şebeke hızı arasındaki dikey çizgi, su damlası ekranı olan cihazda görüntülenmez</string>
     <string name="system_ui_status_bar_hide_icon">Ekran görüntüsü alırken durum çubuğunu gizleyin</string>
@@ -779,6 +780,7 @@
     <string name="custom_hook">Özelleştir</string>
     <string name="various_location_simulation_title">Sahte konum</string>
     <string name="various_dialog_title">Diyalog</string>
+    <string name="various_open_aosp_something_desc">Open aosp interface \"hidden\"</string>
     <string name="settings_notfication_importance">Bildirim önemini göster</string>
     <string name="various_no_overscroll">Sınır dışı sekmeyi devre dışı bırak</string>
     <string name="various_disable_bluetooth_restrict">Bluetooth\'un geçici olarak kapatılmasını önleyin</string>
