@@ -3,6 +3,7 @@ package com.sevtinge.cemiuiler.ui.fragment.systemui;
 import static com.sevtinge.cemiuiler.utils.devicesdk.SystemSDKKt.isAndroidR;
 import static com.sevtinge.cemiuiler.utils.devicesdk.SystemSDKKt.isAndroidS;
 import static com.sevtinge.cemiuiler.utils.devicesdk.SystemSDKKt.isAndroidSv2;
+import static com.sevtinge.cemiuiler.utils.devicesdk.SystemSDKKt.isAndroidT;
 
 import android.provider.Settings;
 import android.view.View;
@@ -26,6 +27,7 @@ public class ControlCenterSettings extends SettingsPreferenceFragment {
     SwitchPreference mNewCCGridRect;
     SwitchPreference mFiveG;
     DropDownPreference mBluetoothSytle;
+    SwitchPreference mAddBlurEffectToNotificationViewForT;
 
     @Override
     public int getContentResId() {
@@ -49,13 +51,23 @@ public class ControlCenterSettings extends SettingsPreferenceFragment {
         mBluetoothSytle = findPreference("prefs_key_system_ui_control_center_cc_bluetooth_tile_style");
         mFiveG = findPreference("prefs_key_system_control_center_5g_tile");
 
+        mAddBlurEffectToNotificationViewForT = findPreference("prefs_key_T_enable");
+
+mAddBlurEffectToNotificationViewForT.setVisible(isAndroidT());
+
         mFixMediaPanel.setVisible(isAndroidS() || isAndroidSv2());
         mNewCCGrid.setVisible(!isAndroidR());
         mNewCCGridRect.setVisible(!isAndroidR());
-        mNotice.setVisible(!isAndroidR());
+        mNotice.setVisible(!isAndroidT());
         mBluetoothSytle.setVisible(!isAndroidR());
         mFiveG.setVisible(TelephonyManager.getDefault().isFiveGCapable());
 
+        if(isAndroidT()){
+mNotice.setEnabled(false);
+}
+        if(!isAndroidT()){
+mAddBlurEffectToNotificationViewForT.setEnabled(false);
+}
         ((SeekBarPreferenceEx) findPreference("prefs_key_system_control_center_old_qs_grid_columns")).setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
