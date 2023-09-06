@@ -1,17 +1,11 @@
 package com.sevtinge.cemiuiler.module.hook.mishare
 
 import com.sevtinge.cemiuiler.module.base.BaseHook
-import com.sevtinge.cemiuiler.utils.DexKit
-import com.sevtinge.cemiuiler.utils.DexKit.closeDexKit
-import com.sevtinge.cemiuiler.utils.DexKit.initDexKit
-import com.sevtinge.cemiuiler.utils.DexKit.dexKitBridge
-import io.luckypray.dexkit.descriptor.member.DexClassDescriptor
-import io.luckypray.dexkit.descriptor.member.DexMethodDescriptor
-import io.luckypray.dexkit.enums.MatchType
+
 
 class MiShareDexKit : BaseHook() {
     override fun init() {
-        System.loadLibrary("dexkit")
+       /* System.loadLibrary("dexkit")
         initDexKit(lpparam)
         try {
             mMiShareResultMethodsMap = dexKitBridge.batchFindMethodsUsingStrings {
@@ -30,6 +24,6 @@ class MiShareDexKit : BaseHook() {
 
     companion object {
         var mMiShareResultMethodsMap: Map<String, List<DexMethodDescriptor>>? = null
-        var mMiShareResultClassMap: Map<String, List<DexClassDescriptor>>? = null
+        var mMiShareResultClassMap: Map<String, List<DexClassDescriptor>>? = null*/
     }
 }

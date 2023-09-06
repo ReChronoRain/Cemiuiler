@@ -8,7 +8,6 @@ import com.sevtinge.cemiuiler.module.hook.home.AllAppsBlur;
 import com.sevtinge.cemiuiler.module.hook.home.AnimDurationRatio;
 import com.sevtinge.cemiuiler.module.hook.home.FreeFormCountForHome;
 import com.sevtinge.cemiuiler.module.hook.home.HideNavigationBar;
-import com.sevtinge.cemiuiler.module.hook.home.HomeDexKit;
 import com.sevtinge.cemiuiler.module.hook.home.HomePortraitReverse;
 import com.sevtinge.cemiuiler.module.hook.home.MaxFreeForm;
 import com.sevtinge.cemiuiler.module.hook.home.ScreenSwipe;
@@ -104,7 +103,7 @@ public class Home extends BaseModule {
     @Override
     public void handleLoadPackage() {
         // Dexkit
-        initHook(new HomeDexKit());
+        // initHook(new HomeDexKit());
 
         // 手势
         initHook(new DoubleTap(), mPrefsMap.getInt("home_gesture_double_tap_action", 0) > 0);

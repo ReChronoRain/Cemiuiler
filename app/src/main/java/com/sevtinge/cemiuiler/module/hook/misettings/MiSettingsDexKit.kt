@@ -1,5 +1,6 @@
 package com.sevtinge.cemiuiler.module.hook.misettings
 
+/*
 import com.sevtinge.cemiuiler.module.base.BaseHook
 import com.sevtinge.cemiuiler.utils.DexKit.closeDexKit
 import com.sevtinge.cemiuiler.utils.DexKit.dexKitBridge
@@ -32,3 +33,4 @@ class MiSettingsDexKit : BaseHook() {
         var mMiSettingsResultClassMap: Map<String, List<DexClassDescriptor>>? = null
     }
 }
+*/

@@ -4,15 +4,20 @@ import com.github.kyuubiran.ezxhelper.EzXHelper
 import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHook
 import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinder
 import com.sevtinge.cemiuiler.module.base.BaseHook
-import com.sevtinge.cemiuiler.module.hook.home.HomeDexKit
+import com.sevtinge.cemiuiler.utils.DexKit.dexKitBridge
 
 object ShowAllHideApp : BaseHook() {
     override fun init() {
-        val result =
-            HomeDexKit.mHomeResultClassMap!!["HideAllApp"]
-
-        result!!.map {
-            it.getClassInstance(EzXHelper.classLoader).methodFinder().first {
+        dexKitBridge.findClass {
+            matcher {
+                methods {
+                    add {
+                        usingStrings = listOf("appInfo.packageName", "activityInfo")
+                    }
+                }
+            }
+        }.forEach {
+            it.getInstance(EzXHelper.classLoader).methodFinder().first {
                 name == "isHideAppValid"
             }.createHook {
                 returnConstant(true)

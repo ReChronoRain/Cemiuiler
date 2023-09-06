@@ -1,7 +1,7 @@
 package com.sevtinge.cemiuiler.utils
 
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
-import io.luckypray.dexkit.DexKitBridge
+import org.luckypray.dexkit.DexKitBridge
 
 /**
  * DexKit 工具

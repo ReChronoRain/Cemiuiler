@@ -4,16 +4,10 @@ import static com.sevtinge.cemiuiler.utils.Helpers.getPackageVersionCode;
 
 import com.sevtinge.cemiuiler.module.base.BaseHook;
 
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
-import io.luckypray.dexkit.DexKitBridge;
-import io.luckypray.dexkit.builder.BatchFindArgs;
-import io.luckypray.dexkit.descriptor.member.DexMethodDescriptor;
-import io.luckypray.dexkit.enums.MatchType;
 
-public class BrowserDexKit extends BaseHook {
+/*public class BrowserDexKit extends BaseHook {
 
     public static Map<String, List<DexMethodDescriptor>> mBrowserResultMethodsMap;
 
@@ -40,4 +34,4 @@ public class BrowserDexKit extends BaseHook {
         }
         bridge.close();
     }
-}
+}*/
