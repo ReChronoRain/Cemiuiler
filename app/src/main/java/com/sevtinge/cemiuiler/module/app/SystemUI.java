@@ -226,17 +226,10 @@ public class SystemUI extends BaseModule {
         initHook(HideLockScreenHint.INSTANCE, mPrefsMap.getBoolean("system_ui_lock_screen_unlock_tip"));
         initHook(HideLockScreenStatusBar.INSTANCE, mPrefsMap.getBoolean("system_ui_lock_screen_hide_status_bar"));
 
-        if (!isAndroidT()) {
+        if (!isAndroidT() && !isAndroidR()) {
 
 initHook(AddBlurEffectToLockScreen.INSTANCE);
 initHook(AddBlurEffectToNotificationView.INSTANCE, mPrefsMap.getBoolean("n_enable"));
-
-        }
-
-//不确定安卓12是否适用，维持原设置
-
-        if (!isAndroidS()) {
-
 initHook(BlurButton.INSTANCE, mPrefsMap.getBoolean("system_ui_lock_screen_blur_button"));
 
         }
