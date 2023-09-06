@@ -58,10 +58,11 @@ mAddBlurEffectToNotificationViewForT.setVisible(isAndroidT());
         mFixMediaPanel.setVisible(isAndroidS() || isAndroidSv2());
         mNewCCGrid.setVisible(!isAndroidR());
         mNewCCGridRect.setVisible(!isAndroidR());
-        mNotice.setVisible(!isAndroidT());
+        mNotice.setVisible(!isAndroidT() && !isAndroidR());
         mBluetoothSytle.setVisible(!isAndroidR());
         mFiveG.setVisible(TelephonyManager.getDefault().isFiveGCapable());
 
+//避免从备份恢复配置时设置页面出现错乱
         if(isAndroidT()){
 mNotice.setEnabled(false);
 }
