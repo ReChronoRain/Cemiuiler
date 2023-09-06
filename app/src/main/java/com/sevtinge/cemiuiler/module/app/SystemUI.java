@@ -1,6 +1,7 @@
 package com.sevtinge.cemiuiler.module.app;
 
 import static com.sevtinge.cemiuiler.utils.devicesdk.SystemSDKKt.isAndroidR;
+import static com.sevtinge.cemiuiler.utils.devicesdk.SystemSDKKt.isAndroidT;
 import static com.sevtinge.cemiuiler.utils.devicesdk.SystemSDKKt.isMoreAndroidVersion;
 
 import com.sevtinge.cemiuiler.module.base.BaseModule;
@@ -224,10 +225,29 @@ public class SystemUI extends BaseModule {
         initHook(HideLockScreenHint.INSTANCE, mPrefsMap.getBoolean("system_ui_lock_screen_unlock_tip"));
         initHook(HideLockScreenStatusBar.INSTANCE, mPrefsMap.getBoolean("system_ui_lock_screen_hide_status_bar"));
 
-        if (!isAndroidR()) {
-            initHook(AddBlurEffectToLockScreen.INSTANCE);
-            initHook(AddBlurEffectToNotificationView.INSTANCE, mPrefsMap.getBoolean("n_enable"));
-            initHook(BlurButton.INSTANCE, mPrefsMap.getBoolean("system_ui_lock_screen_blur_button"));
+        if (!isAndroidT()) {
+
+initHook(AddBlurEffectToLockScreen.INSTANCE);
+initHook(AddBlurEffectToNotificationView.INSTANCE, mPrefsMap.getBoolean("n_enable"));
+
+        }
+
+//不确定安卓12是否适用，维持原设置
+
+        if (!isAndroidS()) {
+
+initHook(BlurButton.INSTANCE, mPrefsMap.getBoolean("system_ui_lock_screen_blur_button"));
+
+        }
+
+        
+        //安卓13通知模糊
+        
+        if (isAndroidT()) {
+
+initHook(AddBlurEffectToNotificationViewForT.INSTANCE, mPrefsMap.getBoolean("T_enable"));
+
+
         }
 
         initHook(DoubleTapToSleep.INSTANCE, mPrefsMap.getBoolean("system_ui_status_bar_double_tap_to_sleep"));
