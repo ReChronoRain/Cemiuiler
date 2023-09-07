@@ -538,6 +538,8 @@
     <string name="system_ui_statusbar_clock_desc">Clock format example</string>
     <string name="system_ui_statusbar_clock_size">Clock size</string>
     <string name="system_ui_statusbar_clock_double_size">Double row clock size</string>
+    <string name="system_ui_statusbar_clock_hide_calendar">hide calendar</string>
+    <string name="system_ui_statusbar_clock_hide_calendar_sum">please enable ustom clock mode to show clock</string>
     <string name="system_ui_statusbar_indicator_battery_title">Power related</string>
     <string name="system_ui_statusbar_indicator_temperature_title">Temperature related</string>
     <string name="system_ui_statusbar_battery_size">Font size</string>
