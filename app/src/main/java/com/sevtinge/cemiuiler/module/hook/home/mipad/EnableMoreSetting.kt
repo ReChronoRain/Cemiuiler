@@ -1,4 +1,4 @@
-package com.sevtinge.cemiuiler.module.home.mipad
+package com.sevtinge.cemiuiler.module.hook.home.mipad
 
 import android.view.View
 import com.github.kyuubiran.ezxhelper.ClassUtils.loadClass
@@ -7,22 +7,18 @@ import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinde
 import com.sevtinge.cemiuiler.module.base.BaseHook
 import com.sevtinge.cemiuiler.utils.getObjectField
 
-class EnableMoreSetting : BaseHook(){
+object EnableMoreSetting : BaseHook() {
     override fun init() {
         loadClass("com.miui.home.settings.MiuiHomeSettings").methodFinder().first{
             name == "checkDevice"
         }.createHook{
-            before(){
-                it.result = true
-            }
+            returnConstant(true)
         }
 
         loadClass("com.miui.home.launcher.DeviceConfig").methodFinder().first{
             name == "needShowCellsEntry"
         }.createHook{
-            before(){
-                it.result = true
-            }
+            returnConstant(true)
         }
 
         loadClass("com.miui.home.launcher.LauncherMenu").methodFinder().first{

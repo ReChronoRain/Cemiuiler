@@ -54,7 +54,7 @@ public class HomeFolderSettings extends SettingsPreferenceFragment {
         mSmallFolderIconBackgroundCustom2 = findPreference("prefs_key_home_big_folder_icon_bg_1x2");
         mSmallFolderIconBackgroundCustom3 = findPreference("prefs_key_home_big_folder_icon_bg");
 
-        setmBigFolderTextForPad();
+        setBigFolderTextForPad();
         setFolderShadeLevelEnable(Integer.parseInt(PrefsUtils.mSharedPreferences.getString("prefs_key_home_folder_shade", "0")));
         setFolderWidthEnable(PrefsUtils.mSharedPreferences.getInt(mFolderColumns.getKey(), 3));
         setFolderSpaceEnable(PrefsUtils.mSharedPreferences.getInt(mFolderColumns.getKey(), 3));
@@ -71,7 +71,7 @@ public class HomeFolderSettings extends SettingsPreferenceFragment {
         }));
     }
 
-    private void setmBigFolderTextForPad(){
+    private void setBigFolderTextForPad(){
         if (isPad()){
             mSmallFolderIconBackgroundCustom1.setTitle(R.string.home_big_folder_icon_bg_2x1_n);
             mSmallFolderIconBackgroundCustom2.setTitle(R.string.home_big_folder_icon_bg_1x2_n);

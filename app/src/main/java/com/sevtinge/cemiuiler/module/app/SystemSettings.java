@@ -20,8 +20,8 @@ import com.sevtinge.cemiuiler.module.hook.systemsettings.VoipAssistantController
 import com.sevtinge.cemiuiler.module.hook.systemsettings.aiimage.UnlockAi;
 import com.sevtinge.cemiuiler.module.hook.systemsettings.aiimage.UnlockMemc;
 import com.sevtinge.cemiuiler.module.hook.systemsettings.aiimage.UnlockSuperResolution;
-import com.sevtinge.cemiuiler.module.systemsettings.EnableFlodArea;
-import com.sevtinge.cemiuiler.module.systemsettings.EnablePadArea;
+import com.sevtinge.cemiuiler.module.hook.systemsettings.EnableFoldArea;
+import com.sevtinge.cemiuiler.module.hook.systemsettings.EnablePadArea;
 
 public class SystemSettings extends BaseModule {
 
@@ -44,7 +44,7 @@ public class SystemSettings extends BaseModule {
         initHook(NoveltyHaptic.INSTANCE, mPrefsMap.getBoolean("system_settings_novelty_haptic"));
 
         initHook(new EnablePadArea(),mPrefsMap.getBoolean("system_settings_enable_pad_area"));
-        initHook(new EnableFlodArea(),mPrefsMap.getBoolean("system_settings_enable_fold_area"));
+        initHook(new EnableFoldArea(),mPrefsMap.getBoolean("system_settings_enable_fold_area"));
 
         if (!isAndroidR()) {
             initHook(UnlockTaplusForSettings.INSTANCE, mPrefsMap.getBoolean("content_extension_unlock_taplus"));

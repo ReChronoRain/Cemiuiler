@@ -63,7 +63,6 @@ import com.sevtinge.cemiuiler.module.hook.systemui.statusbar.SelectiveHideIconFo
 import com.sevtinge.cemiuiler.module.hook.systemui.statusbar.WifiStandard;
 import com.sevtinge.cemiuiler.module.hook.systemui.statusbar.clock.TimeCustomization;
 import com.sevtinge.cemiuiler.module.hook.systemui.statusbar.clock.TimeStyle;
-import com.sevtinge.cemiuiler.module.hook.systemui.statusbar.clock.hideCalendar;
 import com.sevtinge.cemiuiler.module.hook.systemui.statusbar.icon.all.BatteryStyle;
 import com.sevtinge.cemiuiler.module.hook.systemui.statusbar.icon.all.BluetoothIcon;
 import com.sevtinge.cemiuiler.module.hook.systemui.statusbar.icon.all.DataSaverIcon;
@@ -146,7 +145,6 @@ public class SystemUI extends BaseModule {
         // 时钟指示器
         initHook(TimeStyle.INSTANCE);
         initHook(TimeCustomization.INSTANCE, mPrefsMap.getStringAsInt("system_ui_statusbar_clock_mode", 0) != 0);
-        initHook(new hideCalendar(),mPrefsMap.getBoolean("system_ui_statusbar_clock_hide_calendar"));
 
         // 硬件指示器
         initHook(new DisplayHardwareDetail(), mPrefsMap.getBoolean("system_ui_statusbar_battery_enable") ||

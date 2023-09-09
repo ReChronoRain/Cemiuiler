@@ -7,13 +7,6 @@
             android:key="prefs_key_system_ui_statusbar_clock_bold"
             android:title="@string/system_ui_statusbar_indicator_bold" />
 
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="prefs_key_system_ui_statusbar_clock_hide_calendar"
-            android:title="@string/system_ui_statusbar_clock_hide_calendar"
-            android:summary="@string/system_ui_statusbar_clock_hide_calendar_sum"/>
-
-
         <DropDownPreference
             android:defaultValue="0"
             android:key="prefs_key_system_ui_statusbar_clock_mode"

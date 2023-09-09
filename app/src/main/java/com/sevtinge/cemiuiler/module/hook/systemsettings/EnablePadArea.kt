@@ -1,12 +1,13 @@
-package com.sevtinge.cemiuiler.module.systemsettings
+package com.sevtinge.cemiuiler.module.hook.systemsettings
 
-import com.github.kyuubiran.ezxhelper.ClassUtils
+import com.github.kyuubiran.ezxhelper.ClassUtils.setStaticObject
 import com.sevtinge.cemiuiler.module.base.BaseHook
+import com.sevtinge.cemiuiler.utils.api.LazyClass.SettingsFeaturesClass
 
-class EnablePadArea :BaseHook(){
+class EnablePadArea : BaseHook() {
     override fun init() {
-        ClassUtils.setStaticObject(
-            ClassUtils.loadClass("com.android.settings.utils.SettingsFeatures"),
+        setStaticObject(
+            SettingsFeaturesClass,
             "IS_SUPPORT_TABLET_SCREEN_SETTINGS",
             true
         )
