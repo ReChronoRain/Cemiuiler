@@ -796,9 +796,9 @@
     <string name="home_big_folder_icon_bg_width">Background width</string>
     <string name="home_big_folder_icon_bg_height">Background height</string>
     <string name="home_big_folder_item_max_count">Big Folder</string>
-    <string name="home_big_folder_icon_bg_2x1_n">eight grid background custom</string>
-    <string name="home_big_folder_icon_bg_1x2_n">four grid background custom</string>
-    <string name="home_big_folder_icon_bg_n">nine and sixteen grid background custom</string>
+    <string name="home_big_folder_icon_bg_2x1_n">4*2 background custom</string>
+    <string name="home_big_folder_icon_bg_1x2_n">2*2 background custom</string>
+    <string name="home_big_folder_icon_bg_n">3*3 &amp; 4*4 background custom</string>
     <string name="home_auto_close_folder_title">Auto Shut Off</string>
     <string name="home_auto_close_folder_summary">Close app\'s folder after launch</string>
     <string name="home_wallpaper">Background</string>
