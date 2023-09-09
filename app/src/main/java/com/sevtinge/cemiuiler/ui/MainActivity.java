@@ -59,9 +59,22 @@ public class MainActivity extends SettingsActivity {
         initData();
         setImmersionMenuEnabled(true);
         setFragment(mMainFrag);
-        ALPermissionManager.RootCommand("chmod 0777 " + getPackageCodePath());
-        ALPermissionManager.RootCommand("chmod 0777 " + PrefsUtils.mPrefsFile);
-        ALPermissionManager.RootCommand("chown root:root " + PrefsUtils.mPrefsFile);
+        suGet();
+    }
+
+    private void suGet() {
+        final String ExecutedCommand = "ExecutedCommand";
+        SharedPreferences sharedPreferences = getSharedPreferences(ExecutedCommand, MODE_PRIVATE);
+        boolean hasExecutedCommand = sharedPreferences.getBoolean("hasExecutedCommand", false);
+
+        if (!hasExecutedCommand) {
+            ALPermissionManager.RootCommand("chmod 0777 " + getPackageCodePath());
+
+            // 标记命令已执行
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("hasExecutedCommand", true);
+            editor.apply();
+        }
     }
 
     private void initView() {
