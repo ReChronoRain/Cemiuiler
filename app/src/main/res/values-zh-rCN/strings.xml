@@ -708,6 +708,9 @@
     <string name="system_settings_transition_animation_scale">过渡动画缩放</string>
     <string name="system_settings_animator_duration_scale">Animator 时长缩放</string>
 
+    <!--系统服务组件-->
+    <string name="securityadd">系统服务组件</string>
+    <string name="securityadd_xspaceappstartactivity">禁止显示分身动画</string>
     <!--主题壁纸-->
     <string name="theme_manager">主题壁纸</string>
     <string name="theme_manager_version_code_modify">禁用 MIUI 版本检测</string>

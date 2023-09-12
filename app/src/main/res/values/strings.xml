@@ -732,6 +732,9 @@
     <!--MIUI security components-->
     <string name="guard_provider">MIUI security components</string>
     <string name="guard_provider_disable_upload_applist">Prevent automatic upload of installed app list</string>
+    <!--System Service Components-->
+    <string name="securityadd">System Service Components</string>
+    <string name="securityadd_xspaceappstartactivity">Suppress the display of avatar animations</string>
     <!--System launcher-->
     <string name="home">System launcher</string>
     <string name="home_gesture">Gesture and Navigation</string>

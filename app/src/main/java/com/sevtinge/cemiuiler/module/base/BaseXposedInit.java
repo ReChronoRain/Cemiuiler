@@ -38,6 +38,7 @@ import com.sevtinge.cemiuiler.module.app.Scanner;
 import com.sevtinge.cemiuiler.module.app.ScreenRecorder;
 import com.sevtinge.cemiuiler.module.app.ScreenShot;
 import com.sevtinge.cemiuiler.module.app.SecurityCenter;
+import com.sevtinge.cemiuiler.module.app.Securityadd;
 import com.sevtinge.cemiuiler.module.app.Settings;
 import com.sevtinge.cemiuiler.module.app.SystemFramework;
 import com.sevtinge.cemiuiler.module.app.SystemSettings;
@@ -74,6 +75,7 @@ public abstract class BaseXposedInit implements IXposedHookLoadPackage, IXposedH
     public final SystemFramework mSystemFramework = new SystemFramework();
     public final SystemUI mSystemUI = new SystemUI();
     public final Home mHome = new Home();
+    public final Securityadd securityadd = new Securityadd();
     public final ScreenShot mScreenShot = new ScreenShot();
 
     public final ScreenRecorder mScreenRecorder = new ScreenRecorder();
@@ -221,6 +223,9 @@ public abstract class BaseXposedInit implements IXposedHookLoadPackage, IXposedH
             case "com.miui.screenshot" -> {
                 mScreenShot.init(lpparam);
                 mVarious.init(lpparam);
+            }
+            case "com.miui.securityadd" -> {
+                securityadd.init(lpparam);
             }
             case "com.miui.screenrecorder" -> {
                 mScreenRecorder.init(lpparam);
