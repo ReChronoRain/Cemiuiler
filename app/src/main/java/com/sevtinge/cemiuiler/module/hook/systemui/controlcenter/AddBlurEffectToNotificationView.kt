@@ -127,8 +127,7 @@ object AddBlurEffectToNotificationView : BaseHook() {
 
             "com.android.systemui.statusbar.notification.stack.AmbientState".replaceMethod("getAppearFraction")
             {
-                val mExpansionChanging =
-                    it.thisObject.getObjectField("mExpansionChanging") as Boolean
+
                 val isNCSwitching = it.thisObject.getObjectField("isNCSwitching") as Boolean
                 val isSwipingUp = it.thisObject.getObjectField("mIsSwipingUp") as Boolean
                 val isFlinging = it.thisObject.getObjectField("mIsFlinging") as Boolean
@@ -456,26 +455,62 @@ object AddBlurEffectToNotificationView : BaseHook() {
                 }
             })
 
-        // 锁屏画报 隐藏模糊
-        XposedBridge.hookAllMethods(
-            lockScreenMagazineControllerClass,
-            "setViewsAlpha",
-            object : XC_MethodHook() {
-                override fun beforeHookedMethod(param: MethodHookParam) {
-                    if (!isDefaultLockScreenTheme()) return
-                    val alpha = param.args[0] as Float
-                    val drawableAlpha = alpha * 255
-                    val mNotificationStackScrollLayout = HookUtils.getValueByField(
-                        param.thisObject,
-                        "mNotificationStackScrollLayout"
-                    ) as ViewGroup
-                    for (i in 0..mNotificationStackScrollLayout.childCount) {
-                        val childAt =
-                            mNotificationStackScrollLayout.getChildAt(i) ?: continue
-                        setBlurEffectAlphaForNotificationRow(childAt, drawableAlpha.toInt())
-                    }
-                }
-            })
+  if(isMoreAndroidVersion(33)) { 
+          // 锁屏画报 隐藏模糊  
+           // 修复AndroidT锁屏画报模糊残留 
+          XposedBridge.hookAllMethods(  
+              lockScreenMagazineControllerClass,  
+              "setPanelViewAlpha",  
+              object : XC_MethodHook() {  
+                  override fun beforeHookedMethod(param: MethodHookParam) {  
+                      if (!isDefaultLockScreenTheme()) return  
+                      val alpha = param.args[0] as Float  
+                      val drawableAlpha = alpha * 255  
+  
+                                          val mNotificationStackScrollLayoutController = 
+                         HookUtils.getValueByField( 
+                             param.thisObject, 
+                             "mNotificationStackScrollLayoutController" 
+                         ) 
+                             ?: return 
+                     val mView = 
+                         HookUtils.getValueByField( 
+                             mNotificationStackScrollLayoutController, 
+                             "mView" 
+                         ) ?: return 
+  
+  mView as ViewGroup 
+  
+                      for (i in 0..mView.childCount) {  
+                      val childAt = mView.getChildAt(i) ?: continue  
+                          setBlurEffectAlphaForNotificationRow(childAt, drawableAlpha.toInt())  
+                      }  
+                  }  
+              }) 
+ } else { 
+  
+          // 锁屏画报 隐藏模糊  
+          XposedBridge.hookAllMethods(  
+              lockScreenMagazineControllerClass,  
+              "setViewsAlpha",  
+              object : XC_MethodHook() {  
+                  override fun beforeHookedMethod(param: MethodHookParam) {  
+                      if (!isDefaultLockScreenTheme()) return  
+                      val alpha = param.args[0] as Float  
+                      val drawableAlpha = alpha * 255  
+                      val mNotificationStackScrollLayout = HookUtils.getValueByField(  
+                          param.thisObject,  
+                          "mNotificationStackScrollLayout"  
+                      ) as ViewGroup  
+                      for (i in 0..mNotificationStackScrollLayout.childCount) {  
+                          val childAt =  
+                              mNotificationStackScrollLayout.getChildAt(i) ?: continue  
+                          setBlurEffectAlphaForNotificationRow(childAt, drawableAlpha.toInt())  
+                      }  
+                  }  
+              })   
+  
+ }
 
         XposedBridge.hookAllMethods(
             notificationStackScrollLayoutClass,
