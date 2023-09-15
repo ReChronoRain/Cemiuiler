@@ -18,7 +18,7 @@ public class ToastSlideAgain extends BaseHook {
                 @Override
                 protected void before(MethodHookParam param) {
                     unhook = hookToast();
-                    logI("im hook onPointerEvent");
+                    // logI("im hook onPointerEvent");
                 }
 
                 @Override
@@ -33,7 +33,7 @@ public class ToastSlideAgain extends BaseHook {
                 @Override
                 protected void before(MethodHookParam param) {
                     unhook = hookToast();
-                    logI("im hook onStartGesture");
+                    // logI("im hook onStartGesture");
                 }
 
                 @Override
@@ -50,7 +50,7 @@ public class ToastSlideAgain extends BaseHook {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) {
                     param.setResult(null);
-                    logI("im hook Toast show");
+                    // logI("im hook Toast show");
                 }
             }
         );
@@ -59,9 +59,8 @@ public class ToastSlideAgain extends BaseHook {
     public void unHook(XC_MethodHook.Unhook unhook) {
         if (unhook != null) {
             unhook.unhook();
-            logI("the unhook is: " + unhook);
-        } else {
-            logE("the unhook is: null");
-        }
+            // logI("the unhook is: " + unhook);
+        }  // logE("the unhook is: null");
+
     }
 }
