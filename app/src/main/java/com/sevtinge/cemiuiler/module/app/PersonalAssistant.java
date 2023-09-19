@@ -1,6 +1,7 @@
 package com.sevtinge.cemiuiler.module.app;
 
 import com.sevtinge.cemiuiler.module.base.BaseModule;
+import com.sevtinge.cemiuiler.module.base.LoadHostDir;
 import com.sevtinge.cemiuiler.module.hook.personalassistant.BlurOverlay;
 import com.sevtinge.cemiuiler.module.hook.personalassistant.BlurPersonalAssistant;
 import com.sevtinge.cemiuiler.module.hook.personalassistant.EnableFoldWidget;
@@ -11,7 +12,9 @@ public class PersonalAssistant extends BaseModule {
 
     @Override
     public void handleLoadPackage() {
-        initHook(new PersonalAssistantDexKit());
+        // initHook(new PersonalAssistantDexKit());
+        initHook(LoadHostDir.INSTANCE);
+
         initHook(new BlurOverlay(), false);
         initHook(new EnableFoldWidget(), mPrefsMap.getBoolean("personal_assistant_fold_widget_enable"));
         initHook(BlurPersonalAssistant.INSTANCE, mPrefsMap.getBoolean("pa_enable"));

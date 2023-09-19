@@ -2,13 +2,14 @@ package com.sevtinge.cemiuiler.module.hook.browser
 
 import com.github.kyuubiran.ezxhelper.EzXHelper.safeClassLoader
 import com.sevtinge.cemiuiler.module.base.BaseHook
+import com.sevtinge.cemiuiler.utils.DexKit.addUsingStringsEquals
 import com.sevtinge.cemiuiler.utils.DexKit.dexKitBridge
 import com.sevtinge.cemiuiler.utils.Helpers.getPackageVersionCode
 import de.robv.android.xposed.XC_MethodReplacement
 import de.robv.android.xposed.XposedBridge
 import org.luckypray.dexkit.query.enums.StringMatchType
 
-class DebugMode : BaseHook() {
+object DebugMode : BaseHook() {
     override fun init() {
         var found = false
         try {
@@ -60,8 +61,7 @@ class DebugMode : BaseHook() {
 
             dexKitBridge.findMethod {
                 matcher {
-                    usingStrings = listOf("pref_key_debug_mode_new")
-                    StringMatchType.Equals
+                    addUsingStringsEquals("pref_key_debug_mode_new")
                 }
             }.forEach {
                 val debugMode = it.getMethodInstance(lpparam.classLoader)
@@ -81,8 +81,7 @@ class DebugMode : BaseHook() {
             if (!found) {
                 dexKitBridge.findMethod {
                     matcher {
-                        usingStrings = listOf("pref_key_debug_mode")
-                        StringMatchType.Equals
+                        addUsingStringsEquals("pref_key_debug_mode")
                     }
                 }.forEach {
                     val debugMode1 = it.getMethodInstance(safeClassLoader)
@@ -103,8 +102,7 @@ class DebugMode : BaseHook() {
             if (!found) {
                 dexKitBridge.findMethod {
                     matcher {
-                        usingStrings = listOf("pref_key_debug_mode_" + getPackageVersionCode(lpparam))
-                        StringMatchType.Equals
+                        addUsingStringsEquals("pref_key_debug_mode_" + getPackageVersionCode(lpparam))
                     }
                 }.forEach {
                     val debugMode2 = it.getMethodInstance(lpparam.classLoader)

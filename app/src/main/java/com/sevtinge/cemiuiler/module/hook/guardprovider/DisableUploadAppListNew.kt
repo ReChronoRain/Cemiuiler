@@ -2,6 +2,7 @@ package com.sevtinge.cemiuiler.module.hook.guardprovider
 
 import com.sevtinge.cemiuiler.module.base.BaseHook
 import com.sevtinge.cemiuiler.utils.DexKit
+import com.sevtinge.cemiuiler.utils.DexKit.addUsingStringsEquals
 import com.sevtinge.cemiuiler.utils.DexKit.dexKitBridge
 import com.sevtinge.cemiuiler.utils.Helpers
 import com.sevtinge.cemiuiler.utils.replaceMethod
@@ -21,8 +22,7 @@ class DisableUploadAppListNew : BaseHook() {
         }*/
         dexKitBridge.findMethod {
             matcher {
-                usingStrings = listOf("AntiDefraudAppManager", "https://flash.sec.miui.com/detect/app")
-                StringMatchType.Equals
+                addUsingStringsEquals("AntiDefraudAppManager", "https://flash.sec.miui.com/detect/app")
             }
         }.forEach {
             it.getMethodInstance(lpparam.classLoader).replaceMethod {

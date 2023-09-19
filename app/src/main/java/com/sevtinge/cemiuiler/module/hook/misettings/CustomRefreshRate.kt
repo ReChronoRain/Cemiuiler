@@ -7,6 +7,7 @@ import com.github.kyuubiran.ezxhelper.MemberExtensions.isFinal
 import com.github.kyuubiran.ezxhelper.MemberExtensions.isStatic
 import com.github.kyuubiran.ezxhelper.finders.FieldFinder.`-Static`.fieldFinder
 import com.sevtinge.cemiuiler.module.base.BaseHook
+import com.sevtinge.cemiuiler.utils.DexKit.addUsingStringsEquals
 import com.sevtinge.cemiuiler.utils.DexKit.dexKitBridge
 import org.luckypray.dexkit.query.enums.StringMatchType
 
@@ -14,8 +15,7 @@ object CustomRefreshRate : BaseHook() {
     private val resultMethod by lazy {
         dexKitBridge.findMethod {
            matcher {
-               usingStrings = listOf("btn_preferce_category")
-               StringMatchType.Equals
+               addUsingStringsEquals("btn_preferce_category")
            }
         }
     }

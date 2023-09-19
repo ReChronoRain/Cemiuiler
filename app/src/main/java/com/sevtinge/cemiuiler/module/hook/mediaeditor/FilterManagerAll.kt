@@ -6,6 +6,7 @@ import com.github.kyuubiran.ezxhelper.ClassUtils.loadClass
 import com.github.kyuubiran.ezxhelper.ClassUtils.setStaticObject
 import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHook
 import com.sevtinge.cemiuiler.module.base.BaseHook
+import com.sevtinge.cemiuiler.utils.DexKit.addUsingStringsEquals
 import com.sevtinge.cemiuiler.utils.DexKit.dexKitBridge
 import com.sevtinge.cemiuiler.utils.api.LazyClass.AndroidBuildCls
 import org.luckypray.dexkit.query.enums.StringMatchType
@@ -16,12 +17,7 @@ object FilterManagerAll : BaseHook() {
     private val methodResult by lazy {
         dexKitBridge.findMethod {
             matcher {
-                usingStringsMatcher {
-                    this.add {
-                        this.value = "wayne"
-                        StringMatchType.Equals
-                    }
-                }
+                addUsingStringsEquals("wayne")
             }
         }.filter { it.isMethod }.map { it.getMethodInstance(safeClassLoader) }.toTypedArray().firstOrNull()
     }

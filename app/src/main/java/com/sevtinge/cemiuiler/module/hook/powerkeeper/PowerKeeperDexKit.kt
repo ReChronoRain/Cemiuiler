@@ -4,12 +4,10 @@ import com.sevtinge.cemiuiler.module.base.BaseHook
 import com.sevtinge.cemiuiler.utils.DexKit.closeDexKit
 import com.sevtinge.cemiuiler.utils.DexKit.initDexKit
 import com.sevtinge.cemiuiler.utils.DexKit.dexKitBridge
-import io.luckypray.dexkit.descriptor.member.DexMethodDescriptor
-import io.luckypray.dexkit.enums.MatchType
 
 class PowerKeeperDexKit : BaseHook() {
     override fun init() {
-        System.loadLibrary("dexkit")
+        /*System.loadLibrary("dexkit")
         initDexKit(lpparam)
         try {
             mPowerKeeperResultMethodsMap = dexKitBridge.batchFindMethodsUsingStrings {
@@ -23,6 +21,6 @@ class PowerKeeperDexKit : BaseHook() {
     }
 
     companion object {
-        var mPowerKeeperResultMethodsMap: Map<String, List<DexMethodDescriptor>>? = null
+        var mPowerKeeperResultMethodsMap: Map<String, List<DexMethodDescriptor>>? = null*/
     }
 }

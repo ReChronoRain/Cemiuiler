@@ -5,15 +5,14 @@ import com.github.kyuubiran.ezxhelper.EzXHelper.classLoader
 import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHooks
 import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinder
 import com.sevtinge.cemiuiler.module.base.BaseHook
+import com.sevtinge.cemiuiler.utils.DexKit.addUsingStringsEquals
 import com.sevtinge.cemiuiler.utils.DexKit.dexKitBridge
-import org.luckypray.dexkit.query.enums.StringMatchType
 
 object NoAutoTurnOff : BaseHook() {
     private val nullMethod by lazy {
         dexKitBridge.findMethod {
             matcher {
-                usingStrings = listOf("EnabledState", "mishare_enabled")
-                StringMatchType.Equals
+                addUsingStringsEquals("EnabledState", "mishare_enabled")
             }
         }.map { it.getMethodInstance(classLoader) }.toList()
     }
@@ -21,8 +20,7 @@ object NoAutoTurnOff : BaseHook() {
     private val toastClass by lazy {
         dexKitBridge.findClass {
             matcher {
-                usingStrings = listOf("null context", "cta_agree")
-                StringMatchType.Equals
+                addUsingStringsEquals("null context", "cta_agree")
             }
         }.map { it.getInstance(classLoader) }.toList()
     }

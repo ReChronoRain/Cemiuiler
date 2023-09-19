@@ -1,6 +1,7 @@
 package com.sevtinge.cemiuiler.module.app;
 
 import com.sevtinge.cemiuiler.module.base.BaseModule;
+import com.sevtinge.cemiuiler.module.base.LoadHostDir;
 import com.sevtinge.cemiuiler.module.hook.thememanager.DisableThemeAdNew;
 import com.sevtinge.cemiuiler.module.hook.thememanager.EnableFoldTheme;
 import com.sevtinge.cemiuiler.module.hook.thememanager.EnablePadTheme;
@@ -12,7 +13,8 @@ public class ThemeManager extends BaseModule {
 
     @Override
     public void handleLoadPackage() {
-        initHook(new ThemeManagerDexKit());
+        // initHook(new ThemeManagerDexKit());
+        initHook(LoadHostDir.INSTANCE);
         initHook(new DisableThemeAdNew(), mPrefsMap.getBoolean("various_theme_diable_ads"));
         initHook(new ThemeCrackNew(), mPrefsMap.getBoolean("hidden_function") && mPrefsMap.getBoolean("various_theme_crack"));
         // initHook(new ThemeCrack(), mPrefsMap.getBoolean("hidden_function") && mPrefsMap.getBoolean("various_theme_crack"));

@@ -4,6 +4,7 @@ import static com.sevtinge.cemiuiler.utils.api.VoyagerApisKt.isPad;
 import static com.sevtinge.cemiuiler.utils.devicesdk.SystemSDKKt.isAndroidR;
 
 import com.sevtinge.cemiuiler.module.base.BaseModule;
+import com.sevtinge.cemiuiler.module.base.LoadHostDir;
 import com.sevtinge.cemiuiler.module.hook.home.AllAppsBlur;
 import com.sevtinge.cemiuiler.module.hook.home.AnimDurationRatio;
 import com.sevtinge.cemiuiler.module.hook.home.FreeFormCountForHome;
@@ -104,6 +105,7 @@ public class Home extends BaseModule {
     public void handleLoadPackage() {
         // Dexkit
         // initHook(new HomeDexKit());
+        initHook(LoadHostDir.INSTANCE);
 
         // 手势
         initHook(new DoubleTap(), mPrefsMap.getInt("home_gesture_double_tap_action", 0) > 0);
