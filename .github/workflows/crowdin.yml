@@ -3,7 +3,7 @@ name: Crowdin Action
 on:
    workflow_dispatch:
    push:
-     branches: [ main ]
+     branches: [ modified ]
      paths:
        - app/src/main/res/values/strings.xml
    schedule:
