@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 
 import com.sevtinge.cemiuiler.module.base.BaseHook;
 import com.sevtinge.cemiuiler.utils.Helpers;
-import com.sevtinge.cemiuiler.utils.setObjectField;
+import com.github.kyuubiran.ezxhelper.utils.putObject;
 
 import java.util.ArrayList;
 
@@ -19,9 +19,9 @@ public class QSGridLabels extends BaseHook {
             @Override
             protected void after(MethodHookParam param) {
                 if (((ViewGroup) param.thisObject).getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    ((ViewGroup) param.thisObject).setObjectField("mMaxAllowedRows", 4);
+                    ((ViewGroup) param.thisObject).putObject("mMaxAllowedRows", 4);
                 } else {
-                    ((ViewGroup) param.thisObject).setObjectField("mMaxAllowedRows", 2);
+                    ((ViewGroup) param.thisObject).putObject("mMaxAllowedRows", 2);
                 }
                 ((ViewGroup) param.thisObject).requestLayout();
                 //updateLabelsVisibility(param.args[0], XposedHelpers.getIntField(param.thisObject, "mRows"), ((ViewGroup) param.thisObject).getResources().getConfiguration().orientation);
