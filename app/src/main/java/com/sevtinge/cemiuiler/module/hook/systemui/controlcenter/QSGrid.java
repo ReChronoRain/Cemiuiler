@@ -1,6 +1,7 @@
 package com.sevtinge.cemiuiler.module.hook.systemui.controlcenter;
 
 import android.content.res.Configuration;
+import android.view.ViewGroup;
 import com.sevtinge.cemiuiler.R;
 import com.sevtinge.cemiuiler.module.base.BaseHook;
 
