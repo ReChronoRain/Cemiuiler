@@ -17,12 +17,13 @@ public class QSGridLabels extends BaseHook {
         Helpers.hookAllMethods("com.android.systemui.qs.MiuiTileLayout", lpparam.classLoader, "addTile", new MethodHook() {
             @Override
             protected void after(MethodHookParam param) {
+                val viewGroup = param.thisObject.asType(ViewGroup);
                 if (((ViewGroup) param.thisObject).getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    param.thisObject.setObjectField("mMaxAllowedRows", 4);
+                    viewGroup.setObjectField("mMaxAllowedRows", 4);
                 } else {
-                    param.thisObject.setObjectField("mMaxAllowedRows", 2);
+                    viewGroup.setObjectField("mMaxAllowedRows", 2);
                 }
-                param.thisObject.requestLayout();
+                viewGroup.requestLayout();
                 //updateLabelsVisibility(param.args[0], XposedHelpers.getIntField(param.thisObject, "mRows"), ((ViewGroup) param.thisObject).getResources().getConfiguration().orientation);
             }
         });
