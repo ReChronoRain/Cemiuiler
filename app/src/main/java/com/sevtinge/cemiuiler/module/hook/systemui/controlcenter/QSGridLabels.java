@@ -14,7 +14,7 @@ import de.robv.android.xposed.XposedHelpers;
 
 public class QSGridLabels extends BaseHook {
     @Override
-    public void init() {
+    /*public void init() {
         Helpers.hookAllMethods("com.android.systemui.qs.MiuiTileLayout", lpparam.classLoader, "addTile", new MethodHook() {
             @Override
             protected void after(MethodHookParam param) {
@@ -28,7 +28,7 @@ public class QSGridLabels extends BaseHook {
             }
         });
 
-        /*Helpers.hookAllMethods("com.android.systemui.qs.MiuiPagedTileLayout", lpparam.classLoader, "addTile", new MethodHook() {
+        Helpers.hookAllMethods("com.android.systemui.qs.MiuiPagedTileLayout", lpparam.classLoader, "addTile", new MethodHook() {
             @Override
             @SuppressWarnings("unchecked")
             protected void before(MethodHookParam param) throws Throwable {
@@ -54,8 +54,8 @@ public class QSGridLabels extends BaseHook {
                     );
                 }
             });
-        }*/
-    }
+        }
+    }*/
 
     private static void updateLabelsVisibility(Object mRecord, int mRows, int orientation) {
         if (mRecord == null) return;
