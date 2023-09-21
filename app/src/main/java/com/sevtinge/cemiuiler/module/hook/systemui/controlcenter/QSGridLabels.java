@@ -17,7 +17,7 @@ public class QSGridLabels extends BaseHook {
         Helpers.hookAllMethods("com.android.systemui.qs.MiuiTileLayout", lpparam.classLoader, "addTile", new MethodHook() {
             @Override
             protected void after(MethodHookParam param) {
-                val viewGroup = it.thisObject as ViewGroup;
+                val viewGroup = param.thisObject as ViewGroup;
                 if (((ViewGroup) param.thisObject).getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
                     viewGroup.putObject("mMaxAllowedRows", 4);
                 } else {
