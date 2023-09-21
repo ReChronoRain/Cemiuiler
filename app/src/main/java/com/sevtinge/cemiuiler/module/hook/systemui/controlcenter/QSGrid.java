@@ -31,9 +31,7 @@ public class QSGrid extends BaseHook {
 
         if (cols > 2)
             mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_columns", colsRes);
-        if (rows > 1 && ((ViewGroup) param.thisObject).getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) 
-            mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", rowsRes);
-        else
-            mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", 2);
+        if (rows > 1) 
+            mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", 3);
     }
 }
