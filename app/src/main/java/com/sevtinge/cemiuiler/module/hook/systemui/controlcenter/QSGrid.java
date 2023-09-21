@@ -1,5 +1,6 @@
 package com.sevtinge.cemiuiler.module.hook.systemui.controlcenter;
 
+import android.content.res.Configuration;
 import com.sevtinge.cemiuiler.R;
 import com.sevtinge.cemiuiler.module.base.BaseHook;
 
@@ -29,6 +30,9 @@ public class QSGrid extends BaseHook {
 
         if (cols > 2)
             mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_columns", colsRes);
-        if (rows > 1) mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", rowsRes);
+        if (rows > 1 && ((ViewGroup) param.thisObject).getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) 
+            mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", rowsRes);
+        else
+            mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", 2);
     }
 }
