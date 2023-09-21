@@ -5,7 +5,7 @@
 # Cemiuiler
 ### Torne a MIUI ótima novamente!
 
-English&nbsp;&nbsp;|&nbsp;&nbsp;[简体中文](/README.md) |&nbsp;&nbsp;Português (Brasil)
+[English](/README_en-US.md)&nbsp;&nbsp;|&nbsp;&nbsp;[简体中文](/README.md) |&nbsp;&nbsp;Português (Brasil)
 
 </div>
 
