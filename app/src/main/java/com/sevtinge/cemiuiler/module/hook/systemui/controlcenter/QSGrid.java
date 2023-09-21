@@ -1,9 +1,15 @@
 package com.sevtinge.cemiuiler.module.hook.systemui.controlcenter;
 
 import android.content.res.Configuration;
+import android.view.View;
 import android.view.ViewGroup;
+
 import com.sevtinge.cemiuiler.R;
 import com.sevtinge.cemiuiler.module.base.BaseHook;
+
+import com.sevtinge.cemiuiler.utils.Helpers;
+
+import de.robv.android.xposed.XposedHelpers;
 
 public class QSGrid extends BaseHook {
 
@@ -31,7 +37,20 @@ public class QSGrid extends BaseHook {
 
         if (cols > 2)
             mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_columns", colsRes);
-        if (rows > 1) 
-            mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", 3);
+        //if (rows > 1) 
+        //    mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", rowsRes);
+
+        Helpers.hookAllMethods("com.android.systemui.qs.MiuiTileLayout", lpparam.classLoader, "addTile", new MethodHook() {
+            @Override
+            protected void after(MethodHookParam param) {
+                if (rows > 1 && ((ViewGroup) param.thisObject).getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", rowsRes);
+                } else {
+                    mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", 2);
+                }
+                //((ViewGroup) param.thisObject).requestLayout();
+                //updateLabelsVisibility(param.args[0], XposedHelpers.getIntField(param.thisObject, "mRows"), ((ViewGroup) param.thisObject).getResources().getConfiguration().orientation);
+            }
+        });
     }
 }
