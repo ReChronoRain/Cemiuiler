@@ -18,11 +18,11 @@ public class QSGridLabels extends BaseHook {
             @Override
             protected void after(MethodHookParam param) {
                 if (((ViewGroup) param.thisObject).getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    it.thisObject.putObject("mMaxAllowedRows", 4);
+                    param.thisObject.setObjectField("mMaxAllowedRows", 4);
                 } else {
-                    it.thisObject.putObject("mMaxAllowedRows", 2);
+                    param.thisObject.setObjectField("mMaxAllowedRows", 2);
                 }
-                it.thisObject.requestLayout();
+                param.thisObject.requestLayout();
                 //updateLabelsVisibility(param.args[0], XposedHelpers.getIntField(param.thisObject, "mRows"), ((ViewGroup) param.thisObject).getResources().getConfiguration().orientation);
             }
         });
