@@ -50,9 +50,12 @@ public class QSGrid extends BaseHook {
 
     private static void updateGridRows(Object mRecord, int mRows, int orientation) {
         if (mRecord == null) return;
-        if (orientation == Configuration.ORIENTATION_PORTRAIT)
+        if (orientation == Configuration.ORIENTATION_PORTRAIT){
             mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", R.integer.quick_settings_num_rows_2);
-        else
+            mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", R.integer.quick_settings_num_rows_2);
+        } else {
             mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", mRows);
+            mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", mRows);
+        }
     }
 }
