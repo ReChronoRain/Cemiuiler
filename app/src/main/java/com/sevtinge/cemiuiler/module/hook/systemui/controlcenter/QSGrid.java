@@ -15,7 +15,7 @@ public class QSGrid extends BaseHook {
 
     @Override
     public void init() {
-        Helpers.findAndHookMethod("com.android.systemui.qs.MiuiTileLayout", "mMaxAllowedRows", new MethodHook() {
+        findAndHookMethod("com.android.systemui.qs.MiuiTileLayout", "mMaxAllowedRows", new MethodHook() {
             @Override
             protected void after(MethodHookParam param) throws Throwable {
                 param.setResult(2);
