@@ -46,9 +46,9 @@ public class QSGrid extends BaseHook {
             protected void after(MethodHookParam param) {
                 int orientation = ((ViewGroup) param.thisObject).getResources().getConfiguration().orientation;
                 if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    mResHook.setObjectReplacement("com.android.systemui", "integer", "quick_settings_num_rows", R.integer.quick_settings_num_rows_5);
+                    mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", R.integer.quick_settings_num_rows_4);
                 } else {
-                    mResHook.setObjectReplacement("com.android.systemui", "integer", "quick_settings_num_rows", R.integer.quick_settings_num_rows_3);
+                    mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", R.integer.quick_settings_num_rows_5);
                 }
                 //((ViewGroup) param.thisObject).requestLayout();
                 //updateLabelsVisibility(param.args[0], XposedHelpers.getIntField(param.thisObject, "mRows"), ((ViewGroup) param.thisObject).getResources().getConfiguration().orientation);
