@@ -14,16 +14,10 @@ import de.robv.android.xposed.XposedHelpers;
 public class QSGridLabels extends BaseHook {
     @Override
     public void init() {
-        /*Helpers.hookAllMethods("com.android.systemui.qs.MiuiTileLayout", lpparam.classLoader, "addTile", new MethodHook() {
+        Helpers.hookAllMethods("com.android.systemui.qs.MiuiTileLayout", lpparam.classLoader, "addTile", new MethodHook() {
             @Override
             protected void after(MethodHookParam param) {
-                if (((ViewGroup) param.thisObject).getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    ((ViewGroup) param.thisObject).putObject("mMaxAllowedRows", 4);
-                } else {
-                    ((ViewGroup) param.thisObject).putObject("mMaxAllowedRows", 2);
-                }
-                ((ViewGroup) param.thisObject).requestLayout();
-                //updateLabelsVisibility(param.args[0], XposedHelpers.getIntField(param.thisObject, "mRows"), ((ViewGroup) param.thisObject).getResources().getConfiguration().orientation);
+                updateLabelsVisibility(param.args[0], XposedHelpers.getIntField(param.thisObject, "mRows"), ((ViewGroup) param.thisObject).getResources().getConfiguration().orientation);
             }
         });
 
@@ -53,7 +47,7 @@ public class QSGridLabels extends BaseHook {
                     );
                 }
             });
-        }*/
+        }
     }
 
     private static void updateLabelsVisibility(Object mRecord, int mRows, int orientation) {
