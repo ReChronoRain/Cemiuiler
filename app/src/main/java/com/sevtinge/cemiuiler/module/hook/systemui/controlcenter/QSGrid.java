@@ -43,12 +43,12 @@ public class QSGrid extends BaseHook {
 
         Helpers.hookAllMethods("com.android.systemui.qs.MiuiTileLayout", lpparam.classLoader, "addTile", new MethodHook() {
             @Override
-            protected void before(MethodHookParam param) {
+            protected void after(MethodHookParam param) {
                 int orientation = ((ViewGroup) param.thisObject).getResources().getConfiguration().orientation;
                 if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    mResHook.setObjectReplacement("com.android.systemui", "integer", "quick_settings_num_rows", R.integer.quick_settings_num_rows_3);
-                } else {
                     mResHook.setObjectReplacement("com.android.systemui", "integer", "quick_settings_num_rows", R.integer.quick_settings_num_rows_5);
+                } else {
+                    mResHook.setObjectReplacement("com.android.systemui", "integer", "quick_settings_num_rows", R.integer.quick_settings_num_rows_3);
                 }
                 //((ViewGroup) param.thisObject).requestLayout();
                 //updateLabelsVisibility(param.args[0], XposedHelpers.getIntField(param.thisObject, "mRows"), ((ViewGroup) param.thisObject).getResources().getConfiguration().orientation);
