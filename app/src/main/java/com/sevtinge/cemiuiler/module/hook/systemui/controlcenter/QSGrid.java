@@ -41,7 +41,7 @@ public class QSGrid extends BaseHook {
         if (rows > 1) 
             mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", 5);
 
-        Helpers.findAndHookMethod("com.android.systemui.qs.MiuiTileLayout", lpparam.classLoader, "addTile", new MethodHook() {
+        Helpers.hookAllMethods("com.android.systemui.qs.MiuiTileLayout", lpparam.classLoader, "addTile", new MethodHook() {
             @Override
             protected void after(MethodHookParam param) {
         
