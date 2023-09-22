@@ -41,13 +41,19 @@ public class QSGrid extends BaseHook {
                 if (cols > 2)
                     mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_columns", colsRes);
                 int orientation = ((ViewGroup) param.thisObject).getResources().getConfiguration().orientation;
-                if (rows > 1 && orientation == Configuration.ORIENTATION_LANDSCAPE)
-                    mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", rowsRes);
+                if (rows > 1)
+                    updateGridRows(param.args[0], rowsRes, ((ViewGroup) param.thisObject).getResources().getConfiguration().orientation);
                 if (rows > 1 && orientation == Configuration.ORIENTATION_PORTRAIT)
                     mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", R.integer.quick_settings_num_rows_2);
-                //int test = ((ViewGroup) this.thisObject).getResources().getConfiguration().orientation;
-                //updateLayout(param.args[0], XposedHelpers.getIntField(param.thisObject, "mRows"), ((ViewGroup) param.thisObject).getResources().getConfiguration().orientation);
             }
         });
+    }
+
+    private static void updateGridRows(Object mRecord, int mRows, int orientation) {
+        if (mRecord == null) return;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT)
+            mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", R.integer.quick_settings_num_rows_2);
+        else
+            mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", mRows);
     }
 }
