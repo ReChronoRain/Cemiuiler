@@ -39,7 +39,7 @@ public class QSGrid extends BaseHook {
             mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_columns", colsRes);
         if (rows > 1)
             mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", rowsRes);
-        int test = ((ViewGroup) it.thisObject).getResources().getConfiguration().orientation;
+        int test = ((ViewGroup) this.thisObject).getResources().getConfiguration().orientation;
 
         Helpers.hookAllMethods("com.android.systemui.qs.MiuiTileLayout", lpparam.classLoader, "addTile", new MethodHook() {
             @Override
