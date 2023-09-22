@@ -1,7 +1,7 @@
 package com.sevtinge.cemiuiler.module.hook.powerkeeper;
 
 import com.sevtinge.cemiuiler.module.base.BaseHook;
-import io.github.libxposed.api.XposedInterface;
+import com.sevtinge.cemiuiler.utils.Helpers;
 
 public class PreventBatteryWitelist extends BaseHook {
     @Override
