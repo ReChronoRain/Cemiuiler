@@ -43,8 +43,6 @@ public class QSGrid extends BaseHook {
                 int orientation = ((ViewGroup) param.thisObject).getResources().getConfiguration().orientation;
                 if (rows > 1)
                     updateGridRows(param.args[0], rowsRes, ((ViewGroup) param.thisObject).getResources().getConfiguration().orientation);
-                if (rows > 1 && orientation == Configuration.ORIENTATION_PORTRAIT)
-                    mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", R.integer.quick_settings_num_rows_2);
             }
         });
     }
