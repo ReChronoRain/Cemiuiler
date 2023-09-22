@@ -32,8 +32,8 @@ public class QSGrid extends BaseHook {
 
         if (cols > 2)
             mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_columns", colsRes);
-        //if (rows > 1) 
-        //    mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", rowsRes);
+        if (rows > 1) 
+            mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", 5);
 
         Helpers.findAndHookMethod("com.android.systemui.qs.MiuiTileLayout", lpparam.classLoader, "changeTile", new MethodHook() {
             @Override
@@ -47,7 +47,7 @@ public class QSGrid extends BaseHook {
             case 5 -> rowsRes = R.integer.quick_settings_num_rows_5;
         }
                 if (rows > 1 && ((ViewGroup) param.thisObject).getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", rowsRes);
+                    mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", 4);
                 } else {
                     mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", 2);
                 }
