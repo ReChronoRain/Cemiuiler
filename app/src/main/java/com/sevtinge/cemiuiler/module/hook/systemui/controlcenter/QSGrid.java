@@ -15,7 +15,14 @@ public class QSGrid extends BaseHook {
 
     @Override
     public void init() {
-        Helpers.hookAllMethods("com.android.systemui.qs.MiuiTileLayout", lpparam.classLoader, "addTile", new MethodHook() {
+        Helpers.findAndHookMethod("com.android.systemui.qs.MiuiTileLayout", "mMaxAllowedRows", new MethodHook() {
+            @Override
+            protected void after(MethodHookParam param) throws Throwable {
+                param.setResult(2);
+            }
+        });
+    }
+        /*Helpers.hookAllMethods("com.android.systemui.qs.MiuiTileLayout", lpparam.classLoader, "addTile", new MethodHook() {
             @Override
             protected void before(MethodHookParam param) {
                 int cols = mPrefsMap.getInt("system_control_center_old_qs_columns", 2);
@@ -52,10 +59,8 @@ public class QSGrid extends BaseHook {
         if (mRecord == null) return;
         if (orientation == Configuration.ORIENTATION_PORTRAIT){
             mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", R.integer.quick_settings_num_rows_2);
-            mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", R.integer.quick_settings_num_rows_2);
         } else {
             mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", mRows);
-            mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", mRows);
         }
-    }
+    }*/
 }
