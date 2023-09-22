@@ -41,9 +41,9 @@ public class QSGrid extends BaseHook {
                 if (cols > 2)
                     mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_columns", colsRes);
                 int orientation = ((ViewGroup) param.thisObject).getResources().getConfiguration().orientation;
-                if (rows > 1)
-                    updateGridRows(param.args[0], rowsRes, ((ViewGroup) param.thisObject).getResources().getConfiguration().orientation);
-                mResHook.addResource("mMaxAllowedRows", 2);
+                //if (rows > 1)
+                    //updateGridRows(param.args[0], rowsRes, ((ViewGroup) param.thisObject).getResources().getConfiguration().orientation);
+                mResHook.setResReplacement("com.android.systemui.qs.MiuiTileLayout", "integer", "mMaxAllowedRows", 2);
             }
         });
     }
