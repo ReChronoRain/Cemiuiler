@@ -38,17 +38,17 @@ public class QSGrid extends BaseHook {
         if (cols > 2)
             mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_columns", colsRes);
         if (rows > 1)
-            mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", 4);
+            mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", rowsRes);
             
 
         Helpers.hookAllMethods("com.android.systemui.qs.MiuiTileLayout", lpparam.classLoader, "addTile", new MethodHook() {
             @Override
             protected void before(MethodHookParam param) {
                 int orientation = ((ViewGroup) param.thisObject).getResources().getConfiguration().orientation;
-                if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    mResHook.setObjectReplacement("com.android.systemui", "integer", "quick_settings_num_rows", 5);
+                if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    mResHook.setObjectReplacement("com.android.systemui", "integer", "quick_settings_num_rows", R.integer.quick_settings_num_rows_3);
                 } else {
-                    mResHook.setObjectReplacement("com.android.systemui", "integer", "quick_settings_num_rows", 3);
+                    mResHook.setObjectReplacement("com.android.systemui", "integer", "quick_settings_num_rows", R.integer.quick_settings_num_rows_5);
                 }
                 //((ViewGroup) param.thisObject).requestLayout();
                 //updateLabelsVisibility(param.args[0], XposedHelpers.getIntField(param.thisObject, "mRows"), ((ViewGroup) param.thisObject).getResources().getConfiguration().orientation);
