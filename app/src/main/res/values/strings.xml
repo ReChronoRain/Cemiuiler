@@ -981,6 +981,7 @@
     <string name="powerkeeper_lock_max_fps">Lock max FPS</string>
     <string name="powerkeeper_do_not_kill_apps">Try don\'t kill apps</string>
     <string name="powerkeeper_do_not_kill_apps_desc">May increase power consumption</string>
+    <string name="powerkeeper_prevent_recovery_of_battery_optimization_whitelist">Test</string>
     <!--creen Recorder-->
     <string name="screenrecorder">Screen Recorder</string>
     <string name="screen_recorder_force_support_playback_capture">Force enable AOSP screen recording support</string>
