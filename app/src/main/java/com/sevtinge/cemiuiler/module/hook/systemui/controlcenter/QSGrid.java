@@ -46,7 +46,7 @@ public class QSGrid extends BaseHook {
             protected void after(MethodHookParam param) {
                 int orientation = ((ViewGroup) param.thisObject).getResources().getConfiguration().orientation;
                 if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", R.integer.quick_settings_num_rows_4);
+                    mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", R.integer.quick_settings_num_rows_2);
                 } else {
                     mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_rows", R.integer.quick_settings_num_rows_5);
                 }
