@@ -9,6 +9,7 @@ import com.sevtinge.cemiuiler.R;
 import com.sevtinge.cemiuiler.module.base.BaseHook;
 
 import com.sevtinge.cemiuiler.utils.Helpers;
+import com.github.kyuubiran.ezxhelper.utils.FieldUtils;
 
 import de.robv.android.xposed.XposedHelpers;
 
@@ -16,7 +17,7 @@ public class QSGrid extends BaseHook {
 
     @Override
     public void init() {
-        Configuration configuration = ((ViewGroup) this).getResources().getConfiguration();
+        //Configuration configuration = ((ViewGroup) this).getResources().getConfiguration();
         Helpers.hookAllMethods("com.android.systemui.qs.MiuiTileLayout", lpparam.classLoader, "changeLayout", new MethodHook() {
             @Override
             protected void after(MethodHookParam param) {
@@ -43,11 +44,13 @@ public class QSGrid extends BaseHook {
                 if (cols > 2)
                     mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_num_columns", colsRes);
                 int orientation = ((ViewGroup) param.thisObject).getResources().getConfiguration().orientation;
-                if (rows > 1)
-                    updateGridRows(param.args[0], rowsRes, ((ViewGroup) param.thisObject).getResources().getConfiguration().orientation);
-                ViewGroup viewGroup = ((ViewGroup) param.thisObject);
-                viewGroup.requestLayout();
-                //mResHook.setResReplacement("com.android.systemui.qs.MiuiTileLayout", "integer", "mMaxAllowedRows", 2);
+                if (rows > 1) {
+                    //updateGridRows(param.args[0], rowsRes, ((ViewGroup) param.thisObject).getResources().getConfiguration().orientation);
+                    ViewGroup viewGroup = ((ViewGroup) param.thisObject);
+                    viewGroup.putObject("mMaxAllowedRows", R.integer.quick_settings_num_rows_2);
+                    viewGroup.requestLayout();
+                    //mResHook.setResReplacement("com.android.systemui.qs.MiuiTileLayout", "integer", "mMaxAllowedRows", 2);
+                }
             }
         });
 
