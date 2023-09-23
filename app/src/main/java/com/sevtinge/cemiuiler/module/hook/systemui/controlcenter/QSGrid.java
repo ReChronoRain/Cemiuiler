@@ -15,9 +15,10 @@ public class QSGrid extends BaseHook {
 
     @Override
     public void init() {
-        Helpers.hookAllMethods("com.android.systemui.qs.MiuiTileLayout", lpparam.classLoader, "addTile", new MethodHook() {
+        int test = this.getResources().getConfiguration().orientation;
+        Helpers.hookAllMethods("com.android.systemui.qs.MiuiTileLayout", lpparam.classLoader, "changeLayout", new MethodHook() {
             @Override
-            protected void before(MethodHookParam param) {
+            protected void after(MethodHookParam param) {
                 int cols = mPrefsMap.getInt("system_control_center_old_qs_columns", 2);
                 int rows = mPrefsMap.getInt("system_control_center_old_qs_rows", 1);
                 int colsRes = R.integer.quick_settings_num_columns_3;
@@ -46,6 +47,14 @@ public class QSGrid extends BaseHook {
                 ViewGroup viewGroup = ((ViewGroup) param.thisObject);
                 viewGroup.requestLayout();
                 //mResHook.setResReplacement("com.android.systemui.qs.MiuiTileLayout", "integer", "mMaxAllowedRows", 2);
+            }
+        });
+
+        Helpers.hookAllMethods("com.android.systemui", lpparam.classLoader, "changeLayout", new MethodHook() {
+            @Override
+            protected void after(MethodHookParam param) {
+                ViewGroup viewGroup = ((ViewGroup) param.thisObject);
+                viewGroup.requestLayout();
             }
         });
     }
