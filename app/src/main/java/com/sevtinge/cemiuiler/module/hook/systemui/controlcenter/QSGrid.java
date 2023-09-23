@@ -16,7 +16,7 @@ public class QSGrid extends BaseHook {
 
     @Override
     public void init() {
-        Configuration configuration = getResources().getConfiguration();
+        Configuration configuration = this.getResources().getConfiguration();
         Helpers.hookAllMethods("com.android.systemui.qs.MiuiTileLayout", lpparam.classLoader, "changeLayout", new MethodHook() {
             @Override
             protected void after(MethodHookParam param) {
