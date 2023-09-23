@@ -1,7 +1,7 @@
 package com.sevtinge.cemiuiler.module.hook.systemui.controlcenter;
 
 import android.content.res.Configuration;
-import android.content.Context
+import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
