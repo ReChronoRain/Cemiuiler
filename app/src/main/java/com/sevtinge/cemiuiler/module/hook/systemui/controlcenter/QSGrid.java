@@ -15,8 +15,8 @@ import de.robv.android.xposed.XposedHelpers;
 public class QSGrid extends BaseHook {
 
     @Override
-    public void init() {
-        Configuration configuration = this.getResources().getConfiguration();
+    public void init(Context context) {
+        Configuration configuration = context.getResources().getConfiguration();
         Helpers.hookAllMethods("com.android.systemui.qs.MiuiTileLayout", lpparam.classLoader, "changeLayout", new MethodHook() {
             @Override
             protected void after(MethodHookParam param) {
