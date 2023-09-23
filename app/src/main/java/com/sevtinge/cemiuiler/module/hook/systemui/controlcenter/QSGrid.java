@@ -1,6 +1,7 @@
 package com.sevtinge.cemiuiler.module.hook.systemui.controlcenter;
 
 import android.content.res.Configuration;
+import android.content.Context
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -15,7 +16,7 @@ public class QSGrid extends BaseHook {
 
     @Override
     public void init() {
-        int test = this.getResources().getConfiguration().orientation;
+        int test = Context.getResources().getConfiguration().orientation;
         Helpers.hookAllMethods("com.android.systemui.qs.MiuiTileLayout", lpparam.classLoader, "changeLayout", new MethodHook() {
             @Override
             protected void after(MethodHookParam param) {
