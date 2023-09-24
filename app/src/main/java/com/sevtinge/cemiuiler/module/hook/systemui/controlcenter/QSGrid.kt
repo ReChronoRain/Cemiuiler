@@ -66,7 +66,7 @@ class QSGrid : BaseHook() {
                             XposedHelpers.setObjectField (
                                 param.thisObject,
                                 "mMaxAllowedRows",
-                                rowsRes
+                                rows
                             )
                         } else {
                             XposedHelpers.setObjectField (
