@@ -65,7 +65,7 @@ class QSGrid : BaseHook() {
                         "mMaxAllowedRows",
                         4
                     )
-                    val viewGroup = it.thisObject as ViewGroup
+                    val viewGroup = param.thisObject as ViewGroup
                     val mConfiguration: Configuration = viewGroup.context.resources.configuration
                     viewGroup.requestLayout()
                 }
