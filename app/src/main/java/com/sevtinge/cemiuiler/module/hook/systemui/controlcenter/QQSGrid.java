@@ -15,6 +15,6 @@ public class QQSGrid extends BaseHook {
             case 7 -> R.integer.quick_quick_settings_num_rows_7;
             default -> R.integer.quick_quick_settings_num_rows_5;
         };
-        mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_qqs_count", colsResId);
+        //mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_qqs_count", colsResId);
     }
 }
