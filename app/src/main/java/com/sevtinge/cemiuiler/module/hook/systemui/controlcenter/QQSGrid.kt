@@ -28,6 +28,7 @@ class QQSGrid : BaseHook() {
                     } else {
                         param.args[0] = 7
                     }
+                    viewGroup.requestLayout()
                 }
             }
         )
