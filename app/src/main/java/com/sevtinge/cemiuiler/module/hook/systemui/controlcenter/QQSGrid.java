@@ -6,7 +6,7 @@ import com.sevtinge.cemiuiler.module.base.BaseHook;
 public class QQSGrid extends BaseHook {
     @Override
     public void init() {
-        int cols = mPrefsMap.getInt("system_control_center_old_qs_grid_columns", 5);
+        int cols = mPrefsMap.getInt("system_control_center_old_qs_grid_columns", 2);
         int colsResId = switch (cols) {
             case 3 -> R.integer.quick_quick_settings_num_rows_3;
             case 4 -> R.integer.quick_quick_settings_num_rows_4;
