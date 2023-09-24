@@ -9,8 +9,6 @@ import com.sevtinge.cemiuiler.R
 import com.sevtinge.cemiuiler.module.base.BaseHook
 
 import com.sevtinge.cemiuiler.utils.Helpers
-import com.github.kyuubiran.ezxhelper.utils.FieldUtils
-import com.github.kyuubiran.ezxhelper.utils.putObject
 
 import de.robv.android.xposed.XposedHelpers;
 
@@ -38,6 +36,36 @@ class QSGrid : BaseHook() {
 
         val mRowsHorizontal = R.integer.quick_settings_num_rows_2
 
+        Helpers.findAndHookMethod(
+            "com.android.systemui.qs.MiuiTileLayout",
+            pluginLoader,
+            "updateColumns",
+            object : MethodHook() {
+                override fun after(param: MethodHookParam) {
+                    XposedHelpers.setObjectField (
+                        param.thisObject,
+                        "mColumns",
+                        colsRes
+                    )
+                }
+            }
+        )
+
+        Helpers.findAndHookMethod(
+            "com.android.systemui.qs.MiuiTileLayout",
+            pluginLoader,
+            "updateResources",
+            object : MethodHook() {
+                override fun after(param: MethodHookParam) {
+                    XposedHelpers.setObjectField (
+                        param.thisObject,
+                        "mMaxAllowedRows",
+                        rowsRes
+                    )
+                }
+            }
+        )
+        /*
         findMethod("com.android.systemui.qs.MiuiTileLayout") {
             name == "updateColumns"
         }.hookAfter {
@@ -56,5 +84,6 @@ class QSGrid : BaseHook() {
             }
             viewGroup.requestLayout()
         }
+        */
     }
 }
