@@ -4,6 +4,10 @@ import android.content.res.Configuration
 import android.view.View
 import android.view.ViewGroup
 
+import com.github.kyuubiran.ezxhelper.ClassUtils.loadClass
+import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHook
+import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinder
+
 import com.sevtinge.cemiuiler.R
 import com.sevtinge.cemiuiler.module.base.BaseHook
 import com.sevtinge.cemiuiler.utils.Helpers
@@ -25,13 +29,13 @@ class QSGrid : BaseHook() {
                     val mConfiguration: Configuration = viewGroup.context.resources.configuration
                     if (mConfiguration.orientation == Configuration.ORIENTATION_PORTRAIT) {
                         XposedHelpers.setObjectField (
-                            param.thisObject,
+                            it.thisObject,
                             "mColumns",
                             cols
                         )
                     } else {
                         XposedHelpers.setObjectField (
-                            param.thisObject,
+                            it.thisObject,
                             "mColumns",
                             cols
                         )
@@ -47,13 +51,13 @@ class QSGrid : BaseHook() {
                     val mConfiguration: Configuration = viewGroup.context.resources.configuration
                     if (mConfiguration.orientation == Configuration.ORIENTATION_PORTRAIT) {
                         XposedHelpers.setObjectField (
-                            param.thisObject,
+                            it.thisObject,
                             "mMaxAllowedRows",
                             rows
                         )
                     } else {
                         XposedHelpers.setObjectField (
-                            param.thisObject,
+                            it.thisObject,
                             "mMaxAllowedRows",
                             rowsHorizontal
                         )
