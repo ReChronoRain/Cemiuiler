@@ -36,12 +36,12 @@ class QSGrid : BaseHook() {
 
         val mRowsHorizontal = R.integer.quick_settings_num_rows_2
 
-        if (pluginLoader == null) {
-            pluginLoader = it.result as ClassLoader
-        }
+        //if (pluginLoader == null) {
+        //    pluginLoader = it.result as ClassLoader
+        //}
         Helpers.findAndHookMethod(
             "com.android.systemui.qs.MiuiTileLayout",
-            pluginLoader,
+            lpparam.classLoader,
             "updateColumns",
             object : MethodHook() {
                 override fun after(param: MethodHookParam) {
@@ -56,7 +56,7 @@ class QSGrid : BaseHook() {
 
         Helpers.findAndHookMethod(
             "com.android.systemui.qs.MiuiTileLayout",
-            pluginLoader,
+            lpparam.classLoader,
             "updateResources",
             object : MethodHook() {
                 override fun after(param: MethodHookParam) {
