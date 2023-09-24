@@ -65,13 +65,13 @@ class QSGrid : BaseHook() {
                         if (mConfiguration.orientation == Configuration.ORIENTATION_PORTRAIT) {
                             XposedHelpers.setObjectField (
                                 param.thisObject,
-                                "mMaxAllowedRows",
+                                "mRows",
                                 rowsRes
                             )
                         } else {
                             XposedHelpers.setObjectField (
                                 param.thisObject,
-                                "mMaxAllowedRows",
+                                "mRows",
                                 mRowsHorizontal
                             )
                         }
