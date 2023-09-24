@@ -63,8 +63,11 @@ class QSGrid : BaseHook() {
                     XposedHelpers.setObjectField (
                         param.thisObject,
                         "mMaxAllowedRows",
-                        R.integer.quick_settings_num_rows_2
+                        4
                     )
+                    val viewGroup = it.thisObject as ViewGroup
+                    val mConfiguration: Configuration = viewGroup.context.resources.configuration
+                    viewGroup.requestLayout()
                 }
             }
         )
