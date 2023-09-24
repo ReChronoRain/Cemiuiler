@@ -33,7 +33,7 @@ class QSGrid : BaseHook() {
         }
 
         val mRowsHorizontal = R.integer.quick_settings_num_rows_2
-
+/*
         if (cols > 2) {
             Helpers.findAndHookMethod(
                 "com.android.systemui.qs.MiuiTileLayout",
@@ -52,7 +52,7 @@ class QSGrid : BaseHook() {
                 }
             )
         }
-
+*/
         if (rows > 1) {
             Helpers.findAndHookMethod(
                 "com.android.systemui.qs.MiuiTileLayout",
