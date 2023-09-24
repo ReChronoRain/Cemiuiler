@@ -38,6 +38,7 @@ class QSGrid : BaseHook() {
                             colsHorizontal
                         )
                     }
+                    viewGroup.requestLayout()
                 }
             }
 
