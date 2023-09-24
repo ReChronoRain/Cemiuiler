@@ -12,66 +12,49 @@ import de.robv.android.xposed.XposedHelpers;
 
 class QSGrid : BaseHook() {
     override fun init() {
-        val cols = mPrefsMap.getInt("system_control_center_old_qs_columns", 2)
-        val rows = mPrefsMap.getInt("system_control_center_old_qs_rows", 1)
-        val rowsHorizontal = mPrefsMap.getInt("system_control_center_old_qs_rows_horizontal", 0)
-        if (rows > 1) {
-            val rowsRes = rows
-        } else {
-            val rowsRes = 3
-        }
+        val cols = mPrefsMap.getInt("system_control_center_old_qs_columns", 4)
+        val rows = mPrefsMap.getInt("system_control_center_old_qs_rows", 3)
+        val rowsHorizontal = mPrefsMap.getInt("system_control_center_old_qs_rows_horizontal", 2)
 
-        if (rowsHorizontal > 0) {
-            val rowsHorizontalRes = rows
-        } else {
-            val rowsHorizontalRes = 2
-        }
+        Helpers.findAndHookMethod(
+            "com.android.systemui.qs.MiuiTileLayout",
+            lpparam.classLoader,
+            "updateColumns",
+            object : MethodHook() {
+                override fun after(param: MethodHookParam) {
+                    XposedHelpers.setObjectField (
+                        param.thisObject,
+                        "mColumns",
+                        cols
+                    )
+                }
+            }
+        )
 
-        if (cols > 2) {
-            Helpers.findAndHookMethod(
-                "com.android.systemui.qs.MiuiTileLayout",
-                lpparam.classLoader,
-                "updateColumns",
-                object : MethodHook() {
-                    override fun after(param: MethodHookParam) {
-                        val viewGroup = param.thisObject as ViewGroup
+        Helpers.findAndHookMethod(
+            "com.android.systemui.qs.MiuiTileLayout",
+            lpparam.classLoader,
+            "updateResources",
+            object : MethodHook() {
+                override fun after(param: MethodHookParam) {
+                    val viewGroup = param.thisObject as ViewGroup
+                    val mConfiguration: Configuration = viewGroup.context.resources.configuration
+                    if (mConfiguration.orientation == Configuration.ORIENTATION_PORTRAIT) {
                         XposedHelpers.setObjectField (
                             param.thisObject,
-                            "mColumns",
-                            cols
+                            "mMaxAllowedRows",
+                            rows
                         )
-                        viewGroup.requestLayout()
+                    } else {
+                        XposedHelpers.setObjectField (
+                            param.thisObject,
+                            "mMaxAllowedRows",
+                            rowsHorizontal
+                        )
                     }
+                    viewGroup.requestLayout()
                 }
-            )
-        }
-
-        if (rows > 1 || rowsHorizontal > 0) {
-            Helpers.findAndHookMethod(
-                "com.android.systemui.qs.MiuiTileLayout",
-                lpparam.classLoader,
-                "updateResources",
-                object : MethodHook() {
-                    override fun after(param: MethodHookParam) {
-                        val viewGroup = param.thisObject as ViewGroup
-                        val mConfiguration: Configuration = viewGroup.context.resources.configuration
-                        if (rows > 1 && mConfiguration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                            XposedHelpers.setObjectField (
-                                param.thisObject,
-                                "mMaxAllowedRows",
-                                rowsRes
-                            )
-                        } else if (rowsHorizontal > 0 || ) {
-                            XposedHelpers.setObjectField (
-                                param.thisObject,
-                                "mMaxAllowedRows",
-                                rowsHorizontalRes
-                            )
-                        }
-                        viewGroup.requestLayout()
-                    }
-                }
-            )
-        }
+            }
+        )
     }
 }
