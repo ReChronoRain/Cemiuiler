@@ -36,10 +36,7 @@ class QSGrid : BaseHook() {
 
         val mRowsHorizontal = R.integer.quick_settings_num_rows_2
 
-        //if (pluginLoader == null) {
-        //    pluginLoader = it.result as ClassLoader
-        //}
-        /*Helpers.findAndHookMethod(
+        Helpers.findAndHookMethod(
             "com.android.systemui.qs.MiuiTileLayout",
             lpparam.classLoader,
             "updateColumns",
@@ -52,7 +49,7 @@ class QSGrid : BaseHook() {
                     )
                 }
             }
-        )*/
+        )
 
         Helpers.findAndHookMethod(
             "com.android.systemui.qs.MiuiTileLayout",
@@ -60,36 +57,24 @@ class QSGrid : BaseHook() {
             "updateResources",
             object : MethodHook() {
                 override fun after(param: MethodHookParam) {
-                    XposedHelpers.setObjectField (
-                        param.thisObject,
-                        "mMaxAllowedRows",
-                        4
-                    )
                     val viewGroup = param.thisObject as ViewGroup
                     val mConfiguration: Configuration = viewGroup.context.resources.configuration
+                    if (mConfiguration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                        XposedHelpers.setObjectField (
+                            param.thisObject,
+                            "mMaxAllowedRows",
+                            rowsRes
+                        )
+                    } else {
+                        XposedHelpers.setObjectField (
+                            param.thisObject,
+                            "mMaxAllowedRows",
+                            mRowsHorizontal
+                        )
+                    }
                     viewGroup.requestLayout()
                 }
             }
         )
-        /*
-        findMethod("com.android.systemui.qs.MiuiTileLayout") {
-            name == "updateColumns"
-        }.hookAfter {
-            it.thisObject.putObject("mColumns", colsRes)
-        }
-
-        findMethod("com.android.systemui.qs.MiuiTileLayout") {
-            name == "updateResources"
-        }.hookAfter {
-            val viewGroup = it.thisObject as ViewGroup
-            val mConfiguration: Configuration = viewGroup.context.resources.configuration
-            if (mConfiguration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                viewGroup.putObject("mMaxAllowedRows", rowsRes)
-            } else {
-                viewGroup.putObject("mMaxAllowedRows", mRowsHorizontal)
-            }
-            viewGroup.requestLayout()
-        }
-        */
     }
 }
