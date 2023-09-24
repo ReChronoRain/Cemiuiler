@@ -16,8 +16,8 @@ class QSGrid : BaseHook() {
     override fun init() {
         val cols = mPrefsMap.getInt("system_control_center_old_qs_columns", 2)
         val rows = mPrefsMap.getInt("system_control_center_old_qs_rows", 1)
-        val colsRes = R.integer.quick_settings_num_columns_3
-        val rowsRes = R.integer.quick_settings_num_rows_4
+        var colsRes = R.integer.quick_settings_num_columns_3
+        var rowsRes = R.integer.quick_settings_num_rows_4
 
         when (cols) {
             3 -> colsRes = R.integer.quick_settings_num_columns_3
@@ -36,6 +36,9 @@ class QSGrid : BaseHook() {
 
         val mRowsHorizontal = R.integer.quick_settings_num_rows_2
 
+        if (pluginLoader == null) {
+            pluginLoader = it.result as ClassLoader
+        }
         Helpers.findAndHookMethod(
             "com.android.systemui.qs.MiuiTileLayout",
             pluginLoader,
