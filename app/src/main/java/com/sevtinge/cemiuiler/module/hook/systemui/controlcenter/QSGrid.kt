@@ -32,7 +32,7 @@ class QSGrid : BaseHook() {
             5 -> rowsRes = R.integer.quick_settings_num_rows_5
         }
 
-        val mRowsHorizontal = R.integer.quick_settings_num_rows_2
+        var mRowsHorizontal = R.integer.quick_settings_num_rows_2
 /*
         if (cols > 2) {
             Helpers.findAndHookMethod(
@@ -65,13 +65,13 @@ class QSGrid : BaseHook() {
                         if (mConfiguration.orientation == Configuration.ORIENTATION_PORTRAIT) {
                             XposedHelpers.setObjectField (
                                 param.thisObject,
-                                "mRows",
+                                "mMaxAllowedRows",
                                 rowsRes
                             )
                         } else {
                             XposedHelpers.setObjectField (
                                 param.thisObject,
-                                "mRows",
+                                "mMaxAllowedRows",
                                 mRowsHorizontal
                             )
                         }
