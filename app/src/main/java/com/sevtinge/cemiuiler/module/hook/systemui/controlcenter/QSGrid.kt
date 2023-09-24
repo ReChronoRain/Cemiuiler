@@ -43,7 +43,7 @@ class QSGrid : BaseHook() {
             }
 
         loadClass("com.android.systemui.qs.MiuiTileLayout").methodFinder().first {
-                name == "updateRows"
+                name == "updateResources"
             }.createHook {
                 after {
                     val viewGroup = it.thisObject as ViewGroup
