@@ -45,7 +45,7 @@ class QSGrid : BaseHook() {
                     XposedHelpers.setObjectField (
                         param.thisObject,
                         "mColumns",
-                        colsRes
+                        3
                     )
                 }
             }
