@@ -42,11 +42,13 @@ class QSGrid : BaseHook() {
             "updateColumns",
             object : MethodHook() {
                 override fun after(param: MethodHookParam) {
+                    val viewGroup = param.thisObject as ViewGroup
                     XposedHelpers.setObjectField (
                         param.thisObject,
                         "mColumns",
-                        3
+                        5
                     )
+                    viewGroup.requestLayout()
                 }
             }
         )
