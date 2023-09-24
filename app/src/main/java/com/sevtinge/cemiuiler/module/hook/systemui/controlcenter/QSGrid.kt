@@ -17,6 +17,50 @@ class QSGrid : BaseHook() {
         val rows = mPrefsMap.getInt("system_control_center_old_qs_rows", 3)
         val rowsHorizontal = mPrefsMap.getInt("system_control_center_old_qs_rows_horizontal", 2)
 
+        loadClass("com.android.systemui.qs.MiuiTileLayout").methodFinder().first {
+                name == "updateColumns"
+            }.createHook {
+                after {
+                    val viewGroup = it.thisObject as ViewGroup
+                    val mConfiguration: Configuration = viewGroup.context.resources.configuration
+                    if (mConfiguration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                        XposedHelpers.setObjectField (
+                            param.thisObject,
+                            "mColumns",
+                            cols
+                        )
+                    } else {
+                        XposedHelpers.setObjectField (
+                            param.thisObject,
+                            "mColumns",
+                            cols
+                        )
+                    }
+                }
+            }
+
+        loadClass("com.android.systemui.qs.MiuiTileLayout").methodFinder().first {
+                name == "updateRows"
+            }.createHook {
+                after {
+                    val viewGroup = it.thisObject as ViewGroup
+                    val mConfiguration: Configuration = viewGroup.context.resources.configuration
+                    if (mConfiguration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                        XposedHelpers.setObjectField (
+                            param.thisObject,
+                            "mMaxAllowedRows",
+                            rows
+                        )
+                    } else {
+                        XposedHelpers.setObjectField (
+                            param.thisObject,
+                            "mMaxAllowedRows",
+                            rowsHorizontal
+                        )
+                    }
+                }
+            }
+/*
         Helpers.findAndHookMethod(
             "com.android.systemui.qs.MiuiTileLayout",
             lpparam.classLoader,
@@ -67,5 +111,6 @@ class QSGrid : BaseHook() {
                 }
             }
         )
+*/
     }
 }

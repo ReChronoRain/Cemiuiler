@@ -23,7 +23,13 @@ class QQSGrid : BaseHook() {
                 name == "setMaxTiles" && parameterCount == 1
             }.createHook {
                 before {
-                    it.args[0] = cols
+                    val viewGroup = it.thisObject as ViewGroup
+                    val mConfiguration: Configuration = viewGroup.context.resources.configuration
+                    if (mConfiguration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                        it.args[0] = cols
+                    } else {
+                        it.args[0] = 7
+                    }
                 }
             }
 /*
