@@ -584,6 +584,8 @@
     <string name="system_control_center_qs_tile_label">Remove title</string>
     <string name="system_control_center_qs_rows">Rows</string>
     <string name="system_control_center_qs_rows_format">%d lines</string>
+    <string name="system_control_center_qs_rows_horizontal">Rows (Horizontal)</string>
+    <string name="system_control_center_qs_rows_horizontal_format">%d lines</string>
     <string name="system_control_center_qs_columns">Columns</string>
     <string name="system_control_center_qs_columns_format">%d List</string>
     <string name="system_ui_control_center_hide_mi_play_entry">MiPlay Entry</string>
@@ -980,7 +982,7 @@
     <string name="powerkeeper_lock_max_fps">Lock max FPS</string>
     <string name="powerkeeper_do_not_kill_apps">Try don\'t kill apps</string>
     <string name="powerkeeper_do_not_kill_apps_desc">May increase power consumption</string>
-    <string name="powerkeeper_prevent_recovery_of_battery_optimization_whitelist">Test</string>
+    <string name="powerkeeper_prevent_recovery_of_battery_optimization_whitelist">Prevent recovery of battery optimization whitelist</string>
     <!--creen Recorder-->
     <string name="screenrecorder">Screen Recorder</string>
     <string name="screen_recorder_force_support_playback_capture">Force enable AOSP screen recording support</string>

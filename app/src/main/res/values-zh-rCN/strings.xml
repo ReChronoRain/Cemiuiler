@@ -612,6 +612,8 @@
     <string name="system_control_center_qs_tile_label">移除标题</string>
     <string name="system_control_center_qs_rows">行数</string>
     <string name="system_control_center_qs_rows_format">%d 行</string>
+    <string name="system_control_center_qs_rows_horizontal">行数 (横屏)</string>
+    <string name="system_control_center_qs_rows_horizontal_format">%d 行</string>
     <string name="system_control_center_qs_columns">列数</string>
     <string name="system_control_center_qs_columns_format">%d 列</string>
     <string name="system_ui_control_center_hide_mi_play_entry">小米妙播</string>
@@ -1020,6 +1022,7 @@
     <string name="powerkeeper_lock_max_fps">锁定当前刷新率上限</string>
     <string name="powerkeeper_do_not_kill_apps">尝试不要杀死后台应用</string>
     <string name="powerkeeper_do_not_kill_apps_desc">可能使耗电量增加</string>
+    <string name="powerkeeper_prevent_recovery_of_battery_optimization_whitelist">禁止恢复电池优化白名单</string>
     <!--屏幕录制-->
     <string name="screenrecorder">屏幕录制</string>
     <string name="screen_recorder_force_support_playback_capture">强制启用原生屏幕录制支持</string>
