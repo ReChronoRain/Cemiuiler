@@ -14,7 +14,7 @@ import com.github.kyuubiran.ezxhelper.utils.putObject
 
 import de.robv.android.xposed.XposedHelpers;
 
-class CCGrid : BaseHook() {
+class QSGrid : BaseHook() {
     override fun init() {
         val cols = mPrefsMap.getInt("system_control_center_old_qs_columns", 2)
         val rows = mPrefsMap.getInt("system_control_center_old_qs_rows", 1)
