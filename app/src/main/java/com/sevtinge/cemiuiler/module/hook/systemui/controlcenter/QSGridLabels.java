@@ -16,7 +16,7 @@ public class QSGridLabels extends BaseHook {
     public void init() {
         Helpers.hookAllMethods("com.android.systemui.qs.MiuiTileLayout", lpparam.classLoader, "addTile", new MethodHook() {
             @Override
-            protected void before(MethodHookParam param) {
+            protected void after(MethodHookParam param) {
                 updateLabelsVisibility(param.args[0], XposedHelpers.getIntField(param.thisObject, "mRows"), ((ViewGroup) param.thisObject).getResources().getConfiguration().orientation);
             }
         });
@@ -62,9 +62,7 @@ public class QSGridLabels extends BaseHook {
 
             if (mLabelContainer != null) {
                 mLabelContainer.setVisibility(
-                    mPrefsMap.getBoolean("system_control_center_qs_tile_label") ||
-                        orientation == Configuration.ORIENTATION_PORTRAIT && mRows >= 5 ||
-                        orientation == Configuration.ORIENTATION_LANDSCAPE && mRows >= 3 ? View.GONE : View.VISIBLE
+                    mPrefsMap.getBoolean("system_control_center_qs_tile_label") ? View.GONE : View.VISIBLE
                 );
             }
         }
