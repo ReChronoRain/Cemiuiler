@@ -16,8 +16,8 @@ class QSGrid : BaseHook() {
         val rows = mPrefsMap.getInt("system_control_center_old_qs_rows", 1)
 
         when (cols) {
-            3 -> val colsRes = R.integer.quick_settings_num_columns_3
-            4 -> val colsRes = R.integer.quick_settings_num_columns_4
+            3 -> { val colsRes = R.integer.quick_settings_num_columns_3 }
+            4 -> { val colsRes = R.integer.quick_settings_num_columns_4 }
             5 -> val colsRes = R.integer.quick_settings_num_columns_5
             6 -> val colsRes = R.integer.quick_settings_num_columns_6
             7 -> val colsRes = R.integer.quick_settings_num_columns_7
