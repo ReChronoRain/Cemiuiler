@@ -39,7 +39,7 @@ class QSGrid : BaseHook() {
         //if (pluginLoader == null) {
         //    pluginLoader = it.result as ClassLoader
         //}
-        Helpers.findAndHookMethod(
+        /*Helpers.findAndHookMethod(
             "com.android.systemui.qs.MiuiTileLayout",
             lpparam.classLoader,
             "updateColumns",
@@ -52,7 +52,7 @@ class QSGrid : BaseHook() {
                     )
                 }
             }
-        )
+        )*/
 
         Helpers.findAndHookMethod(
             "com.android.systemui.qs.MiuiTileLayout",
@@ -63,7 +63,7 @@ class QSGrid : BaseHook() {
                     XposedHelpers.setObjectField (
                         param.thisObject,
                         "mMaxAllowedRows",
-                        rowsRes
+                        R.integer.quick_settings_num_rows_2
                     )
                 }
             }
