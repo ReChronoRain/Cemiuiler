@@ -15,21 +15,21 @@ class QSGrid : BaseHook() {
         val cols = mPrefsMap.getInt("system_control_center_old_qs_columns", 2)
         val rows = mPrefsMap.getInt("system_control_center_old_qs_rows", 1)
 
-        when (cols) {
-            3 -> { val colsRes = R.integer.quick_settings_num_columns_3 }
-            4 -> { val colsRes = R.integer.quick_settings_num_columns_4 }
-            5 -> val colsRes = R.integer.quick_settings_num_columns_5
-            6 -> val colsRes = R.integer.quick_settings_num_columns_6
-            7 -> val colsRes = R.integer.quick_settings_num_columns_7
-            else -> val colsRes = R.integer.quick_settings_num_columns_4
+        val colsRes = when (cols) {
+            3 -> R.integer.quick_settings_num_columns_3
+            4 -> R.integer.quick_settings_num_columns_4
+            5 -> R.integer.quick_settings_num_columns_5
+            6 -> R.integer.quick_settings_num_columns_6
+            7 -> R.integer.quick_settings_num_columns_7
+            else -> R.integer.quick_settings_num_columns_4
         }
 
-        when (rows) {
-            2 -> val rowsRes = R.integer.quick_settings_num_rows_2
-            3 -> val rowsRes = R.integer.quick_settings_num_rows_3
-            4 -> val rowsRes = R.integer.quick_settings_num_rows_4
-            5 -> val rowsRes = R.integer.quick_settings_num_rows_5
-            else -> val rowsRes = R.integer.quick_settings_num_rows_3
+        val rowsRes = when (rows) {
+            2 -> R.integer.quick_settings_num_rows_2
+            3 -> R.integer.quick_settings_num_rows_3
+            4 -> R.integer.quick_settings_num_rows_4
+            5 -> R.integer.quick_settings_num_rows_5
+            else -> R.integer.quick_settings_num_rows_3
         }
 
         val rowsHorizontalRes = R.integer.quick_settings_num_rows_2
