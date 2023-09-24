@@ -66,13 +66,13 @@ class QSGrid : BaseHook() {
                             XposedHelpers.setObjectField (
                                 param.thisObject,
                                 "mMaxAllowedRows",
-                                rowsRes
+                                4
                             )
                         } else {
                             XposedHelpers.setObjectField (
                                 param.thisObject,
                                 "mMaxAllowedRows",
-                                mRowsHorizontal
+                                2
                             )
                         }
                         viewGroup.requestLayout()
