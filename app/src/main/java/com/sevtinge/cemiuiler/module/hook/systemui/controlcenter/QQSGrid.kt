@@ -17,7 +17,7 @@ import de.robv.android.xposed.XposedHelpers
 class QQSGrid : BaseHook() {
     override fun init() {
         val cols = mPrefsMap.getInt("system_control_center_old_qs_grid_columns", 5);
-        //val colsHorizontal = mPrefsMap.getInt("system_control_center_old_qs_grid_columns_horizontal", 6);
+        val colsHorizontal = mPrefsMap.getInt("system_control_center_old_qs_grid_columns_horizontal", 6);
 
         loadClass("com.android.systemui.qs.MiuiQuickQSPanel").methodFinder().first {
                 name == "setMaxTiles" && parameterCount == 1
@@ -28,29 +28,9 @@ class QQSGrid : BaseHook() {
                     if (mConfiguration.orientation == Configuration.ORIENTATION_PORTRAIT) {
                         it.args[0] = cols
                     } else {
-                        it.args[0] = 7
+                        it.args[0] = colsHorizontal
                     }
                 }
             }
-/*
-        Helpers.findAndHookMethod(
-            "com.android.systemui.qs.MiuiQuickQSPanel",
-            lpparam.classLoader,
-            "setMaxTiles",
-            object : MethodHook() {
-                override fun before(param: MethodHookParam) {
-                    val viewGroup = param.thisObject as ViewGroup
-                    val mConfiguration: Configuration = viewGroup.context.resources.configuration
-                    if (mConfiguration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                        param.args[0] = cols
-                    } else {
-                        param.args[0] = 7
-                    }
-                    viewGroup.requestLayout()
-                }
-            }
-        )
-*/
-        //mResHook.setResReplacement("com.android.systemui", "integer", "quick_settings_qqs_count", colsResId);
     }
 }

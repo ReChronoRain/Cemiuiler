@@ -8,16 +8,14 @@ import com.github.kyuubiran.ezxhelper.ClassUtils.loadClass
 import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHook
 import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinder
 
-import com.sevtinge.cemiuiler.R
 import com.sevtinge.cemiuiler.module.base.BaseHook
-import com.sevtinge.cemiuiler.utils.Helpers
 
 import de.robv.android.xposed.XposedHelpers
 
 class QSGrid : BaseHook() {
     override fun init() {
         val cols = mPrefsMap.getInt("system_control_center_old_qs_columns", 4)
-        //val colsHorizontal = mPrefsMap.getInt("system_control_center_old_qs_columns_horizontal", 5)
+        val colsHorizontal = mPrefsMap.getInt("system_control_center_old_qs_columns_horizontal", 5)
         val rows = mPrefsMap.getInt("system_control_center_old_qs_rows", 3)
         val rowsHorizontal = mPrefsMap.getInt("system_control_center_old_qs_rows_horizontal", 2)
 
@@ -37,7 +35,7 @@ class QSGrid : BaseHook() {
                         XposedHelpers.setObjectField (
                             it.thisObject,
                             "mColumns",
-                            cols
+                            colsHorizontal
                         )
                     }
                 }
@@ -62,59 +60,8 @@ class QSGrid : BaseHook() {
                             rowsHorizontal
                         )
                     }
-                }
-            }
-/*
-        Helpers.findAndHookMethod(
-            "com.android.systemui.qs.MiuiTileLayout",
-            lpparam.classLoader,
-            "updateColumns",
-            object : MethodHook() {
-                override fun after(param: MethodHookParam) {
-                    val viewGroup = param.thisObject as ViewGroup
-                    val mConfiguration: Configuration = viewGroup.context.resources.configuration
-                    if (mConfiguration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                        XposedHelpers.setObjectField (
-                            param.thisObject,
-                            "mColumns",
-                            cols
-                        )
-                    } else {
-                        XposedHelpers.setObjectField (
-                            param.thisObject,
-                            "mColumns",
-                            cols //colsHorizontal
-                        )
-                    }
-                }
-            }
-        )
-
-        Helpers.findAndHookMethod(
-            "com.android.systemui.qs.MiuiTileLayout",
-            lpparam.classLoader,
-            "updateRows",
-            object : MethodHook() {
-                override fun after(param: MethodHookParam) {
-                    val viewGroup = param.thisObject as ViewGroup
-                    val mConfiguration: Configuration = viewGroup.context.resources.configuration
-                    if (mConfiguration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                        XposedHelpers.setObjectField (
-                            param.thisObject,
-                            "mMaxAllowedRows",
-                            rows
-                        )
-                    } else {
-                        XposedHelpers.setObjectField (
-                            param.thisObject,
-                            "mMaxAllowedRows",
-                            rowsHorizontal
-                        )
-                    }
                     viewGroup.requestLayout()
                 }
             }
-        )
-*/
     }
 }
