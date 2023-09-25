@@ -64,6 +64,7 @@
     <string name="about_crwd_desc">帮助我们将应用翻译为您的语言</string>
     <!--弹窗/miuix 部分-->
     <string name="soft_reboot">重启 </string>
+    <string name="reboot_networkboost">NetworkBoost</string>
     <string name="restart_app_desc">确定要立即重启%1$s吗？</string>
     <string name="tip">提示</string>
     <string name="hook_failed">模块暂未激活，请检查 Xposed 管理器是否启用，如有请重启或重新优化模块</string>
@@ -1184,6 +1185,7 @@
     <string name="settings_notfication_importance">显示通知重要程度</string>
     <string name="various_no_overscroll">禁用越界回弹</string>
     <string name="various_disable_bluetooth_restrict">禁用蓝牙临时关闭</string>
+    <string name="various_disable_link_turbo_toast">禁止显示正在使用流量加速Toast</string>
     <string name="various_disable_access_device_logs">关闭访问设备日志确认</string>
     <string name="various_unlock_ime">解锁输入法全面屏优化</string>
     <string name="various_unlock_ime_desc">开启后请在 Xposed 管理器中勾选对应输入法作用域</string>

@@ -74,6 +74,7 @@
     <string name="about_crwd_desc">Help us translate Cemiuiler into you language</string>
     <!--Pop-up window/miuix part-->
     <string name="soft_reboot">Reboot </string>
+    <string name="reboot_networkboost">NetworkBoost</string>
     <string name="restart_app_desc">Are you sure you want to restart now %1$s?</string>
     <string name="tip">Tip</string>
     <string name="hook_failed">The module is not activated yet.\nPlease check whether the Xposed manager is enabled. If so, please restart or re-optimize the module.</string>
@@ -1171,6 +1172,7 @@
     <string name="various_mipad_input_ingore_gesture_desc">Ignore the long press gesture on the stylus buttons</string>
     <string name="various_mipad_input_need_finger_num_title">Swap the number of fingers required for gestures</string>
     <string name="various_mipad_input_need_finger_num_desc">Change screenshot gesture, partial screenshot gesture, and horizontal split screen gesture to be triggered by four fingers, and switch apps gesture to be triggered by three fingers</string>
+    <string name="various_disable_link_turbo_toast">Suppress display of LinkTurbo Toast</string>
     <string name="custom_background_blur_enabled">Background blur</string>
     <string name="custom_background_blur_radius">Blurry radius</string>
     <string name="custom_background_color">Background color</string>
