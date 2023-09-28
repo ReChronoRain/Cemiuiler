@@ -254,7 +254,7 @@ public class SunlightMode extends TileUtils {
         StringBuilder builder = null;
         try {
             // 800毫秒获得丝滑转场效果，太好笑了，记录一下
-            Thread.sleep(800);
+            Thread.sleep(need ? 800 : 400);
         } catch (InterruptedException e) {
             logE("sleep error: " + e);
         }
