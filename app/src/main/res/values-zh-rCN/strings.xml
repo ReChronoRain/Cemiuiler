@@ -199,6 +199,9 @@
     <string name="status_bar_icon_mode_default">默认</string>
     <string name="status_bar_icon_mode_on">始终显示</string>
     <string name="status_bar_icon_mode_off">始终隐藏</string>
+    <string name="control_center_sunshine_mode_default">关闭</string>
+    <string name="control_center_sunshine_mode_one">系统默认模式</string>
+    <string name="control_center_sunshine_mode_two">强制最高亮度</string>
     <string name="status_bar_icon_mode_off_unconnect">仅在未连接时隐藏</string>
     <string name="status_bar_icon_mode_on_beforering">仅在响铃前显示</string>
 
@@ -606,7 +609,7 @@
     <string name="system_control_center_qs_detail_bg">卡片背景透明度</string>
     <string name="system_control_center_5g_tile">5G 网络开关</string>
     <string name="system_control_center_5g_toggle_label">5G网络</string>
-    <string name="system_control_center_sunshine_mode">阳光模式开关</string>
+    <string name="system_control_center_sunshine_mode">阳光模式</string>
     <string name="system_ui_control_auto_close">磁贴自动收起</string>
     <string name="system_ui_control_auto_close_more">开启后点击状态栏磁贴会自动收起状态栏</string>
     <string name="system_control_center_qs_tile_label">移除标题</string>
@@ -1189,6 +1192,7 @@
     <string name="various_no_overscroll">禁用越界回弹</string>
     <string name="various_disable_bluetooth_restrict">禁用蓝牙临时关闭</string>
     <string name="various_disable_link_turbo_toast">禁止显示正在使用流量加速Toast</string>
+    <string name="various_disable_link_turbo_toast_more">请在快速重启作用域中重启NetworkBoost</string>
     <string name="various_disable_access_device_logs">关闭访问设备日志确认</string>
     <string name="various_unlock_ime">解锁输入法全面屏优化</string>
     <string name="various_unlock_ime_desc">开启后请在 Xposed 管理器中勾选对应输入法作用域</string>
