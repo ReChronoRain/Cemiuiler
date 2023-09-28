@@ -55,8 +55,8 @@
         <item>com.xiaomi.mirror</item>
         <item>com.xiaomi.misettings</item>
         <item>com.xiaomi.mtb</item>
-        <item>com.xiaomi.scanner</item>
         <item>com.xiaomi.NetworkBoost</item>
+        <item>com.xiaomi.scanner</item>
     </string-array>
 
     <string-array name="app_module_support">
