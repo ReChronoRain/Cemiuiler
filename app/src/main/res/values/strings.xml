@@ -218,6 +218,9 @@
     <string name="array_bluetooth_tile_style_2rows2cols">One big and two small tiles</string>
     <string name="array_pa_blur_official">Official comes with blur</string>
     <string name="array_bpa_blur_customize">Custom background blur</string>
+    <string name="control_center_sunshine_mode_default">Close</string>
+    <string name="control_center_sunshine_mode_one">System default mode</string>
+    <string name="control_center_sunshine_mode_two">Force maximum brightness</string>
     <!--System Framework-->
     <string name="system_framework">System Framework</string>
     <string name="system_framework_volume_title">Volume</string>
@@ -1146,6 +1149,8 @@
     <string name="settings_notfication_importance">Show notification importance</string>
     <string name="various_no_overscroll">Disable out-of-bounds bounce</string>
     <string name="various_disable_bluetooth_restrict">Prevent bluetooth from being turned off temporarily</string>
+    <string name="various_disable_link_turbo_toast">Suppress display of LinkTurbo Toast</string>
+    <string name="various_disable_link_turbo_toast_more">Please restart NetworkBoost in the fast restart scope</string>
     <string name="various_disable_access_device_logs">Dismiss access device logs request dialog</string>
     <string name="various_unlock_ime">Unlock IME</string>
     <string name="various_unlock_ime_desc">After opening, please check the corresponding input method scope in the Xposed manager</string>
@@ -1175,12 +1180,7 @@
     <string name="various_mipad_input_ingore_gesture_desc">Ignore the long press gesture on the stylus buttons</string>
     <string name="various_mipad_input_need_finger_num_title">Swap the number of fingers required for gestures</string>
     <string name="various_mipad_input_need_finger_num_desc">Change screenshot gesture, partial screenshot gesture, and horizontal split screen gesture to be triggered by four fingers, and switch apps gesture to be triggered by three fingers</string>
-    <string name="various_disable_link_turbo_toast">Suppress display of LinkTurbo Toast</string>
-    <string name="various_disable_link_turbo_toast_more">Please restart NetworkBoost in the fast restart scope</string>
     <string name="custom_background_blur_enabled">Background blur</string>
-    <string name="control_center_sunshine_mode_default">Close</string>
-    <string name="control_center_sunshine_mode_one">System default mode</string>
-    <string name="control_center_sunshine_mode_two">Force maximum brightness</string>
     <string name="custom_background_blur_radius">Blurry radius</string>
     <string name="custom_background_color">Background color</string>
     <string name="custom_background_color_alpha">background color transparency</string>

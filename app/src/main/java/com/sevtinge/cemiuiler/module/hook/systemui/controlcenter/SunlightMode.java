@@ -196,7 +196,7 @@ public class SunlightMode extends TileUtils {
     @Override
     public ArrayMap<String, Integer> tileUpdateState(MethodHookParam param, Class<?> mResourceIcon, String tileName) {
         int nowInt;
-        int nowSunlight = 0;
+        int nowSunlight;
         boolean isEnable = false;
         Context mContext = (Context) XposedHelpers.getObjectField(param.thisObject, "mContext");
         try {

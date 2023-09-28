@@ -199,9 +199,6 @@
     <string name="status_bar_icon_mode_default">默认</string>
     <string name="status_bar_icon_mode_on">始终显示</string>
     <string name="status_bar_icon_mode_off">始终隐藏</string>
-    <string name="control_center_sunshine_mode_default">关闭</string>
-    <string name="control_center_sunshine_mode_one">系统默认模式</string>
-    <string name="control_center_sunshine_mode_two">强制最高亮度</string>
     <string name="status_bar_icon_mode_off_unconnect">仅在未连接时隐藏</string>
     <string name="status_bar_icon_mode_on_beforering">仅在响铃前显示</string>
 
@@ -233,6 +230,10 @@
 
     <string name="array_pa_blur_official">官方自带模糊</string>
     <string name="array_bpa_blur_customize">自定义背景模糊</string>
+
+    <string name="control_center_sunshine_mode_default">关闭</string>
+    <string name="control_center_sunshine_mode_one">系统默认模式</string>
+    <string name="control_center_sunshine_mode_two">强制最高亮度</string>
     <!--系统框架-->
     <string name="system_framework">系统框架</string>
     <string name="system_framework_volume_title">音量</string>
@@ -1191,8 +1192,8 @@
     <string name="settings_notfication_importance">显示通知重要程度</string>
     <string name="various_no_overscroll">禁用越界回弹</string>
     <string name="various_disable_bluetooth_restrict">禁用蓝牙临时关闭</string>
-    <string name="various_disable_link_turbo_toast">禁止显示正在使用流量加速Toast</string>
-    <string name="various_disable_link_turbo_toast_more">请在快速重启作用域中重启NetworkBoost</string>
+    <string name="various_disable_link_turbo_toast">隐藏正在使用流量加速 Toast</string>
+    <string name="various_disable_link_turbo_toast_more">开关后请在快速重启作用域中重启 NetworkBoost</string>
     <string name="various_disable_access_device_logs">关闭访问设备日志确认</string>
     <string name="various_unlock_ime">解锁输入法全面屏优化</string>
     <string name="various_unlock_ime_desc">开启后请在 Xposed 管理器中勾选对应输入法作用域</string>
