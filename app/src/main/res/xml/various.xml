@@ -3,120 +3,123 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory>
         <Preference
-            android:enabled="false"
             android:title="@string/various_location_simulation_title"
-            app:isPreferenceVisible="false" />
+            android:enabled="false"
+            app:isPreferenceVisible="false"/>
 
         <Preference
-            android:fragment="com.sevtinge.cemiuiler.ui.fragment.various.AlertDialogSettings"
-            android:key="prefs_key_various_dialog"
             android:title="@string/various_dialog_title"
-            app:isPreferenceVisible="true" />
+            android:key="prefs_key_various_dialog"
+            app:isPreferenceVisible="true"
+            android:fragment="com.sevtinge.cemiuiler.ui.fragment.various.AlertDialogSettings" />
 
         <Preference
-            android:fragment="com.sevtinge.cemiuiler.ui.fragment.various.AOSPSettings"
-            android:key="prefs_key_various_open_aosp_something"
+            android:title="@string/various_open_aosp_something_title"
             android:summary="@string/various_open_aosp_something_desc"
-            android:title="@string/various_open_aosp_something_title" />
+            android:key="prefs_key_various_open_aosp_something"
+            android:fragment="com.sevtinge.cemiuiler.ui.fragment.various.AOSPSettings" />
 
         <Preference
-            android:fragment="com.sevtinge.cemiuiler.ui.fragment.various.MiPadSettings"
-            android:key="prefs_key_various_mipad"
             android:title="@string/various_mipad_title"
-            app:isPreferenceVisible="true" />
+            android:key="prefs_key_various_mipad"
+            app:isPreferenceVisible="true"
+            android:fragment="com.sevtinge.cemiuiler.ui.fragment.various.MiPadSettings" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/various_super_clipboard_title">
+    <PreferenceCategory
+        android:title="@string/various_super_clipboard_title">
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="prefs_key_various_super_clipboard_enable"
+            android:title="@string/various_unlock_super_clipboard"
             android:summary="@string/various_super_clipboard_summary"
-            android:title="@string/various_unlock_super_clipboard" />
+            android:key="prefs_key_various_super_clipboard_enable"
+            android:defaultValue="false" />
 
         <SwitchPreference
-            android:defaultValue="false"
+            android:title="@string/gallery"
+            android:summary="@string/various_super_clipboard_picture_desc"
             android:dependency="prefs_key_various_super_clipboard_enable"
             android:key="prefs_key_various_super_clipboard_gallery"
-            android:summary="@string/various_super_clipboard_picture_desc"
-            android:title="@string/gallery" />
+            android:defaultValue="false" />
 
         <SwitchPreference
-            android:defaultValue="false"
+            android:title="@string/notes"
             android:dependency="prefs_key_various_super_clipboard_enable"
             android:key="prefs_key_various_super_clipboard_notes"
-            android:title="@string/notes" />
+            android:defaultValue="false" />
 
         <SwitchPreference
-            android:defaultValue="false"
+            android:title="@string/creation"
             android:dependency="prefs_key_various_super_clipboard_enable"
             android:key="prefs_key_various_super_clipboard_creation"
-            android:title="@string/creation" />
+            android:defaultValue="false" />
 
         <SwitchPreference
-            android:defaultValue="false"
+            android:title="@string/screenshot"
+            android:summary="@string/various_super_clipboard_picture_desc"
             android:dependency="prefs_key_various_super_clipboard_enable"
             android:key="prefs_key_various_super_clipboard_screenshot"
-            android:summary="@string/various_super_clipboard_picture_desc"
-            android:title="@string/screenshot" />
+            android:defaultValue="false" />
 
         <SwitchPreference
-            android:defaultValue="false"
+            android:title="@string/mms"
+            android:dependency="prefs_key_various_super_clipboard_enable"
+            android:key="prefs_key_various_super_clipboard_mms"
+            android:defaultValue="false" />
+
+        <SwitchPreference
+            android:title="@string/browser"
+            android:summary="@string/various_super_clipboard_files_desc"
             android:dependency="prefs_key_various_super_clipboard_enable"
             android:key="prefs_key_various_super_clipboard_browser"
-            android:title="@string/browser" />
+            android:defaultValue="false" />
 
         <SwitchPreference
-            android:defaultValue="false"
+            android:title="@string/fileexplorer"
+            android:summary="@string/various_super_clipboard_files_desc"
             android:dependency="prefs_key_various_super_clipboard_enable"
             android:key="prefs_key_various_super_clipboard_fileexplorer"
-            android:summary="@string/various_super_clipboard_files_desc"
-            android:title="@string/fileexplorer" />
+            android:defaultValue="false" />
 
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/various">
         <SwitchPreference
-            android:defaultValue="false"
+            android:title="@string/settings_notfication_importance"
             android:key="prefs_key_settings_notfication_importance"
-            android:title="@string/settings_notfication_importance" />
+            android:defaultValue="false" />
 
         <SwitchPreference
-            android:defaultValue="false"
+            android:title="@string/various_no_overscroll"
             android:key="prefs_key_various_no_overscroll"
-            android:title="@string/various_no_overscroll" />
+            android:defaultValue="false" />
 
         <SwitchPreference
-            android:defaultValue="false"
+            android:title="@string/various_disable_bluetooth_restrict"
             android:key="prefs_key_various_disable_bluetooth_restrict"
-            android:title="@string/various_disable_bluetooth_restrict" />
+            android:defaultValue="false" />
 
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="prefs_key_various_disable_link_turbo_toast"
-            android:title="@string/various_disable_link_turbo_toast" />
-
-        <SwitchPreference
-            android:defaultValue="false"
+            android:title="@string/various_disable_access_device_logs"
             android:key="prefs_key_various_disable_access_device_logs"
-            android:title="@string/various_disable_access_device_logs" />
+            android:defaultValue="false" />
 
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="prefs_key_various_unlock_ime"
+            android:title="@string/various_unlock_ime"
             android:summary="@string/various_unlock_ime_desc"
-            android:title="@string/various_unlock_ime" />
+            android:key="prefs_key_various_unlock_ime"
+            android:defaultValue="false" />
 
         <SwitchPreference
-            android:defaultValue="false"
+            android:title="@string/various_disable_folder_cantuse"
             android:key="prefs_key_various_disable_folder_cantuse"
-            android:title="@string/various_disable_folder_cantuse" />
+            android:defaultValue="false" />
 
         <DropDownPreference
-            android:defaultValue="0"
             android:key="prefs_key_various_collapse_miui_title"
-            android:summary="@string/various_collapse_miui_title_desc"
             android:title="@string/various_collapse_miui_title"
+            android:summary="@string/various_collapse_miui_title_desc"
+            android:defaultValue="0"
             app:entries="@array/collapse_miui_title"
             app:entryValues="@array/collapse_miui_title_value" />
 
