@@ -149,11 +149,6 @@ public class SunlightMode extends TileUtils {
                     // if (maxSunlight == 0)
                     //     maxSunlight = Settings.System.getInt(mContext.getContentResolver(), screenBrightness);
                     // sLog("tileClick: lastSunlight: " + lastSunlight + " pathSunlight: " + pathSunlight + " filter: " + filter);
-                    try {
-                        Thread.sleep(800);
-                    } catch (InterruptedException e) {
-                        logE("sleep error: " + e);
-                    }
                     readAndWrit("" + Integer.MAX_VALUE, true);
                     // ShellUtils.CommandResult commandResult = ShellUtils.execCommand("sleep 0.8 && echo " + Integer.MAX_VALUE + " > " + path + " && cat " + path, true, true);
                     // try {
@@ -257,6 +252,11 @@ public class SunlightMode extends TileUtils {
         BufferedReader reader = null;
         BufferedWriter writer = null;
         StringBuilder builder = null;
+        try {
+            Thread.sleep(800);
+        } catch (InterruptedException e) {
+            logE("sleep error: " + e);
+        }
         if (writ != null) {
             try {
                 writer = new BufferedWriter(new FileWriter(path, false));
