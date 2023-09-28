@@ -158,7 +158,7 @@ public class SunlightMode extends TileUtils {
                     // }
                 } else {
                     // sLog("tileClick: comeback lastSunlight: " + lastSunlight + " pathSunlight: " + pathSunlight);
-                    readAndWrit(null, false);
+                    // readAndWrit(null, false);
                     BroadcastReceiver broadcastReceiver = (BroadcastReceiver) XposedHelpers.getAdditionalInstanceField(param.thisObject, "broadcastReceiver");
                     if (broadcastReceiver != null) mContext.unregisterReceiver(broadcastReceiver);
                     Settings.System.putInt(mContext.getContentResolver(), screenBrightness, lastSunlight);
