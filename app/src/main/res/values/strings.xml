@@ -1149,7 +1149,7 @@
     <string name="settings_notfication_importance">Show notification importance</string>
     <string name="various_no_overscroll">Disable out-of-bounds bounce</string>
     <string name="various_disable_bluetooth_restrict">Prevent bluetooth from being turned off temporarily</string>
-    <string name="various_disable_link_turbo_toast">Suppress display of LinkTurbo Toast</string>
+    <string name="various_disable_link_turbo_toast">Hide LinkTurbo Toast</string>
     <string name="various_disable_link_turbo_toast_more">Please restart NetworkBoost in the fast restart scope</string>
     <string name="various_disable_access_device_logs">Dismiss access device logs request dialog</string>
     <string name="various_unlock_ime">Unlock IME</string>
