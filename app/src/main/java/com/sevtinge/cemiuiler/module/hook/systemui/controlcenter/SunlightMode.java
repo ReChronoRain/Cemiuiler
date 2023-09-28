@@ -27,10 +27,10 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 import de.robv.android.xposed.XposedHelpers;
 
 public class SunlightMode extends TileUtils {
-    public static final String path = "/sys/class/mi_display/disp-DSI-0/brightness_clone";
+    public static String path = null;
     public static boolean mMode = false;
     public static int lastSunlight = 0;
-    public static int maxSunlight = 0;
+    // public static int maxSunlight = 0;
     public static int pathSunlight = 0;
     public static boolean intentListening = false;
     // public static boolean imGetSun = false;
@@ -46,9 +46,9 @@ public class SunlightMode extends TileUtils {
         super.init();
     }
 
-    // public void sLog(String log) {
-    //     Log.i("SunlightMode", "sLog: " + log);
-    // }
+    /*public void sLog(String log) {
+        Log.i("SunlightMode", "sLog: " + log);
+    }*/
 
     public void modeSwitch() {
         int mode = mPrefsMap.getStringAsInt("system_control_center_sunshine_new_mode", 0);
@@ -59,11 +59,21 @@ public class SunlightMode extends TileUtils {
     }
 
     public void setPath() {
-        ShellUtils.CommandResult commandResult = ShellUtils.execCommand("[ -f " + path + " ]", true, false);
+        String fileOne = "/sys/class/mi_display/disp-DSI-0/brightness_clone";
+        String fileTwo = "/sys/class/backlight/panel0-backlight/brightness";
+        ShellUtils.CommandResult commandResult = ShellUtils.execCommand("[ -f " + fileOne + " ]", true, false);
+        if (commandResult.result == 0) {
+            path = fileOne;
+        } else {
+            ShellUtils.CommandResult shell = ShellUtils.execCommand("[ -f " + fileOne + " ]", true, false);
+            if (shell.result == 0) {
+                path = fileTwo;
+            }
+        }
         ShellUtils.execCommand("chmod 777 " + path, true, false);
         // sLog("tileCheck: shell result is: " + commandResult.result);
         // intentListening = true;
-        if (commandResult.result == 1) {
+        if (path == null) {
             mMode = false;
             logE("tileCheck: Missing directory, unable to set this mode: " + path);
         }
@@ -127,7 +137,7 @@ public class SunlightMode extends TileUtils {
                     logE("tileClick: ERROR Int For sunlight_mode");
                 }
             } else {
-                if (maxSunlight == 0 || lastSunlight == 0 || Settings.System.getInt(mContext.getContentResolver(), screenBrightness) != maxSunlight) {
+                if (lastSunlight == 0 || Integer.parseInt(readAndWrit(null, false)) != pathSunlight) {
                     BroadcastReceiver broadcastReceiver = new Screen();
                     IntentFilter filter = new IntentFilter();
                     filter.addAction(Intent.ACTION_SCREEN_OFF);
@@ -136,9 +146,9 @@ public class SunlightMode extends TileUtils {
                     intentListening = true;
                     lastSunlight = Settings.System.getInt(mContext.getContentResolver(), screenBrightness);
                     Settings.System.putInt(mContext.getContentResolver(), screenBrightness, Integer.MAX_VALUE);
-                    if (maxSunlight == 0)
-                        maxSunlight = Settings.System.getInt(mContext.getContentResolver(), screenBrightness);
-                    // sLog("tileClick: lastSunlight: " + lastSunlight + " maxSunlight: " + maxSunlight + " filter: " + filter);
+                    // if (maxSunlight == 0)
+                    //     maxSunlight = Settings.System.getInt(mContext.getContentResolver(), screenBrightness);
+                    // sLog("tileClick: lastSunlight: " + lastSunlight + " pathSunlight: " + pathSunlight + " filter: " + filter);
                     try {
                         Thread.sleep(800);
                     } catch (InterruptedException e) {
@@ -152,7 +162,8 @@ public class SunlightMode extends TileUtils {
                     //     logE("cant to int: " + pathSunlight);
                     // }
                 } else {
-                    // sLog("tileClick: comeback lastSunlight: " + lastSunlight);
+                    // sLog("tileClick: comeback lastSunlight: " + lastSunlight + " pathSunlight: " + pathSunlight);
+                    readAndWrit(null, false);
                     BroadcastReceiver broadcastReceiver = (BroadcastReceiver) XposedHelpers.getAdditionalInstanceField(param.thisObject, "broadcastReceiver");
                     if (broadcastReceiver != null) mContext.unregisterReceiver(broadcastReceiver);
                     Settings.System.putInt(mContext.getContentResolver(), screenBrightness, lastSunlight);
@@ -195,8 +206,8 @@ public class SunlightMode extends TileUtils {
 
     @Override
     public ArrayMap<String, Integer> tileUpdateState(MethodHookParam param, Class<?> mResourceIcon, String tileName) {
-        int nowInt;
-        int nowSunlight = 0;
+        int nowInt = 0;
+        int nowSunlight;
         boolean isEnable = false;
         Context mContext = (Context) XposedHelpers.getObjectField(param.thisObject, "mContext");
         try {
@@ -216,12 +227,13 @@ public class SunlightMode extends TileUtils {
             if (!mMode) {
                 nowInt = Settings.System.getInt(mContext.getContentResolver(), sunlightMode);
             } else {
-                nowInt = Settings.System.getInt(mContext.getContentResolver(), screenBrightness);
+                // nowInt = Settings.System.getInt(mContext.getContentResolver(), screenBrightness);
                 nowSunlight = Integer.parseInt(readAndWrit(null, false));
-                if (nowInt == maxSunlight) {
-                    nowInt = 1;
-                } else if (nowSunlight == pathSunlight) nowInt = 1;
-                // sLog("tileUpdateState: nowInt is: " + nowInt + " maxSunlight: " + maxSunlight);
+                // if (nowInt == maxSunlight) {
+                //     nowInt = 1;
+                // } else
+                if (nowSunlight == pathSunlight) nowInt = 1;
+                // sLog("tileUpdateState: nowInt is: " + nowInt + " pathSunlight: " + pathSunlight + " nowSunlight: " + nowSunlight);
             }
             if (nowInt == 1) isEnable = true;
             if (intentListening && !isEnable) {
@@ -242,24 +254,44 @@ public class SunlightMode extends TileUtils {
 
     public String readAndWrit(String writ, boolean need) {
         String line;
+        BufferedReader reader = null;
+        BufferedWriter writer = null;
         StringBuilder builder = null;
         if (writ != null) {
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(path, false))) {
+            try {
+                writer = new BufferedWriter(new FileWriter(path, false));
                 writer.write(writ);
             } catch (IOException e) {
                 logE("error to writ: " + path);
+            } finally {
+                try {
+                    if (writer != null) {
+                        writer.close();
+                    }
+                } catch (IOException e) {
+                    logE("close writer error: " + e);
+                }
             }
         }
-        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
+        try {
+            reader = new BufferedReader(new FileReader(path));
             builder = new StringBuilder();
             while ((line = reader.readLine()) != null) {
                 builder.append(line);
             }
         } catch (IOException e) {
             logE("error to read: " + path);
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException e) {
+                logE("close reader error: " + e);
+            }
         }
         if (builder != null) {
-            logE("get string: " + builder);
+            // logE("get string: " + builder);
             if (need) pathSunlight = Integer.parseInt(builder.toString());
             return builder.toString();
         }
