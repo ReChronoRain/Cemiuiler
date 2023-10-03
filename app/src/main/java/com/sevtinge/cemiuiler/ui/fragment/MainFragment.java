@@ -5,6 +5,7 @@ import static com.sevtinge.cemiuiler.utils.devicesdk.SystemSDKKt.isAndroidR;
 
 import com.sevtinge.cemiuiler.R;
 import com.sevtinge.cemiuiler.ui.fragment.base.SettingsPreferenceFragment;
+import java.security.SecureRandom;
 
 import java.util.Random;
 
@@ -17,7 +18,7 @@ public class MainFragment extends SettingsPreferenceFragment {
     Preference mSecurityCenter;
     Preference mSecurityCenterPad;
     Preference mTip;
-    Random r = new Random();
+    Random r = new SecureRandom();
 
     int[] tips = new int[]{
         R.string.tip_0,
