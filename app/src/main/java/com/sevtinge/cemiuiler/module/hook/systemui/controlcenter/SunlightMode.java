@@ -31,7 +31,7 @@ import de.robv.android.xposed.XposedHelpers;
 public class SunlightMode extends TileUtils {
     public static String path = null;
     public static boolean mMode = false;
-    public static boolean useSystem = true;
+    public static boolean useSystem = false;
     public static int lastSunlight = 0;
     // public static int maxSunlight = 0;
     public static int pathSunlight = 0;
