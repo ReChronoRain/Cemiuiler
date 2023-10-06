@@ -1,6 +1,5 @@
 package com.sevtinge.cemiuiler.ui;
 
-import android.annotation.SuppressLint;
 import android.app.backup.BackupManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -49,7 +47,6 @@ public class MainActivity extends SettingsActivity {
     TextWatcher mSearchResultListener;
     ModSearchAdapter mSearchAdapter;
     String lastFilter;
-    String mPermission = "Cemiuiler_Permission";
     private final MainFragment mMainFrag = new MainFragment();
     private final int REQUEST_CODE = 2038;
 
@@ -78,9 +75,7 @@ public class MainActivity extends SettingsActivity {
     }
 
     private void requestCta() {
-        if (!PermissionRecord(true)) {
-            CtaUtils.showCtaDialog(this, REQUEST_CODE);
-        }
+        CtaUtils.showCtaDialog(this, REQUEST_CODE);
     }
 
     private void initView() {
@@ -246,36 +241,10 @@ public class MainActivity extends SettingsActivity {
                 if (resultCode == RESULT_CANCELED) {
                     finish();
                 } else if (resultCode == RESULT_FIRST_USER) {
-                    PermissionRecord(false);
+
                 }
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    /**
-     * @noinspection deprecation
-     */
-    private boolean PermissionRecord(boolean iNeedGet) {
-        @SuppressLint({"WorldWriteableFiles", "WorldReadableFiles"})
-        SharedPreferences sharedPreferences =
-            getSharedPreferences(mPermission, MODE_WORLD_WRITEABLE | MODE_WORLD_READABLE);
-        if (!iNeedGet) {
-            boolean mPermissionRecord = sharedPreferences.getBoolean("mPermissionRecord", false);
-        /*
-        需要每次更新软件重新弹出界面可以使用下面的方法
-        String PackageCodePath = sharedPreferences.getString("mPackageCodePath", "null");
-        String Now_PackageCodePath = getPackageCodePath();
-        if (!hasExecutedCommand || !PackageCodePath.equals(Now_PackageCodePath)) {
-        */
-            if (!mPermissionRecord) {
-                // 标记得到允许
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean("mPermissionRecord", true);
-                /*editor.putString("packageCodePath", Now_PackageCodePath);*/
-                editor.apply();
-            }
-        }
-        return sharedPreferences.getBoolean("mPermissionRecord", false);
     }
 }
