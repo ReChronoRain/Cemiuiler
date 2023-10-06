@@ -11,11 +11,11 @@ import android.os.Build;
 import android.os.Handler;
 import android.provider.Settings;
 import android.util.ArrayMap;
-import android.util.Log;
 
 import com.sevtinge.cemiuiler.R;
 import com.sevtinge.cemiuiler.utils.ShellUtils;
 import com.sevtinge.cemiuiler.utils.TileUtils;
+import com.sevtinge.cemiuiler.utils.log.AndroidLogUtils;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -89,7 +89,7 @@ public class SunlightMode extends TileUtils {
             logE("setPath: Missing directory, unable to set this mode: " + path);
         } else {
             ShellUtils.execCommand("chmod 777 " + path, true, false);
-            logE("setPath: im get file: " + path);
+            // logI("setPath: im get file: " + path);
         }
     }
 
@@ -303,14 +303,14 @@ public class SunlightMode extends TileUtils {
                 writer = new BufferedWriter(new FileWriter(path, false));
                 writer.write(writ);
             } catch (IOException e) {
-                Log.e("SunlightMode", "error to writ: " + path);
+                AndroidLogUtils.LogE("SunlightMode", "error to writer: " + path + " ", e);
             } finally {
                 try {
                     if (writer != null) {
                         writer.close();
                     }
                 } catch (IOException e) {
-                    Log.e("SunlightMode", "close writer error: " + e);
+                    AndroidLogUtils.LogE("SunlightMode", "close writer error: ", e);
                 }
             }
         }
@@ -321,14 +321,14 @@ public class SunlightMode extends TileUtils {
                 builder.append(line);
             }
         } catch (IOException e) {
-            Log.e("SunlightMode", "error to read: " + path);
+            AndroidLogUtils.LogE("SunlightMode", "error to read: " + path + " ", e);
         } finally {
             try {
                 if (reader != null) {
                     reader.close();
                 }
             } catch (IOException e) {
-                Log.e("SunlightMode", "close reader error: " + e);
+                AndroidLogUtils.LogE("SunlightMode", "close reader error: ", e);
             }
         }
         if (builder != null) {
