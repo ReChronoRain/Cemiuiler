@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 
 import androidx.annotation.Nullable;
+import io.github.pixee.security.BoundedLineReader;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -62,10 +63,10 @@ public class BackupUtils {
         InputStream inputStream = activity.getContentResolver().openInputStream(data);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         StringBuilder stringBuilder = new StringBuilder();
-        String line = bufferedReader.readLine();
+        String line = BoundedLineReader.readLine(bufferedReader, 5_000_000);
         while (line != null) {
             stringBuilder.append(line);
-            line = bufferedReader.readLine();
+            line = BoundedLineReader.readLine(bufferedReader, 5_000_000);
         }
         String read = stringBuilder.toString();
         JSONObject jsonObject = new JSONObject(read);

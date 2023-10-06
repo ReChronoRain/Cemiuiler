@@ -1,5 +1,6 @@
 package com.sevtinge.cemiuiler.utils;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -137,10 +138,10 @@ public class ShellUtils {
                 successResult = new BufferedReader(new InputStreamReader(process.getInputStream()));
                 errorResult = new BufferedReader(new InputStreamReader(process.getErrorStream()));
                 String s;
-                while ((s = successResult.readLine()) != null) {
+                while ((s = BoundedLineReader.readLine(successResult, 5_000_000)) != null) {
                     successMsg.append(s);
                 }
-                while ((s = errorResult.readLine()) != null) {
+                while ((s = BoundedLineReader.readLine(errorResult, 5_000_000)) != null) {
                     errorMsg.append(s);
                 }
             }
