@@ -1,6 +1,7 @@
 package com.sevtinge.cemiuiler.module.app;
 
 import com.sevtinge.cemiuiler.module.base.BaseModule;
+import com.sevtinge.cemiuiler.module.base.CloseHostDir;
 import com.sevtinge.cemiuiler.module.base.LoadHostDir;
 import com.sevtinge.cemiuiler.module.hook.personalassistant.BlurOverlay;
 import com.sevtinge.cemiuiler.module.hook.personalassistant.BlurPersonalAssistant;
@@ -20,6 +21,7 @@ public class PersonalAssistant extends BaseModule {
         initHook(BlurPersonalAssistant.INSTANCE, mPrefsMap.getBoolean("pa_enable"));
 
         initHook(new WidgetCrack(), mPrefsMap.getBoolean("hidden_function") && mPrefsMap.getBoolean("personal_assistant_widget_crack"));
+        initHook(CloseHostDir.INSTANCE);
     }
 
 }

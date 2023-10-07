@@ -4,6 +4,7 @@ import static com.sevtinge.cemiuiler.utils.api.VoyagerApisKt.isPad;
 import static com.sevtinge.cemiuiler.utils.devicesdk.SystemSDKKt.isAndroidR;
 
 import com.sevtinge.cemiuiler.module.base.BaseModule;
+import com.sevtinge.cemiuiler.module.base.CloseHostDir;
 import com.sevtinge.cemiuiler.module.base.LoadHostDir;
 import com.sevtinge.cemiuiler.module.hook.home.AllAppsBlur;
 import com.sevtinge.cemiuiler.module.hook.home.AnimDurationRatio;
@@ -243,6 +244,7 @@ public class Home extends BaseModule {
 
         // 小米/红米平板相关
         initHook(SetGestureNeedFingerNum.INSTANCE, mPrefsMap.getBoolean("mipad_input_need_finger_num") && isPad());
+        initHook(CloseHostDir.INSTANCE);
     }
 
 }

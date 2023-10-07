@@ -7,6 +7,14 @@ object LoadHostDir : BaseHook() {
     override fun init() {
         if (lpparam != null) {
             initDexKit(lpparam)
+        }
+    }
+}
+
+
+object CloseHostDir : BaseHook() {
+    override fun init() {
+        if (lpparam != null) {
             closeDexKit()
         }
     }

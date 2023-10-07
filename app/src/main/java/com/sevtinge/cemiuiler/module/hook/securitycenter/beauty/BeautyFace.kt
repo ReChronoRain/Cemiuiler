@@ -1,50 +1,41 @@
-package com.sevtinge.cemiuiler.module.hook.securitycenter.beauty;
+package com.sevtinge.cemiuiler.module.hook.securitycenter.beauty
 
-import com.sevtinge.cemiuiler.module.base.BaseHook;
-import com.sevtinge.cemiuiler.module.hook.securitycenter.SecurityCenterDexKit;
+import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHook
+import com.sevtinge.cemiuiler.module.base.BaseHook
+import com.sevtinge.cemiuiler.utils.DexKit.addUsingStringsEquals
+import com.sevtinge.cemiuiler.utils.DexKit.dexKitBridge
+import java.lang.reflect.Method
 
-import java.lang.reflect.Method;
-import java.util.List;
-import java.util.Objects;
+object BeautyFace : BaseHook() {
+    var beautyFace: Method? = null
+    override fun init() {
+        dexKitBridge.findMethod {
+            matcher {
+                addUsingStringsEquals("taoyao", "IN", "persist.vendor.vcb.ability")
+                returnType = "boolean"
+            }
+        }.forEach {
+            beautyFace = it.getMethodInstance(lpparam.classLoader)
+        }
 
-import de.robv.android.xposed.XC_MethodReplacement;
-import de.robv.android.xposed.XposedBridge;
-import io.luckypray.dexkit.descriptor.member.DexMethodDescriptor;
+        beautyFace!!.createHook {
+            returnConstant(true)
+        }
 
-public class BeautyFace extends BaseHook {
-    static Method beautyFace;
-
-    @Override
-    public void init() {
-        try {
-            List<DexMethodDescriptor> result = Objects.requireNonNull(SecurityCenterDexKit.mSecurityCenterResultMap.get("BeautyFace"));
-            for (DexMethodDescriptor descriptor : result) {
-                beautyFace = descriptor.getMethodInstance(lpparam.classLoader);
-                log("beautyFace method is " + beautyFace);
-                if (beautyFace.getReturnType() == boolean.class) {
-                    XposedBridge.hookMethod(beautyFace, XC_MethodReplacement.returnConstant(true));
+        /*try {
+            val result: List<DexMethodDescriptor> =
+                Objects.requireNonNull<List<DexMethodDescriptor>>(
+                    SecurityCenterDexKit.mSecurityCenterResultMap.get("BeautyFace")
+                )
+            for (descriptor in result) {
+                beautyFace = descriptor.getMethodInstance(lpparam.classLoader)
+                log("beautyFace method is " + beautyFace)
+                if (beautyFace!!.returnType == Boolean::class.javaPrimitiveType) {
+                    XposedBridge.hookMethod(beautyFace, XC_MethodReplacement.returnConstant(true))
                 }
             }
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
-        /*
-        int appVersionCode = getPackageVersionCode(lpparam);
-        if (appVersionCode == 40000749) {
-            findAndHookMethod("p5.f", "D", new BaseHook.MethodHook() {
-                @Override
-                protected void before(XC_MethodHook.MethodHookParam param) throws Throwable {
-                    param.setResult(true);
-                }
-            });
-        } else {
-            findAndHookMethod("com.miui.gamebooster.beauty.i", "z", new BaseHook.MethodHook() {
-                @Override
-                protected void before(XC_MethodHook.MethodHookParam param) throws Throwable {
-                    param.setResult(true);
-                }
-            });
-        }
-        */
+        } catch (e: Throwable) {
+            e.printStackTrace()
+        }*/
     }
 }

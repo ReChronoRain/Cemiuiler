@@ -23,7 +23,6 @@
 
         <SwitchPreference
             android:defaultValue="false"
-            android:enabled="false"
             android:key="prefs_key_security_center_app_default_setting"
             android:summary="@string/security_disable_app_url_summary"
             android:title="@string/security_disable_app_url_title" />
@@ -196,6 +195,7 @@
             android:title="@string/security_center_dolby_open" />
 
         <SwitchPreference
+            app:isPreferenceVisible="false"
             android:defaultValue="false"
             android:key="prefs_key_security_center_disable_sidebar_show_suggest"
             android:title="@string/security_center_disable_sidebar_show_suggest" />

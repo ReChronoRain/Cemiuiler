@@ -1,97 +1,69 @@
-package com.sevtinge.cemiuiler.module.hook.securitycenter.lab;
+package com.sevtinge.cemiuiler.module.hook.securitycenter.lab
 
-import com.sevtinge.cemiuiler.module.base.BaseHook;
-import com.sevtinge.cemiuiler.module.hook.securitycenter.SecurityCenterDexKit;
-import com.sevtinge.cemiuiler.utils.Helpers;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-
-import io.luckypray.dexkit.descriptor.member.DexClassDescriptor;
-
-public class AiClipboardEnable extends BaseHook {
-
-    Class<?> mLab;
-    Class<?> mStableVer;
-    Class<?> utilCls;
-    Class<?> labUtils;
+import com.github.kyuubiran.ezxhelper.EzXHelper
+import com.sevtinge.cemiuiler.module.base.BaseHook
+import com.sevtinge.cemiuiler.utils.DexKit.addUsingStringsEquals
+import com.sevtinge.cemiuiler.utils.DexKit.dexKitBridge
+import com.sevtinge.cemiuiler.utils.Helpers
 
 
-    @Override
-    public void init() {
-        try {
-            List<DexClassDescriptor> result = Objects.requireNonNull(SecurityCenterDexKit.mSecurityCenterResultClassMap.get("LabUtils"));
-            for (DexClassDescriptor descriptor : result) {
-                labUtils = descriptor.getClassInstance(lpparam.classLoader);
-                log("labUtils class is " + labUtils);
-                findAndHookMethod("com.miui.permcenter.settings.PrivacyLabActivity", "onCreateFragment", new MethodHook() {
-                    @Override
-                    protected void before(MethodHookParam param) {
-                        Object fm = Helpers.getStaticObjectFieldSilently(labUtils, "b");
+object AiClipboardEnable : BaseHook() {
+    private var mLab: Class<*>? = null
+    private var mStableVer: Class<*>? = null
+    private var utilCls: Class<*>? = null
+    private var labUtils: Class<*>? = null
+    override fun init() {
+        dexKitBridge.findClass {
+            matcher {
+                addUsingStringsEquals("mi_lab_ai_clipboard_enable", "mi_lab_blur_location_enable")
+            }
+        }.forEach {
+            labUtils = it.getInstance(EzXHelper.classLoader)
+            log("labUtils class is $labUtils")
+            findAndHookMethod(
+                "com.miui.permcenter.settings.PrivacyLabActivity",
+                "onCreateFragment",
+                object : MethodHook() {
+                    override fun before(param: MethodHookParam) {
+                        val fm = Helpers.getStaticObjectFieldSilently(labUtils, "b")
                         if (fm != null) {
                             try {
-                                Map<String, Integer> featMap = (Map<String, Integer>) fm;
-                                featMap.put("mi_lab_ai_clipboard_enable", 0);
+                                val featMap = fm as MutableMap<String, Int>
+                                featMap["mi_lab_ai_clipboard_enable"] = 0
                                 // featMap.put("mi_lab_blur_location_enable", 0);
-                            } catch (Throwable ignore) {
+                            } catch (ignore: Throwable) {
                             }
                         }
                     }
-                });
-            }
-        } catch (Throwable e) {
-            e.printStackTrace();
+                })
         }
-        /*mLab = findClassIfExists("com.miui.permcenter.q");
-        mStableVer = findClassIfExists("miui.os.Build");
 
-        findAndHookMethod(mLab, "e", new MethodHook() {
-            @Override
-            protected void before(MethodHookParam param) throws Throwable {
-                param.setResult(true);
-            }
-        });*/
-
-        /*
-        Helpers.findAndHookMethod("com.miui.permcenter.settings.PrivacyLabActivity", lpparam.classLoader, "onCreateFragment", new MethodHook() {
-            @Override
-            protected void before(MethodHookParam param) throws Throwable {
-                int appVersionCode = getPackageVersionCode(lpparam);
-                if (appVersionCode >= 40000749) {
-                    utilCls = findClassIfExists("rb.e", lpparam.classLoader);
-                } else {
-                    utilCls = findClassIfExists("com.miui.permcenter.utils.h", lpparam.classLoader);
-                }
-                if (utilCls != null) {
-                    Object fm = Helpers.getStaticObjectFieldSilently(utilCls, "b");
-                    if (fm != null) {
-                        try {
-                            Map<String, Integer> featMap = (Map<String, Integer>) fm;
-                            featMap.put("mi_lab_ai_clipboard_enable", 0);
-                            //featMap.put("mi_lab_blur_location_enable", 0);
-                        } catch (Throwable ignore) {
+       /* try {
+            val result: List<DexClassDescriptor> = Objects.requireNonNull<List<DexClassDescriptor>>(
+                SecurityCenterDexKit.mSecurityCenterResultClassMap.get("LabUtils")
+            )
+            for (descriptor in result) {
+                labUtils = descriptor.getClassInstance(lpparam.classLoader)
+                log("labUtils class is $labUtils")
+                findAndHookMethod(
+                    "com.miui.permcenter.settings.PrivacyLabActivity",
+                    "onCreateFragment",
+                    object : MethodHook() {
+                        protected override fun before(param: MethodHookParam) {
+                            val fm = Helpers.getStaticObjectFieldSilently(labUtils, "b")
+                            if (fm != null) {
+                                try {
+                                    val featMap = fm as MutableMap<String, Int>
+                                    featMap["mi_lab_ai_clipboard_enable"] = 0
+                                    // featMap.put("mi_lab_blur_location_enable", 0);
+                                } catch (ignore: Throwable) {
+                                }
+                            }
                         }
-                    }
-                }
+                    })
             }
-        });
-
-         */
-
-        /*findAndHookMethod("com.miui.permcenter.utils.h", "<clinit>", new MethodHook() {
-            @Override
-            protected void before(MethodHookParam param) throws Throwable {
-                XposedHelpers.setBooleanField(param.thisObject, "IS_STABLE_VERSION", true);
-            }
-            //protected void before(MethodHookParam param) throws Throwable {
-            //    param.setResult(true);
-            //}
-            protected void after(MethodHookParam param) throws Throwable {
-                XC_MethodHook.Unhook();
-            }
-        });*/
+        } catch (e: Throwable) {
+            e.printStackTrace()
+        }*/
     }
 }
-
-

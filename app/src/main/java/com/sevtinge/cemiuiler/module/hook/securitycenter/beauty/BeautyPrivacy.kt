@@ -1,16 +1,61 @@
 package com.sevtinge.cemiuiler.module.hook.securitycenter.beauty
 
+import com.github.kyuubiran.ezxhelper.EzXHelper
 import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHook
+import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHooks
 import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinder
 import com.sevtinge.cemiuiler.module.base.BaseHook
 import com.sevtinge.cemiuiler.module.hook.securitycenter.SecurityCenterDexKit
+import com.sevtinge.cemiuiler.utils.DexKit.addUsingStringsEquals
+import com.sevtinge.cemiuiler.utils.DexKit.dexKitBridge
 import com.sevtinge.cemiuiler.utils.Helpers
 import com.sevtinge.cemiuiler.utils.api.IS_TABLET
 import java.util.Objects
 
 object BeautyPrivacy : BaseHook() {
+    private val privateCls by lazy {
+        dexKitBridge.findClass {
+            matcher {
+                usingStrings = listOf("persist.sys.privacy_camera")
+            }
+        }.first().getInstance(EzXHelper.classLoader)
+    }
+
+    private val R0 by lazy {
+        dexKitBridge.findMethod {
+            matcher {
+                addUsingStringsEquals("persist.sys.privacy_camera")
+            }
+        }.first().getMethodInstance(EzXHelper.classLoader)
+    }
+
+    private val invokeMethod by lazy {
+        dexKitBridge.findMethod {
+            matcher {
+                declaredClass = privateCls.name
+                paramTypes = emptyList()
+                returnType = "boolean"
+                addInvoke {
+                    returnType = R0.returnType.name
+                    paramTypes = listOf(R0.parameterTypes[0].name)
+                    declaredClass = privateCls.name
+                }
+            }
+        }.map { it.getMethodInstance(EzXHelper.classLoader) }.toList()
+    }
+
     override fun init() {
-        try {
+        R0.createHook {
+            before {
+                it.args[0] = true
+            }
+        }
+
+        invokeMethod.createHooks {
+            returnConstant(true)
+        }
+
+       /* try {
             val appVersionCode = Helpers.getPackageVersionCode(lpparam)
             val result =
                 Objects.requireNonNull(SecurityCenterDexKit.mSecurityCenterResultClassMap["BeautyLight"])
@@ -43,6 +88,6 @@ object BeautyPrivacy : BaseHook() {
             }
         } catch (e: Exception) {
            log("BeautyPrivacy -> $e")
-        }
+        }*/
     }
 }

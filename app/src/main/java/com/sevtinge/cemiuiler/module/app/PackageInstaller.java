@@ -3,6 +3,7 @@ package com.sevtinge.cemiuiler.module.app;
 import android.text.TextUtils;
 
 import com.sevtinge.cemiuiler.module.base.BaseModule;
+import com.sevtinge.cemiuiler.module.base.CloseHostDir;
 import com.sevtinge.cemiuiler.module.base.LoadHostDir;
 import com.sevtinge.cemiuiler.module.hook.mms.DisableAd;
 import com.sevtinge.cemiuiler.module.hook.packageinstaller.AllAsSystemApp;
@@ -26,7 +27,7 @@ public class PackageInstaller extends BaseModule {
         /*initHook(new MiuiPackageInstallModify(), mPrefsMap.getBoolean("miui_package_installer_modify"));*/
 
         // 纯净模式
-        initHook(new SafeMode(), true);
+        initHook(new SafeMode());
 
         // 禁用广告
         initHook(DisableAd.INSTANCE, mPrefsMap.getBoolean("miui_package_installer_disable_ad"));
@@ -49,5 +50,6 @@ public class PackageInstaller extends BaseModule {
 
         // 禁用频繁安装应用检查
         initHook(DisableCountChecking.INSTANCE, mPrefsMap.getBoolean("miui_package_installer_count_checking"));
+        initHook(CloseHostDir.INSTANCE);
     }
 }

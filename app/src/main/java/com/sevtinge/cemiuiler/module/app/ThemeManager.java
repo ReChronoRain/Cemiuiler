@@ -1,6 +1,7 @@
 package com.sevtinge.cemiuiler.module.app;
 
 import com.sevtinge.cemiuiler.module.base.BaseModule;
+import com.sevtinge.cemiuiler.module.base.CloseHostDir;
 import com.sevtinge.cemiuiler.module.base.LoadHostDir;
 import com.sevtinge.cemiuiler.module.hook.thememanager.DisableThemeAdNew;
 import com.sevtinge.cemiuiler.module.hook.thememanager.EnableFoldTheme;
@@ -24,6 +25,7 @@ public class ThemeManager extends BaseModule {
 
         // 修改版本号
         initHook(new VersionCodeModify(), mPrefsMap.getBoolean("theme_manager_version_code_modify"));
+        initHook(CloseHostDir.INSTANCE);
     }
 
 }

@@ -1,30 +1,44 @@
-package com.sevtinge.cemiuiler.module.hook.securitycenter.sidebar.video;
+package com.sevtinge.cemiuiler.module.hook.securitycenter.sidebar.video
 
-import com.sevtinge.cemiuiler.module.base.BaseHook;
-import com.sevtinge.cemiuiler.module.hook.securitycenter.SecurityCenterDexKit;
+import com.github.kyuubiran.ezxhelper.EzXHelper
+import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHook
+import com.sevtinge.cemiuiler.module.base.BaseHook
+import com.sevtinge.cemiuiler.utils.DexKit.dexKitBridge
 
-import java.lang.reflect.Method;
-import java.util.List;
-import java.util.Objects;
-
-import de.robv.android.xposed.XC_MethodReplacement;
-import de.robv.android.xposed.XposedBridge;
-import io.luckypray.dexkit.descriptor.member.DexMethodDescriptor;
-
-public class DisableRemoveScreenHoldOn extends BaseHook {
-    @Override
-    public void init() {
+object DisableRemoveScreenHoldOn : BaseHook() {
+    /*override fun init() {
         try {
-            List<DexMethodDescriptor> result = Objects.requireNonNull(SecurityCenterDexKit.mSecurityCenterResultMap.get("RemoveScreenHoldOn"));
-            for (DexMethodDescriptor descriptor : result) {
-                Method removeScreenHoldOn = descriptor.getMethodInstance(lpparam.classLoader);
-                log("removeScreenHoldOn method is " + removeScreenHoldOn);
-                if (removeScreenHoldOn.getReturnType() == boolean.class) {
-                    XposedBridge.hookMethod(removeScreenHoldOn, XC_MethodReplacement.returnConstant(false));
+            val result: List<DexMethodDescriptor> =
+                Objects.requireNonNull(SecurityCenterDexKit.mSecurityCenterResultMap.get("RemoveScreenHoldOn"))
+            for (descriptor in result) {
+                val removeScreenHoldOn: Method = descriptor.getMethodInstance(lpparam.classLoader)
+                log("removeScreenHoldOn method is $removeScreenHoldOn")
+                if (removeScreenHoldOn.returnType == Boolean::class.javaPrimitiveType) {
+                    XposedBridge.hookMethod(
+                        removeScreenHoldOn,
+                        XC_MethodReplacement.returnConstant(false)
+                    )
                 }
             }
-        } catch (Throwable e) {
-            e.printStackTrace();
+        } catch (e: Throwable) {
+            e.printStackTrace()
+        }
+    }*/
+
+    private val screen by lazy {
+        dexKitBridge.findMethod {
+            matcher {
+                usingStrings = listOf("remove_screen_off_hold_on")
+                returnType = "boolean"
+            }
+        }.firstOrNull()?.getMethodInstance(EzXHelper.classLoader)
+    }
+
+    override fun init() {
+        screen?.createHook {
+            before {
+                it.result = false
+            }
         }
     }
 }

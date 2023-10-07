@@ -1,29 +1,37 @@
-package com.sevtinge.cemiuiler.module.hook.securitycenter;
+package com.sevtinge.cemiuiler.module.hook.securitycenter
 
-import com.sevtinge.cemiuiler.module.base.BaseHook;
+import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHook
+import com.sevtinge.cemiuiler.module.base.BaseHook
+import com.sevtinge.cemiuiler.utils.DexKit.addUsingStringsEquals
+import com.sevtinge.cemiuiler.utils.DexKit.dexKitBridge
 
-import java.lang.reflect.Method;
-import java.util.List;
-import java.util.Objects;
-
-import de.robv.android.xposed.XC_MethodReplacement;
-import de.robv.android.xposed.XposedBridge;
-import io.luckypray.dexkit.descriptor.member.DexMethodDescriptor;
-
-public class DisableReport extends BaseHook {
-    @Override
-    public void init() {
-        try {
-            List<DexMethodDescriptor> result = Objects.requireNonNull(SecurityCenterDexKit.mSecurityCenterResultMap.get("IsShowReport"));
-            for (DexMethodDescriptor descriptor : result) {
-                Method isShowReport = descriptor.getMethodInstance(lpparam.classLoader);
-                log("isShowReport method is " + isShowReport);
-                if (isShowReport.getReturnType() == boolean.class) {
-                    XposedBridge.hookMethod(isShowReport, XC_MethodReplacement.returnConstant(false));
-                }
+object DisableReport : BaseHook() {
+    override fun init() {
+        dexKitBridge.findMethod {
+            matcher {
+                addUsingStringsEquals("android.intent.action.VIEW", "com.xiaomi.market")
+                returnType = "boolean"
             }
-        } catch (Throwable e) {
-            e.printStackTrace();
+        }.forEach { methodData ->
+            methodData.getMethodInstance(lpparam.classLoader).createHook {
+                returnConstant(false)
+            }
         }
+
+        /* val result: List<DexMethodDescriptor> =
+             java.util.Objects.requireNonNull<List<DexMethodDescriptor>>(
+                 SecurityCenterDexKit.mSecurityCenterResultMap["IsShowReport"]
+             )
+         for (descriptor in result) {
+             val isShowReport: java.lang.reflect.Method =
+                 descriptor.getMethodInstance(lpparam.classLoader)
+             log("isShowReport method is $isShowReport")
+             if (isShowReport.returnType == Boolean::class.javaPrimitiveType) {
+                 XposedBridge.hookMethod(
+                     isShowReport,
+                     XC_MethodReplacement.returnConstant(false)
+                 )
+             }
+         }*/
     }
 }

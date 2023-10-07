@@ -11,7 +11,30 @@ import java.util.Objects
 
 object UnlockMemc : BaseHook() {
     override fun init() {
-        initDexKit(lpparam)
+        dexKitBridge.findClass {
+            matcher {
+                usingStrings = listOf("ro.vendor.media.video.frc.support")
+            }
+        }.map {
+            val frcSupport = it.getInstance(classLoader)
+            var counter = 0
+            dexKitBridge.findMethod {
+                matcher {
+                    declaredClass = frcSupport.name
+                    returnType = "boolean"
+                    paramTypes = listOf("java.lang.String")
+                }
+            }.forEach { methods ->
+                counter++
+                if (counter == 5) {
+                    methods.getMethodInstance(classLoader).createHook {
+                        returnConstant(true)
+                    }
+                }
+            }
+        }
+
+       /* initDexKit(lpparam)
         try {
             val result = Objects.requireNonNull(
                 SecurityCenterDexKit.mSecurityCenterResultClassMap["FrcSupport"]
@@ -36,6 +59,6 @@ object UnlockMemc : BaseHook() {
         } catch (e: Throwable) {
             logE("FrcSupport", e)
         }
-        closeDexKit()
+        closeDexKit()*/
     }
 }
