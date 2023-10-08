@@ -3,8 +3,6 @@ package com.sevtinge.cemiuiler.module.app;
 import static com.sevtinge.cemiuiler.utils.devicesdk.SystemSDKKt.isAndroidR;
 
 import com.sevtinge.cemiuiler.module.base.BaseModule;
-import com.sevtinge.cemiuiler.module.base.CloseHostDir;
-import com.sevtinge.cemiuiler.module.base.LoadHostDir;
 import com.sevtinge.cemiuiler.module.hook.securitycenter.AppLockPinScramble;
 import com.sevtinge.cemiuiler.module.hook.securitycenter.BlurSecurity;
 import com.sevtinge.cemiuiler.module.hook.securitycenter.DisableReport;
@@ -47,10 +45,6 @@ public class SecurityCenter extends BaseModule {
 
     @Override
     public void handleLoadPackage() {
-
-        // initHook(new SecurityCenterDexKit());
-        initHook(LoadHostDir.INSTANCE);
-
         // 应用管理
         initHook(new AppDefaultSort(), mPrefsMap.getStringAsInt("security_center_app_default_sort", 0) > 0);
         initHook(new AppRestrict(), mPrefsMap.getBoolean("security_center_app_restrict"));
@@ -107,7 +101,5 @@ public class SecurityCenter extends BaseModule {
         initHook(new AddSideBarExpandReceiver(), mPrefsMap.getBoolean("security_center_hide_sidebar"));
         // initHook(new DisableDockSuggest(), mPrefsMap.getBoolean("security_center_disable_sidebar_show_suggest"));
         initHook(new VideoDolbyOpen(), mPrefsMap.getBoolean("security_center_dolby_open"));
-
-        initHook(CloseHostDir.INSTANCE);
     }
 }
