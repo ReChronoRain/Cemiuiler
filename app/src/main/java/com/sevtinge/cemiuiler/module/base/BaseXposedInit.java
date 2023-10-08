@@ -128,6 +128,7 @@ public abstract class BaseXposedInit implements IXposedHookLoadPackage, IXposedH
     public static String mPrefsNameXml = "cemiuiler_prefs.xml";
     @SuppressLint("SdCardPath")
     public static String mPrefsFileUser = "/data/user/0/" + Helpers.mAppModulePkg + "/shared_prefs/";
+    public static String mPrefsFileUserBack = "/data/user/0/" + Helpers.mAppModulePkg + "/";
     public static String mPrefsFileMisc = "/data/misc/*/prefs/" + Helpers.mAppModulePkg + "/";
 
     @Override
@@ -152,10 +153,10 @@ public abstract class BaseXposedInit implements IXposedHookLoadPackage, IXposedH
                     allPrefs = mXSharedPreferences == null ? null : mXSharedPreferences.getAll();
                     if (allPrefs == null || allPrefs.size() == 0) {
                         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-                            String mCommand = "[ ! -f " + mPrefsFileMisc + mPrefsNameXml + " ] " +
-                                "&& [ -d " + mPrefsFileMisc + " ]" +
-                                " && [ -f " + mPrefsFileUser + mPrefsNameXml + " ] " +
-                                " && cp -f " + mPrefsFileUser + "* " + mPrefsFileMisc +
+                            String mCommand = "[ -d " + mPrefsFileMisc + " ]" +
+                                " && [ -f " + mPrefsFileUser + mPrefsNameXml + " ]" +
+                                " && cp -f " + mPrefsFileUser + mPrefsNameXml + " " + mPrefsFileUserBack +
+                                " && mv -f " + mPrefsFileUser + "* " + mPrefsFileMisc +
                                 " && chmod -R 777 " + mPrefsFileMisc + "*";
                             ShellUtils.CommandResult utils = ShellUtils.execCommand(mCommand, true, false);
                             if (utils.result == 0) {
@@ -169,10 +170,28 @@ public abstract class BaseXposedInit implements IXposedHookLoadPackage, IXposedH
                                     mPrefsMap.putAll(allPrefs);
                                 }
                             } else {
-                                XposedLogUtils.INSTANCE.logE("[UID" + android.os.Process.myUid() + "]",
-                                    "Failed to execute shell command: " + utils.result +
-                                        " Cannot read module's SharedPreferences, some mods might not work!",
-                                    null, null);
+                                mCommand = "[ -d " + mPrefsFileMisc + " ]" +
+                                    " && [ -f " + PrefsUtils.mPrefsFile + " ]" +
+                                    " && cp -f " + PrefsUtils.mPrefsFile + " " + mPrefsFileUserBack +
+                                    " && mv -f " + PrefsUtils.mPrefsPath + "/* " + mPrefsFileMisc +
+                                    " && chmod -R 777 " + mPrefsFileMisc + "*";
+                                utils = ShellUtils.execCommand(mCommand, true, false);
+                                if (utils.result == 0) {
+                                    mXSharedPreferences = new XSharedPreferences(Helpers.mAppModulePkg, PrefsUtils.mPrefsName);
+                                    mXSharedPreferences.makeWorldReadable();
+
+                                    allPrefs = mXSharedPreferences == null ? null : mXSharedPreferences.getAll();
+                                    if (allPrefs == null || allPrefs.size() == 0) {
+                                        getSharedPreferencesFail();
+                                    } else {
+                                        mPrefsMap.putAll(allPrefs);
+                                    }
+                                } else {
+                                    XposedLogUtils.INSTANCE.logE("[UID" + android.os.Process.myUid() + "]",
+                                        "Failed to execute shell command: " + utils.result +
+                                            " Cannot read module's SharedPreferences, some mods might not work!",
+                                        null, null);
+                                }
                             }
                         } else {
                             getSharedPreferencesFail();
