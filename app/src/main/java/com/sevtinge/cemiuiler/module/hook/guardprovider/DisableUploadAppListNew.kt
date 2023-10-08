@@ -1,15 +1,11 @@
 package com.sevtinge.cemiuiler.module.hook.guardprovider
 
 import com.sevtinge.cemiuiler.module.base.BaseHook
-import com.sevtinge.cemiuiler.utils.DexKit
 import com.sevtinge.cemiuiler.utils.DexKit.addUsingStringsEquals
 import com.sevtinge.cemiuiler.utils.DexKit.dexKitBridge
-import com.sevtinge.cemiuiler.utils.Helpers
 import com.sevtinge.cemiuiler.utils.replaceMethod
-import org.luckypray.dexkit.query.enums.StringMatchType
-import java.lang.reflect.Method
 
-class DisableUploadAppListNew : BaseHook() {
+object DisableUploadAppListNew : BaseHook() {
 
     @Throws(NoSuchMethodException::class)
     override fun init() {

@@ -3,8 +3,10 @@ package com.sevtinge.cemiuiler.module.app;
 import android.text.TextUtils;
 
 import com.sevtinge.cemiuiler.module.base.BaseModule;
+import com.sevtinge.cemiuiler.module.base.CloseHostDir;
+import com.sevtinge.cemiuiler.module.base.LoadHostDir;
+import com.sevtinge.cemiuiler.module.hook.mms.DisableAd;
 import com.sevtinge.cemiuiler.module.hook.packageinstaller.AllAsSystemApp;
-import com.sevtinge.cemiuiler.module.hook.packageinstaller.DisableAd;
 import com.sevtinge.cemiuiler.module.hook.packageinstaller.DisableCountChecking;
 import com.sevtinge.cemiuiler.module.hook.packageinstaller.DisableSafeModelTip;
 import com.sevtinge.cemiuiler.module.hook.packageinstaller.DisplayMoreApkInfoNew;
@@ -15,6 +17,10 @@ import com.sevtinge.cemiuiler.module.hook.packageinstaller.SafeMode;
 public class PackageInstaller extends BaseModule {
 
     public void handleLoadPackage() {
+
+        // dexKit load
+        initHook(LoadHostDir.INSTANCE);
+
         //
         /*initHook(new MiuiPackageInstallModify(), mPrefsMap.getBoolean("miui_package_installer_modify"));*/
 
@@ -42,5 +48,8 @@ public class PackageInstaller extends BaseModule {
 
         // 禁用频繁安装应用检查
         initHook(DisableCountChecking.INSTANCE, mPrefsMap.getBoolean("miui_package_installer_count_checking"));
+
+        // dexKit finish
+        initHook(CloseHostDir.INSTANCE);
     }
 }

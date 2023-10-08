@@ -5,7 +5,6 @@ import static com.sevtinge.cemiuiler.utils.log.AndroidLogUtils.deLogI;
 
 import com.sevtinge.cemiuiler.BuildConfig;
 import com.sevtinge.cemiuiler.XposedInit;
-import com.sevtinge.cemiuiler.utils.DexKit;
 import com.sevtinge.cemiuiler.utils.PrefsMap;
 import com.sevtinge.cemiuiler.utils.ResourcesHook;
 import com.sevtinge.cemiuiler.utils.log.XposedLogUtils;
@@ -32,7 +31,6 @@ public abstract class BaseHook {
 
     public void onCreate(LoadPackageParam lpparam) {
         try {
-            DexKit.INSTANCE.initDexKit(lpparam);
             setLoadPackageParam(lpparam);
             init();
             if (detailLog && !isDebugVersion) {
@@ -41,7 +39,6 @@ public abstract class BaseHook {
         } catch (Throwable t) {
             XposedLogUtils.INSTANCE.logE(TAG, "Hook Failed", t, null);
         }
-        DexKit.INSTANCE.closeDexKit();
     }
 
     public void setLoadPackageParam(LoadPackageParam param) {
