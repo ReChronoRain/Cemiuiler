@@ -19,10 +19,12 @@ android {
         minSdk 30
         targetSdk 34
         versionCode 127
-        versionName "1.2.127-d"
-        ndk.abiFilters += "arm64-v8a"
-        ndk.abiFilters += "armeabi-v7a"
+        versionName "1.2.127"
         project.archivesBaseName = "Cemiuiler"
+        ndk {
+            // noinspection ChromeOsAbiSupport
+            abiFilters 'arm64-v8a', 'armeabi-v7a'
+        }
         applicationVariants.configureEach { variant ->
             variant.outputs.configureEach {
                 outputFileName = project.archivesBaseName + "_" + versionName + "(" + versionCode + ")_" + variant.buildType.name + ".apk"
@@ -111,12 +113,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_20
-        targetCompatibility JavaVersion.VERSION_20
+        sourceCompatibility JavaVersion.VERSION_19
+        targetCompatibility JavaVersion.VERSION_19
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_20.toString()
+        jvmTarget = JavaVersion.VERSION_19.toString()
     }
 
 }

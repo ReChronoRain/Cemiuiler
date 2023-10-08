@@ -17,8 +17,8 @@ public class ThemeManager extends BaseModule {
         // initHook(new ThemeManagerDexKit());
         initHook(LoadHostDir.INSTANCE);
         initHook(new DisableThemeAdNew(), mPrefsMap.getBoolean("various_theme_diable_ads"));
-        initHook(new ThemeCrackNew(), mPrefsMap.getBoolean("hidden_function") && mPrefsMap.getBoolean("various_theme_crack"));
-        // initHook(new ThemeCrack(), mPrefsMap.getBoolean("hidden_function") && mPrefsMap.getBoolean("various_theme_crack"));
+        initHook(new ThemeCrackNew(), mPrefsMap.getBoolean("enable_function") && mPrefsMap.getBoolean("various_theme_crack"));
+        // initHook(new ThemeCrack(), mPrefsMap.getBoolean("enable_hidden_function") && mPrefsMap.getBoolean("various_theme_crack"));
         // initHook(new ThemeCrack(), mPrefsMap.getBoolean("various_theme_crack"));
         initHook(new EnablePadTheme(), mPrefsMap.getBoolean("various_theme_enable_pad_theme"));
         initHook(new EnableFoldTheme(), mPrefsMap.getBoolean("various_theme_enable_fold_theme"));

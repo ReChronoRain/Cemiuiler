@@ -11,4 +11,8 @@ object LazyClass {
     val AndroidBuildCls by lazy {
         loadClass("android.os.Build")
     }
+
+    val SettingsFeaturesClass by lazy {
+        loadClass("com.android.settings.utils.SettingsFeatures")
+    }
 }

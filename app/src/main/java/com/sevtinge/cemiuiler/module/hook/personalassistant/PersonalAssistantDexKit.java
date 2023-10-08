@@ -21,12 +21,12 @@ public class PersonalAssistantDexKit extends BaseHook {
                 return;
             }
             mPersonalAssistantResultMethodsMap =
-                    bridge.batchFindMethodsUsingStrings(
-                            BatchFindArgs.builder()
-                                    .addQuery("ScrollStateManager", Set.of("ScrollStateManager"))
-                                    .matchType(MatchType.CONTAINS)
-                                    .build()
-                    );
+                bridge.batchFindMethodsUsingStrings(
+                    BatchFindArgs.builder()
+                        .addQuery("ScrollStateManager", Set.of("ScrollStateManager", "Manager must be init before using"))
+                        .matchType(MatchType.FULL)
+                        .build()
+                );
         } catch (Throwable e) {
             e.printStackTrace();
         }

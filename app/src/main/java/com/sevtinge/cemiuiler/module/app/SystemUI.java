@@ -16,10 +16,10 @@ import com.sevtinge.cemiuiler.module.hook.systemui.NotificationVolumeSeparateSli
 import com.sevtinge.cemiuiler.module.hook.systemui.OriginChargeAnimation;
 import com.sevtinge.cemiuiler.module.hook.systemui.QSDetailBackGround;
 import com.sevtinge.cemiuiler.module.hook.systemui.StatusBarActions;
-import com.sevtinge.cemiuiler.module.hook.systemui.SwitchControlPanel;
 import com.sevtinge.cemiuiler.module.hook.systemui.controlcenter.AddBlurEffectToNotificationView;
 import com.sevtinge.cemiuiler.module.hook.systemui.controlcenter.CCGrid;
 import com.sevtinge.cemiuiler.module.hook.systemui.controlcenter.CompactNotificationsHook;
+import com.sevtinge.cemiuiler.module.hook.systemui.controlcenter.ControlCenterStyle;
 import com.sevtinge.cemiuiler.module.hook.systemui.controlcenter.FixMediaControlPanel;
 import com.sevtinge.cemiuiler.module.hook.systemui.controlcenter.GmsTile;
 import com.sevtinge.cemiuiler.module.hook.systemui.controlcenter.MuteVisibleNotifications;
@@ -31,6 +31,7 @@ import com.sevtinge.cemiuiler.module.hook.systemui.controlcenter.QSControlDetail
 import com.sevtinge.cemiuiler.module.hook.systemui.controlcenter.FiveGTile;
 import com.sevtinge.cemiuiler.module.hook.systemui.controlcenter.QSGrid;
 import com.sevtinge.cemiuiler.module.hook.systemui.controlcenter.QSGridLabels;
+import com.sevtinge.cemiuiler.module.hook.systemui.controlcenter.RedirectToNotificationChannelSetting;
 import com.sevtinge.cemiuiler.module.hook.systemui.controlcenter.SmartHome;
 import com.sevtinge.cemiuiler.module.hook.systemui.controlcenter.SunlightMode;
 import com.sevtinge.cemiuiler.module.hook.systemui.controlcenter.SwitchCCAndNotification;
@@ -56,8 +57,7 @@ import com.sevtinge.cemiuiler.module.hook.systemui.statusbar.DoubleTapToSleep;
 import com.sevtinge.cemiuiler.module.hook.systemui.statusbar.DualRowSignalHook;
 import com.sevtinge.cemiuiler.module.hook.systemui.statusbar.HideStatusBarBeforeScreenshot;
 import com.sevtinge.cemiuiler.module.hook.systemui.statusbar.MobileNetwork;
-import com.sevtinge.cemiuiler.module.hook.systemui.statusbar.MobileTypeSingleHook;
-import com.sevtinge.cemiuiler.module.hook.systemui.statusbar.MobileTypeTextCustom;
+import com.sevtinge.cemiuiler.module.hook.systemui.statusbar.model.MobileTypeTextCustom;
 import com.sevtinge.cemiuiler.module.hook.systemui.statusbar.NotificationIconColumns;
 import com.sevtinge.cemiuiler.module.hook.systemui.statusbar.SelectiveHideIconForAlarmClock;
 import com.sevtinge.cemiuiler.module.hook.systemui.statusbar.WifiStandard;
@@ -75,6 +75,7 @@ import com.sevtinge.cemiuiler.module.hook.systemui.statusbar.icon.all.StatusBarS
 import com.sevtinge.cemiuiler.module.hook.systemui.statusbar.icon.all.WifiNetworkIndicator;
 import com.sevtinge.cemiuiler.module.hook.systemui.statusbar.icon.t.UseNewHD;
 import com.sevtinge.cemiuiler.module.hook.systemui.statusbar.layout.StatusBarLayout;
+import com.sevtinge.cemiuiler.module.hook.systemui.statusbar.model.MobileTypeSingleHook;
 import com.sevtinge.cemiuiler.module.hook.systemui.statusbar.network.NetworkSpeed;
 import com.sevtinge.cemiuiler.module.hook.systemui.statusbar.network.NetworkSpeedSec;
 import com.sevtinge.cemiuiler.module.hook.systemui.statusbar.network.NetworkSpeedSpacing;
@@ -103,7 +104,7 @@ public class SystemUI extends BaseModule {
 
         // 状态栏图标
         initHook(WifiNetworkIndicator.INSTANCE, mPrefsMap.getStringAsInt("system_ui_status_bar_icon_wifi_network_indicator", 0) > 0);
-        initHook(new StatusBarIcon(), true);
+        initHook(new StatusBarIcon());
         initHook(new IconsFromSystemManager());
         initHook(new WifiStandard(), mPrefsMap.getStringAsInt("system_ui_status_bar_icon_wifi_standard", 0) > 0);
         initHook(new BluetoothIcon(), mPrefsMap.getStringAsInt("system_ui_status_bar_icon_bluetooth", 0) != 0);
@@ -119,7 +120,7 @@ public class SystemUI extends BaseModule {
         initHook(new MobileNetwork(), true);
         initHook(new BigMobileNetworkType(), false);
         initHook(new DualRowSignalHook(), mPrefsMap.getBoolean("system_ui_statusbar_network_icon_enable"));
-        initHook(new MobileTypeSingleHook(), mPrefsMap.getBoolean("system_ui_statusbar_mobile_type_enable"));
+        initHook(MobileTypeSingleHook.INSTANCE, mPrefsMap.getBoolean("system_ui_statusbar_mobile_type_enable"));
         initHook(MobileTypeTextCustom.INSTANCE, !Objects.equals(mPrefsMap.getString("system_ui_status_bar_mobile_type_custom", ""), ""));
 
         // 电池相关
@@ -176,15 +177,15 @@ public class SystemUI extends BaseModule {
             mPrefsMap.getStringAsInt("system_ui_statusbar_layout_mode", 0) != 0);
 
         // 实验性功能
-        initHook(new SwitchControlPanel(), false);
-        initHook(new MiuiGxzwSize(), false);
+        // initHook(new SwitchControlPanel(), false);
+        // initHook(new MiuiGxzwSize(), false);
 
         // 控制中心
         initHook(new SmartHome(), false);
         initHook(new QSDetailBackGround(), mPrefsMap.getInt("system_control_center_qs_detail_bg", 0) > 0);
         initHook(new GmsTile(), mPrefsMap.getBoolean("security_center_gms_open"));
         initHook(new FiveGTile(), mPrefsMap.getBoolean("system_control_center_5g_tile"));
-        initHook(new SunlightMode(), mPrefsMap.getBoolean("system_control_center_sunshine_mode"));
+        initHook(new SunlightMode(), mPrefsMap.getStringAsInt("system_control_center_sunshine_new_mode", 0) != 0);
         initHook(new QSGridLabels(), mPrefsMap.getInt("system_control_center_old_qs_rows", 1) > 1 ||
             mPrefsMap.getBoolean("system_control_center_qs_tile_label"));
         initHook(new MuteVisibleNotifications(), mPrefsMap.getBoolean("system_ui_control_center_mute_visible_notice"));
@@ -202,6 +203,8 @@ public class SystemUI extends BaseModule {
         initHook(new QSGrid(), mPrefsMap.getBoolean("system_control_center_old_enable"));
         initHook(new QQSGrid(), mPrefsMap.getBoolean("system_control_center_old_enable"));
         initHook(new AutoCollapse(), mPrefsMap.getBoolean("system_ui_control_auto_close"));
+        initHook(RedirectToNotificationChannelSetting.INSTANCE, mPrefsMap.getBoolean("system_ui_control_center_redirect_notice"));
+        initHook(ControlCenterStyle.INSTANCE, mPrefsMap.getBoolean("system_control_center_unlock_old"));
 
         // Actions
         initHook(new StatusBarActions());

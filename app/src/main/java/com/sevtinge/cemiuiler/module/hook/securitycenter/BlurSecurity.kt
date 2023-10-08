@@ -396,7 +396,7 @@ object BlurSecurity : BaseHook() {
                 })
 
 
-            log("3")
+            logI("3")
 
             XposedHelpers.findAndHookMethod(
                 srsLevelSeekBarProClass,
@@ -486,7 +486,7 @@ object BlurSecurity : BaseHook() {
                 })
         }
 
-        log("4")
+        logI("4")
     }
 
     // 尽量给最外层加 RenderEffect 而不是 最内层

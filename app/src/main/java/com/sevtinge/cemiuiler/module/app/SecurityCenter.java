@@ -36,7 +36,6 @@ import com.sevtinge.cemiuiler.module.hook.securitycenter.other.LockOneHundredPoi
 import com.sevtinge.cemiuiler.module.hook.securitycenter.other.NoLowBatteryWarning;
 import com.sevtinge.cemiuiler.module.hook.securitycenter.other.SkipCountDownLimit;
 import com.sevtinge.cemiuiler.module.hook.securitycenter.sidebar.AddSideBarExpandReceiver;
-import com.sevtinge.cemiuiler.module.hook.securitycenter.sidebar.DisableDockSuggest;
 import com.sevtinge.cemiuiler.module.hook.securitycenter.sidebar.game.RemoveMacroBlackList;
 import com.sevtinge.cemiuiler.module.hook.securitycenter.sidebar.game.UnlockGunService;
 import com.sevtinge.cemiuiler.module.hook.securitycenter.sidebar.video.DisableRemoveScreenHoldOn;
@@ -106,7 +105,7 @@ public class SecurityCenter extends BaseModule {
         initHook(UnlockSuperResolution.INSTANCE, mPrefsMap.getBoolean("security_center_unlock_s_resolution"));
         initHook(UnlockEnhanceContours.INSTANCE, mPrefsMap.getBoolean("security_center_unlock_enhance_contours"));
         initHook(new AddSideBarExpandReceiver(), mPrefsMap.getBoolean("security_center_hide_sidebar"));
-        initHook(new DisableDockSuggest(), mPrefsMap.getBoolean("security_center_disable_sidebar_show_suggest"));
+        // initHook(new DisableDockSuggest(), mPrefsMap.getBoolean("security_center_disable_sidebar_show_suggest"));
         initHook(new VideoDolbyOpen(), mPrefsMap.getBoolean("security_center_dolby_open"));
 
         initHook(CloseHostDir.INSTANCE);

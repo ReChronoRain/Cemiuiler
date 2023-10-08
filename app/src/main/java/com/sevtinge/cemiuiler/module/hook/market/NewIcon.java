@@ -20,7 +20,7 @@ public class NewIcon extends BaseHook {
             List<DexMethodDescriptor> result = Objects.requireNonNull(MarketDexKit.mMarketResultMethodsMap.get("DesktopSupportOperationIcon"));
             for (DexMethodDescriptor descriptor : result) {
                 isDesktopSupportOperationIcon = descriptor.getMethodInstance(lpparam.classLoader);
-                log("isDesktopSupportOperationIcon method is " + isDesktopSupportOperationIcon);
+                logI("isDesktopSupportOperationIcon method is " + isDesktopSupportOperationIcon);
                 if (isDesktopSupportOperationIcon.getReturnType() == boolean.class) {
                     XposedBridge.hookMethod(isDesktopSupportOperationIcon, XC_MethodReplacement.returnConstant(false));
                 }

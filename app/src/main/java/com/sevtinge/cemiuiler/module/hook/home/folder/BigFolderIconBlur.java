@@ -1,5 +1,7 @@
 package com.sevtinge.cemiuiler.module.hook.home.folder;
 
+import static com.sevtinge.cemiuiler.utils.api.VoyagerApisKt.isPad;
+
 import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
@@ -29,19 +31,24 @@ public class BigFolderIconBlur extends BaseHook {
 
     @Override
     public void init() {
-
         mLauncher = findClassIfExists("com.miui.home.launcher.Launcher");
         mFolderInfo = findClassIfExists("com.miui.home.launcher.FolderInfo");
         mFolderIcon = findClassIfExists("com.miui.home.launcher.FolderIcon");
         mLauncherState = findClassIfExists("com.miui.home.launcher.LauncherState");
         mDragView = findClassIfExists("com.miui.home.launcher.DragView");
         mFolderIcon2x2 = findClassIfExists("com.miui.home.launcher.folder.FolderIcon2x2");
-        mFolderIcon2x2_4 = findClassIfExists("com.miui.home.launcher.folder.FolderIcon2x2_4");
-        mFolderIcon2x2_9 = findClassIfExists("com.miui.home.launcher.folder.FolderIcon2x2_9");
+
+        if (isPad()) {
+            mFolderIcon2x2_4 = findClassIfExists("com.miui.home.launcher.folder.FolderIcon4x4_16");
+            mFolderIcon2x2_9 = findClassIfExists("com.miui.home.launcher.folder.FolderIcon3x3_9");
+        } else {
+            mFolderIcon2x2_4 = findClassIfExists("com.miui.home.launcher.folder.FolderIcon2x2_4");
+            mFolderIcon2x2_9 = findClassIfExists("com.miui.home.launcher.folder.FolderIcon2x2_9");
+        }
 
         hookAllConstructors(mFolderIcon, new MethodHook() {
             @Override
-            protected void after(MethodHookParam param) throws Throwable {
+            protected void after(MethodHookParam param) {
                 Context mContext = (Context) XposedHelpers.getObjectField(param.thisObject, "mContext");
                 Object mDockBlur = XposedHelpers.getAdditionalInstanceField(param.thisObject, "mDockBlur");
                 if (mDockBlur != null) return;
@@ -52,7 +59,7 @@ public class BigFolderIconBlur extends BaseHook {
 
         MethodHook mBigFolderIconBlur = new MethodHook() {
             @Override
-            protected void after(MethodHookParam param) throws Throwable {
+            protected void after(MethodHookParam param) {
                 Context mContext = (Context) XposedHelpers.getObjectField(param.thisObject, "mContext");
                 int mFolderWidth = DisplayUtils.dip2px(mContext, mPrefsMap.getInt("home_big_folder_icon_bg_width", 145));
                 int mFolderHeight = DisplayUtils.dip2px(mContext, mPrefsMap.getInt("home_big_folder_icon_bg_height", 145));
@@ -69,11 +76,18 @@ public class BigFolderIconBlur extends BaseHook {
                 mIconContainer.addView(mDockBlur, 0);
                 FrameLayout.LayoutParams lp1 = (FrameLayout.LayoutParams) mDockBlur.getLayoutParams();
                 lp1.gravity = Gravity.CENTER;
-                lp1.width = mFolderWidth;
-                lp1.height = mFolderHeight;
+
+                if(isPad()){
+                    lp1.width = mFolderWidth * 2;
+                    lp1.height = mFolderHeight *2;
+                }else {
+                    lp1.width = mFolderWidth;
+                    lp1.height = mFolderHeight;
+                }
+
                 findAndHookMethod(mLauncher, "showEditPanel", boolean.class, new MethodHook() {
                     @Override
-                    protected void after(MethodHookParam param) throws Throwable {
+                    protected void after(MethodHookParam param) {
                         isShowEditPanel = (boolean) param.args[0];
                         if (isShowEditPanel) {
                             mDockBlur.setVisibility(View.GONE);
@@ -87,21 +101,21 @@ public class BigFolderIconBlur extends BaseHook {
 
                 findAndHookMethod(mLauncher, "openFolder", mFolderInfo, View.class, new MethodHook() {
                     @Override
-                    protected void after(MethodHookParam param) throws Throwable {
+                    protected void after(MethodHookParam param) {
                         mDockBlur.setVisibility(View.GONE);
                     }
                 });
 
                 findAndHookMethod(mLauncher, "closeFolder", boolean.class, new MethodHook() {
                     @Override
-                    protected void after(MethodHookParam param) throws Throwable {
+                    protected void after(MethodHookParam param) {
                         if (!isShowEditPanel) mDockBlur.setVisibility(View.VISIBLE);
                     }
                 });
 
                 findAndHookMethod(mLauncher, "onStateSetStart", mLauncherState, new MethodHook() {
                     @Override
-                    protected void after(MethodHookParam param) throws Throwable {
+                    protected void after(MethodHookParam param) {
                         if (param.args[0].getClass().getSimpleName().equals("LauncherState")) {
                             mDockBlur.setVisibility(View.VISIBLE);
                         } else {
@@ -111,6 +125,7 @@ public class BigFolderIconBlur extends BaseHook {
                 });
             }
         };
+
 
         Method FolderIcon2x2_4_OnFinishInflate = XposedHelpers.findMethodExactIfExists(mFolderIcon2x2_4, "onFinishInflate", Void.TYPE);
         Method FolderIcon2x2_9_OnFinishInflate = XposedHelpers.findMethodExactIfExists(mFolderIcon2x2_9, "onFinishInflate", Void.TYPE);
@@ -124,7 +139,7 @@ public class BigFolderIconBlur extends BaseHook {
 
         hookAllConstructors(mDragView, new MethodHook() {
             @Override
-            protected void after(MethodHookParam param) throws Throwable {
+            protected void after(MethodHookParam param) {
                 View mDragView = (View) param.thisObject;
                 mDragView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
@@ -134,7 +149,6 @@ public class BigFolderIconBlur extends BaseHook {
                 boolean isFolderShowing = (boolean) XposedHelpers.callMethod(mLauncher, "isFolderShowing");
 
                 if (!isFolderShowing && itemType == 21) {
-
                     new BlurUtils(mDragView, "home_big_folder_icon_bg_custom");
                 }
             }

@@ -1,6 +1,12 @@
 <resources>
     <!--Xposed 模块简介-->
     <string name="xposed_description">Make MIUI Great Again!</string>
+
+    <string name="new_permission_storage_desc">用于保存图片至本地的功能</string>
+    <string name="new_permission_location_desc">用于提供经纬度等服务</string>
+    <string name="new_cta_agree_desc">您可随时前往权限管理调整所有权限的授权情况。</string>
+    <string name="new_cta_app_main_purpose">修改系统应用</string>
+    <string name="new_cta_app_all_purpose_title">欢迎使用 Cemiuiler，Cemiuiler 能 xxx。</string>
     <!--Cemiuiler 设置/关于页-->
     <string name="language">简体中文</string>
     <string name="translator">绀漓 | Sevtinge</string>
@@ -64,10 +70,9 @@
     <string name="about_crwd_desc">帮助我们将应用翻译为您的语言</string>
     <!--弹窗/miuix 部分-->
     <string name="soft_reboot">重启 </string>
-    <string name="restart_app_desc1">确定要立即重启</string>
-    <string name="restart_app_desc2">吗？</string>
+    <string name="restart_app_desc">确定要立即重启%1$s吗？</string>
     <string name="tip">提示</string>
-    <string name="hook_failed">模块暂未激活</string>
+    <string name="hook_failed">模块暂未激活，请检查 Xposed 管理器是否启用，如有请重启或重新优化模块</string>
     <string name="kill_failed">结束进程失败，请检查是否为 Cemiuiler 授予了 Root/Su 权限?</string>
     <string name="reboot_failed">重启失败，请检查是否为 Cemiuiler 授予了 Root/Su 权限?</string>
 
@@ -227,6 +232,13 @@
 
     <string name="array_bluetooth_tile_style_3rows">三排大磁贴</string>
     <string name="array_bluetooth_tile_style_2rows2cols">一大和二小磁贴</string>
+
+    <string name="array_pa_blur_official">官方自带模糊</string>
+    <string name="array_bpa_blur_customize">自定义背景模糊</string>
+
+    <string name="control_center_sunshine_mode_default">关闭</string>
+    <string name="control_center_sunshine_mode_one">系统默认模式</string>
+    <string name="control_center_sunshine_mode_two">强制最高亮度</string>
     <!--系统框架-->
     <string name="system_framework">系统框架</string>
     <string name="system_framework_volume_title">音量</string>
@@ -426,6 +438,7 @@
     <string name="system_ui_navigation_title">导航栏</string>
     <string name="system_ui_navigation_handle_title">手势提示线</string>
     <string name="system_ui_hide_navigation_bar">隐藏手势提示线</string>
+    <string name="system_ui_hide_navigation_bar_more">请重启系统桌面和系统界面两个作用域</string>
     <string name="system_ui_navigation_handle_custom">自定义手势提示线</string>
     <string name="system_ui_navigation_handle_custom_height">高度</string>
     <string name="system_ui_navigation_handle_custom_width">竖屏宽度</string>
@@ -456,6 +469,7 @@
 
     <string name="system_ui_status_bar_mobile_type_single">移动网络类型图标单独显示</string>
     <string name="system_ui_status_bar_mobile_type_left">显示在信号左侧</string>
+    <string name="system_ui_status_bar_mobile_type_only_show_network">仅显示上网卡</string>
     <string name="system_ui_status_bar_mobile_indicator">隐藏移动网络活动指示器</string>
     <string name="system_ui_status_bar_mobile_type_custom">自定义文本内容</string>
     <string name="system_ui_statusbar_mobile_type_font_size">字体大小</string>
@@ -601,14 +615,16 @@
     <string name="system_control_center_qs_detail_bg">卡片背景透明度</string>
     <string name="system_control_center_5g_tile">5G 网络开关</string>
     <string name="system_control_center_5g_toggle_label">5G网络</string>
-    <string name="system_control_center_sunshine_mode">阳光模式开关</string>
+    <string name="system_control_center_sunshine_mode">阳光模式</string>
     <string name="system_ui_control_auto_close">磁贴自动收起</string>
     <string name="system_ui_control_auto_close_more">开启后点击状态栏磁贴会自动收起状态栏</string>
     <string name="system_control_center_qs_tile_label">移除标题</string>
     <string name="system_control_center_qs_rows">行数</string>
     <string name="system_control_center_qs_rows_format">%d 行</string>
+    <string name="system_control_center_qs_rows_horizontal">行数（横屏）</string>
     <string name="system_control_center_qs_columns">列数</string>
     <string name="system_control_center_qs_columns_format">%d 列</string>
+    <string name="system_control_center_qs_columns_horizontal">列数（横屏）</string>
     <string name="system_ui_control_center_hide_mi_play_entry">小米妙播</string>
     <string name="system_ui_control_center_hide_mi_smart_hub_entry">小米妙享</string>
     <string name="system_ui_control_center_hide_device_ctrl_entry">智能生活</string>
@@ -623,6 +639,8 @@
     <string name="system_ui_control_center_fix_media_control_panel">修复音乐面板背景图异常</string>
     <string name="system_ui_control_center_compact_notice">紧凑通知</string>
     <string name="system_ui_control_center_compact_notice_desc">减小通知垂直边框</string>
+    <string name="system_ui_control_center_redirect_notice">重定向通知设置</string>
+    <string name="system_ui_control_center_redirect_notice_desc">打开通知菜单的设置会导航到目标频道设置而不是应用通知设置</string>
     <string name="system_ui_control_center_show_weather">显示天气</string>
     <string name="system_ui_control_center_show_weather_city">显示地区</string>
     <string name="system_ui_control_center_mute_visible_notice">亮屏时静音</string>
@@ -634,11 +652,10 @@
 
     <string name="system_ui_controlcenter_new_title">新控制中心</string>
     <string name="system_ui_controlcenter_old_title">经典控制中心</string>
+    <string name="system_ui_controlcenter_unlock_old_title">解锁控制中心样式</string>
     <string name="system_ui_controlcenter_enable_title">自定义行列数</string>
-    <string name="system_control_center_old_qs_rows_desc">竖屏显示 5 行时会隐藏标签，横屏时则限制为 3 行</string>
-    <string name="system_control_center_old_qs_columns_desc">竖屏时会额外增加一列\n如果您的 ROM 具有快速设置紧凑布局选项，不管是横屏还是竖屏都会增加其他列</string>
     <string name="system_control_center_old_qs_grid_columns">折叠面板中的列数</string>
-    <string name="system_control_center_old_qs_grid_columns_desc">横屏时将会额外增加一列</string>
+    <string name="system_control_center_old_qs_grid_columns_horizontal">折叠面板中的列数（横屏）</string>
 
     <string name="system_ui_other_title">其他</string>
     <string name="system_ui_charge_animation_title">充电动画</string>
@@ -668,6 +685,9 @@
     <string name="system_settings_wifi_password_dlgtitle">WiFi 详情</string>
     <string name="system_settings_novelty_haptic_title">解锁新版触感调节页面</string>
     <string name="system_settings_novelty_haptic_desc">仅支持有 \"声音与触感-触感\" 页面的设备</string>
+    <string name="system_settings_enable_pad_area">解锁平板专区</string>
+    <string name="system_settings_enable_fold_area">解锁折叠屏专区</string>
+    <string name="system_settings_enable_area_desc">不支持的设备解锁后会导致设置闪退</string>
 
     <string name="system_settings_connection_sharing_title">连接与共享</string>
     <string name="system_settings_new_nfc_page">新版 NFC 页面</string>
@@ -700,7 +720,6 @@
     <string name="system_settings_window_animation_scale">窗口动画缩放</string>
     <string name="system_settings_transition_animation_scale">过渡动画缩放</string>
     <string name="system_settings_animator_duration_scale">Animator 时长缩放</string>
-
     <!--主题壁纸-->
     <string name="theme_manager">主题壁纸</string>
     <string name="theme_manager_version_code_modify">禁用 MIUI 版本检测</string>
@@ -826,6 +845,9 @@
     <string name="home_big_folder_icon_bg_width_1x2">背景宽度</string>
     <string name="home_big_folder_icon_bg_height_1x2">背景高度</string>
     <string name="home_big_folder_icon_bg">九宫格背景自定义</string>
+    <string name="home_big_folder_icon_bg_2x1_n">八宫格背景自定义</string>
+    <string name="home_big_folder_icon_bg_1x2_n">四宫格背景义</string>
+    <string name="home_big_folder_icon_bg_n">九、十六宫格背景自定义</string>
     <string name="home_big_folder_icon_bg_custom">自定义</string>
     <string name="home_big_folder_icon_bg_width">背景宽度</string>
     <string name="home_big_folder_icon_bg_height">背景高度</string>
@@ -867,6 +889,8 @@
     <string name="home_title_title_title">标题</string>
     <string name="home_title_title_marquee">文字滚动</string>
     <string name="home_title_title_marquee_desc">过长的应用名称将以滚动进行显示，不再使用换行</string>
+    <string name="home_title_title_new_install">禁止新安装软件显示指示标</string>
+    <string name="home_title_title_new_install_more">安装新应用时不显示应用标题旁边的指示标</string>
     <string name="home_title_font_size">文本大小</string>
     <string name="home_title_title_color">文本颜色</string>
     <string name="home_title_animation_speed">动画速度</string>
@@ -948,11 +972,14 @@
     <string name="home_other_blur_radius">模糊半径</string>
     <string name="home_large_icon_corner_radius">大图标圆角</string>
     <string name="home_other_app_icon_hide">桌面快捷方式管理</string>
+    <string name="home_other_toast_slide_again">禁止提示 \"请再划一次\" Toast</string>
     <string name="home_other_shortcut_remove_restrictions">解锁快捷菜单数量限制</string>
     <string name="home_other_disable_hide_google">禁止隐藏 Google 图标</string>
     <string name="home_other_fix_android_r_s">修复兼容性问题导致桌面黑屏</string>
     <string name="home_other_shortcut_background_blur_custom">快捷菜单背景透明度</string>
     <string name="home_other_high_models">强制识别为高端机型</string>
+    <string name="home_other_mi_pad_enable_more_setting_title">解锁桌面设置更多选项</string>
+    <string name="home_other_mi_pad_enable_more_setting_desc">解锁后的功能不一定可用，部分功能需要系统底层支持</string>
 
     <string name="home_recent_blur_level">模糊等级</string>
     <string name="home_recent_complete_blur_plus">完整模糊补充 (实验性)</string>
@@ -985,6 +1012,10 @@
     <string name="miui_package_installer_install_source">自定义安装来源</string>
     <string name="miui_package_installer_apk_info">显示更多安装包信息</string>
     <string name="miui_package_installer_apk_info_desc">显示安装中应用的更多相关信息</string>
+    <!--networkboost-->
+    <string name="networkboost">NetworkBoost</string>
+    <string name="various_disable_link_turbo_toast">隐藏正在使用流量加速 Toast</string>
+    <string name="various_disable_link_turbo_toast_more">开关后请在快速重启作用域中重启 NetworkBoost</string>
     <!--智能助理-->
     <string name="personal_assistant">智能助理</string>
     <string name="personal_assistant_widget_crack">小部件破解</string>
@@ -992,6 +1023,7 @@
     <string name="personal_assistant_fold_widget_enable_desc">启用 Pad/Fold 样式的小部件</string>
     <string name="personal_assistant_overlap_mode">负一屏 Fold 样式</string>
     <string name="personal_assistant_blur_model">负一屏背景设置</string>
+    <string name="personal_assistant_blur_value">背景样式</string>
     <string name="personal_assistant_blurradius">负一屏背景模糊程度</string>
     <string name="personal_assistant_color">负一屏背景叠加层颜色</string>
     <!--音乐-->
@@ -1003,6 +1035,7 @@
     <string name="powerkeeper_lock_max_fps">锁定当前刷新率上限</string>
     <string name="powerkeeper_do_not_kill_apps">尝试不要杀死后台应用</string>
     <string name="powerkeeper_do_not_kill_apps_desc">可能使耗电量增加</string>
+    <string name="powerkeeper_prevent_recovery_of_battery_optimization_whitelist">禁止恢复电池优化白名单</string>
     <!--屏幕录制-->
     <string name="screenrecorder">屏幕录制</string>
     <string name="screen_recorder_force_support_playback_capture">强制启用原生屏幕录制支持</string>
@@ -1015,6 +1048,8 @@
     <!--截屏-->
     <string name="screenshot">截屏</string>
     <string name="screenshot_unlock_minimum_crop_limit">解锁最小裁切图片限制</string>
+    <string name="screenshot_unlock_privacy_marking_title">解锁智能隐私打码</string>
+    <string name="screenshot_unlock_privacy_marking_desc">需要预装高版本 “MiAI引擎” APP 才能正常使用</string>
     <string name="screenshot_save_to_pictures_desc">规范截屏保存位置到 Pictures/Screenshots</string>
     <string name="screenshot_device_customize_title">自定义带壳截屏机型</string>
     <string name="screenshot_device_customize_desc">填写请输入 机型代号</string>
@@ -1200,11 +1235,11 @@
     <string name="various_mipad_input_need_finger_num_title">交换手势所需的手指数量</string>
     <string name="various_mipad_input_need_finger_num_desc">将三指截屏、三指长按区域截屏、三指横向分屏手势更改为四指触发，切换应用手势更改为三指触发</string>
 
-    <string name="custom_background_blur_enabled">背景模糊</string>
+    <string name="custom_background_blur_enabled">高斯模糊</string>
     <string name="custom_background_blur_radius">模糊半径</string>
-    <string name="custom_background_color">背景颜色</string>
+    <string name="custom_background_color">颜色</string>
     <string name="custom_background_color_alpha">背景颜色透明度</string>
-    <string name="custom_background_corner_radius">背景圆角</string>
+    <string name="custom_background_corner_radius">圆角</string>
 
     <string name="custom_blur_enabled">背景模糊</string>
     <string name="various_blur_radius">模糊半径</string>

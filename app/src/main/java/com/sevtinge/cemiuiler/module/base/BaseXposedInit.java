@@ -1,5 +1,7 @@
 package com.sevtinge.cemiuiler.module.base;
 
+import static com.sevtinge.cemiuiler.utils.log.AndroidLogUtils.LogD;
+
 import com.sevtinge.cemiuiler.BuildConfig;
 import com.sevtinge.cemiuiler.module.app.AiAsst;
 import com.sevtinge.cemiuiler.module.app.Aireco;
@@ -29,6 +31,7 @@ import com.sevtinge.cemiuiler.module.app.MiWallpaper;
 import com.sevtinge.cemiuiler.module.app.Mms;
 import com.sevtinge.cemiuiler.module.app.Mtb;
 import com.sevtinge.cemiuiler.module.app.Music;
+import com.sevtinge.cemiuiler.module.app.NetworkBoost;
 import com.sevtinge.cemiuiler.module.app.Notes;
 import com.sevtinge.cemiuiler.module.app.PackageInstaller;
 import com.sevtinge.cemiuiler.module.app.PersonalAssistant;
@@ -49,10 +52,10 @@ import com.sevtinge.cemiuiler.module.app.Various;
 import com.sevtinge.cemiuiler.module.app.VoiceAssist;
 import com.sevtinge.cemiuiler.module.app.Weather;
 import com.sevtinge.cemiuiler.utils.Helpers;
-import com.sevtinge.cemiuiler.utils.LogUtils;
 import com.sevtinge.cemiuiler.utils.PrefsMap;
 import com.sevtinge.cemiuiler.utils.PrefsUtils;
 import com.sevtinge.cemiuiler.utils.ResourcesHook;
+import com.sevtinge.cemiuiler.utils.log.XposedLogUtils;
 
 import java.io.File;
 import java.util.Map;
@@ -71,7 +74,6 @@ public abstract class BaseXposedInit implements IXposedHookLoadPackage, IXposedH
     public static PrefsMap<String, Object> mPrefsMap = new PrefsMap<>();
 
     public final SystemFramework mSystemFramework = new SystemFramework();
-    // public SystemFrameworkForCorepatch mSystemFrameworkForCorepatch = new SystemFrameworkForCorepatch();
     public final SystemUI mSystemUI = new SystemUI();
     public final Home mHome = new Home();
     public final ScreenShot mScreenShot = new ScreenShot();
@@ -118,22 +120,8 @@ public abstract class BaseXposedInit implements IXposedHookLoadPackage, IXposedH
     public final Aod mAod = new Aod();
     public final Barrage mBarrage = new Barrage();
     public final Notes mNotes = new Notes();
+    public final NetworkBoost networkBoost = new NetworkBoost();
     public final Creation mCreation = new Creation();
-    // public SystemSettings mSystemSettings = new SystemSettings();
-    /*public void init(BaseModule... baseModules) {
-        mPkgName = mLoadPackageParam.packageName;
-        for (BaseModule app : baseModules) {
-            String packageName = app.getAppPackageName();
-            String mSimpleName = app.getClass().getSimpleName();
-            if (TextUtils.isEmpty(packageName) && mSimpleName.equals("Various")) {
-                app.init(mLoadPackageParam, true);
-            } else {
-                if (mPkgName.equals(packageName)) {
-                    app.init(mLoadPackageParam, false);
-                }
-            }
-        }
-    }*/
 
     @Override
     public void initZygote(StartupParam startupParam) throws Throwable {
@@ -144,7 +132,7 @@ public abstract class BaseXposedInit implements IXposedHookLoadPackage, IXposedH
 
     public void setXSharedPrefs() {
         if (mPrefsMap.size() == 0) {
-            XSharedPreferences mXSharedPreferences = null;
+            XSharedPreferences mXSharedPreferences;
             try {
                 mXSharedPreferences = new XSharedPreferences(Helpers.mAppModulePkg, PrefsUtils.mPrefsName);
                 mXSharedPreferences.makeWorldReadable();
@@ -155,7 +143,11 @@ public abstract class BaseXposedInit implements IXposedHookLoadPackage, IXposedH
                     mXSharedPreferences.makeWorldReadable();
                     allPrefs = mXSharedPreferences == null ? null : mXSharedPreferences.getAll();
                     if (allPrefs == null || allPrefs.size() == 0) {
-                        LogUtils.log("[UID " + android.os.Process.myUid() + "] Cannot read module's SharedPreferences, some mods might not work!");
+                        XposedLogUtils.INSTANCE.logE(
+                            "[UID" + android.os.Process.myUid() + "]",
+                            "Cannot read module's SharedPreferences, some mods might not work!",
+                            null, null
+                        );
                     } else {
                         mPrefsMap.putAll(allPrefs);
                     }
@@ -163,26 +155,22 @@ public abstract class BaseXposedInit implements IXposedHookLoadPackage, IXposedH
                     mPrefsMap.putAll(allPrefs);
                 }
             } catch (Throwable t) {
-                XposedBridge.log(t);
+                LogD("setXSharedPrefs", t);
             }
         }
     }
 
     public void init(LoadPackageParam lpparam) {
         String packageName = lpparam.packageName;
-        // XposedBridge.log("R=" + Build.VERSION_CODES.R + " S=" + Build.VERSION_CODES.S + " T=" + Build.VERSION_CODES.TIRAMISU + " This=" + Build.VERSION.SDK_INT);
         switch (packageName) {
             case "android" -> {
                 mSystemFramework.init(lpparam);
                 mVarious.init(lpparam);
             }
-            // mSystemFrameworkForCorepatch.init(lpparam);
             case "com.android.systemui" -> {
                 if (isSystemUIModuleEnable()) {
-                    // ALPermissionManager.RootCommand(android.content.ContextWrapper.getPackageCodePath());
                     mSystemUI.init(lpparam);
                     mVarious.init(lpparam);
-                    // mSystemUIPlugin.init(lpparam);
                 }
             }
             case "com.miui.home" -> {
@@ -218,26 +206,20 @@ public abstract class BaseXposedInit implements IXposedHookLoadPackage, IXposedH
                 mUpdater.init(lpparam);
                 mVarious.init(lpparam);
             }
-            case "com.xiaomi.market" -> {
-                mMarket.init(lpparam);
-                mVarious.init(lpparam);
-            }
+            case "com.xiaomi.market" -> mMarket.init(lpparam);
+
             case "com.miui.packageinstaller" -> {
                 mPackageInstaller.init(lpparam);
                 mVarious.init(lpparam);
             }
-            case "com.miui.powerkeeper" -> {
-                mPowerKeeper.init(lpparam);
-                mVarious.init(lpparam);
-            }
+            case "com.miui.powerkeeper" -> mPowerKeeper.init(lpparam);
+
             case "com.xiaomi.misettings" -> {
                 mMiSettings.init(lpparam);
                 mVarious.init(lpparam);
             }
-            case "com.xiaomi.joyose" -> {
-                mJoyose.init(lpparam);
-                mVarious.init(lpparam);
-            }
+            case "com.xiaomi.joyose" -> mJoyose.init(lpparam);
+
             case "com.miui.screenshot" -> {
                 mScreenShot.init(lpparam);
                 mVarious.init(lpparam);
@@ -278,10 +260,8 @@ public abstract class BaseXposedInit implements IXposedHookLoadPackage, IXposedH
                 mAireco.init(lpparam);
                 mVarious.init(lpparam);
             }
-            case "com.xiaomi.barrage" -> {
-                mBarrage.init(lpparam);
-                mVarious.init(lpparam);
-            }
+            case "com.xiaomi.barrage" -> mBarrage.init(lpparam);
+
             case "com.xiaomi.aiasst.vision" -> {
                 mAiAsst.init(lpparam);
                 mVarious.init(lpparam);
@@ -298,14 +278,10 @@ public abstract class BaseXposedInit implements IXposedHookLoadPackage, IXposedH
                 mMiShare.init(lpparam);
                 mVarious.init(lpparam);
             }
-            case "com.milink.service" -> {
-                mMiLink.init(lpparam);
-                mVarious.init(lpparam);
-            }
-            case "com.miui.guardprovider" -> {
-                mGuardProvider.init(lpparam);
-                mVarious.init(lpparam);
-            }
+            case "com.milink.service" -> mMiLink.init(lpparam);
+
+            case "com.miui.guardprovider" -> mGuardProvider.init(lpparam);
+
             case "com.lbe.security.miui" -> {
                 mLbe.init(lpparam);
                 mVarious.init(lpparam);
@@ -338,13 +314,10 @@ public abstract class BaseXposedInit implements IXposedHookLoadPackage, IXposedH
                 mFileExplorer.init(lpparam);
                 mVarious.init(lpparam);
             }
-            case "com.android.phone" -> {
-                mPhone.init(lpparam);
-                mVarious.init(lpparam);
-            }
-            case "com.xiaomi.mtb" -> {
-                mMtb.init(lpparam);
-            }
+            case "com.android.phone" -> mPhone.init(lpparam);
+
+            case "com.xiaomi.mtb" -> mMtb.init(lpparam);
+
             case "com.android.externalstorage" -> {
                 mExternalStorage.init(lpparam);
                 mVarious.init(lpparam);
@@ -353,14 +326,13 @@ public abstract class BaseXposedInit implements IXposedHookLoadPackage, IXposedH
                 mCamera.init(lpparam);
                 mVarious.init(lpparam);
             }
-            case "com.android.providers.downloads" -> {
-                mDownloads.init(lpparam);
-                mVarious.init(lpparam);
-            }
+            case "com.android.providers.downloads" -> mDownloads.init(lpparam);
+
             case "com.miui.creation" -> {
                 mCreation.init(lpparam);
                 mVarious.init(lpparam);
             }
+            case "com.xiaomi.NetworkBoost" -> networkBoost.init(lpparam);
             case BuildConfig.APPLICATION_ID -> ModuleActiveHook(lpparam);
             default -> mVarious.init(lpparam);
         }
@@ -375,19 +347,19 @@ public abstract class BaseXposedInit implements IXposedHookLoadPackage, IXposedH
 
 
     public boolean isSafeModeEnable(String key) {
-        return mPrefsMap.getBoolean(key);
+        return !mPrefsMap.getBoolean(key);
     }
 
     public boolean isSystemUIModuleEnable() {
-        return !isSafeModeEnable("system_ui_safe_mode_enable");
+        return isSafeModeEnable("system_ui_safe_mode_enable");
     }
 
     public boolean isHomeModuleEnable() {
-        return !isSafeModeEnable("home_safe_mode_enable");
+        return isSafeModeEnable("home_safe_mode_enable");
     }
 
     public boolean isSecurityCenterModuleEnable() {
-        return !isSafeModeEnable("security_center_safe_mode_enable");
+        return isSafeModeEnable("security_center_safe_mode_enable");
     }
 
 }

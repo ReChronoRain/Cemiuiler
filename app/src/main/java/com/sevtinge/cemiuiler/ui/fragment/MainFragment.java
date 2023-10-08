@@ -19,7 +19,7 @@ public class MainFragment extends SettingsPreferenceFragment {
     Preference mTip;
     Random r = new Random();
 
-    int[] tips = new int[] {
+    int[] tips = new int[]{
         R.string.tip_0,
         R.string.tip_1,
         R.string.tip_2,

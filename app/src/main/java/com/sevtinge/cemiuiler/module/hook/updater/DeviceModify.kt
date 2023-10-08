@@ -16,7 +16,7 @@ object DeviceModify : BaseHook() {
                 if (it.args[0] == "ro.product.mod_device") it.result = deviceName
             }
         } catch (e: Throwable) {
-            XposedBridge.log("Cemiuiler: DeviceModify (Updater) android.os.SystemProperties hook failed by $e")
+            XposedBridge.log("[Cemiuiler][E][DeviceModify(Updater)]: android.os.SystemProperties hook failed by $e")
         }
         try {
             "miuix.core.util.SystemProperties".hookBeforeMethod(
@@ -25,7 +25,7 @@ object DeviceModify : BaseHook() {
                 if (it.args[0] == "ro.product.mod_device") it.result = deviceName
             }
         } catch (e: Throwable) {
-            XposedBridge.log("Cemiuiler: DeviceModify (Updater) miuix.core.util.SystemProperties hook failed by $e")
+            XposedBridge.log("[Cemiuiler][E][DeviceModify(Updater)]: DeviceModify (Updater) miuix.core.util.SystemProperties hook failed by $e")
         }
         dexKitBridge.findMethod {
             matcher {
@@ -47,9 +47,9 @@ object DeviceModify : BaseHook() {
             systemPropertiesMethod.hookBeforeMethod {
                 if (it.args[0] == "ro.product.mod_device") it.result = deviceName
             }
-            log("(Updater) dexkit method is $systemPropertiesMethod")
+            logI("(Updater) dexkit method is $systemPropertiesMethod")
         } catch (e: Throwable) {
-            XposedBridge.log("Cemiuiler: DeviceModify (Updater) dexkit hook failed by $e")
+            XposedBridge.log("[Cemiuiler][E][DeviceModify(Updater)]: DeviceModify (Updater) dexkit hook failed by $e")
         }*/
     }
 }

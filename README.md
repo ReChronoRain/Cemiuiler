@@ -5,7 +5,7 @@
 # Cemiuiler
 ### Make MIUI Great Again!
 
-简体中文&nbsp;&nbsp;|&nbsp;&nbsp;[English](/README_en-US.md)
+简体中文&nbsp;&nbsp;|&nbsp;&nbsp;[English](/README_en-US.md) |&nbsp;&nbsp;[Português (Brasil)](/README_pt-BR.md)
 
 </div>
 
@@ -16,7 +16,7 @@ Android 11 ~ 13 的 MIUI 12.5 ~ 14
 >
 > 目前 Cemiuiler 是基于 Android 13 的 MIUI 14 的手机端设备进行适配，覆盖不是很完整，需要不断测试和改进，
 >
-> 对于 Android 11 的设备，已尽力做好支持，在基于 Android 14 的 MIUI 发布后，新功能不会再主动适配 Android 11。
+> 对于 Android 11 的设备，已尽力做好支持，在 1.3.130 版本发布后，主线分支将不再支持 Android 11，但依旧会提供老版本功能维护与移植。
 
 ## 作用域包含的应用
 
@@ -24,7 +24,7 @@ Android 11 ~ 13 的 MIUI 12.5 ~ 14
     <summary>点击展开折叠的内容</summary>
 
 | 应用名 | 包名 |
-| :---- | :---- | 
+| :---- | :---- |
 | 系统框架 | system |
 | 系统界面 | com.android.systemui |
 | 系统桌面 | com.miui.home |
@@ -79,6 +79,7 @@ Android 11 ~ 13 的 MIUI 12.5 ~ 14
 | 小爱同学 | com.miui.voiceassist |
 | 音乐 | com.miui.player |
 | MIUI+ Beta 版 | com.xiaomi.mirror |
+| com.xiaomi.NetworkBoost | com.xiaomi.NetworkBoost |
 
 </details>
 
@@ -93,6 +94,8 @@ Android 11 ~ 13 的 MIUI 12.5 ~ 14
 [![badge_telegram]][telegram_url]
 
 ## 为 Cemiuiler 贡献翻译
+
+[![Crowdin](https://badges.crowdin.net/cemiuiler/localized.svg)](https://crowdin.com/project/cemiuiler)
 
 您可以在[这里](https://crwd.in/cemiuiler)为 Cemiuiler 项目贡献翻译。
 

@@ -8,6 +8,7 @@ import com.sevtinge.cemiuiler.module.base.LoadHostDir;
 import com.sevtinge.cemiuiler.module.hook.screenshot.DeviceShellCustomize;
 import com.sevtinge.cemiuiler.module.hook.screenshot.SaveToPictures;
 import com.sevtinge.cemiuiler.module.hook.screenshot.UnlockMinimumCropLimit;
+import com.sevtinge.cemiuiler.module.hook.screenshot.UnlockPrivacyMarking;
 import com.sevtinge.cemiuiler.module.hook.various.UnlockSuperClipboard;
 
 public class ScreenShot extends BaseModule {
@@ -17,6 +18,7 @@ public class ScreenShot extends BaseModule {
         initHook(new UnlockMinimumCropLimit(), mPrefsMap.getBoolean("screenshot_unlock_minimum_crop_limit"));
         initHook(SaveToPictures.INSTANCE, mPrefsMap.getBoolean("screenshot_save_to_pictures"));
         initHook(DeviceShellCustomize.INSTANCE, !TextUtils.isEmpty(mPrefsMap.getString("screenshot_device_customize", "")));
+        initHook(UnlockPrivacyMarking.INSTANCE, mPrefsMap.getBoolean("screenshot_unlock_privacy_marking"));
 
         // 超级剪切板
         initHook(LoadHostDir.INSTANCE);

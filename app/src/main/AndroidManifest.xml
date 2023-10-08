@@ -6,6 +6,7 @@
     <uses-permission
         android:name="android.permission.BROADCAST_CLOSE_SYSTEM_DIALOGS"
         tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -49,6 +50,7 @@
 
     <uses-permission android:name="miui.permission.READ_LOGS" />
     <uses-permission android:name="miui.permission.DUMP_CACHED_LOG" />
+    <uses-permission android:name="com.miui.securitycenter.permission.SYSTEM_PERMISSION_DECLARE" />
     <uses-permission android:name="com.miui.securitycenter.permission.ACCESS_SECURITY_CENTER_PROVIDER" />
 
     <uses-permission
@@ -105,17 +107,21 @@
         <provider
             android:name=".provider.SharedPrefsProvider"
             android:authorities="com.sevtinge.cemiuiler.provider.sharedprefs"
+            android:defaultToDeviceProtectedStorage="true"
             android:directBootAware="true"
             android:exported="true"
-            android:defaultToDeviceProtectedStorage="true"
             android:grantUriPermissions="true" />
+
+        <meta-data
+            android:name="required_permissions"
+            android:value=";" />
 
         <meta-data
             android:name="xposedmodule"
             android:value="true" />
         <meta-data
             android:name="xposedminversion"
-            android:value="82" />
+            android:value="93" />
         <meta-data
             android:name="xposeddescription"
             android:value="@string/xposed_description" />

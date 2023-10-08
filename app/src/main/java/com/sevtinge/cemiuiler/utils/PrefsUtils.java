@@ -10,6 +10,7 @@ import android.os.Handler;
 
 import com.sevtinge.cemiuiler.XposedInit;
 import com.sevtinge.cemiuiler.provider.SharedPrefsProvider;
+import com.sevtinge.cemiuiler.utils.log.XposedLogUtils;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -32,7 +33,7 @@ public class PrefsUtils {
     public static SharedPreferences getSharedPrefs(Context context, boolean multiProcess) {
         context = Helpers.getProtectedContext(context);
         try {
-            return context.getSharedPreferences(mPrefsName, multiProcess ? Context.MODE_MULTI_PROCESS | Context.MODE_WORLD_READABLE : Context.MODE_WORLD_READABLE | Context.MODE_PRIVATE);
+            return context.getSharedPreferences(mPrefsName, multiProcess ? Context.MODE_MULTI_PROCESS | Context.MODE_WORLD_READABLE : Context.MODE_WORLD_READABLE);
         } catch (Throwable t) {
             return context.getSharedPreferences(mPrefsName, multiProcess ? Context.MODE_MULTI_PROCESS | Context.MODE_PRIVATE : Context.MODE_PRIVATE);
         }
@@ -90,7 +91,7 @@ public class PrefsUtils {
                 String prefValue = cursor.getString(0);
                 cursor.close();
                 return prefValue;
-            } else Helpers.log("ContentResolver", "[" + name + "] Cursor fail: " + cursor);
+            } else XposedLogUtils.INSTANCE.logI("ContentResolver", "[" + name + "] Cursor fail: " + cursor);
         } catch (Throwable t) {
             XposedBridge.log(t);
         }
@@ -112,7 +113,7 @@ public class PrefsUtils {
                 cursor.close();
                 return prefValue;
             } else {
-                LogUtils.logXp("ContentResolver", "[" + name + "] Cursor fail: null");
+                XposedLogUtils.INSTANCE.logI("ContentResolver", "[" + name + "] Cursor fail: null");
             }
         } catch (Throwable t) {
             XposedBridge.log(t);
@@ -135,7 +136,7 @@ public class PrefsUtils {
                 int prefValue = cursor.getInt(0);
                 cursor.close();
                 return prefValue;
-            } else LogUtils.logXp("ContentResolver", "[" + name + "] Cursor fail: " + cursor);
+            } else XposedLogUtils.INSTANCE.logI("ContentResolver", "[" + name + "] Cursor fail: " + cursor);
         } catch (Throwable t) {
             XposedBridge.log(t);
         }
@@ -154,7 +155,7 @@ public class PrefsUtils {
                 int prefValue = cursor.getInt(0);
                 cursor.close();
                 return prefValue == 1;
-            } else Helpers.log("ContentResolver", "[" + name + "] Cursor fail: " + cursor);
+            } else XposedLogUtils.INSTANCE.logI("ContentResolver", "[" + name + "] Cursor fail: " + cursor);
         } catch (Throwable t) {
             XposedBridge.log(t);
         }
@@ -259,7 +260,8 @@ public class PrefsUtils {
                 uri = boolPrefsToUri(mPrefsName, mPrefsDefValueBool);
             else if (prefType == PrefType.Any)
                 uri = anyPrefsToUri();
-            if (uri != null) ctx.getContentResolver().registerContentObserver(uri, prefType == PrefType.Any, this);
+            if (uri != null)
+                ctx.getContentResolver().registerContentObserver(uri, prefType == PrefType.Any, this);
         }
 
         @Override

@@ -16,6 +16,7 @@ import com.sevtinge.cemiuiler.module.hook.home.ScreenSwipe;
 import com.sevtinge.cemiuiler.module.hook.home.SeekPoints;
 import com.sevtinge.cemiuiler.module.hook.home.SetDeviceLevel;
 import com.sevtinge.cemiuiler.module.hook.home.StickyFloatingWindowsForHome;
+import com.sevtinge.cemiuiler.module.hook.home.ToastSlideAgain;
 import com.sevtinge.cemiuiler.module.hook.home.UnlockHotseatIcon;
 import com.sevtinge.cemiuiler.module.hook.home.UserPresentAnimation;
 import com.sevtinge.cemiuiler.module.hook.home.WidgetCornerRadius;
@@ -49,6 +50,8 @@ import com.sevtinge.cemiuiler.module.hook.home.layout.HotSeatsMarginTop;
 import com.sevtinge.cemiuiler.module.hook.home.layout.SearchBarMarginBottom;
 import com.sevtinge.cemiuiler.module.hook.home.layout.UnlockGrids;
 import com.sevtinge.cemiuiler.module.hook.home.layout.WorkspacePadding;
+import com.sevtinge.cemiuiler.module.hook.home.mipad.EnableHideGestureLine;
+import com.sevtinge.cemiuiler.module.hook.home.mipad.EnableMoreSetting;
 import com.sevtinge.cemiuiler.module.hook.home.navigation.BackGestureAreaHeight;
 import com.sevtinge.cemiuiler.module.hook.home.navigation.BackGestureAreaWidth;
 import com.sevtinge.cemiuiler.module.hook.home.other.AlwaysBlurWallpaper;
@@ -88,6 +91,7 @@ import com.sevtinge.cemiuiler.module.hook.home.title.EnableIconMonoChrome;
 import com.sevtinge.cemiuiler.module.hook.home.title.FixAnimation;
 import com.sevtinge.cemiuiler.module.hook.home.title.IconTitleColor;
 import com.sevtinge.cemiuiler.module.hook.home.title.LargeIconCornerRadius;
+import com.sevtinge.cemiuiler.module.hook.home.title.NewInstallIndicator;
 import com.sevtinge.cemiuiler.module.hook.home.title.PerfectIcon;
 import com.sevtinge.cemiuiler.module.hook.home.title.TitleFontSize;
 import com.sevtinge.cemiuiler.module.hook.home.title.TitleMarquee;
@@ -173,17 +177,18 @@ public class Home extends BaseModule {
             mPrefsMap.getInt("task_view_header_height", 40) != 40);
         initHook(RealMemory.INSTANCE, mPrefsMap.getBoolean("home_recent_show_real_memory"));
         initHook(MemInfoShow.INSTANCE, mPrefsMap.getBoolean("home_recent_show_memory_info") && isPad());
-        initHook(AlwaysShowCleanUp.INSTANCE,mPrefsMap.getBoolean("always_show_clean_up"));
+        initHook(AlwaysShowCleanUp.INSTANCE, mPrefsMap.getBoolean("always_show_clean_up"));
 
         // 图标
         initHook(BigIconCorner.INSTANCE, mPrefsMap.getBoolean("home_title_big_icon_corner"));
         initHook(new DownloadAnimation(), mPrefsMap.getBoolean("home_title_download_animation"));
-        initHook(DisableHideTheme.INSTANCE,mPrefsMap.getBoolean("home_title_disable_hide_theme"));
+        initHook(DisableHideTheme.INSTANCE, mPrefsMap.getBoolean("home_title_disable_hide_theme"));
         initHook(DisableHideFile.INSTANCE, mPrefsMap.getBoolean("home_title_disable_hide_file"));
         // initHook(new IconScaleHook()/*, mPrefsMap.getInt("home_title_icon_scale", 100) != 100*/);
 
         // 标题
         initHook(new TitleMarquee(), mPrefsMap.getBoolean("home_title_title_marquee"));
+        initHook(new NewInstallIndicator(), mPrefsMap.getBoolean("home_title_title_new_install"));
         initHook(new TitleFontSize(), mPrefsMap.getInt("home_title_font_size", 12) != 12);
         initHook(IconTitleColor.INSTANCE);
         initHook(new UnlockHotseatIcon(), mPrefsMap.getBoolean("home_dock_unlock_hotseat"));
@@ -237,13 +242,18 @@ public class Home extends BaseModule {
         initHook(new OverlapMode(), mPrefsMap.getBoolean("personal_assistant_overlap_mode"));
 
         // Other
+        initHook(new ToastSlideAgain(), mPrefsMap.getBoolean("home_other_toast_slide_again"));
         initHook(new StickyFloatingWindowsForHome(), mPrefsMap.getBoolean("system_framework_freeform_sticky"));
-        initHook(new WidgetCrack(), mPrefsMap.getBoolean("hidden_function") && mPrefsMap.getBoolean("personal_assistant_widget_crack"));
+        initHook(new WidgetCrack(), mPrefsMap.getBoolean("enable_function") && mPrefsMap.getBoolean("personal_assistant_widget_crack"));
         initHook(AnimDurationRatio.INSTANCE, true);
         initHook(SetDeviceLevel.INSTANCE, mPrefsMap.getBoolean("home_other_high_models"));
 
         // 小米/红米平板相关
+        boolean mMoreSetting = mPrefsMap.getBoolean("home_other_mi_pad_enable_more_setting") && isPad();
         initHook(SetGestureNeedFingerNum.INSTANCE, mPrefsMap.getBoolean("mipad_input_need_finger_num") && isPad());
+        initHook(EnableMoreSetting.INSTANCE, mMoreSetting);
+        initHook(EnableHideGestureLine.INSTANCE, mMoreSetting);
+
         initHook(CloseHostDir.INSTANCE);
     }
 
