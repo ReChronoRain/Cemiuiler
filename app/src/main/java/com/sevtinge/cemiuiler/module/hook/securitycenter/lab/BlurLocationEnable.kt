@@ -2,7 +2,6 @@ package com.sevtinge.cemiuiler.module.hook.securitycenter.lab
 
 import com.github.kyuubiran.ezxhelper.EzXHelper
 import com.sevtinge.cemiuiler.module.base.BaseHook
-import com.sevtinge.cemiuiler.utils.DexKit
 import com.sevtinge.cemiuiler.utils.DexKit.addUsingStringsEquals
 import com.sevtinge.cemiuiler.utils.DexKit.dexKitBridge
 import com.sevtinge.cemiuiler.utils.Helpers
@@ -20,7 +19,7 @@ object BlurLocationEnable : BaseHook() {
             }
         }.forEach {
             labUtils = it.getInstance(EzXHelper.classLoader)
-            log("labUtils class is $labUtils")
+            logI("labUtils class is $labUtils")
             findAndHookMethod(
                 "com.miui.permcenter.settings.PrivacyLabActivity",
                 "onCreateFragment",

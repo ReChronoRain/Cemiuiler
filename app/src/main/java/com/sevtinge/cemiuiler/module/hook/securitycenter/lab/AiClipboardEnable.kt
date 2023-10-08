@@ -19,7 +19,7 @@ object AiClipboardEnable : BaseHook() {
             }
         }.forEach {
             labUtils = it.getInstance(EzXHelper.classLoader)
-            log("labUtils class is $labUtils")
+            logI("labUtils class is $labUtils")
             findAndHookMethod(
                 "com.miui.permcenter.settings.PrivacyLabActivity",
                 "onCreateFragment",

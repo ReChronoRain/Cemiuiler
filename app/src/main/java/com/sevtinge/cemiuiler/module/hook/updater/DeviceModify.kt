@@ -4,7 +4,7 @@ import com.sevtinge.cemiuiler.module.base.BaseHook
 import com.sevtinge.cemiuiler.utils.DexKit.addUsingStringsEquals
 import com.sevtinge.cemiuiler.utils.DexKit.dexKitBridge
 import com.sevtinge.cemiuiler.utils.hookBeforeMethod
-import de.robv.android.xposed.XposedBridge
+import com.sevtinge.cemiuiler.utils.log.XposedLogUtils.logE
 
 object DeviceModify : BaseHook() {
     private val deviceName: String = mPrefsMap.getString("updater_device", "")
@@ -16,7 +16,7 @@ object DeviceModify : BaseHook() {
                 if (it.args[0] == "ro.product.mod_device") it.result = deviceName
             }
         } catch (e: Throwable) {
-            XposedBridge.log("[Cemiuiler][E][DeviceModify(Updater)]: android.os.SystemProperties hook failed by $e")
+            logE(TAG, "[DeviceModify(Updater)]: android.os.SystemProperties hook failed", e, null)
         }
         try {
             "miuix.core.util.SystemProperties".hookBeforeMethod(
@@ -25,7 +25,7 @@ object DeviceModify : BaseHook() {
                 if (it.args[0] == "ro.product.mod_device") it.result = deviceName
             }
         } catch (e: Throwable) {
-            XposedBridge.log("[Cemiuiler][E][DeviceModify(Updater)]: DeviceModify (Updater) miuix.core.util.SystemProperties hook failed by $e")
+            logE(TAG, "[DeviceModify(Updater)]: DeviceModify (Updater) miuix.core.util.SystemProperties hook failed", e, null)
         }
         dexKitBridge.findMethod {
             matcher {
@@ -35,7 +35,7 @@ object DeviceModify : BaseHook() {
             methodData.getMethodInstance(lpparam.classLoader).hookBeforeMethod {
                 if (it.args[0] == "ro.product.mod_device") it.result = deviceName
             }
-            log("(Updater) dexkit method is $methodData")
+            logI("(Updater) dexkit method is $methodData")
         }
 
         /*try {

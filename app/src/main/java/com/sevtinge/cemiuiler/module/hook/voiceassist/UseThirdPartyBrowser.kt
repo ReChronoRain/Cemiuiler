@@ -32,7 +32,7 @@ object UseThirdPartyBrowser : BaseHook() {
         } catch (e: Throwable) {
             e.printStackTrace()
         }*/
-        log("com.miui.voiceassist browserActivityWithIntent method is $browserActivityWithIntent")
+        logI("com.miui.voiceassist browserActivityWithIntent method is $browserActivityWithIntent")
         // Class<?> clazz = XposedHelpers.findClass("e.D.L.pa.Wa", lpparam.classLoader);
         XposedBridge.hookMethod(browserActivityWithIntent, object : XC_MethodHook() {
             @Throws(Throwable::class)
@@ -40,11 +40,10 @@ object UseThirdPartyBrowser : BaseHook() {
                 super.beforeHookedMethod(param)
                 // XposedBridge.log("0)Hook到Activity启动，开始判断");
                 val intent = param.args[0] as android.content.Intent
-                log(intent.toString())
+                logI(intent.toString())
                 try {
                     if (intent.getPackage() == "com.android.browser") {
-                        log("com.miui.voiceassist get browser intent")
-                        log("com.miui.voiceassist get URL " + intent.dataString)
+                        logI("com.miui.voiceassist get URL " + intent.dataString)
                         val uri = android.net.Uri.parse(intent.dataString)
                         val newIntent = android.content.Intent()
                         newIntent.setAction("android.intent.action.VIEW")
