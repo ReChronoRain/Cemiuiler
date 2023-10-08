@@ -225,7 +225,7 @@ public class SystemUI extends BaseModule {
         initHook(HideLockScreenStatusBar.INSTANCE, mPrefsMap.getBoolean("system_ui_lock_screen_hide_status_bar"));
 
         if (!isAndroidR()) {
-            initHook(AddBlurEffectToLockScreen.INSTANCE);
+            initHook(AddBlurEffectToLockScreen.INSTANCE, mPrefsMap.getBoolean("system_ui_lock_screen_blur_button"));
             initHook(AddBlurEffectToNotificationView.INSTANCE, mPrefsMap.getBoolean("n_enable"));
             initHook(BlurButton.INSTANCE, mPrefsMap.getBoolean("system_ui_lock_screen_blur_button"));
         }

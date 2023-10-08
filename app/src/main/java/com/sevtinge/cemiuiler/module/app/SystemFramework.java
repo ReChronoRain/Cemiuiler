@@ -16,7 +16,6 @@ import com.sevtinge.cemiuiler.module.hook.systemframework.DisablePinVerifyPer72h
 import com.sevtinge.cemiuiler.module.hook.systemframework.FlagSecure;
 import com.sevtinge.cemiuiler.module.hook.systemframework.FreeFormCount;
 import com.sevtinge.cemiuiler.module.hook.systemframework.FreeformBubble;
-import com.sevtinge.cemiuiler.module.hook.systemframework.IsDetailLog;
 import com.sevtinge.cemiuiler.module.hook.systemframework.MultiFreeFormSupported;
 import com.sevtinge.cemiuiler.module.hook.systemframework.PackagePermissions;
 import com.sevtinge.cemiuiler.module.hook.systemframework.RemoveSmallWindowRestrictions;
@@ -47,13 +46,15 @@ import com.sevtinge.cemiuiler.module.hook.systemframework.network.N28Band;
 import com.sevtinge.cemiuiler.module.hook.systemframework.network.N5N8Band;
 import com.sevtinge.cemiuiler.module.hook.various.NoAccessDeviceLogsRequest;
 
+import de.robv.android.xposed.XposedBridge;
+
 
 public class SystemFramework extends BaseModule {
 
     @Override
     public void handleLoadPackage() {
-
-        initHook(new IsDetailLog());
+        if (mPrefsMap.getBoolean("settings_disable_detailed_log"))
+            XposedBridge.log("[Cemiuiler][I]: Detail log is disabled.");
 
         // 小窗
         initHook(new FreeFormCount(), mPrefsMap.getBoolean("system_framework_freeform_count"));
