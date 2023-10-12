@@ -58,6 +58,8 @@
     <string name="backup_success">Backup success</string>
     <string name="backup_failed">Backup failed</string>
     <string name="rest_title">Recover</string>
+    <string name="select_all">Select All</string>
+    <string name="inverse">Inverse</string>
     <string name="rest_success">Recovery succeeded</string>
     <string name="rest_failed">Recovery failed</string>
     <string name="backup_ask">Do you want to write backups?</string>

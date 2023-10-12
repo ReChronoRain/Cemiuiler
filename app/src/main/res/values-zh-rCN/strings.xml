@@ -44,6 +44,8 @@
     <string name="backup_success">备份成功</string>
     <string name="backup_failed">备份失败</string>
     <string name="rest_title">恢复</string>
+    <string name="select_all">全选</string>
+    <string name="inverse">反选</string>
     <string name="rest_success">恢复成功</string>
     <string name="rest_failed">恢复失败</string>
     <string name="backup_ask">您是否要写入备份？</string>
