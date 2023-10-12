@@ -1,14 +1,13 @@
 package com.sevtinge.cemiuiler.module.hook.packageinstaller
 
 import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHook
-import com.github.kyuubiran.ezxhelper.finders.MethodFinder.`-Static`.methodFinder
 import com.sevtinge.cemiuiler.module.base.BaseHook
-import com.sevtinge.cemiuiler.module.hook.packageinstaller.PackageInstallerDexKit.mPackageInstallerResultMethodsMap
-import java.util.Objects
+import com.sevtinge.cemiuiler.utils.DexKit.addUsingStringsEquals
+import com.sevtinge.cemiuiler.utils.DexKit.dexKitBridge
 
 object InstallRiskDisable : BaseHook() {
     override fun init() {
-        val result = Objects.requireNonNull(
+        /*val result = Objects.requireNonNull(
             mPackageInstallerResultMethodsMap!!["SecureVerifyEnable"]
         )
         for (descriptor in result) {
@@ -36,6 +35,30 @@ object InstallRiskDisable : BaseHook() {
             mDisableSafeModelTip.createHook {
                  returnConstant(false)
             }
+        }*/
+
+        dexKitBridge.findMethod {
+            matcher {
+                addUsingStringsEquals("secure_verify_enable")
+            }
+        }.firstOrNull()?.getMethodInstance(lpparam.classLoader)?.createHook {
+            returnConstant(false)
+        }
+
+        dexKitBridge.findMethod {
+            matcher {
+                addUsingStringsEquals("installerOpenSafetyModel")
+            }
+        }.firstOrNull()?.getMethodInstance(lpparam.classLoader)?.createHook {
+            returnConstant(false)
+        }
+
+        dexKitBridge.findMethod {
+            matcher {
+                addUsingStringsEquals("android.provider.MiuiSettings\$Ad")
+            }
+        }.firstOrNull()?.getMethodInstance(lpparam.classLoader)?.createHook {
+            returnConstant(false)
         }
     }
 }

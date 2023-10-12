@@ -1,5 +1,6 @@
 package com.sevtinge.cemiuiler.ui;
 
+import android.annotation.SuppressLint;
 import android.app.backup.BackupManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +27,7 @@ import com.sevtinge.cemiuiler.ui.base.SettingsActivity;
 import com.sevtinge.cemiuiler.ui.fragment.AboutFragment;
 import com.sevtinge.cemiuiler.ui.fragment.MainFragment;
 import com.sevtinge.cemiuiler.utils.ALPermissionManager;
+import com.sevtinge.cemiuiler.utils.CtaUtils;
 import com.sevtinge.cemiuiler.utils.Helpers;
 import com.sevtinge.cemiuiler.utils.PrefsUtils;
 import com.sevtinge.cemiuiler.utils.SearchHelper;
@@ -45,11 +48,14 @@ public class MainActivity extends SettingsActivity {
     TextWatcher mSearchResultListener;
     ModSearchAdapter mSearchAdapter;
     String lastFilter;
+    String mPermission = "Cemiuiler_Permission";
     private final MainFragment mMainFrag = new MainFragment();
+    private final int REQUEST_CODE = 2038;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState == null) requestCta();
         new Thread(new Runnable() {
             public void run() {
                 SearchHelper.getAllMods(MainActivity.this, savedInstanceState != null);
@@ -59,24 +65,20 @@ public class MainActivity extends SettingsActivity {
         initData();
         setImmersionMenuEnabled(true);
         setFragment(mMainFrag);
-        suGet();
+        ALPermissionManager.RootCommand("chmod 0777 " + getPackageCodePath());
+        ALPermissionManager.RootCommand("chmod 0777 " + PrefsUtils.mPrefsFile);
+        ALPermissionManager.RootCommand("chown root:root " + PrefsUtils.mPrefsFile);
     }
 
-    private void suGet() {
-        final String ExecutedCommand = "ExecutedCommand";
-        SharedPreferences sharedPreferences = getSharedPreferences(ExecutedCommand, MODE_PRIVATE);
-        boolean hasExecutedCommand = sharedPreferences.getBoolean("hasExecutedCommand", false);
-        String PackageCodePath = sharedPreferences.getString("packageCodePath", "null");
-        String Now_PackageCodePath = getPackageCodePath();
-        // BuildConfig.VERSION_CODE
-        if (!hasExecutedCommand || !PackageCodePath.equals(Now_PackageCodePath)) {
-            ALPermissionManager.RootCommand("chmod 0777 " + getPackageCodePath());
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        requestCta();
+    }
 
-            // 标记命令已执行
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean("hasExecutedCommand", true);
-            editor.putString("packageCodePath", Now_PackageCodePath);
-            editor.apply();
+    private void requestCta() {
+        if (!CtaUtils.isCtaEnabled(this)) {
+            CtaUtils.showCtaDialog(this, REQUEST_CODE);
         }
     }
 
@@ -234,5 +236,43 @@ public class MainActivity extends SettingsActivity {
 
     private void updateData() {
         mFrameContent.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == RESULT_CANCELED) {
+                finish();
+            } else if (resultCode == RESULT_FIRST_USER) {
+                CtaUtils.setCtaEnabled(this);
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    /**
+     * @noinspection deprecation
+     */
+    private boolean PermissionRecord(boolean iNeedGet) {
+        @SuppressLint({"WorldWriteableFiles", "WorldReadableFiles"})
+        SharedPreferences sharedPreferences =
+            getSharedPreferences(mPermission, MODE_WORLD_WRITEABLE | MODE_WORLD_READABLE);
+        if (!iNeedGet) {
+            boolean mPermissionRecord = sharedPreferences.getBoolean("mPermissionRecord", false);
+        /*
+        需要每次更新软件重新弹出界面可以使用下面的方法
+        String PackageCodePath = sharedPreferences.getString("mPackageCodePath", "null");
+        String Now_PackageCodePath = getPackageCodePath();
+        if (!hasExecutedCommand || !PackageCodePath.equals(Now_PackageCodePath)) {
+        */
+            if (!mPermissionRecord) {
+                // 标记得到允许
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("mPermissionRecord", true);
+                /*editor.putString("packageCodePath", Now_PackageCodePath);*/
+                editor.apply();
+            }
+        }
+        return sharedPreferences.getBoolean("mPermissionRecord", false);
     }
 }

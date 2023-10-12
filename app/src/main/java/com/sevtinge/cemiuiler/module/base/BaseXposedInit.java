@@ -1,8 +1,9 @@
 package com.sevtinge.cemiuiler.module.base;
 
+import static com.sevtinge.cemiuiler.utils.log.AndroidLogUtils.LogD;
+
 import com.sevtinge.cemiuiler.BuildConfig;
 import com.sevtinge.cemiuiler.module.app.AiAsst;
-import com.sevtinge.cemiuiler.module.app.Aireco;
 import com.sevtinge.cemiuiler.module.app.Aod;
 import com.sevtinge.cemiuiler.module.app.Barrage;
 import com.sevtinge.cemiuiler.module.app.Browser;
@@ -29,6 +30,8 @@ import com.sevtinge.cemiuiler.module.app.MiWallpaper;
 import com.sevtinge.cemiuiler.module.app.Mms;
 import com.sevtinge.cemiuiler.module.app.Mtb;
 import com.sevtinge.cemiuiler.module.app.Music;
+import com.sevtinge.cemiuiler.module.app.NetworkBoost;
+import com.sevtinge.cemiuiler.module.app.Nfc;
 import com.sevtinge.cemiuiler.module.app.Notes;
 import com.sevtinge.cemiuiler.module.app.PackageInstaller;
 import com.sevtinge.cemiuiler.module.app.PersonalAssistant;
@@ -48,12 +51,12 @@ import com.sevtinge.cemiuiler.module.app.Updater;
 import com.sevtinge.cemiuiler.module.app.Various;
 import com.sevtinge.cemiuiler.module.app.VoiceAssist;
 import com.sevtinge.cemiuiler.module.app.Weather;
-import com.sevtinge.cemiuiler.utils.ALPermissionManager;
+import com.sevtinge.cemiuiler.utils.DexKit;
 import com.sevtinge.cemiuiler.utils.Helpers;
-import com.sevtinge.cemiuiler.utils.LogUtils;
 import com.sevtinge.cemiuiler.utils.PrefsMap;
 import com.sevtinge.cemiuiler.utils.PrefsUtils;
 import com.sevtinge.cemiuiler.utils.ResourcesHook;
+import com.sevtinge.cemiuiler.utils.log.XposedLogUtils;
 
 import java.io.File;
 import java.util.Map;
@@ -95,7 +98,6 @@ public abstract class BaseXposedInit implements IXposedHookLoadPackage, IXposedH
     public final FileExplorer mFileExplorer = new FileExplorer();
     public final Music mMusic = new Music();
     public final Gallery mGallery = new Gallery();
-    public final Aireco mAireco = new Aireco();
     public final AiAsst mAiAsst = new AiAsst();
     public final Scanner mScanner = new Scanner();
     public final MiShare mMiShare = new MiShare();
@@ -118,7 +120,9 @@ public abstract class BaseXposedInit implements IXposedHookLoadPackage, IXposedH
     public final Aod mAod = new Aod();
     public final Barrage mBarrage = new Barrage();
     public final Notes mNotes = new Notes();
+    public final NetworkBoost networkBoost = new NetworkBoost();
     public final Creation mCreation = new Creation();
+    public final Nfc mNfc = new Nfc();
 
     @Override
     public void initZygote(StartupParam startupParam) throws Throwable {
@@ -136,13 +140,15 @@ public abstract class BaseXposedInit implements IXposedHookLoadPackage, IXposedH
 
                 Map<String, ?> allPrefs = mXSharedPreferences == null ? null : mXSharedPreferences.getAll();
                 if (allPrefs == null || allPrefs.size() == 0) {
-                    ALPermissionManager.RootCommand("chmod 0777 " + PrefsUtils.mPrefsFile);
-                    ALPermissionManager.RootCommand("chown root:root " + PrefsUtils.mPrefsFile);
                     mXSharedPreferences = new XSharedPreferences(new File(PrefsUtils.mPrefsFile));
                     mXSharedPreferences.makeWorldReadable();
                     allPrefs = mXSharedPreferences == null ? null : mXSharedPreferences.getAll();
                     if (allPrefs == null || allPrefs.size() == 0) {
-                        LogUtils.log("[UID " + android.os.Process.myUid() + "] Cannot read module's SharedPreferences, some mods might not work!");
+                        XposedLogUtils.INSTANCE.logE(
+                            "[UID" + android.os.Process.myUid() + "]",
+                            "Cannot read module's SharedPreferences, some mods might not work!",
+                            null, null
+                        );
                     } else {
                         mPrefsMap.putAll(allPrefs);
                     }
@@ -150,7 +156,7 @@ public abstract class BaseXposedInit implements IXposedHookLoadPackage, IXposedH
                     mPrefsMap.putAll(allPrefs);
                 }
             } catch (Throwable t) {
-                XposedBridge.log(t);
+                LogD("setXSharedPrefs", t);
             }
         }
     }
@@ -197,27 +203,28 @@ public abstract class BaseXposedInit implements IXposedHookLoadPackage, IXposedH
                 mBrowser.init(lpparam);
                 mVarious.init(lpparam);
             }
+            case "com.android.nfc" -> {
+                mNfc.init(lpparam);
+                mVarious.init(lpparam);
+            }
             case "com.android.updater" -> {
                 mUpdater.init(lpparam);
                 mVarious.init(lpparam);
             }
-            case "com.xiaomi.market" -> {
-                mMarket.init(lpparam);
-            }
+            case "com.xiaomi.market" -> mMarket.init(lpparam);
+
             case "com.miui.packageinstaller" -> {
                 mPackageInstaller.init(lpparam);
                 mVarious.init(lpparam);
             }
-            case "com.miui.powerkeeper" -> {
-                mPowerKeeper.init(lpparam);
-            }
+            case "com.miui.powerkeeper" -> mPowerKeeper.init(lpparam);
+
             case "com.xiaomi.misettings" -> {
                 mMiSettings.init(lpparam);
                 mVarious.init(lpparam);
             }
-            case "com.xiaomi.joyose" -> {
-                mJoyose.init(lpparam);
-            }
+            case "com.xiaomi.joyose" -> mJoyose.init(lpparam);
+
             case "com.miui.screenshot" -> {
                 mScreenShot.init(lpparam);
                 mVarious.init(lpparam);
@@ -254,13 +261,8 @@ public abstract class BaseXposedInit implements IXposedHookLoadPackage, IXposedH
                 mAod.init(lpparam);
                 mVarious.init(lpparam);
             }
-            case "com.xiaomi.aireco" -> {
-                mAireco.init(lpparam);
-                mVarious.init(lpparam);
-            }
-            case "com.xiaomi.barrage" -> {
-                mBarrage.init(lpparam);
-            }
+            case "com.xiaomi.barrage" -> mBarrage.init(lpparam);
+
             case "com.xiaomi.aiasst.vision" -> {
                 mAiAsst.init(lpparam);
                 mVarious.init(lpparam);
@@ -277,12 +279,10 @@ public abstract class BaseXposedInit implements IXposedHookLoadPackage, IXposedH
                 mMiShare.init(lpparam);
                 mVarious.init(lpparam);
             }
-            case "com.milink.service" -> {
-                mMiLink.init(lpparam);
-            }
-            case "com.miui.guardprovider" -> {
-                mGuardProvider.init(lpparam);
-            }
+            case "com.milink.service" -> mMiLink.init(lpparam);
+
+            case "com.miui.guardprovider" -> mGuardProvider.init(lpparam);
+
             case "com.lbe.security.miui" -> {
                 mLbe.init(lpparam);
                 mVarious.init(lpparam);
@@ -315,12 +315,10 @@ public abstract class BaseXposedInit implements IXposedHookLoadPackage, IXposedH
                 mFileExplorer.init(lpparam);
                 mVarious.init(lpparam);
             }
-            case "com.android.phone" -> {
-                mPhone.init(lpparam);
-            }
-            case "com.xiaomi.mtb" -> {
-                mMtb.init(lpparam);
-            }
+            case "com.android.phone" -> mPhone.init(lpparam);
+
+            case "com.xiaomi.mtb" -> mMtb.init(lpparam);
+
             case "com.android.externalstorage" -> {
                 mExternalStorage.init(lpparam);
                 mVarious.init(lpparam);
@@ -329,16 +327,17 @@ public abstract class BaseXposedInit implements IXposedHookLoadPackage, IXposedH
                 mCamera.init(lpparam);
                 mVarious.init(lpparam);
             }
-            case "com.android.providers.downloads" -> {
-                mDownloads.init(lpparam);
-            }
+            case "com.android.providers.downloads" -> mDownloads.init(lpparam);
+
             case "com.miui.creation" -> {
                 mCreation.init(lpparam);
                 mVarious.init(lpparam);
             }
+            case "com.xiaomi.NetworkBoost" -> networkBoost.init(lpparam);
             case BuildConfig.APPLICATION_ID -> ModuleActiveHook(lpparam);
             default -> mVarious.init(lpparam);
         }
+        DexKit.INSTANCE.closeDexKit();
     }
 
     public void ModuleActiveHook(LoadPackageParam lpparam) {
@@ -350,19 +349,19 @@ public abstract class BaseXposedInit implements IXposedHookLoadPackage, IXposedH
 
 
     public boolean isSafeModeEnable(String key) {
-        return mPrefsMap.getBoolean(key);
+        return !mPrefsMap.getBoolean(key);
     }
 
     public boolean isSystemUIModuleEnable() {
-        return !isSafeModeEnable("system_ui_safe_mode_enable");
+        return isSafeModeEnable("system_ui_safe_mode_enable");
     }
 
     public boolean isHomeModuleEnable() {
-        return !isSafeModeEnable("home_safe_mode_enable");
+        return isSafeModeEnable("home_safe_mode_enable");
     }
 
     public boolean isSecurityCenterModuleEnable() {
-        return !isSafeModeEnable("security_center_safe_mode_enable");
+        return isSafeModeEnable("security_center_safe_mode_enable");
     }
 
 }

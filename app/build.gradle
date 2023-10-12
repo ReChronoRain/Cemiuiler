@@ -18,11 +18,13 @@ android {
         applicationId namespace
         minSdk 30
         targetSdk 34
-        versionCode 126
-        versionName "1.2.126"
-        ndk.abiFilters += "arm64-v8a"
-        ndk.abiFilters += "armeabi-v7a"
+        versionCode 128
+        versionName "1.2.128"
         project.archivesBaseName = "Cemiuiler"
+        ndk {
+            // noinspection ChromeOsAbiSupport
+            abiFilters 'arm64-v8a', 'armeabi-v7a'
+        }
         applicationVariants.configureEach { variant ->
             variant.outputs.configureEach {
                 outputFileName = project.archivesBaseName + "_" + versionName + "(" + versionCode + ")_" + variant.buildType.name + ".apk"
@@ -129,7 +131,8 @@ dependencies {
 
     compileOnly(roots.XposedApi)
 
-    implementation 'org.luckypray:DexKit:1.1.8'
+    implementation 'org.luckypray:dexkit:2.0.0-rc6'
+    // implementation 'org.luckypray:DexKit:1.1.8'
     implementation 'com.github.kyuubiran:EzXHelper:2.0.7'
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.32.0"
     implementation "org.lsposed.hiddenapibypass:hiddenapibypass:4.3"

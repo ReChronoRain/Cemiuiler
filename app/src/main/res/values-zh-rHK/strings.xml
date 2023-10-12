@@ -62,8 +62,7 @@
     <string name="about_crwd_desc">協助我們將這個應用程式翻譯為您的語言</string>
     <!--Pop-up window/miuix part-->
     <string name="soft_reboot">重啟 </string>
-    <string name="restart_app_desc1">確定要立即重啟</string>
-    <string name="restart_app_desc2">嗎？</string>
+    <string name="restart_app_desc">確定要立即重啟%1$s嗎？</string>
     <string name="tip">提示</string>
     <string name="hook_failed">模組暫未啟用</string>
     <string name="kill_failed">結束進程失敗，請檢查是否為 Cemiuiler 授予了 Root/Su 權限？</string>
@@ -591,10 +590,7 @@
     <string name="system_ui_controlcenter_new_title">新控制中心</string>
     <string name="system_ui_controlcenter_old_title">經典控制中心</string>
     <string name="system_ui_controlcenter_enable_title">自訂行列數</string>
-    <string name="system_control_center_old_qs_rows_desc">豎屏顯示 5 行時會隱藏標籤，橫屏時則限制為 3 行</string>
-    <string name="system_control_center_old_qs_columns_desc">豎屏時會額外增加一列\n如果您的 ROM 具有快速設置緊湊佈局選項，不管是橫屏還是豎屏都會增加其他列</string>
     <string name="system_control_center_old_qs_grid_columns">折疊面板中的列數</string>
-    <string name="system_control_center_old_qs_grid_columns_desc">橫屏時將會額外增加一列</string>
     <string name="system_ui_control_center_cc_bluetooth_tile_style_title">藍牙磁貼樣式</string>
     <string name="system_ui_control_center_cc_bluetooth_tile_style_sum">調整藍牙磁貼位置至網絡磁貼旁</string>
     <string name="system_ui_other_title">其他</string>
@@ -1028,7 +1024,7 @@
     <string name="security_center_unlock_screen_time_desc">在耗電排行中螢幕幕耗電訊息並恢復顯示所有其他應用程式的耗電量和時間</string>
     <string name="security_center_unlock_gun_service">解鎖準星輔助</string>
     <string name="security_center_disable_remove_screen_hold_on">禁用移除待機聽劇與關閉螢幕掛機</string>
-    <string name="security_center_unlock_memc">解鎖準星輔助</string>
+    <string name="security_center_unlock_memc">解鎖動態畫面補償</string>
     <string name="security_center_unlock_enhance_contours">解鎖影像輪廓增強</string>
     <string name="security_center_unlock_s_resolution">解鎖極清播放</string>
     <string name="security_center_hide_sidebar">隱藏側邊欄</string>
@@ -1051,9 +1047,6 @@
     <string name="aiasst">小愛翻譯</string>
     <string name="aiasst_ai_captions">強制啟用實時字幕</string>
     <string name="aiasst_ai_captions_desc">只能識別翻譯中文、英文</string>
-    <!--AI Reco-->
-    <string name="aireco">小愛建議</string>
-    <string name="aireco_device_modify">移除內測限制</string>
     <!--Barrage-->
     <string name="barrage">彈幕通知</string>
     <string name="barrage_any_barrage">允許所有應用程式使用彈幕通知</string>

@@ -12,8 +12,15 @@
     <string name="array_netspeedicons_arrows_long2" translatable="false">⇧ ⇩</string>
     <string name="system_ui_display_toast_title" translatable="false">Toast</string>
     <string name="summary_collapsed_preference_list" translatable="false">%1$s%2$s</string>
+    <string name="networkboost" translatable="false">NetworkBoost</string>
     <!--Introduction to Xposed Modules-->
     <string name="xposed_description">Make MIUI Great Again!</string>
+
+    <string name="new_permission_wifi_state_desc">add and delete files on device\'s internal storage</string>
+    <string name="new_permission_location_desc">used to provide services such as latitude and longitude</string>
+    <string name="new_cta_agree_desc">During use, in order to provide you with more features, we may apply for Root/Su permission from you. You can go to Permission Management at any time to adjust the authorization status of all permissions, and please go to your Root/Su manager for Root/Su permissions.</string>
+    <string name="new_cta_app_main_purpose">modify system applications</string>
+    <string name="new_cta_app_all_purpose_title">Welcome to Cemiuiler, this application runs on the Xposed framework, you can use this application to hijack and modify other supported applications to achieve MIUI enhancements. During use, in order to provide you with more features, we may apply for Root/Su permission from you. You can go to your Root/Su manager for Root/Su permissions.</string>
     <!--Cemiuiler Settings/About Page-->
     <string name="language">English</string>
     <string name="translator">Ling Qiqi</string>
@@ -26,6 +33,8 @@
     <string name="about_contributer_desc">Thanks to the following contributors for their help in the development of Cemiuiler (in no particular order)</string>
     <string name="about_donation">Sponsor</string>
     <string name="about_donation_desc">You can support us by donating here</string>
+    <string name="about_privacy">Privacy Policy</string>
+    <string name="about_protocol">User Agreement</string>
     <string name="settings_data_title">Backup and Restore</string>
     <string name="settings_bug_title">Troubleshooting</string>
     <string name="settings_debug_title">Debug</string>
@@ -74,10 +83,9 @@
     <string name="about_crwd_desc">Help us translate Cemiuiler into you language</string>
     <!--Pop-up window/miuix part-->
     <string name="soft_reboot">Reboot </string>
-    <string name="restart_app_desc1">Are you sure you want to restart now </string>
-    <string name="restart_app_desc2">\?</string>
+    <string name="restart_app_desc">Are you sure you want to restart now %1$s?</string>
     <string name="tip">Tip</string>
-    <string name="hook_failed">Module not activated</string>
+    <string name="hook_failed">The module is not activated yet.\nPlease check whether the Xposed manager is enabled. If so, please restart or re-optimize the module.</string>
     <string name="kill_failed">Failed to end process, please check if Cemiuiler has been granted Root/Su permissions?</string>
     <string name="reboot_failed">Reboot failed, please check if Cemiuiler is granted Root/Su permission?</string>
     <string name="expand_button_title">High level</string>
@@ -218,6 +226,9 @@
     <string name="array_bluetooth_tile_style_2rows2cols">One big and two small tiles</string>
     <string name="array_pa_blur_official">Official comes with blur</string>
     <string name="array_bpa_blur_customize">Custom background blur</string>
+    <string name="control_center_sunshine_mode_default">Close</string>
+    <string name="control_center_sunshine_mode_one">System default mode</string>
+    <string name="control_center_sunshine_mode_two">Force maximum brightness</string>
     <!--System Framework-->
     <string name="system_framework">System Framework</string>
     <string name="system_framework_volume_title">Volume</string>
@@ -411,6 +422,7 @@
     <string name="system_ui_navigation_title">Navigation</string>
     <string name="system_ui_navigation_handle_title">Handle line</string>
     <string name="system_ui_hide_navigation_bar">Hide Navigation Bar</string>
+    <string name="system_ui_hide_navigation_bar_more">Please restart both the Miui Home and SystemUi scopes</string>
     <string name="system_ui_navigation_handle_custom">Custom handle line</string>
     <string name="system_ui_navigation_handle_custom_height">Height</string>
     <string name="system_ui_navigation_handle_custom_width">Portrait width</string>
@@ -583,8 +595,10 @@
     <string name="system_control_center_qs_tile_label">Remove title</string>
     <string name="system_control_center_qs_rows">Rows</string>
     <string name="system_control_center_qs_rows_format">%d lines</string>
+    <string name="system_control_center_qs_rows_horizontal">Rows (Landscape)</string>
     <string name="system_control_center_qs_columns">Columns</string>
     <string name="system_control_center_qs_columns_format">%d List</string>
+    <string name="system_control_center_qs_columns_horizontal">Columns (Landscape)</string>
     <string name="system_ui_control_center_hide_mi_play_entry">MiPlay Entry</string>
     <string name="system_ui_control_center_hide_mi_smart_hub_entry">Mi smart hub entry</string>
     <string name="system_ui_control_center_hide_device_ctrl_entry">Device control entry</string>
@@ -599,6 +613,8 @@
     <string name="system_ui_control_center_fix_media_control_panel">Fix media control panel</string>
     <string name="system_ui_control_center_compact_notice">Compact notifications</string>
     <string name="system_ui_control_center_compact_notice_desc">Reduce notifications\' vertical paddings</string>
+    <string name="system_ui_control_center_redirect_notice">Redirect notification settings</string>
+    <string name="system_ui_control_center_redirect_notice_desc">Opening the notification menu\'s settings navigates to the target channel settings instead of applying the notification settings</string>
     <string name="system_ui_control_center_show_weather">Show weather</string>
     <string name="system_ui_control_center_show_weather_city">Show city</string>
     <string name="system_ui_control_center_mute_visible_notice">Mute when screen is on</string>
@@ -607,11 +623,10 @@
     <string name="system_ui_control_center_switch_cc_and_notification_title">Switch control center and notification drawer</string>
     <string name="system_ui_controlcenter_new_title">New control center</string>
     <string name="system_ui_controlcenter_old_title">Legacy control center</string>
+    <string name="system_ui_controlcenter_unlock_old_title">Unlock control center styles</string>
     <string name="system_ui_controlcenter_enable_title">Customize the number of rows and columns</string>
-    <string name="system_control_center_old_qs_rows_desc">Labels will be hidden for 5 rows in a portrait orientation. Number of rows is limited to 3 with hidden labels in a landscape orientation.</string>
-    <string name="system_control_center_old_qs_columns_desc">Landscape orientation will have one additional column\nIf your ROM has a compact Quick Settings layout option, it will add another column in both orientations</string>
     <string name="system_control_center_old_qs_grid_columns">Number of columns in collapsed panel</string>
-    <string name="system_control_center_old_qs_grid_columns_desc">Landscape orientation will have one additional column</string>
+    <string name="system_control_center_old_qs_grid_columns_horizontal">Number of columns in collapsed panel (Landscape)</string>
     <string name="system_ui_control_center_cc_bluetooth_tile_style_title">Bluetooth tile style</string>
     <string name="system_ui_control_center_cc_bluetooth_tile_style_sum">Move the bluetooth tile near the network tile</string>
 
@@ -837,6 +852,8 @@
     <string name="home_title_title_title">Title</string>
     <string name="home_title_title_marquee">Text scroll</string>
     <string name="home_title_title_marquee_desc">App names that are too long will be scrolled instead of wrapping</string>
+    <string name="home_title_title_new_install">New Install App Dont show Indicator</string>
+    <string name="home_title_title_new_install_more">Do not display the indicator next to the application title when installing a new application</string>
     <string name="home_title_font_size">Font size</string>
     <string name="home_title_title_color">Title color</string>
     <string name="home_title_animation_speed">Animation speed</string>
@@ -918,6 +935,7 @@
     <string name="home_other_blur_radius">Blur Radius</string>
     <string name="home_large_icon_corner_radius">Large icons with rounded corners</string>
     <string name="home_other_app_icon_hide">Desktop shortcut management</string>
+    <string name="home_other_toast_slide_again">Prohibit prompts \"please stroke again\" Toast</string>
     <string name="home_other_shortcut_remove_restrictions">Remove restrictions on shortcuts</string>
     <string name="home_other_disable_hide_google">Disable hide Google</string>
     <string name="home_other_fix_android_r_s">Fix a compatibility issue that caused the desktop to go black</string>
@@ -975,6 +993,7 @@
     <string name="powerkeeper_lock_max_fps">Lock max FPS</string>
     <string name="powerkeeper_do_not_kill_apps">Try don\'t kill apps</string>
     <string name="powerkeeper_do_not_kill_apps_desc">May increase power consumption</string>
+    <string name="powerkeeper_prevent_recovery_of_battery_optimization_whitelist">Prevent recovery of battery optimization whitelist</string>
     <!--creen Recorder-->
     <string name="screenrecorder">Screen Recorder</string>
     <string name="screen_recorder_force_support_playback_capture">Force enable AOSP screen recording support</string>
@@ -987,6 +1006,8 @@
     <!--Screenshot-->
     <string name="screenshot">Screenshot</string>
     <string name="screenshot_unlock_minimum_crop_limit">Unlock the minimum crop image limit</string>
+    <string name="screenshot_unlock_privacy_marking_title">Unlock privacy marking</string>
+    <string name="screenshot_unlock_privacy_marking_desc">A higher version of the \"Mi AI Engine\" APP needs to be pre-installed for normal use</string>
     <string name="screenshot_save_to_pictures_desc">Canonical screenshot save location to /Pictures/Screenshots</string>
     <string name="screenshot_device_customize_title">Custom screenshot model with shell</string>
     <string name="screenshot_device_customize_desc">Please enter the model code</string>
@@ -1082,9 +1103,6 @@
     <string name="aiasst">AI Translate</string>
     <string name="aiasst_ai_captions">Force enabled AI captions</string>
     <string name="aiasst_ai_captions_desc">Only Chinese and English can be recognized and translated</string>
-    <!--AI Reco-->
-    <string name="aireco">AI Reco</string>
-    <string name="aireco_device_modify">Remove beta restrictions</string>
     <!--Barrage-->
     <string name="barrage">Barrage</string>
     <string name="barrage_any_barrage">Allow all apps use barrage</string>
@@ -1137,6 +1155,8 @@
     <string name="settings_notfication_importance">Show notification importance</string>
     <string name="various_no_overscroll">Disable out-of-bounds bounce</string>
     <string name="various_disable_bluetooth_restrict">Prevent bluetooth from being turned off temporarily</string>
+    <string name="various_disable_link_turbo_toast">Hide LinkTurbo Toast</string>
+    <string name="various_disable_link_turbo_toast_more">Please restart NetworkBoost in the fast restart scope</string>
     <string name="various_disable_access_device_logs">Dismiss access device logs request dialog</string>
     <string name="various_unlock_ime">Unlock IME</string>
     <string name="various_unlock_ime_desc">After opening, please check the corresponding input method scope in the Xposed manager</string>
@@ -1263,4 +1283,7 @@
     <string name="tip_18">Tip: Cemiuiler is the fastest battery draining system app (grumpy speech)</string>
     <string name="tip_19">Tip: If there is no special annotation for the function that turns gray, it means that the function is abnormal, and it is not planned to be opened to users for the time being</string>
     <string name="tip_20">Tip: Don’t chase the new version of Canary if you have nothing to do, and don’t rush to update if it’s broken (</string>
+    <string name="nfc_disable_sound">Disable sound</string>
+    <string name="nfc_allow_information_screen">Allow recognizable when information screen</string>
+    <string name="nfc">NFC Service</string>
 </resources>

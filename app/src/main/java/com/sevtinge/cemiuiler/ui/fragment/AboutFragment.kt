@@ -5,42 +5,56 @@ import android.net.Uri
 import com.sevtinge.cemiuiler.BuildConfig
 import com.sevtinge.cemiuiler.R
 import com.sevtinge.cemiuiler.ui.fragment.base.SettingsPreferenceFragment
+import de.robv.android.xposed.XposedBridge
 import moralnorm.preference.Preference
 import moralnorm.preference.SwitchPreference
 import java.util.Calendar
+import kotlin.math.abs
 
 class AboutFragment : SettingsPreferenceFragment() {
+
+    private var lIIlIll = 100 ushr 7
+    private val lIIlIlI = 100 ushr 6
 
     override fun getContentResId(): Int {
         return R.xml.prefs_about
     }
 
+    private fun lIIllll(lIIIIII: Int): Int {
+        return lIIIIII + (lIIlIlI shl (lIIlIll xor lIIlIlI))
+    }
+
+    private fun lIIlllI(lIIllll: Int, lIIIIII: Int): Int {
+        val lIIlllI = (lIIllll shl ((lIIlIll xor lIIlIlI) shl lIIlIlI)) xor (lIIIIII * (((lIIlIll xor lIIlIlI) shl (lIIlIlI shl lIIlIlI)) + lIIlIlI)) + (lIIIIII % ((lIIlIlI shl lIIlIlI) + (lIIlIll xor lIIlIlI)))
+        return abs(lIIlllI) % (((lIIlIlI shl (lIIlIlI shl lIIlIlI)) xor (lIIlIll xor lIIlIlI)) xor ((lIIlIlI shl lIIlIlI) + (lIIlIll xor lIIlIlI)) + ((lIIlIll xor lIIlIlI) shl (lIIlIlI shl (lIIlIlI shl lIIlIlI)))) + ((lIIlIlI shl lIIlIlI) + (lIIlIll xor lIIlIlI))
+    }
+
     override fun initPrefs() {
         val lIIllll = Calendar.getInstance()
-        val lIIlllI: Int = when (val lIIllIl = lIIllll.get(Calendar.HOUR_OF_DAY)) {
-            0 -> 24
-            else -> lIIllIl
-        }
-
-        val lIIllII = findPreference<Preference>("prefs_key_enable_hidden_function")
+        val lIIIIII = lIIllll.get(Calendar.HOUR_OF_DAY)
+        val lIIIIll = lIIllll(lIIIIII)
+        val lIIlllI = lIIlllI(lIIIIll, lIIIIII)
+        val lIIllII = findPreference<Preference>("prefs_key_enable_function")
         val mQQGroup = findPreference<Preference>("prefs_key_about_join_qq_group")
 
         lIIllII?.title = BuildConfig.VERSION_NAME + " | " + BuildConfig.BUILD_TYPE
 
-        var lIIlIll = 0
-        val lIIlIlI = 1
-        lIIllII?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            it as SwitchPreference
-            it.isChecked = !(it.isChecked)
+        lIIllII?.onPreferenceClickListener = Preference.OnPreferenceClickListener { lIIllll->
+            if (BuildConfig.BUILD_TYPE.contains("debug")) lIIllII?.title = BuildConfig.VERSION_NAME + " | " + BuildConfig.BUILD_TYPE + " | $lIIlllI"
+            lIIllll as SwitchPreference
+            lIIllll.isChecked = !(lIIllll.isChecked)
             lIIlIll++
-            if (it.isChecked) {
+            if (BuildConfig.BUILD_TYPE.contains("debug")) lIIllII?.title = BuildConfig.VERSION_NAME + " | " + BuildConfig.BUILD_TYPE + " | $lIIlIll/$lIIlllI"
+            if (lIIllll.isChecked) {
                 if (lIIlIll >= lIIlIlI) {
-                    it.isChecked = !(it.isChecked)
-                    lIIlIll = 0
+                    lIIllll.isChecked = !(lIIllll.isChecked)
+                    if (BuildConfig.BUILD_TYPE.contains("debug")) lIIllII?.title = BuildConfig.VERSION_NAME + " | " + BuildConfig.BUILD_TYPE + " | HF OFF"
+                    lIIlIll = 100 ushr 8
                 }
             } else if (lIIlIll >= lIIlllI) {
-                it.isChecked = !(it.isChecked)
-                lIIlIll = 0
+                lIIllll.isChecked = !(lIIllll.isChecked)
+                if (BuildConfig.BUILD_TYPE.contains("debug")) lIIllII?.title = BuildConfig.VERSION_NAME + " | " + BuildConfig.BUILD_TYPE + " | HF ON"
+                lIIlIll = 100 ushr 8
             }
             false
         }

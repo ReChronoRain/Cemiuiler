@@ -24,11 +24,6 @@ public class DeviceModify extends BaseHook {
             mDevice = "yuechu";
             mModel = "23046PNC9C";
             mManufacturer = "Xiaomi";
-        } else if (mPrefsMap.getStringAsInt("market_device_modify_new", 0) == 222) {
-            // f2
-            mDevice = "zizhan";
-            mModel = "22061218C";
-            mManufacturer = "Xiaomi";
         } else if (mPrefsMap.getStringAsInt("market_device_modify_new", 0) == 223) {
             // f3
             mDevice = "babylon";
@@ -44,20 +39,30 @@ public class DeviceModify extends BaseHook {
             mDevice = "draco";
             mModel = "MIX Alpha";
             mManufacturer = "Xiaomi";
-        } else if (mPrefsMap.getStringAsInt("market_device_modify_new", 0) == 207) {
-            // pad6p
-            mDevice = "liuqin";
-            mModel = "23046RP50C";
+        } else if (mPrefsMap.getStringAsInt("market_device_modify_new", 0) == 208) {
+            // pad6m
+            mDevice = "yudi";
+            mModel = "2307BRPDCC";
             mManufacturer = "Xiaomi";
-        } else if (mPrefsMap.getStringAsInt("market_device_modify_new", 0) == 306) {
-            // k60p
-            mDevice = "socrates";
-            mModel = "22127RK46C";
+        } else if (mPrefsMap.getStringAsInt("market_device_modify_new", 0) == 307) {
+            // k60u
+            mDevice = "corot";
+            mModel = "23078RKD5C";
             mManufacturer = "Redmi";
-        } else if (mPrefsMap.getStringAsInt("market_device_modify_new", 0) == 332) {
-            // n12t
-            mDevice = "marble";
-            mModel = "23049RAD8C";
+        } else if (mPrefsMap.getStringAsInt("market_device_modify_new", 0) == 309) {
+            // k70p
+            mDevice = "manet";
+            mModel = "23117RK66C";
+            mManufacturer = "Redmi";
+        } else if (mPrefsMap.getStringAsInt("market_device_modify_new", 0) == 351) {
+            // k70e
+            mDevice = "duchamp";
+            mModel = "23113RKC6C";
+            mManufacturer = "Redmi";
+        } else if (mPrefsMap.getStringAsInt("market_device_modify_new", 0) == 334) {
+            // n13pp
+            mDevice = "zircon";
+            mModel = "23090RA98C";
             mManufacturer = "Redmi";
         }
         findAndHookConstructor("com.xiaomi.market.MarketApp", new MethodHook() {

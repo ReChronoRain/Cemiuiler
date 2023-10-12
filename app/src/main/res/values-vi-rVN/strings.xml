@@ -62,8 +62,6 @@
     <string name="about_crwd_desc">Giúp chúng tôi dịch Cemiuiler sang ngôn ngữ của bạn</string>
     <!--Pop-up window/miuix part-->
     <string name="soft_reboot">Khởi động lại nhanh</string>
-    <string name="restart_app_desc1">Bạn có muốn khởi động lại máy bây giờ </string>
-    <string name="restart_app_desc2">\?</string>
     <string name="tip">Mẹo</string>
     <string name="hook_failed">Mô-đun chưa được kích hoạt</string>
     <string name="kill_failed">Không thể kết thúc quá trình, kiểm tra Cemiuiler đã được cấp quyền Root?</string>
@@ -595,11 +593,7 @@ Chức năng này là chức năng thử nghiệm có độ ổn định cao</st
     <string name="system_ui_controlcenter_new_title">Trung tâm điều khiển kiểu mới</string>
     <string name="system_ui_controlcenter_old_title">Trung tâm điều khiển kiểu cũ</string>
     <string name="system_ui_controlcenter_enable_title">Tùy chỉnh số lượng hàng và cột</string>
-    <string name="system_control_center_old_qs_rows_desc">Tiêu đề sẽ bị ẩn khi hiển thị 5 dòng ở chế độ dọc và 3 dòng ở chế độ ngang</string>
-    <string name="system_control_center_old_qs_columns_desc">Cột bổ sung sẽ được thêm vào khi màn hình dọc
-Nếu ROM của bạn có tùy chọn thu gọn bố cục cài đặt nhanh sẽ thêm các cột bổ sung cả ngang và dọc</string>
     <string name="system_control_center_old_qs_grid_columns">Hàng trong bảng thu gọn</string>
-    <string name="system_control_center_old_qs_grid_columns_desc">Cột bổ sung sẽ được thêm vào bảng thu gọn</string>
     <string name="system_ui_control_center_cc_bluetooth_tile_style_title">Kiểu ô Bluetooth</string>
     <string name="system_ui_control_center_cc_bluetooth_tile_style_sum">Ô Bluetooth được di chuyển đến khu vực ô mạng</string>
     <string name="system_ui_other_title">Khác</string>
@@ -1067,9 +1061,6 @@ Nếu ROM của bạn có tùy chọn thu gọn bố cục cài đặt nhanh s�
     <string name="aiasst">Mi AI Translate</string>
     <string name="aiasst_ai_captions">Mở khoá Phụ đề AI</string>
     <string name="aiasst_ai_captions_desc">Chỉ có thể nhận dạng và dịch được tiếng Trung và tiếng Anh</string>
-    <!--AI Reco-->
-    <string name="aireco">AI Reco</string>
-    <string name="aireco_device_modify">Xóa các hạn chế thử nghiệm</string>
     <!--Barrage-->
     <string name="barrage">Barrage</string>
     <string name="barrage_any_barrage">Cho phép tất cả ứng dụng sử dụng barrage</string>

@@ -17,9 +17,9 @@ import androidx.annotation.RequiresApi
 import com.github.kyuubiran.ezxhelper.HookFactory.`-Static`.createHook
 import com.sevtinge.cemiuiler.module.base.BaseHook
 import com.sevtinge.cemiuiler.utils.ColorUtils
-import com.sevtinge.cemiuiler.utils.DexKit.closeDexKit
 import com.sevtinge.cemiuiler.utils.DexKit.dexKitBridge
 import com.sevtinge.cemiuiler.utils.HookUtils
+import com.sevtinge.cemiuiler.utils.log.XposedLogUtils.logW
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XC_MethodReplacement
 import de.robv.android.xposed.XposedBridge
@@ -163,44 +163,34 @@ object BlurSecurity : BaseHook() {
 
         // if (getPackageVersionCode(lpparam) >= 40000754) {
         dexKitBridge.findMethod {
-            methodReturnType = "Landroid/view/View;"
-            methodParamTypes = arrayOf("Landroid/content/Context;", "Z", "Z")
-        }.forEach {
-            it.getMethodInstance(lpparam.classLoader).createHook {
-                after { param ->
-                    val mainContent = HookUtils.getValueByField(param.thisObject, "b") as ViewGroup
-                    mainContent.addOnAttachStateChangeListener(
-                        object :
-                            View.OnAttachStateChangeListener {
-                            @RequiresApi(Build.VERSION_CODES.S)
-                            override fun onViewAttachedToWindow(view: View) {
-                                if (view.background != null) {
-                                    if (HookUtils.isBlurDrawable(view.background)) {
-                                        return
-                                    }
-                                }
-
-                                view.background =
-                                    HookUtils.createBlurDrawable(
-                                        view,
-                                        blurRadius,
-                                        40,
-                                        backgroundColor
-                                    )
-
-                                if (shouldInvertColor) {
-                                    invertViewColor(mainContent)
-                                }
-                            }
-
-                            override fun onViewDetachedFromWindow(view: View) {
-                                view.background = null
-                            }
-                        })
-                }
+            matcher {
+                returnType = "Landroid/view/View;"
+                paramTypes = listOf("Landroid/content/Context;", "Z", "Z")
             }
+           /* methodReturnType = "Landroid/view/View;"
+            methodParamTypes = arrayOf("Landroid/content/Context;", "Z", "Z")*/
+        }.firstOrNull()?.getMethodInstance(lpparam.classLoader)?.createHook {
+            after { param ->
+                val mainContent = HookUtils.getValueByField(param.thisObject, "b") as ViewGroup
+                mainContent.addOnAttachStateChangeListener(object :
+                    View.OnAttachStateChangeListener {
+                        @RequiresApi(Build.VERSION_CODES.S)
+                        override fun onViewAttachedToWindow(view: View) {
+                            if (view.background != null) {
+                                if (HookUtils.isBlurDrawable(view.background)) return
+                            }
+                            view.background =
+                                HookUtils.createBlurDrawable(view, blurRadius, 40, backgroundColor)
+
+                            if (shouldInvertColor) invertViewColor(mainContent)
+                        }
+
+                        override fun onViewDetachedFromWindow(view: View) {
+                            view.background = null
+                        }
+                    })
+                }
         }
-        closeDexKit()
 
         /*
 
@@ -461,7 +451,7 @@ object BlurSecurity : BaseHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
                         val view = HookUtils.getValueByField(param.thisObject, "d") as View
                         val parentView = view.parent
-                        HookUtils.log(parentView)
+                        logI(parentView.toString())
                         if (parentView is ViewGroup) {
                             val lastChild = parentView.getChildAt(parentView.childCount - 1)
                             if (lastChild is ImageView && lastChild.drawable is VectorDrawable) {
@@ -517,7 +507,7 @@ object BlurSecurity : BaseHook() {
                 }
             }
         } catch (e: Throwable) {
-            HookUtils.log(e.message)
+            logW("$TAG => invertViewColor", e)
         }
     }
 
@@ -553,7 +543,7 @@ object BlurSecurity : BaseHook() {
                 }
             }
         } catch (e: Throwable) {
-            HookUtils.log(e.message)
+            logW("$TAG => isChildNeedInvertColor", e)
         }
         return true
     }

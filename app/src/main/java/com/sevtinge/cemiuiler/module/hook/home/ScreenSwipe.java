@@ -1,5 +1,7 @@
 package com.sevtinge.cemiuiler.module.hook.home;
 
+import static com.sevtinge.cemiuiler.utils.log.AndroidLogUtils.LogD;
+
 import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
@@ -12,8 +14,8 @@ import android.view.ViewGroup;
 import com.sevtinge.cemiuiler.module.app.GlobalActions;
 import com.sevtinge.cemiuiler.module.base.BaseHook;
 import com.sevtinge.cemiuiler.utils.Helpers;
-import com.sevtinge.cemiuiler.utils.LogUtils;
 import com.sevtinge.cemiuiler.utils.PrefsUtils;
+import com.sevtinge.cemiuiler.utils.log.XposedLogUtils;
 
 import de.robv.android.xposed.XposedHelpers;
 
@@ -72,7 +74,7 @@ public class ScreenSwipe extends BaseHook {
                                         mPrefsMap.put(key, PrefsUtils.getSharedBoolPrefs(act, key, false));
                                 }
                         } catch (Throwable t) {
-                            Helpers.log(t);
+                            LogD(TAG, "setAction", t);
                         }
                     }
                 };
@@ -142,6 +144,7 @@ public class ScreenSwipe extends BaseHook {
                 if (PrefsUtils.getSharedIntPrefs((Context) param.args[0], "prefs_key_home_gesture_up_swipe_action", 0) > 0)
                     param.setResult(false);
             }
-        })) if (lpparam.packageName.equals("com.miui.home")) LogUtils.logXp(TAG, "Cannot disable swipe up search");
+        })) if (lpparam.packageName.equals("com.miui.home"))
+            XposedLogUtils.INSTANCE.logI(TAG, "Cannot disable swipe up search");
     }
 }

@@ -1,12 +1,13 @@
 package com.sevtinge.cemiuiler.module.app;
 
 import static com.sevtinge.cemiuiler.utils.devicesdk.SystemSDKKt.isAndroidR;
-import static com.sevtinge.cemiuiler.utils.devicesdk.SystemSDKKt.isMoreAndroidVersion;
 
 import com.sevtinge.cemiuiler.module.base.BaseModule;
 import com.sevtinge.cemiuiler.module.hook.miinput.UnlockKnuckleFunction;
 import com.sevtinge.cemiuiler.module.hook.systemsettings.AddMiuiPlusEntry;
 import com.sevtinge.cemiuiler.module.hook.systemsettings.AppsFreezerEnable;
+import com.sevtinge.cemiuiler.module.hook.systemsettings.EnableFoldArea;
+import com.sevtinge.cemiuiler.module.hook.systemsettings.EnablePadArea;
 import com.sevtinge.cemiuiler.module.hook.systemsettings.EnableSpeedMode;
 import com.sevtinge.cemiuiler.module.hook.systemsettings.InternationalBuild;
 import com.sevtinge.cemiuiler.module.hook.systemsettings.NewNFCPage;
@@ -20,8 +21,6 @@ import com.sevtinge.cemiuiler.module.hook.systemsettings.VoipAssistantController
 import com.sevtinge.cemiuiler.module.hook.systemsettings.aiimage.UnlockAi;
 import com.sevtinge.cemiuiler.module.hook.systemsettings.aiimage.UnlockMemc;
 import com.sevtinge.cemiuiler.module.hook.systemsettings.aiimage.UnlockSuperResolution;
-import com.sevtinge.cemiuiler.module.hook.systemsettings.EnableFoldArea;
-import com.sevtinge.cemiuiler.module.hook.systemsettings.EnablePadArea;
 
 public class SystemSettings extends BaseModule {
 
@@ -48,9 +47,7 @@ public class SystemSettings extends BaseModule {
 
         if (!isAndroidR()) {
             initHook(UnlockTaplusForSettings.INSTANCE, mPrefsMap.getBoolean("content_extension_unlock_taplus"));
-        }
-
-        if (!isMoreAndroidVersion(33)) {
+        } else {
             initHook(UnlockKnuckleFunction.INSTANCE, mPrefsMap.getBoolean("system_settings_knuckle_function"));
         }
     }
