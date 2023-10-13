@@ -103,18 +103,20 @@ object AddBlurEffectToNotificationView : BaseHook() {
 
 
             // 换个方式修改通知上划极限值
+//用findClass方法，可修复锁屏时钟样式闪退，也许这就是mi10暴毙的原因(猜测)
+
             try {
                 "com.android.systemui.statusbar.notification.stack.AmbientState".replaceMethod("getOverExpansion") {
                     val getScreenHeight =
-                        loadClass("com.android.systemui.fsgesture.AppQuickSwitchActivity")
-                            .callStaticMethod("getScreenHeight", appContext) as Int
+                        findClass("com.android.systemui.fsgesture.AppQuickSwitchActivity")
+                            .callStaticMethod("getScreenHeight",appContext) as Int
                     val mOverExpansion = it.thisObject.getObjectField("mOverExpansion") as Float
                     val isNCSwitching = it.thisObject.getObjectField("isNCSwitching") as Boolean
                     val isSwipingUp = it.thisObject.getObjectField("mIsSwipingUp") as Boolean
                     val isFlinging = it.thisObject.getObjectField("mIsFlinging") as Boolean
                     val isAppearing = it.thisObject.getObjectField("mAppearing") as Boolean
                     val isScreenLandscape =
-                        loadClass("com.android.systemui.statusbar.notification.NotificationUtil")
+                        findClass("com.android.systemui.statusbar.notification.NotificationUtil")
                             .callStaticMethod("isScreenLandscape") as Boolean
 
                     if (isAppearing && (isSwipingUp || isFlinging) && !isNCSwitching) {
@@ -145,7 +147,7 @@ object AddBlurEffectToNotificationView : BaseHook() {
                     val mAppearFraction = it.thisObject.getObjectField("mAppearFraction") as Float
                     val isAppearing = it.thisObject.getObjectField("mAppearing") as Boolean
                     val isScreenLandscape =
-                        loadClass("com.android.systemui.statusbar.notification.NotificationUtil")
+                        findClass("com.android.systemui.statusbar.notification.NotificationUtil")
                             .callStaticMethod("isScreenLandscape") as Boolean
 
                     if (isAppearing && (isSwipingUp || isFlinging) && !isNCSwitching && hasActiveMediaOrRecommendation && isScreenLandscape) {
@@ -195,6 +197,26 @@ object AddBlurEffectToNotificationView : BaseHook() {
                 override fun afterHookedMethod(param: MethodHookParam) {
                     val notificationBackground = param.thisObject as View
                     val backgroundDrawable = notificationBackground.background ?: return
+
+//适配游戏模式及横屏全屏视频半透明通知(可以做个开关)
+
+                           if (isTransparentAble()) { 
+                         XposedHelpers.callMethod( 
+                             notificationBackground.background, 
+                             "setVisible", 
+                             false, 
+                             false 
+                         ) 
+                         } else { 
+  
+                         XposedHelpers.callMethod( 
+                             notificationBackground.background, 
+                             "setVisible", 
+                             true, 
+                             false 
+                         ) 
+                                         } 
+
                     if (HookUtils.isBlurDrawable(backgroundDrawable)) {
                         val drawable = param.args[1] as Drawable
                         backgroundDrawable.bounds = drawable.bounds
@@ -643,6 +665,18 @@ object AddBlurEffectToNotificationView : BaseHook() {
             "isDefaultLockScreenTheme"
         ) as Boolean
     }
+
+//增加一个游戏模式跟全屏视频判断，用以增加透明通知适配
+     fun isTransparentAble(): Boolean { 
+         val notificationContentInflaterInjectorClass = findClassIfExists( 
+             "com.android.systemui.statusbar.notification.row.NotificationContentInflaterInjector" 
+         ) ?: return true 
+         return XposedHelpers.callStaticMethod( 
+             notificationContentInflaterInjectorClass, 
+             "isTransparentAble" 
+         ) as Boolean 
+      } 
+
 
     fun hideBlurEffectForNotificationRow(notificationRow: View) {
         if (notificationRow.javaClass.name.contains("ZenModeView")) {
