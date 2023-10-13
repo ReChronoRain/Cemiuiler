@@ -53,7 +53,7 @@ jobs:
           echo "APK_FILE_CANARY=$(find app/build/outputs/apk/canary -name '*.apk')" >> $GITHUB_ENV
 
       - name: Show APKs SHA256
-        if: success() &&0contains(github.event.head_commit.message, '[skip]') == false
+        if: success() && contains(github.event.head_commit.message, '[skip]') == false
         run: |
           echo "### Build Success" >> $GITHUB_STEP_SUMMARY
           echo "|Artifact|SHA256|" >> $GITHUB_STEP_SUMMARY
