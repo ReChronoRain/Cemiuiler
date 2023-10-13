@@ -4,7 +4,6 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.view.View
 import android.view.ViewGroup
-import com.github.kyuubiran.ezxhelper.ClassUtils.loadClass
 import com.github.kyuubiran.ezxhelper.EzXHelper.appContext
 import com.sevtinge.cemiuiler.module.base.BaseHook
 import com.sevtinge.cemiuiler.utils.HookUtils
@@ -27,6 +26,9 @@ object AddBlurEffectToNotificationView : BaseHook() {
     var blurRadius: Int = mPrefsMap.getInt("system_ui_control_center_blur_radius", 99)
     var defaultBackgroundAlpha: Int =
         mPrefsMap.getInt("system_ui_control_center_default_background_alpha", 200)
+    val fixNotification by lazy {
+        mPrefsMap.getBoolean("n_enable_fix")
+    }
 
     fun setDrawableAlpha(thiz: Any?, alpha: Int) {
         if (isAndroidU()) {
@@ -79,7 +81,7 @@ object AddBlurEffectToNotificationView : BaseHook() {
             ) ?: return
 
         // 通知模糊额外修正项，增加一个开关避免使用过程中暴毙
-        if(isAndroidT() && mPrefsMap.getBoolean("n_enable_fix")) {
+        if (isAndroidT() && fixNotification) {
             val mediaDataFilterClass =
                 findClassIfExists("com.android.systemui.media.MediaDataFilter") ?: return
 
@@ -103,13 +105,11 @@ object AddBlurEffectToNotificationView : BaseHook() {
 
 
             // 换个方式修改通知上划极限值
-//用findClass方法，可修复锁屏时钟样式闪退，也许这就是mi10暴毙的原因(猜测)
-
             try {
                 "com.android.systemui.statusbar.notification.stack.AmbientState".replaceMethod("getOverExpansion") {
                     val getScreenHeight =
                         findClass("com.android.systemui.fsgesture.AppQuickSwitchActivity")
-                            .callStaticMethod("getScreenHeight",appContext) as Int
+                            .callStaticMethod("getScreenHeight", appContext) as Int
                     val mOverExpansion = it.thisObject.getObjectField("mOverExpansion") as Float
                     val isNCSwitching = it.thisObject.getObjectField("isNCSwitching") as Boolean
                     val isSwipingUp = it.thisObject.getObjectField("mIsSwipingUp") as Boolean
@@ -135,7 +135,7 @@ object AddBlurEffectToNotificationView : BaseHook() {
                         return@replaceMethod mOverExpansion
                     }
                 }
-            } catch (t: Throwable){
+            } catch (t: Throwable) {
                 logE(t)
             }
 
@@ -156,7 +156,7 @@ object AddBlurEffectToNotificationView : BaseHook() {
                         return@replaceMethod mAppearFraction
                     }
                 }
-            } catch (t: Throwable){
+            } catch (t: Throwable) {
                 logE(t)
             }
         }
@@ -198,24 +198,20 @@ object AddBlurEffectToNotificationView : BaseHook() {
                     val notificationBackground = param.thisObject as View
                     val backgroundDrawable = notificationBackground.background ?: return
 
-//适配游戏模式及横屏全屏视频半透明通知(可以做个开关)
-
-                           if (isTransparentAble()) { 
-                         XposedHelpers.callMethod( 
-                             notificationBackground.background, 
-                             "setVisible", 
-                             false, 
-                             false 
-                         ) 
-                         } else { 
-  
-                         XposedHelpers.callMethod( 
-                             notificationBackground.background, 
-                             "setVisible", 
-                             true, 
-                             false 
-                         ) 
-                                         } 
+                    // 适配游戏模式及横屏全屏视频半透明通知(可以做个开关)
+                    if (isTransparentAble() && fixNotification) {
+                        XposedHelpers.callMethod(
+                            notificationBackground.background,
+                            "setVisible",
+                            false, false
+                        )
+                    } else {
+                        XposedHelpers.callMethod(
+                            notificationBackground.background,
+                            "setVisible",
+                            true, false
+                        )
+                    }
 
                     if (HookUtils.isBlurDrawable(backgroundDrawable)) {
                         val drawable = param.args[1] as Drawable
@@ -666,16 +662,16 @@ object AddBlurEffectToNotificationView : BaseHook() {
         ) as Boolean
     }
 
-//增加一个游戏模式跟全屏视频判断，用以增加透明通知适配
-     fun isTransparentAble(): Boolean { 
-         val notificationContentInflaterInjectorClass = findClassIfExists( 
-             "com.android.systemui.statusbar.notification.row.NotificationContentInflaterInjector" 
-         ) ?: return true 
-         return XposedHelpers.callStaticMethod( 
-             notificationContentInflaterInjectorClass, 
-             "isTransparentAble" 
-         ) as Boolean 
-      } 
+    // 增加一个游戏模式跟全屏视频判断，用以增加透明通知适配
+    fun isTransparentAble(): Boolean {
+        val notificationContentInflaterInjectorClass = findClassIfExists(
+            "com.android.systemui.statusbar.notification.row.NotificationContentInflaterInjector"
+        ) ?: return true
+        return XposedHelpers.callStaticMethod(
+            notificationContentInflaterInjectorClass,
+            "isTransparentAble"
+        ) as Boolean
+    }
 
 
     fun hideBlurEffectForNotificationRow(notificationRow: View) {
