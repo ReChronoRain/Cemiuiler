@@ -100,6 +100,13 @@
     <string name="appcompat_search_action_mode_cancel">Cancelar</string>
     <string name="appcompat_search_input_description">Pesquisar</string>
     <string name="appcompat_actionbar_immersion_button_more_description">Mais</string>
+    <string name="appcompat_action_mode_inverse">Desmarcar todos</string>
+    <string name="color_picker_alpha_text_transparent">Opacidade</string>
+    <string name="color_picker_tab_grid">Grade</string>
+    <string name="color_picker_tab_slider">Slider</string>
+    <string name="color_picker_view_page_text_hue">Matiz</string>
+    <string name="color_picker_view_page_text_lightness">Luminosidade</string>
+    <string name="color_picker_view_page_text_saturation">Saturação</string>
     <!--String reuse-->
     <string name="top_margin">Margem superior</string>
     <string name="bottom_margin">Margem inferior</string>
@@ -590,6 +597,8 @@
     <string name="system_ui_control_center_hide_device_ctrl_entry">Entrada de controle do dispositivo</string>
     <string name="system_ui_control_center_control_detail_background_alpha">Valor do blur do detalhe de fundo do controle</string>
     <string name="system_ui_control_center_notification_blur_model">Modelo do blur de notificação</string>
+    <string name="system_ui_control_center_notification_blur_fix">Otimização de notificação</string>
+    <string name="system_ui_control_center_notification_blur_fix_desc">Função experimental, disponível apenas para modelos Android 13 e superiores. Após a ativação, o blur de notificação em algumas áreas será otimizado.\nPode haver um problema de travamento da interface do sistema em alguns modelos.</string>
     <string name="system_ui_control_center_blur_radius">Raio do blur</string>
     <string name="system_ui_control_center_blur_radius_desc">Sem notificação suspensa</string>
     <string name="system_ui_control_center_corner_radius">Raio do canto</string>
@@ -955,6 +964,13 @@
     <string name="miui_package_installer_install_source">Fonte de instalação personalizada</string>
     <string name="miui_package_installer_apk_info">Exibir mais informações do pacote</string>
     <string name="miui_package_installer_apk_info_desc">Exibir mais informações sobre o app que está sendo instalado</string>
+    <!--networkboost-->
+    <string name="various_disable_link_turbo_toast">Ocultar brinde LinkTurbo</string>
+    <string name="various_disable_link_turbo_toast_more">Por favor, reinicie o NetworkBoost no escopo de reinicialização rápida</string>
+    <!--nfc-->
+    <string name="nfc">Serviço NFC</string>
+    <string name="nfc_disable_sound">Desativar som</string>
+    <string name="nfc_allow_information_screen">Permitir reconhecível quando a tela de informações</string>
     <!--App vault-->
     <string name="personal_assistant">Assistente</string>
     <string name="personal_assistant_widget_crack">Correção do widget</string>
@@ -1136,8 +1152,6 @@
     <string name="settings_notfication_importance">Exibir importância da notificação</string>
     <string name="various_no_overscroll">Desativar rejeição fora dos limites</string>
     <string name="various_disable_bluetooth_restrict">Impedir que o bluetooth seja desligado temporariamente</string>
-    <string name="various_disable_link_turbo_toast">Ocultar brinde LinkTurbo</string>
-    <string name="various_disable_link_turbo_toast_more">Por favor, reinicie o NetworkBoost no escopo de reinicialização rápida</string>
     <string name="various_disable_access_device_logs">Ignorar diálogo de solicitação de logs do dispositivo de acesso</string>
     <string name="various_unlock_ime">Desbloquear IME</string>
     <string name="various_unlock_ime_desc">Após abrir, verifique o escopo do método de entrada correspondente no gerenciador Xposed</string>
@@ -1264,7 +1278,4 @@
     <string name="tip_18">Dica: Cemiuiler é o app de sistema com consumo de bateria mais rápido (fala mal-humorada)</string>
     <string name="tip_19">Dica: Se não houver nenhuma anotação especial para a função que fica cinza, significa que a função está anormal e não está planejada para ser aberta aos usuários por enquanto</string>
     <string name="tip_20">Dica: Não persiga a nova versão do Canary se não tiver nada para fazer e não se apresse em atualizar se ela estiver quebrada</string>
-    <string name="nfc_disable_sound">Desativar som</string>
-    <string name="nfc_allow_information_screen">Permitir reconhecível quando a tela de informações</string>
-    <string name="nfc">Serviço NFC</string>
 </resources>
