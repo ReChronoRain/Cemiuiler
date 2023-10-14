@@ -80,7 +80,7 @@ public class FlashLight extends TileUtils {
     public ArrayMap<String, Integer> tileUpdateState(XC_MethodHook.MethodHookParam param, Class<?> mResourceIcon, String tileName) {
         Context mContext = (Context) XposedHelpers.getObjectField(param.thisObject, "mContext");
         ContentObserver contentObserver;
-        logE("tileUpdateState: args: " + param.args[1]);
+        // logE("tileUpdateState: args: " + param.args[1]);
         if (param.args[1] != null) {
             boolean enabled = (boolean) param.args[1];
             Object flash = XposedHelpers.getObjectField(param.thisObject, "flashlightController");
@@ -90,14 +90,14 @@ public class FlashLight extends TileUtils {
                 }
                 if (!isListening) listening(mContext, param, flash, isListening);
                 setFlashLightEnabled(mContext, 1);
-                logE("tileUpdateState: isListening1: " + isListening);
+                // logE("tileUpdateState: isListening1: " + isListening);
             } else if ((boolean) XposedHelpers.callMethod(flash, "isEnabled")) {
                 if (getFlashLightEnabled(mContext) == 1 && !isListening) {
                     setFlashLightEnabled(mContext, 0);
                 }
                 if (!isListening) listening(mContext, param, flash, isListening);
                 setFlashLightEnabled(mContext, 1);
-                logE("tileUpdateState: isListening2: " + isListening + " call: " + (boolean) XposedHelpers.callMethod(flash, "isEnabled"));
+                // logE("tileUpdateState: isListening2: " + isListening + " call: " + (boolean) XposedHelpers.callMethod(flash, "isEnabled"));
             } else {
                 setFlashLightEnabled(mContext, 0);
                 if (isListening) {
@@ -107,7 +107,7 @@ public class FlashLight extends TileUtils {
                         mContext.getContentResolver().unregisterContentObserver(contentObserver);
                     }
                 }
-                logE("tileUpdateState: isListening3: " + isListening);
+                // logE("tileUpdateState: isListening3: " + isListening);
             }
         }
         return null;
@@ -121,7 +121,7 @@ public class FlashLight extends TileUtils {
                 public void onChange(boolean selfChange, @Nullable Uri uri) {
                     super.onChange(selfChange, uri);
                     hookFlash(param.thisObject, flash, mContext, readFile());
-                    logE("listening: listening: selfChange: " + selfChange + " uri: " + uri);
+                    // logE("listening: listening: selfChange: " + selfChange + " uri: " + uri);
                 }
             };
             mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor("flash_light_enabled"), false, contentObserver);
@@ -136,10 +136,10 @@ public class FlashLight extends TileUtils {
             "lambda$onChanged$0", boolean.class, float.class, new MethodHook() {
                 @Override
                 protected void before(MethodHookParam param) {
-                    logE("MiuiBrightnessController lambda$onChanged$0: " + param.args[0] + " 2: " + param.args[1]);
+                    // logE("MiuiBrightnessController lambda$onChanged$0: " + param.args[0] + " 2: " + param.args[1]);
                     Context mContext = (Context) XposedHelpers.getObjectField(param.thisObject, "mContext");
                     int enabled = getFlashLightEnabled(mContext);
-                    logE("lambda$onChanged$0 enabled: " + enabled);
+                    // logE("lambda$onChanged$0 enabled: " + enabled);
                     int i;
                     if (enabled == 1) {
                         float floatValue = (Float) param.args[1];
@@ -158,7 +158,7 @@ public class FlashLight extends TileUtils {
                                 //     i = 400;
                                 //     writeFile(i);
                             }
-                            logE("lambda$onChanged$0 i: " + i);
+                            // logE("lambda$onChanged$0 i: " + i);
                             writeFile(i);
                         } else {
                             XposedHelpers.callMethod(flash, "setFlashlight", false);
@@ -175,9 +175,9 @@ public class FlashLight extends TileUtils {
                 @Override
                 protected void before(MethodHookParam param) {
                     int enabled = getFlashLightEnabled(context);
-                    logE("MiuiBrightnessController$5 enabled: " + enabled);
+                    // logE("MiuiBrightnessController$5 enabled: " + enabled);
                     if (enabled == 1) {
-                        logE("MiuiBrightnessController$5 run");
+                        // logE("MiuiBrightnessController$5 run");
                         param.setResult(null);
                     }
                 }
