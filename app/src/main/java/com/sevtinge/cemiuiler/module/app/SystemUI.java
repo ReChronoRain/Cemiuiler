@@ -22,6 +22,7 @@ import com.sevtinge.cemiuiler.module.hook.systemui.controlcenter.CompactNotifica
 import com.sevtinge.cemiuiler.module.hook.systemui.controlcenter.ControlCenterStyle;
 import com.sevtinge.cemiuiler.module.hook.systemui.controlcenter.FiveGTile;
 import com.sevtinge.cemiuiler.module.hook.systemui.controlcenter.FixMediaControlPanel;
+import com.sevtinge.cemiuiler.module.hook.systemui.controlcenter.FlashLight;
 import com.sevtinge.cemiuiler.module.hook.systemui.controlcenter.GmsTile;
 import com.sevtinge.cemiuiler.module.hook.systemui.controlcenter.MuteVisibleNotifications;
 import com.sevtinge.cemiuiler.module.hook.systemui.controlcenter.NotificationWeather;
@@ -183,6 +184,7 @@ public class SystemUI extends BaseModule {
         initHook(new QSDetailBackGround(), mPrefsMap.getInt("system_control_center_qs_detail_bg", 0) > 0);
         initHook(new GmsTile(), mPrefsMap.getBoolean("security_center_gms_open"));
         initHook(new FiveGTile(), mPrefsMap.getBoolean("system_control_center_5g_tile"));
+        initHook(new FlashLight(), mPrefsMap.getBoolean("security_flash_light"));
         initHook(new SunlightMode(), mPrefsMap.getStringAsInt("system_control_center_sunshine_new_mode", 0) != 0);
         initHook(new QSGridLabels(), mPrefsMap.getInt("system_control_center_old_qs_rows", 1) > 1 ||
             mPrefsMap.getBoolean("system_control_center_qs_tile_label"));

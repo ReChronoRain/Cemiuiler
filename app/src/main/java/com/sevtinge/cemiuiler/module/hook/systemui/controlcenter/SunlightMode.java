@@ -61,6 +61,11 @@ public class SunlightMode extends TileUtils {
         }
     }
 
+    @Override
+    public boolean needCustom() {
+        return true;
+    }
+
     public void setPath() {
         String fileOne = "/sys/class/mi_display/disp-DSI-0/brightness_clone";
         String fileTwo = "/sys/class/backlight/panel0-backlight/brightness";
@@ -86,7 +91,7 @@ public class SunlightMode extends TileUtils {
         intentListening = true;*/
         if (path == null) {
             useSystem = true;
-            logE("setPath: Missing directory, unable to set this mode: " + path);
+            logE("Missing directory, unable to set this mode: " + useSystem);
         } else {
             ShellUtils.execCommand("chmod 777 " + path, true, false);
             // logI("setPath: im get file: " + path);
@@ -105,9 +110,10 @@ public class SunlightMode extends TileUtils {
 
     @Override
     public String[] customTileProvider() {
-        String[] TileProvider = new String[2];
+        String[] TileProvider = new String[3];
         TileProvider[0] = isMoreAndroidVersion(Build.VERSION_CODES.TIRAMISU) ? "autoBrightnessTileProvider" : "mAutoBrightnessTileProvider";
-        TileProvider[1] = "createTileInternal";
+        TileProvider[1] = isMoreAndroidVersion(Build.VERSION_CODES.TIRAMISU) ? "createTileInternal" : "interceptCreateTile";
+        TileProvider[2] = "createTile";
         return TileProvider;
     }
 
@@ -136,6 +142,11 @@ public class SunlightMode extends TileUtils {
     }
 
     @Override
+    public boolean needAfter() {
+        return false;
+    }
+
+    @Override
     public void tileClick(MethodHookParam param, String tileName) {
         Context mContext = (Context) XposedHelpers.getObjectField(param.thisObject, "mContext");
         try {
@@ -148,7 +159,7 @@ public class SunlightMode extends TileUtils {
                     Settings.System.putInt(mContext.getContentResolver(), sunlightMode, 1);
                     refreshState(param.thisObject);
                 } else {
-                    logE("tileClick: ERROR Int For sunlight_mode");
+                    logE("ERROR Int For sunlight_mode");
                 }
             } else {
                 if (!useSystem) {
@@ -252,7 +263,7 @@ public class SunlightMode extends TileUtils {
                 }
             }
         } catch (Settings.SettingNotFoundException e) {
-            logE("tileCheck: Missing system API: " + sunlightMode);
+            logE("tileUpdateState: Missing system API: " + sunlightMode);
         }
         try {
             if (!mMode) {
