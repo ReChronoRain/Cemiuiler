@@ -1,5 +1,6 @@
 package com.sevtinge.cemiuiler.module.hook.systemui.controlcenter;
 
+import static com.sevtinge.cemiuiler.utils.devicesdk.SystemSDKKt.isAndroidU;
 import static com.sevtinge.cemiuiler.utils.devicesdk.SystemSDKKt.isMoreAndroidVersion;
 
 import android.content.Context;
@@ -12,6 +13,7 @@ import android.util.ArrayMap;
 
 import androidx.annotation.Nullable;
 
+import com.sevtinge.cemiuiler.utils.MathUtils;
 import com.sevtinge.cemiuiler.utils.ShellUtils;
 import com.sevtinge.cemiuiler.utils.TileUtils;
 
@@ -97,7 +99,7 @@ public class FlashLight extends TileUtils {
                 }
                 if (!isListening) listening(mContext, param, flash, isListening);
                 setFlashLightEnabled(mContext, 1);
-                // logE("tileUpdateState: isListening2: " + isListening + " call: " + (boolean) XposedHelpers.callMethod(flash, "isEnabled"));
+                // logE("tileUpdateState: isListening2: " + isListening + " call: " + XposedHelpers.callMethod(flash, "isEnabled"));
             } else {
                 setFlashLightEnabled(mContext, 0);
                 if (isListening) {
@@ -131,54 +133,116 @@ public class FlashLight extends TileUtils {
     }
 
     public void hookFlash(Object o, Object flash, Context context, int max) {
-        final int maxPath = max;
-        findAndHookMethod("com.android.systemui.controlcenter.policy.MiuiBrightnessController",
-            "lambda$onChanged$0", boolean.class, float.class, new MethodHook() {
+        if (!isAndroidU()) {
+            setBrightnessUtils(o, flash, context, max);
+            findAndHookMethod("com.android.systemui.controlcenter.policy.MiuiBrightnessController",
+                "lambda$onChanged$0", boolean.class, float.class, new MethodHook() {
+                    @Override
+                    protected void before(MethodHookParam param) {
+                        // logE("MiuiBrightnessController lambda$onChanged$0: " + param.args[0] + " 2: " + param.args[1]);
+                        Context mContext = (Context) XposedHelpers.getObjectField(param.thisObject, "mContext");
+                        int enabled = getFlashLightEnabled(mContext);
+                        // logE("lambda$onChanged$0 enabled: " + enabled);
+                        if (enabled == 1) {
+                            param.setResult(null);
+                        }
+                    }
+                }
+            );
+
+            findAndHookMethod("com.android.systemui.controlcenter.policy.MiuiBrightnessController$5",
+                "run", new MethodHook() {
+                    @Override
+                    protected void before(MethodHookParam param) {
+                        int enabled = getFlashLightEnabled(context);
+                        // logE("MiuiBrightnessController$5 enabled: " + enabled);
+                        if (enabled == 1) {
+                            // logE("MiuiBrightnessController$5 run");
+                            param.setResult(null);
+                        }
+                    }
+                }
+            );
+        } else {
+            setBrightnessUtils(o, flash, context, max);
+            findAndHookMethod("com.android.systemui.controlcenter.policy.MiuiBrightnessController$$ExternalSyntheticLambda0",
+                "run", new MethodHook() {
+                    @Override
+                    protected void before(MethodHookParam param) {
+                        if (getFlashLightEnabled(context) == 1) {
+                            // logE("MiuiBrightnessController$$ExternalSyntheticLambda0 run");
+                            param.setResult(null);
+                        }
+                    }
+                }
+            );
+            findAndHookMethod("com.android.systemui.controlcenter.policy.MiuiBrightnessController$2",
+                "run", new MethodHook() {
+                    @Override
+                    protected void before(MethodHookParam param) {
+                        if (getFlashLightEnabled(context) == 1) {
+                            // logE("MiuiBrightnessController$2 run");
+                            param.setResult(null);
+                        }
+                    }
+                }
+            );
+        }
+    }
+
+    public void setBrightnessUtils(Object o, Object flash, Context context, int maxPath) {
+        findAndHookMethod("com.android.systemui.controlcenter.policy.BrightnessUtils",
+            "convertGammaToLinearFloat", int.class, float.class, float.class, new MethodHook() {
                 @Override
                 protected void before(MethodHookParam param) {
-                    // logE("MiuiBrightnessController lambda$onChanged$0: " + param.args[0] + " 2: " + param.args[1]);
-                    Context mContext = (Context) XposedHelpers.getObjectField(param.thisObject, "mContext");
-                    int enabled = getFlashLightEnabled(mContext);
-                    // logE("lambda$onChanged$0 enabled: " + enabled);
-                    int i;
-                    if (enabled == 1) {
-                        float floatValue = (Float) param.args[1];
-                        // if (floatValue < 0.03f && floatValue > 0.01f) {
-                        //     i = Math.round(floatValue * 600);
-                        // } else if (floatValue < 0.009f) {
-                        //     i = Math.round(floatValue * 700);
-                        // } else if (floatValue < 0.005f) {
-                        //     i = Math.round(floatValue * 800);
-                        // } else
-                        i = Math.round(floatValue * 500);
+                    if (getFlashLightEnabled(context) == 1) {
+                        // AndroidLogUtils.deLogI("FlashLight", "convertGammaToLinearFloat int 1: " + param.args[0]);
+                        // AndroidLogUtils.deLogI("FlashLight", "convertGammaToLinearFloat float 2: " + param.args[1]);
+                        // AndroidLogUtils.deLogI("FlashLight", "convertGammaToLinearFloat float 3: " + param.args[2]);
+                        // logE("convertGammaToLinearFloat int 1: " + param.args[0]);
+                        // logE("convertGammaToLinearFloat float 2: " + param.args[1]);
+                        // logE("convertGammaToLinearFloat float 3: " + param.args[2]);
+                        float min = (float) param.args[1];
+                        float max = (float) param.args[2];
+                        if (min < 0.001f) {
+                            min = 0.00114514f;
+                        }
+                        min = Math.round(min * 500);
+                        max = Math.round(max * 500);
+                        float exp;
+                        Class<?> BrightnessUtils = XposedHelpers.findClass("com.android.systemui.controlcenter.policy.BrightnessUtils", lpparam.classLoader);
+                        int GAMMA_SPACE_MAX = XposedHelpers.getStaticIntField(BrightnessUtils, "GAMMA_SPACE_MAX");
+                        float R = XposedHelpers.getStaticFloatField(BrightnessUtils, "R");
+                        float A = XposedHelpers.getStaticFloatField(BrightnessUtils, "A");
+                        float B = XposedHelpers.getStaticFloatField(BrightnessUtils, "B");
+                        float C = XposedHelpers.getStaticFloatField(BrightnessUtils, "C");
+                        float norm = MathUtils.norm(0.0f, GAMMA_SPACE_MAX, (int) param.args[0]);
+                        if (norm <= R) {
+                            exp = MathUtils.sq(norm / R);
+                        } else {
+                            exp = MathUtils.exp((norm - C) / A) + B;
+                        }
+                        if (min < 10) {
+                            min = 12;
+                        }
+                        // AndroidLogUtils.deLogI("FlashLight", "convertGammaToLinearFloat R: " + R + " A: " + A + " B: " + B + " C: " + C);
+                        // AndroidLogUtils.deLogI("FlashLight", "convertGammaToLinearFloat exp: " + exp);
+                        float end = MathUtils.lerpNew(min, max, (MathUtils.constrain(exp, 0.0f, 12.0f) / 12.0f));
+                        // AndroidLogUtils.deLogI("FlashLight", "convertGammaToLinearFloat min: " + min);
+                        // AndroidLogUtils.deLogI("FlashLight", "convertGammaToLinearFloat max: " + max);
+                        // AndroidLogUtils.deLogI("FlashLight", "convertGammaToLinearFloat end: " + end);
+                        int i = Math.round(end);
                         if (i != 0) {
                             if (maxPath != -1 && i > maxPath) {
                                 i = maxPath;
-                                // } else if (i > 400) {
-                                //     i = 400;
-                                //     writeFile(i);
                             }
-                            // logE("lambda$onChanged$0 i: " + i);
+                            // logE("convertGammaToLinearFloat i: " + i);
                             writeFile(i);
                         } else {
                             XposedHelpers.callMethod(flash, "setFlashlight", false);
                             XposedHelpers.callMethod(o, "refreshState");
                         }
-                        param.setResult(null);
-                    }
-                }
-            }
-        );
-
-        findAndHookMethod("com.android.systemui.controlcenter.policy.MiuiBrightnessController$5",
-            "run", new MethodHook() {
-                @Override
-                protected void before(MethodHookParam param) {
-                    int enabled = getFlashLightEnabled(context);
-                    // logE("MiuiBrightnessController$5 enabled: " + enabled);
-                    if (enabled == 1) {
-                        // logE("MiuiBrightnessController$5 run");
-                        param.setResult(null);
+                        param.setResult(end);
                     }
                 }
             }
