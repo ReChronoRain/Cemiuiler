@@ -111,13 +111,13 @@ public class SunlightMode extends TileUtils {
 
     @Override
     public Class<?> customClass() {
-        return findClassIfExists("com.android.systemui.qs.tiles.AutoBrightnessTile");
+        return findClassIfExists("com.android.systemui.qs.tiles.PowerSaverTile");
     }
 
     @Override
     public String[] customTileProvider() {
         String[] TileProvider = new String[3];
-        TileProvider[0] = isMoreAndroidVersion(Build.VERSION_CODES.TIRAMISU) ? "autoBrightnessTileProvider" : "mAutoBrightnessTileProvider";
+        TileProvider[0] = isMoreAndroidVersion(Build.VERSION_CODES.TIRAMISU) ? "powerSaverTileProvider" : "mPowerSaverTileProvider";
         TileProvider[1] = isMoreAndroidVersion(Build.VERSION_CODES.TIRAMISU) ? "createTileInternal" : "interceptCreateTile";
         TileProvider[2] = "createTile";
         return TileProvider;
@@ -421,16 +421,12 @@ public class SunlightMode extends TileUtils {
                         // Log.i("SunlightMode", "onReceive: run");
                         // Settings.System.putInt(context.getContentResolver(), screenBrightness, lastSunlight);
                         readAndWrit("" + lastSunlight, false);
-                        if (getCustomBrightnessMode(context) == 1) {
-                            setBrightnessMode(context, 1);
-                            setCustomBrightnessMode(context, 0);
-                        }
                     } else {
                         Settings.System.putInt(context.getContentResolver(), screenBrightness, lastSunlight);
-                        if (getCustomBrightnessMode(context) == 1) {
-                            setBrightnessMode(context, 1);
-                            setCustomBrightnessMode(context, 0);
-                        }
+                    }
+                    if (getCustomBrightnessMode(context) == 1) {
+                        setBrightnessMode(context, 1);
+                        setCustomBrightnessMode(context, 0);
                     }
                 }
             }
