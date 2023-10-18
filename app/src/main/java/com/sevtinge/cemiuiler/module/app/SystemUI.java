@@ -195,7 +195,7 @@ public class SystemUI extends BaseModule {
         initHook(NotificationWeatherOld.INSTANCE, mPrefsMap.getBoolean("system_ui_control_center_show_weather"));
         initHook(NotificationWeatherNew.INSTANCE, mPrefsMap.getBoolean("system_ui_control_center_show_weather"));
         initHook(CompactNotificationsHook.INSTANCE, mPrefsMap.getBoolean("system_ui_control_center_compact_notice"));
-        initHook(new CCGrid(), mPrefsMap.getInt("system_control_center_cc_rows", 4) > 4 ||
+        initHook(CCGrid.INSTANCE, mPrefsMap.getInt("system_control_center_cc_rows", 4) > 4 ||
             mPrefsMap.getInt("system_control_center_cc_columns", 4) > 4 ||
             mPrefsMap.getBoolean("system_ui_control_center_rounded_rect") ||
             mPrefsMap.getBoolean("system_control_center_qs_tile_label"));
@@ -234,6 +234,6 @@ public class SystemUI extends BaseModule {
 
         initHook(DoubleTapToSleep.INSTANCE, mPrefsMap.getBoolean("system_ui_status_bar_double_tap_to_sleep"));
 
-        initHook(new PluginHelper(), true);
+        initHook(new PluginHelper());
     }
 }
