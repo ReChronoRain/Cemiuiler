@@ -13,16 +13,17 @@ import com.sevtinge.cemiuiler.module.hook.securitycenter.IsSbnBelongToActiveBubb
 import com.sevtinge.cemiuiler.module.hook.securitycenter.NewBoxBlur;
 import com.sevtinge.cemiuiler.module.hook.securitycenter.RemoveConversationBubbleSettingsRestriction;
 import com.sevtinge.cemiuiler.module.hook.securitycenter.RemoveOpenAppConfirmationPopup;
-import com.sevtinge.cemiuiler.module.hook.securitycenter.ScreenUsedTime;
-import com.sevtinge.cemiuiler.module.hook.securitycenter.ShowBatteryTemperatureNew;
 import com.sevtinge.cemiuiler.module.hook.securitycenter.SidebarLineCustom;
-import com.sevtinge.cemiuiler.module.hook.securitycenter.UnlockSuperWirelessCharge;
 import com.sevtinge.cemiuiler.module.hook.securitycenter.VideoDolbyOpen;
 import com.sevtinge.cemiuiler.module.hook.securitycenter.app.AppDefaultSort;
 import com.sevtinge.cemiuiler.module.hook.securitycenter.app.AppDetails;
 import com.sevtinge.cemiuiler.module.hook.securitycenter.app.AppDisable;
 import com.sevtinge.cemiuiler.module.hook.securitycenter.app.AppRestrict;
 import com.sevtinge.cemiuiler.module.hook.securitycenter.app.OpenByDefaultSetting;
+import com.sevtinge.cemiuiler.module.hook.securitycenter.battery.ScreenUsedTime;
+import com.sevtinge.cemiuiler.module.hook.securitycenter.battery.ShowBatteryTemperatureNew;
+import com.sevtinge.cemiuiler.module.hook.securitycenter.battery.UnlockSmartCharge;
+import com.sevtinge.cemiuiler.module.hook.securitycenter.battery.UnlockSuperWirelessCharge;
 import com.sevtinge.cemiuiler.module.hook.securitycenter.beauty.BeautyFace;
 import com.sevtinge.cemiuiler.module.hook.securitycenter.beauty.BeautyLightAuto;
 import com.sevtinge.cemiuiler.module.hook.securitycenter.beauty.BeautyPc;
@@ -64,6 +65,7 @@ public class SecurityCenter extends BaseModule {
         initHook(ShowBatteryTemperatureNew.INSTANCE, mPrefsMap.getBoolean("security_center_show_battery_temperature"));
         initHook(UnlockSuperWirelessCharge.INSTANCE, mPrefsMap.getBoolean("security_center_super_wireless_charge"));
         initHook(ScreenUsedTime.INSTANCE, mPrefsMap.getBoolean("security_center_unlock_screen_time"));
+        initHook(UnlockSmartCharge.INSTANCE, mPrefsMap.getBoolean("security_center_unlock_smart_charge"));
 
         // 隐私保护
         initHook(new AppLockPinScramble(), mPrefsMap.getBoolean("security_center_applock_pin_scramble"));
