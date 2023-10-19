@@ -109,32 +109,25 @@ public class ShellUtils {
     /**
      * execute shell commands
      *
-     * @param command         command activity_wifi
-     * @param isRoot          whether need to run with root
-     * @param isNeedResultMsg whether need result msg
-     * @param checkResult     whether check result
-     * @return if checkResult is true, then return boolean
+     * @param command command activity_wifi
+     * @param isRoot  whether need to run with root
+     * @return if execCommand.result is 0, then return true, else return false
      * @see ShellUtils#execCommand(String[], boolean, boolean)
      */
-    public static boolean execCommand(String command, boolean isRoot, boolean isNeedResultMsg, boolean checkResult) {
-        CommandResult commandResult = execCommand(new String[]{command}, isRoot, isNeedResultMsg);
-        if (checkResult) return commandResult.result == 0;
-        return false; // 请勿把checkResult设置为false
+    public static boolean getResultBoolean(String command, boolean isRoot) {
+        return execCommand(new String[]{command}, isRoot, false).result == 0;
     }
 
     /**
      * execute shell commands
      *
-     * @param commands        command activity_wifi
-     * @param isRoot          whether need to run with root
-     * @param isNeedResultMsg whether need result msg
-     * @return if checkResult is true, then return boolean
+     * @param commands command activity_wifi
+     * @param isRoot   whether need to run with root
+     * @return if execCommand.result is 0, then return true, else return false
      * @see ShellUtils#execCommand(String[], boolean, boolean)
      */
-    public static boolean execCommand(List<String> commands, boolean isRoot, boolean isNeedResultMsg, boolean checkResult) {
-        if (checkResult)
-            return execCommand(commands == null ? null : commands.toArray(new String[]{}), isRoot, isNeedResultMsg).result == 0;
-        return false; // 请勿把checkResult设置为false
+    public static boolean getResultBoolean(List<String> commands, boolean isRoot) {
+        return execCommand(commands == null ? null : commands.toArray(new String[]{}), isRoot, false).result == 0;
     }
 
     /**

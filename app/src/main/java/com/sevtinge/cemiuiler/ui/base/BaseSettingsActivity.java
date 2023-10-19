@@ -123,9 +123,9 @@ public class BaseSettingsActivity extends AppCompatActivity {
         boolean result;
 
         if (isRestartSystem) {
-            result = ShellUtils.execCommand("reboot", true, false, true);
+            result = ShellUtils.getResultBoolean("reboot", true);
         } else {
-            result = ShellUtils.execCommand("pkill -l 9 -f " + packageName, true, false, true);
+            result = ShellUtils.getResultBoolean("pkill -l 9 -f " + packageName, true);
         }
         if (!result) {
             new AlertDialog.Builder(this)
