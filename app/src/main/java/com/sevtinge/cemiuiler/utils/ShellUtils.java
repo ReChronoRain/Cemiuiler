@@ -1,11 +1,16 @@
 package com.sevtinge.cemiuiler.utils;
 
+import com.sevtinge.cemiuiler.utils.log.AndroidLogUtils;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
+/**
+ * @noinspection JavadocDeclaration, unused , RedundantSuppression
+ */
 public class ShellUtils {
 
     public static final String COMMAND_SU = "su";
@@ -20,10 +25,22 @@ public class ShellUtils {
     /**
      * check whether has root permission
      *
-     * @return
+     * @return if int = 0, then have root, else don't have.
      */
-    public static boolean checkRootPermission() {
-        return execCommand("echo root", true, false).result == 0;
+    public static int checkRootPermission() {
+        Process process = null;
+        int exitCode = -1;
+        try {
+            process = Runtime.getRuntime().exec("su -c true");
+            return exitCode = process.waitFor();
+        } catch (Exception e) {
+            AndroidLogUtils.LogE("checkRootPermission", "check whether has root permission error: ", e);
+            return exitCode;
+        } finally {
+            if (process != null) {
+                process.destroy();
+            }
+        }
     }
 
     /**
@@ -69,6 +86,7 @@ public class ShellUtils {
      * @param isRoot          whether need to run with root
      * @param isNeedResultMsg whether need result msg
      * @return
+     * @noinspection UnusedReturnValue
      * @see ShellUtils#execCommand(String[], boolean, boolean)
      */
     public static CommandResult execCommand(String command, boolean isRoot, boolean isNeedResultMsg) {
@@ -86,6 +104,37 @@ public class ShellUtils {
      */
     public static CommandResult execCommand(List<String> commands, boolean isRoot, boolean isNeedResultMsg) {
         return execCommand(commands == null ? null : commands.toArray(new String[]{}), isRoot, isNeedResultMsg);
+    }
+
+    /**
+     * execute shell commands
+     *
+     * @param command         command activity_wifi
+     * @param isRoot          whether need to run with root
+     * @param isNeedResultMsg whether need result msg
+     * @param checkResult     whether check result
+     * @return if checkResult is true, then return boolean
+     * @see ShellUtils#execCommand(String[], boolean, boolean)
+     */
+    public static boolean execCommand(String command, boolean isRoot, boolean isNeedResultMsg, boolean checkResult) {
+        CommandResult commandResult = execCommand(new String[]{command}, isRoot, isNeedResultMsg);
+        if (checkResult) return commandResult.result == 0;
+        return false; // 请勿把checkResult设置为false
+    }
+
+    /**
+     * execute shell commands
+     *
+     * @param commands        command activity_wifi
+     * @param isRoot          whether need to run with root
+     * @param isNeedResultMsg whether need result msg
+     * @return if checkResult is true, then return boolean
+     * @see ShellUtils#execCommand(String[], boolean, boolean)
+     */
+    public static boolean execCommand(List<String> commands, boolean isRoot, boolean isNeedResultMsg, boolean checkResult) {
+        if (checkResult)
+            return execCommand(commands == null ? null : commands.toArray(new String[]{}), isRoot, isNeedResultMsg).result == 0;
+        return false; // 请勿把checkResult设置为false
     }
 
     /**
@@ -113,6 +162,12 @@ public class ShellUtils {
         StringBuilder errorMsg = null;
 
         DataOutputStream os = null;
+        if (isRoot) {
+            int exitCode = checkRootPermission();
+            if (exitCode != 0) {
+                return new CommandResult(exitCode, null, null);
+            }
+        }
         try {
             process = Runtime.getRuntime().exec(isRoot ? COMMAND_SU : COMMAND_SH);
             os = new DataOutputStream(process.getOutputStream());
