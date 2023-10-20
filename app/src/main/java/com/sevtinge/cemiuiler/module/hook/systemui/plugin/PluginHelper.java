@@ -31,8 +31,8 @@ public class PluginHelper extends BaseHook {
                                 isHooked = true;
                                 if (pluginLoader == null) {
                                     pluginLoader = (ClassLoader) param.getResult();
-                                    setClassLoader(pluginLoader);
                                 }
+                                setClassLoader(pluginLoader);
                             } else {
                                 logE("appInfo is not miui.systemui.plugin");
                             }
@@ -64,8 +64,8 @@ public class PluginHelper extends BaseHook {
                                 isHooked = true;
                                 if (pluginLoader == null) {
                                     pluginLoader = (ClassLoader) pathClassLoader;
-                                    setClassLoader(pluginLoader);
                                 }
+                                setClassLoader(pluginLoader);
                             } else {
                                 logE("appInfo is not miui.systemui.plugin");
                             }
