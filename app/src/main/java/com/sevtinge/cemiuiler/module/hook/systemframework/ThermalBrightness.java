@@ -64,6 +64,7 @@ public class ThermalBrightness extends BaseHook {
                 }
             }
         );*/
+
         try {
             findClassIfExists(displayPowerControllerImpl).getDeclaredMethod("updateThermalBrightness", float.class);
             findAndHookMethod(displayPowerControllerImpl,
