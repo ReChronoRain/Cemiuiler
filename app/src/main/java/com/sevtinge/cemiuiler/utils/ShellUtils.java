@@ -138,12 +138,12 @@ public class ShellUtils {
 
         DataOutputStream os = null;
         try {
-            if (isRoot) {
-                int exitCode = checkRootPermission();
-                if (exitCode != 0) {
-                    return new CommandResult(exitCode, null, null);
-                }
-            }
+            // if (isRoot) {
+            //     int exitCode = checkRootPermission();
+            //     if (exitCode != 0) {
+            //         return new CommandResult(exitCode, null, null);
+            //     }
+            // }
             process = Runtime.getRuntime().exec(isRoot ? "su" : "sh");
             os = new DataOutputStream(process.getOutputStream());
             for (String command : commands) {
