@@ -12,6 +12,8 @@ import android.content.pm.Signature;
 import android.util.Log;
 
 import com.sevtinge.cemiuiler.BuildConfig;
+import com.sevtinge.cemiuiler.utils.Helpers;
+import com.sevtinge.cemiuiler.utils.PrefsUtils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -58,7 +60,7 @@ public class CorePatchForR extends XposedHelper implements IXposedHookLoadPackag
         }
     }
 
-    final XSharedPreferences prefs = new XSharedPreferences(BuildConfig.APPLICATION_ID, "conf");
+    final XSharedPreferences prefs = new XSharedPreferences(Helpers.mAppModulePkg, PrefsUtils.mPrefsName);
 
     @Override
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam loadPackageParam) throws IllegalAccessException, InvocationTargetException, InstantiationException {
@@ -104,7 +106,7 @@ public class CorePatchForR extends XposedHelper implements IXposedHookLoadPackag
         var apkVerifierClass = XposedHelpers.findClassIfExists("com.android.apksig.ApkVerifier",
             loadPackageParam.classLoader);
         if (apkVerifierClass != null) {
-            findAndHookMethod(apkVerifierClass,"getMinimumSignatureSchemeVersionForTargetSdk", loadPackageParam.classLoader, int.class,
+            findAndHookMethod(apkVerifierClass, "getMinimumSignatureSchemeVersionForTargetSdk", loadPackageParam.classLoader, int.class,
                 new ReturnConstant(prefs, "prefs_key_system_framework_core_patch_auth_creak", 0));
         }
 
@@ -175,7 +177,7 @@ public class CorePatchForR extends XposedHelper implements IXposedHookLoadPackag
                             if (prefs.getBoolean("prefs_key_system_framework_core_patch_use_pre_signature", false)) {
                                 PackageManager PM = AndroidAppHelper.currentApplication().getPackageManager();
                                 if (PM == null) {
-                                    XposedBridge.log("[E" + TAG +"[" + BuildConfig.APPLICATION_ID + "] Cannot get the Package Manager... Are you using MiUI?");
+                                    XposedBridge.log("[E" + TAG + "[" + BuildConfig.APPLICATION_ID + "] Cannot get the Package Manager... Are you using MiUI?");
                                 } else {
                                     PackageInfo pI;
                                     if (parseErr != null) {
