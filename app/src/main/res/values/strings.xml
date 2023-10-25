@@ -876,6 +876,8 @@
     <string name="home_drawer_editor_desc">Removed the \"Edit\" button from the Apps tab in the drawer</string>
     <string name="home_drawer_blur">Enable All Apps Container View Blur</string>
     <string name="home_drawer_blur_desc">Please set app drawer background transparency to 100% to use this feature</string>
+    <string name="home_drawer_pinyin">Arranged in pinyin order</string>
+    <string name="home_drawer_pinyin_more">When the language is not Simplified Chinese, the apps in the drawer are still arranged according to Pinyin</string>
     <string name="home_title">Icon and Title</string>
     <string name="home_title_icon_title">Icon</string>
     <string name="home_title_bigicon_title">Big icon</string>
@@ -884,7 +886,7 @@
     <string name="home_title_title_marquee_desc">App names that are too long will be scrolled instead of wrapping</string>
     <string name="home_title_title_new_install">New Install App Dont show Indicator</string>
     <string name="home_title_drawer_font_hidden">Hide all app titles</string>
-    <string name="home_title_drawer_font_hidden_more">The app title inside the drawer will also be hidden, otherwise please use \"Font size\" to adjust it</string>
+    <string name="home_title_drawer_font_hidden_more">The app title in the drawer will also be hidden.\nIf you want to keep the app title in the drawer, please use \"Font Size\" to adjust it.</string>
     <string name="home_title_title_new_install_more">Do not display the indicator next to the application title when installing a new application</string>
     <string name="home_title_font_size">Font size</string>
     <string name="home_title_title_color">Title color</string>
