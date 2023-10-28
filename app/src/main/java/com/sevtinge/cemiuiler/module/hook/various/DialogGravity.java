@@ -39,7 +39,7 @@ public class DialogGravity extends BaseHook {
         if (mDialogCls != null) {
             boolean oldMethodFound = false;
             for (Method method : mDialogCls.getDeclaredMethods()) {
-                if (method.getName().equals("setupDialogPanel")) oldMethodFound = true;
+                if ("setupDialogPanel".equals(method.getName())) oldMethodFound = true;
                 methodList.add(method);
                 LogI(TAG, method.getName());
             }

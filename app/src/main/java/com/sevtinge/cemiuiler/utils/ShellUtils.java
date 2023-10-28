@@ -1,6 +1,7 @@
 package com.sevtinge.cemiuiler.utils;
 
 import com.sevtinge.cemiuiler.utils.log.AndroidLogUtils;
+import io.github.pixee.security.SystemCommand;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -18,7 +19,7 @@ public class ShellUtils {
         Process process = null;
         int exitCode = -1;
         try {
-            process = Runtime.getRuntime().exec("su -c true");
+            process = SystemCommand.runCommand(Runtime.getRuntime(), "su -c true");
             return process.waitFor();
         } catch (IOException | InterruptedException e) {
             AndroidLogUtils.LogE("checkRootPermission", "check whether has root permission error: ", e);
@@ -144,7 +145,7 @@ public class ShellUtils {
             //         return new CommandResult(exitCode, null, null);
             //     }
             // }
-            process = Runtime.getRuntime().exec(isRoot ? "su" : "sh");
+            process = SystemCommand.runCommand(Runtime.getRuntime(), isRoot ? "su" : "sh");
             os = new DataOutputStream(process.getOutputStream());
             for (String command : commands) {
                 if (command == null) {

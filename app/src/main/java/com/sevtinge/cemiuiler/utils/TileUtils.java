@@ -234,7 +234,7 @@ public abstract class TileUtils extends BaseHook {
     private void SystemUiHook() {
         String custom = customName();
         if (needCustom()) {
-            if (custom.equals("")) {
+            if ("".equals(custom)) {
                 XposedLogUtils.logE(TAG, "Error custom:" + custom);
                 return;
             }
@@ -349,7 +349,7 @@ public abstract class TileUtils extends BaseHook {
         if (needCustom()) {
             int customValue = customValue();
             String custom = customName();
-            if (customValue == -1 || custom.equals("")) {
+            if (customValue == -1 || "".equals(custom)) {
                 XposedLogUtils.logE(TAG, "Error customValue:" + customValue);
                 return;
             }

@@ -131,7 +131,7 @@ public class BaseSettingsActivity extends AppCompatActivity {
                     "' | grep -v $$) != \"\" ]] && { pkill -l 9 -f \"" + packageName +
                     "\"; }; } || { echo \"kill error\"; }", true, true);
                 if (commandResult.result == 0) {
-                    if (commandResult.successMsg.equals("kill error")) {
+                    if ("kill error".equals(commandResult.successMsg)) {
                         pid = false;
                     } else result = true;
                 } else
