@@ -161,7 +161,7 @@ public class MainActivity extends SettingsActivity {
             else if (val instanceof Boolean)
                 path = "boolean/";
             getContentResolver().notifyChange(Uri.parse("content://" + SharedPrefsProvider.AUTHORITY + "/" + path + s), null);
-            if (!path.equals(""))
+            if (!"".equals(path))
                 getContentResolver().notifyChange(Uri.parse("content://" + SharedPrefsProvider.AUTHORITY + "/pref/" + path + s), null);
         };
 
@@ -183,7 +183,7 @@ public class MainActivity extends SettingsActivity {
 
     void findMod(String filter) {
         lastFilter = filter;
-        mSearchResultView.setVisibility(filter.equals("") ? View.GONE : View.VISIBLE);
+        mSearchResultView.setVisibility("".equals(filter) ? View.GONE : View.VISIBLE);
         ModSearchAdapter adapter = (ModSearchAdapter) mSearchResultView.getAdapter();
         if (adapter == null) return;
         adapter.getFilter().filter(filter);

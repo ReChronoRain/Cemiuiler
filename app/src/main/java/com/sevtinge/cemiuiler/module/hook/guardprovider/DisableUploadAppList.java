@@ -26,7 +26,7 @@ public class DisableUploadAppList extends BaseHook {
             if (guardApplication != null) {
                 Field[] guardApplicationFields = guardApplication.getDeclaredFields();
                 for (Field field : guardApplicationFields) {
-                    if (field.getName().equals("c")) {
+                    if ("c".equals(field.getName())) {
                         XposedHelpers.setStaticBooleanField(guardApplication, "c", true);
                         XposedLogUtils.logI("Info: GuardProvider will work as debug mode!");
                     }
@@ -48,7 +48,7 @@ public class DisableUploadAppList extends BaseHook {
             final Method[] methods = antiDefraudAppManager.getDeclaredMethods();
             Method getAllUnSystemAppsStatus = null;
             for (Method method : methods) {
-                if (method.getName().equals("getAllUnSystemAppsStatus") && method.getParameterTypes().length == 1) {
+                if ("getAllUnSystemAppsStatus".equals(method.getName()) && method.getParameterTypes().length == 1) {
                     getAllUnSystemAppsStatus = method;
                     break;
                 }
