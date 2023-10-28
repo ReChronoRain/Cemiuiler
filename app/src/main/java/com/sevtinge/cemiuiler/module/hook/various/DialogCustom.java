@@ -62,7 +62,7 @@ public class DialogCustom extends BaseHook {
         if (mAlertControllerCls != null) {
 
             for (Method method : mAlertControllerCls.getDeclaredMethods()) {
-                if (method.getName().equals("setupDialogPanel")) {
+                if ("setupDialogPanel".equals(method.getName())) {
                     oldMethodFound = true;
                     XposedLogUtils.logI(TAG, method.getName());
                 }

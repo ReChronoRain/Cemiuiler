@@ -142,9 +142,9 @@ public class MultiActionSettings extends SettingsPreferenceFragment {
 
         if (!pkgActName.equals(notSelected)) {
             if (pkgActArray.length >= 1 && pkgActArray[0] != null) try {
-                if (!forcePkg && pkgActArray.length >= 2 && pkgActArray[1] != null && !pkgActArray[1].trim().equals("")) {
+                if (!forcePkg && pkgActArray.length >= 2 && pkgActArray[1] != null && !"".equals(pkgActArray[1].trim())) {
                     return pm.getActivityInfo(new ComponentName(pkgActArray[0], pkgActArray[1]), 0).loadLabel(pm).toString();
-                } else if (!pkgActArray[0].trim().equals("")) {
+                } else if (!"".equals(pkgActArray[0].trim())) {
                     ai = pm.getApplicationInfo(pkgActArray[0], 0);
                     return pm.getApplicationLabel(ai).toString();
                 }
