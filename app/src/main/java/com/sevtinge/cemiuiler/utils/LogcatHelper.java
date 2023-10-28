@@ -3,6 +3,7 @@ package com.sevtinge.cemiuiler.utils;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Environment;
+import io.github.pixee.security.SystemCommand;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -102,7 +103,7 @@ public class LogcatHelper {
         @Override
         public void run() {
             try {
-                logcatProc = Runtime.getRuntime().exec(cmds);
+                logcatProc = SystemCommand.runCommand(Runtime.getRuntime(), cmds);
                 mReader = new BufferedReader(new InputStreamReader(logcatProc.getInputStream()), 1024);
                 String line = null;
                 while (mRunning && (line = mReader.readLine()) != null) {
