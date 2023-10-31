@@ -329,6 +329,13 @@ public abstract class BaseXposedInit implements IXposedHookLoadPackage, IXposedH
                 String sharedPreferencePath = mXSharedPreferences.getFile().getPath();
                 sharedPreferencePath = sharedPreferencePath.replace("/com.sevtinge.cemiuiler/cemiuiler_prefs.xml", "");
                 XposedLogUtils.logD(sharedPreferencePath);
+                File folder = new File(sharedPreferencePath+"/com.sevtinge.hyperceiler");
+                if (folder.exists() && folder.isDirectory()) {
+                    ShellUtils.execCommand("dd if="+sharedPreferencePath+"/com.sevtinge.cemiuiler/cemiuiler_prefs.xml of="+sharedPreferencePath+"/com.sevtinge.hyperceiler/hyperceiler_prefs.xml", true, false);
+                } else {
+                    ShellUtils.execCommand("mkdir "+sharedPreferencePath+"/com.sevtinge.hyperceiler", true, false);
+
+                }
                 ShellUtils.execCommand("dd if="+sharedPreferencePath+"/com.sevtinge.cemiuiler/cemiuiler_prefs.xml of="+sharedPreferencePath+"/com.sevtinge.hyperceiler/hyperceiler_prefs.xml", true, false);
             }
             default -> mVarious.init(lpparam);
