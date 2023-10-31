@@ -55,6 +55,7 @@ import com.sevtinge.cemiuiler.utils.Helpers;
 import com.sevtinge.cemiuiler.utils.PrefsMap;
 import com.sevtinge.cemiuiler.utils.PrefsUtils;
 import com.sevtinge.cemiuiler.utils.ResourcesHook;
+import com.sevtinge.cemiuiler.utils.ShellUtils;
 import com.sevtinge.cemiuiler.utils.log.XposedLogUtils;
 
 import java.io.File;
@@ -322,7 +323,14 @@ public abstract class BaseXposedInit implements IXposedHookLoadPackage, IXposedH
                 mVarious.init(lpparam);
             }
             case "com.xiaomi.NetworkBoost" -> networkBoost.init(lpparam);
-            case BuildConfig.APPLICATION_ID -> ModuleActiveHook(lpparam);
+            case BuildConfig.APPLICATION_ID -> {
+                ModuleActiveHook(lpparam);
+                XSharedPreferences mXSharedPreferences = new XSharedPreferences(Helpers.mAppModulePkg, PrefsUtils.mPrefsName);
+                String sharedPreferencePath = mXSharedPreferences.getFile().getPath();
+                sharedPreferencePath = sharedPreferencePath.replace("/com.sevtinge.cemiuiler/cemiuiler_prefs.xml", "");
+                XposedLogUtils.logD(sharedPreferencePath);
+                ShellUtils.execCommand("dd if="+sharedPreferencePath+"/com.sevtinge.cemiuiler/cemiuiler_prefs.xml of="+sharedPreferencePath+"/com.sevtinge.hyperceiler/hyperceiler_prefs.xml", true, false);
+            }
             default -> mVarious.init(lpparam);
         }
     }
