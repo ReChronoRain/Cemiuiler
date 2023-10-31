@@ -18,8 +18,8 @@ android {
         applicationId namespace
         minSdk 30
         targetSdk 34
-        versionCode 129
-        versionName "1.2.129"
+        versionCode 130
+        versionName "1.3.130"
         project.archivesBaseName = "Cemiuiler"
         ndk {
             // noinspection ChromeOsAbiSupport
