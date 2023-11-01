@@ -44,6 +44,7 @@ import com.sevtinge.cemiuiler.module.hook.home.folder.FolderVerticalPadding;
 import com.sevtinge.cemiuiler.module.hook.home.folder.SmallFolderIconBlur;
 import com.sevtinge.cemiuiler.module.hook.home.gesture.DoubleTap;
 import com.sevtinge.cemiuiler.module.hook.home.gesture.HotSeatSwipe;
+import com.sevtinge.cemiuiler.module.hook.home.gesture.QuickBack;
 import com.sevtinge.cemiuiler.module.hook.home.gesture.ShakeDevice;
 import com.sevtinge.cemiuiler.module.hook.home.layout.HotSeatsHeight;
 import com.sevtinge.cemiuiler.module.hook.home.layout.HotSeatsMarginBottom;
@@ -115,6 +116,7 @@ public class Home extends BaseModule {
         initHook(LoadHostDir.INSTANCE);
 
         // 手势
+        initHook(new QuickBack(), mPrefsMap.getBoolean("home_navigation_quick_back"));
         initHook(new DoubleTap(), mPrefsMap.getInt("home_gesture_double_tap_action", 0) > 0);
         initHook(new ScreenSwipe(), mPrefsMap.getInt("home_gesture_up_swipe_action", 0) > 0 ||
             mPrefsMap.getInt("home_gesture_down_swipe_action", 0) > 0 ||
