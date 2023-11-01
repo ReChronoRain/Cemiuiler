@@ -44,7 +44,7 @@ public class AppDetails extends BaseHook {
             boolean oldMethodFound = false;
 
             for (Member method : mAmAppInfoCls.getDeclaredMethods()) {
-                if (method.getName().equals("onLoadFinished")) {
+                if ("onLoadFinished".equals(method.getName())) {
                     oldMethodFound = true;
                 }
             }
