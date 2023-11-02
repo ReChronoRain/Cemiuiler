@@ -697,7 +697,10 @@
     <string name="updater">Atualizações</string>
     <string name="updater_fuck_vab">Remover verificação OTA</string>
     <string name="updater_fuck_vab_desc">Apenas dispositivos VAB são suportados, por favor, não habilite outros dispositivos não-VAB!\n- Você pode deslizar para o pacote completo de passagem do cartão de teste interno sem permissões de teste interno\n- Recomenda-se limpar os dados após o flash em diferentes tipos de versão\n- Não suporta nenhum uso de ROM não oficial\n- Esta função é perigosa, por favor, avalie se deve ativá-la após entender a operação do Fastboot</string>
-    <string name="updater_miui_version">Versão da MIUI falsa para Atualizações</string>
+    <string name="updater_version_mode">Tipo de disfarce</string>
+    <string name="updater_big_version">Versão grande falsa</string>
+    <string name="updater_big_version_desc">Itens que precisam ser preenchidos ao disfarçar a versão Xiaomi HyperOS, o padrão é V816</string>
+    <string name="updater_miui_version">Versão falsa para Atualizações</string>
     <string name="updater_miui_version_desc">Modifique apenas a atualização do sistema, que pode proteger a atualização do sistema até certo ponto</string>
     <string name="updater_device">Dispositivo falso para Atualizações</string>
     <string name="updater_device_desc">Insira o código do modelo do dispositivo de destino para especificar o modelo, que pode ser usado para obter pacotes de ROM para outros modelos, o que é extremamente perigoso</string>
@@ -749,6 +752,8 @@
     <string name="home">Launcher do sistema</string>
     <string name="home_gesture">Gestos e Navegação</string>
     <string name="home_navigation_title">Navegação</string>
+    <string name="home_navigation_quick_back">Volte para o app anterior</string>
+    <string name="home_navigation_quick_back_more">Deslize pela tela começando pela borda para voltar ao app anterior</string>
     <string name="home_navigation_back_area_height">Altura da área do gesto de retorno</string>
     <string name="home_navigation_back_area_width">Largura da área do gesto de retorno</string>
     <string name="home_gesture_title2">Gestos</string>
@@ -768,7 +773,7 @@
     <string name="home_gesture_down_swipe_desc">Deslize para baixo com um dedo em qualquer tela inicial</string>
     <string name="home_gesture_up_swipe2">Deslize para cima com dois dedos</string>
     <string name="home_gesture_up_swipe2_desc">Deslize para cima com dois dedos em qualquer tela inicial</string>
-    <string name="home_gesture_down_swipe2">Deslize para baixo com dois dedos</string>
+    <string name="home_gesture_down_swipe2">Deslizar para baixo com dois dedos</string>
     <string name="home_gesture_down_swipe2_desc">Deslize para baixo com dois dedos em qualquer tela inicial</string>
     <string name="home_gesture_pinch">Pince com dois dedos</string>
     <string name="home_gesture_spread">Espalhe com dois dedos</string>
@@ -854,7 +859,7 @@
     <string name="home_title_title_marquee_desc">Nomes de apps muito longos serão rolados em vez de agrupados</string>
     <string name="home_title_title_new_install">Não mostrar novo indicador de instalação do app</string>
     <string name="home_title_drawer_font_hidden">Ocultar todos os nomes dos apps</string>
-    <string name="home_title_drawer_font_hidden_more">O título do app na gaveta também ficará oculto.\nSe você quiser manter o título do app na gaveta, use Tamanho da fonte para ajustá-lo.</string>
+    <string name="home_title_drawer_font_hidden_more">O nome do app na gaveta também ficará oculto.\nSe você quiser manter o nome do app na gaveta, use Tamanho da fonte para ajustá-lo.</string>
     <string name="home_title_title_new_install_more">Não exiba o indicador próximo ao nome do app ao instalar um novo app</string>
     <string name="home_title_font_size">Tamanho da fonte</string>
     <string name="home_title_title_color">Cor do título</string>
