@@ -16,7 +16,8 @@ Android 11 ~ 13 的 MIUI 12.5 ~ 14
 >
 > 目前 Cemiuiler 是基于 Android 13 的 MIUI 14 的手机端设备进行适配，覆盖不是很完整，需要不断测试和改进，
 >
-> 对于 Android 11 的设备，已尽力做好支持，在 1.3.130 版本发布后，主线分支将不再支持 Android 11，但依旧会提供老版本功能维护与移植。
+> 本项目已迁移，请前往[新项目](https://github.com/saraSakuHj/HyperCeiler)
+
 
 ## 作用域包含的应用
 
